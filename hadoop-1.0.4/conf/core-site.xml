@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/home/young/hadoop_data/hadoop_tmp-${user.name}</value>
+  </property>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://localhost:54310</value>
+  </property>
+  <property>
+    <name>fs.checkpoint.edits.dir</name>
+    <value>/home/young/hadoop_data/hadoop_checkpoint-${user.name}</value>
+  </property>
+</configuration>

@@ -1,0 +1,2 @@
+#!/bin/bash -e
+./start_gps_nodes.sh 2 quick-start "-ifs /data/soc-Epinions1-d-n.txt -hcf /home/young/cs848/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /machine-configs/test_machine_config.cfg -log4jconfig /home/young/cs848/gps-rev-110/conf/log4j.config -other -max###40"
