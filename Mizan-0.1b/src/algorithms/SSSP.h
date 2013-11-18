@@ -13,7 +13,7 @@
 #include "../dataManager/dataStructures/data/mLong.h"
 
 #define INF      mLong(LLONG_MAX)
-#define min(a,b) ((a < b) ? a : b)
+#define MIN(a,b) ((a < b) ? a : b)
 
 // combiner that takes the minimum of all messages
 class SSSPCombiner: public Icombiner<mLong, mLong, mLong, mLong> {
@@ -22,7 +22,7 @@ class SSSPCombiner: public Icombiner<mLong, mLong, mLong, mLong> {
 
     mLong minDist = INF;
     while (messages->hasNext()) {
-      minDist = min(minDist, messages->getNext());
+      minDist = MIN(minDist, messages->getNext());
     }
 
     mManager->sendMessage(dst, minDist);
@@ -70,7 +70,7 @@ public:
     mLong newDist = isSrc(data->getVertexID()) ? mLong(0) : INF;
 
     while (messages->hasNext()) {
-      newDist = min(newDist, messages->getNext());
+      newDist = MIN(newDist, messages->getNext());
     }
 
     // if new distance is smaller, notify out edges
