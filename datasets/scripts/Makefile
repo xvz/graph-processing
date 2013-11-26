@@ -1,7 +1,7 @@
-all: mizan-to-giraph
+all: mizan-convert
 
 clean:
-	rm -f mizan-to-giraph
+	rm -f mizan-convert
 
-mizan-to-giraph: mizan-to-giraph.cpp
-	g++ mizan-to-giraph.cpp -o mizan-to-giraph
+mizan-convert: mizan-convert.cpp
+	g++ mizan-convert.cpp -o mizan-convert
