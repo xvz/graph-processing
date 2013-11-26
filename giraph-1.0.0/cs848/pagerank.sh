@@ -1,13 +1,17 @@
 #!/bin/bash
 
+if [ $# -ne 2 ]; then
+    echo "usage: $0 [input graph] [workers]"
+    exit -1
+fi
+
 # place input in /user/ubuntu/giraph-input/
 # output is in /user/ubuntu/giraph-output/
-inputgraph=soc-Epinions1-d-n-giraph.txt
+inputgraph=$(basename $1)
 
-# workers can be > number of EC2 instances
-workers=8
+workers=$2    # workers can be > number of EC2 instances
 
-outputdir=/user/giraph-output/sssp
+outputdir=/user/giraph-output/pagerank
 
 hadoop dfs -rmr ${outputdir}
 

@@ -1,11 +1,16 @@
 #!/bin/bash -e
 
+if [ $# -ne 2 ]; then
+    echo "usage: $0 [input graph] [ec2 nodes]"
+    exit -1
+fi
+
 # place input in /user/ubuntu/gps-input/
 # output is in /user/ubuntu/gps/output/
-inputgraph=soc-Epinions1-d-n.txt # LiveJournal01.txt
+inputgraph=$(basename $1)
 
 # nodes should be number of EC2 instances
-nodes=4
+nodes=$2
 
 cd ../master-scripts/
 
