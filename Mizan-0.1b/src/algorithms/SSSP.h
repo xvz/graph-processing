@@ -1,8 +1,8 @@
 /*
  * SSSP.h
  *
- *  Created on: Nov 17 2013
- *     Authors: Jack Jin, Jenny Wang, Young Han
+ * Created on: Nov 17 2013
+ * Authors: Jack Jin, Jenny Wang, Young Han
  */
 
 #ifndef SSSP_H_
@@ -13,16 +13,22 @@
 #include "../dataManager/dataStructures/data/mLong.h"
 
 #define INF      mLong(LLONG_MAX)
-#define MIN(a,b) ((a < b) ? a : b)
 
 // combiner that takes the minimum of all messages
 class SSSPCombiner: public Icombiner<mLong, mLong, mLong, mLong> {
+private:
+  // NOTE: making this into a macro is dangerous!!
+  mLong min(mLong a, mLong b) {
+    return (a < b) ? a : b;
+  }
+
+public:
   void combineMessages(mLong dst, messageIterator<mLong> * messages,
                        messageManager<mLong, mLong, mLong, mLong> * mManager) {
 
     mLong minDist = INF;
     while (messages->hasNext()) {
-      minDist = MIN(minDist, messages->getNext());
+      minDist = min(minDist, messages->getNext());
     }
 
     mManager->sendMessage(dst, minDist);
@@ -47,6 +53,10 @@ private:
     return (id == srcID);
   }
 
+  mLong min(mLong a, mLong b) {
+    return (a < b) ? a : b;
+  }
+
 public:
   /**
    * \param srcID The vertex ID of the source.
@@ -54,9 +64,16 @@ public:
    */
   SSSP(mLong srcID, int maxSS) : srcID(srcID), maxSuperStep(maxSS) {}
 
-  void initialize(userVertexObject<mLong, mLong, mLong, mLong> * data) {
+  void initialize(userVertexObject<mLong, mLong, mLong, mLong> * data) {    
     // start all vertices with INF distance
     data->setVertexValue(INF);
+
+    // TODO: HACK. Mizan does not read in edge values,
+    // so let's assign some random ones
+    //
+    for (int i = 0; i < data->getOutEdgeCount(); i++) {
+      data->setOutEdgeValue( data->getOutEdgeID(i), mLong(i+3) );
+    }
   }
 
   void compute(messageIterator<mLong> * messages,
@@ -70,7 +87,8 @@ public:
     mLong newDist = isSrc(data->getVertexID()) ? mLong(0) : INF;
 
     while (messages->hasNext()) {
-      newDist = MIN(newDist, messages->getNext());
+      //printf("receiving msg %d %ld\n", data->getCurrentSS(), data->getVertexID().getValue());
+      newDist = min(newDist, messages->getNext());
     }
 
     // if new distance is smaller, notify out edges
@@ -84,12 +102,16 @@ public:
           // (outEdgeValue is the value of an outgoing edge)
           comm->sendMessage(data->getOutEdgeID(i),
                             mLong(newDist.getValue() + data->getOutEdgeValue(i).getValue()));
+          //printf("sending msg %d %ld\n", data->getCurrentSS(), data->getVertexID().getValue());
         }
+      } else {
+        data->voteToHalt();
       }
+    } else {
+      // NOTE: strange quirk with Mizan: if *everyone* halts, then
+      // nobody will wake from message!
+      data->voteToHalt();
     }
-  
-    // vertices always vote to halt after a superstep
-    data->voteToHalt();
   }
 };
 #endif /* SSSP_H_ */

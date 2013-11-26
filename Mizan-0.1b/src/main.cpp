@@ -21,6 +21,7 @@
 #include "algorithms/pageRankTopK.h"
 #include "algorithms/AdSim.h"
 #include "algorithms/SSSP.h"
+//#include "algorithms/MST.h"
 #include "tools/argParser.h"
 #include "algorithms/maxAggregator.h"
 #include "general.h"
@@ -134,8 +135,8 @@ int main(int argc, char** argv) {
                                             myArgs.fs, myArgs.migration);
 
     // use combiner for better network efficiency
-    SSSPCombiner ssspc;
-    mmk->registerMessageCombiner(&ssspc);
+    //SSSPCombiner ssspc;
+    //mmk->registerMessageCombiner(&ssspc);
 
     mmk->setVoteToHalt(groupVoteToHalt);
 
@@ -143,30 +144,37 @@ int main(int argc, char** argv) {
     myWorkerID = mmk->getPEID();
     delete mmk;
 
-  }
-  /*
-    else if (myArgs.algorithm == 6) {
+  }/* else if (myArgs.algorithm == 6) {
     groupVoteToHalt = true;
-    storageType = InOutNbrStore;      // TODO: ???
+    storageType = InOutNbrStore;      // undirected edge is InOut
 
-    MST mst(mLong(0), myArgs.superSteps);
+    MST mst(myArgs.superSteps);
 
-    Mizan<mLong, mLong, mLong, mLong> * mmk =
-      new Mizan<mLong, mLong, mLong, mLong>(myArgs.communication, &mst, storageType,
-                                            inputBaseFile, myArgs.clusterSize,
-                                            myArgs.fs, myArgs.migration);
+    Mizan<mLong, mLongArray, mLongArray, mLong> * mmk =
+      new Mizan<mLong, mLongArray,mLongArray, mLong>(myArgs.communication, &mst, storageType,
+                                                      inputBaseFile, myArgs.clusterSize,
+                                                      myArgs.fs, myArgs.migration);
 
     // use combiner for better network efficiency
     MSTCombiner mstc;
     mmk->registerMessageCombiner(&mstc);
 
+    // aggregator needed for superbarriers
+    // included from MST header
+    char* counterAgg_name = "counter";
+    countAggregator counterAgg;
+    mmk->registerAggregator(counterAgg_name, &counterAgg);
+
+    char* maxAgg_name = "max";
+    countAggregator maxAgg;
+    mmk->registerAggregator(maxAgg_name, &maxAgg);
+
     mmk->setVoteToHalt(groupVoteToHalt);
 
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-  }
-  */
+    }*/
 
 #ifdef Verbose
   if (myWorkerID == 0) {
