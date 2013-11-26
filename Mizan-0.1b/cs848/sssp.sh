@@ -1,21 +1,26 @@
 #!/bin/bash -e
 
-# input is placed by preMizan
+# input is placed by preMizan into /user/ubuntu/input
+# output of preMizan is in /user/ubuntu/m_output/mizan_${inputgraph}_hash/range_${workers}
 inputgraph=web-Google.txt
-workers=10
-nodes=4     # ec2 instances
+
+# workers can be > number of EC2 instances
+workers=4
 
 # dynamic partitioning
 dynamic=1
 
+logfile=sssp-"$(date +%F-%H-%M-%S)".txt
+
 read -p "preMizan? (y/n): " pre
 
 if [[ "$pre" == "y" ]]; then
-    ../preMizan/preMizan.sh ${inputgraph} ${nodes}
+    cd ../preMizan/
+    ./preMizan.sh ../cs848/${inputgraph} ${workers} | tee -a ./${logfile}
 fi
 
 # -np indicates number of processors
 # should probably not go above 2, to avoid contention
 #
-# SSSP
-mpirun -f machines -np 2 ../Release/Mizan-0.1b -a 4 -s 100 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} | tee -a ./sssp-"$(date +%F-%H-%M-%S)".txt
+# pagerank
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 4 -s 300 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} | tee -a ./${logfile}
