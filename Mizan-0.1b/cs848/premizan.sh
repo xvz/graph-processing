@@ -15,9 +15,7 @@ cd ../preMizan/hadoopScripts/
 
 # modified from preMizan/preMizan.sh
 case $3 in
-    [1]*) ./hadoop_run_modhash.sh $inputgraph $2 true | tee -a ../../cs848/${logfile};;
-    [2]*) ./hadoop_run_range.sh $inputgraph $2 true | tee -a ../../cs848/${logfile};;
+    [1]*) ./hadoop_run_modhash.sh $inputgraph $2 true 2>&1 | tee -a ../../cs848/${logfile};;
+    [2]*) ./hadoop_run_range.sh $inputgraph $2 true 2>&1 | tee -a ../../cs848/${logfile};;
     *) echo "Error: invalid partition type!";;
 esac
-
-
