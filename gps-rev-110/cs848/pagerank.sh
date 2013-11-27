@@ -16,3 +16,6 @@ cd ../master-scripts/
 
 # NOTE: max controls max number of supersteps
 ./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###100"
+
+echo "WARNING: NOT AUTOMATED."
+echo "MOVE./gps/output/quick-start-machine-stats to ./gps/stats-pagerank-${inputgraph}-${nodes}-$(date +%F-%H-%M-%S)"

@@ -12,7 +12,7 @@ inputgraph=$(basename $1)
 workers=$2    # workers can be > number of EC2 instances
 dynamic=$3    # dynamic partitioning
 
-logfile=pagerank-"$(date +%F-%H-%M-%S)".txt
+logfile=pagerank_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)".txt
 
 
 # -np indicates number of processors

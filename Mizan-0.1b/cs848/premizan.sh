@@ -8,7 +8,7 @@ fi
 
 inputgraph=$(basename $1)
 
-logfile=premizan-"$(date +%F-%H-%M-%S)".txt
+logfile=premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)".txt
 
 
 cd ../preMizan/hadoopScripts/
