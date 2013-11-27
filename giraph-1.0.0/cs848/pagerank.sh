@@ -11,7 +11,7 @@ inputgraph=$(basename $1)
 
 workers=$2    # workers can be > number of EC2 instances
 
-outputdir=/user/giraph-output/pagerank
+outputdir=/user/ubuntu/giraph-output/pagerank
 
 hadoop dfs -rmr ${outputdir}
 

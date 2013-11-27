@@ -25,7 +25,7 @@ fi
 echo "starting gps worker ${2}"
 # Set the XMS_SIZE and XMX_SIZE properties according to the RAM in the machines of your cluster.
 XMS_SIZE=256M   # initial heap size
-XMX_SIZE=1024M  # max heap size
+XMX_SIZE=2048M  # max heap size
 OUTPUT_FILE_NAME=${4}-output-${2}-of-${3}
 if [ ${2} -eq -1 ]; then
     XMS_SIZE=50M
