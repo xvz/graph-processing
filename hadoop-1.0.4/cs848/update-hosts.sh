@@ -1,6 +1,6 @@
-#!/bin/bash -e
+#!/bin/bash
 
-nodes=4
+nodes=12
 
 for ((i=1;i<=${nodes};i++)); do
     sudo scp /etc/hosts cloud$i:/etc/hosts

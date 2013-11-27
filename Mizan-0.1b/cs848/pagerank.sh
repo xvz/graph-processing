@@ -19,4 +19,4 @@ logfile=pagerank_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)".txt
 # should probably not go above 2, to avoid contention
 #
 # pagerank
-mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 1 -s 100 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 1 -s 40 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
