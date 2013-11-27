@@ -17,10 +17,11 @@ logname=pagerank_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 cd ../master-scripts/
 
 # NOTE: max controls max number of supersteps
-#./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###40"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###40"
+
+cd ../cs848/
 
 echo "WARNING: NOT AUTOMATED. USE SCRIPT TO GET MACHINE STATS."
-
 echo "hadoop dfs -get /user/ubuntu/gps/output/quick-start-machine-stats ./stats-${logname}" > ./${logname}.sh
 echo "hadoop dfs -cp /user/ubuntu/gps/output/quick-start-machine-stats /user/ubuntu/gps/stats-${logname}" >> ./${logname}.sh
-chmod +x ${logname}.sh
+chmod +x ./${logname}.sh
