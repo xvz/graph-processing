@@ -7,7 +7,8 @@
 
 #define M_IN_NOVAL       1
 #define M_IN_VAL         2
-#define M_IN_FAKE        3
+#define M_IN_GEN_UNITY   3
+#define M_IN_GEN_SEQ     4
 
 #define M_TO_GIRAPH      1
 #define M_TO_GPS_NOVAL   2
@@ -20,9 +21,10 @@ static long counter = 1;
 static void usage(char **argv) {
   cout << "usage: " << argv[0] << " input-file output-file in-format out-format" << endl;
   cout << endl;
-  cout << "in-format:  1. No values (node-id node-dst)" << endl;
-  cout << "            2. Values (node-id node-dst weight)" << endl;
-  cout << "            3. Same as 1, but generate unique sequential weights" << endl;
+  cout << "in-format:  1. No values in input file (format: node-id node-dst)" << endl;
+  cout << "            2. Values in input file (format: node-id node-dst weight)" << endl;
+  cout << "            3. Same as 1, but set output edge weights to 1." << endl;
+  cout << "            3. Same as 1, but output unique sequential edge weights" << endl;
   cout << "               (i.e., fake weights are assigned sequentially in" << endl;
   cout << "                order of how vertices are listed in input file)" << endl;
   cout << endl;
@@ -41,7 +43,11 @@ static inline void get_edge_weight(ifstream &ifs, int in_format, long &edge_weig
     ifs >> edge_weight;
     break;
 
-  case M_IN_FAKE:
+  case M_IN_GEN_UNITY:
+    edge_weight = 1;
+    break;
+
+  case M_IN_GEN_SEQ:
     edge_weight = counter;
     counter++;
     break;
@@ -68,7 +74,7 @@ int main(int argc, char **argv) {
   int out_format = atoi(argv[4]);
 
   if (!ifs || !ofs ||
-      (in_format < M_IN_NOVAL || in_format > M_IN_FAKE) ||
+      (in_format < M_IN_NOVAL || in_format > M_IN_GEN_SEQ) ||
       (out_format < M_TO_GIRAPH || out_format > M_TO_GPS_VAL) ) {
     usage(argv);
     return -1;
