@@ -30,7 +30,7 @@ static void usage(char **argv) {
   cout << endl;
   cout << "out-format: 1. Mizan to Giraph" << endl;
   cout << "            2. Mizan to GPS (no values)" << endl;
-  cout << "            3. Mizan to GPS (vertex + edge values)" << endl;
+  cout << "            3. Mizan to GPS (vertex + edge values, no vertex value)" << endl;
 }
 
 static inline void get_edge_weight(ifstream &ifs, int in_format, long &edge_weight) {
@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
   case M_TO_GPS_VAL:
     while (!ifs.eof()) {
       // format: vertex-id vertex-val edge-dst edge-val ...
-      ofs << curr_id << " 0 " << edge_dst << " " << edge_weight;
+      ofs << curr_id << " " << edge_dst << " " << edge_weight;
 
       ifs >> vertex_id;
       ifs >> edge_dst;
