@@ -106,11 +106,10 @@ public:
       } else {
         data->voteToHalt();
       }
-    } else {
-      // NOTE: strange quirk with Mizan: if *everyone* halts, then
-      // nobody will wake from message!
-      data->voteToHalt();
     }
+
+    // always vote to halt
+    data->voteToHalt();
   }
 };
 #endif /* SSSP_H_ */
