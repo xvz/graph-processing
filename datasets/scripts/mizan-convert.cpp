@@ -24,7 +24,7 @@ static void usage(char **argv) {
   cout << "in-format:  1. No values in input file (format: node-id node-dst)" << endl;
   cout << "            2. Values in input file (format: node-id node-dst weight)" << endl;
   cout << "            3. Same as 1, but set output edge weights to 1." << endl;
-  cout << "            3. Same as 1, but output unique sequential edge weights" << endl;
+  cout << "            4. Same as 1, but output unique sequential edge weights" << endl;
   cout << "               (i.e., fake weights are assigned sequentially in" << endl;
   cout << "                order of how vertices are listed in input file)" << endl;
   cout << endl;
