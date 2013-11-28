@@ -22,6 +22,12 @@ hadoop dfs -put patents-gps-noval.txt ./gps-input
 hadoop dfs -put road-gps-noval.txt ./gps-input
 hadoop dfs -put retweet-gps-noval.txt ./gps-input
 
+hadoop dfs -put amazon-gps-val.txt ./gps-input
+hadoop dfs -put google-gps-val.txt ./gps-input
+hadoop dfs -put patents-gps-val.txt ./gps-input
+hadoop dfs -put road-gps-val.txt ./gps-input
+hadoop dfs -put retweet-gps-val.txt ./gps-input
+
 # mizan
 hadoop dfs -rmr ./input
 hadoop dfs -mkdir ./input
@@ -41,6 +47,9 @@ if [[ "$yn" == "y" ]]; then
     # gps
     hadoop dfs -put livejournal-gps-noval.txt ./gps-input
     hadoop dfs -put orkut-gps-noval.txt ./gps-input
+
+    hadoop dfs -put livejournal-gps-val.txt ./gps-input
+    hadoop dfs -put orkut-gps-val.txt ./gps-input
 
     # mizan
     hadoop dfs -put livejournal.txt ./input
