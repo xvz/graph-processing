@@ -69,10 +69,9 @@ public:
     data->setVertexValue(INF);
 
     // TODO: HACK. Mizan does not read in edge values,
-    // so let's assign some random ones
-    //
+    // so let's assign everybody 1s
     for (int i = 0; i < data->getOutEdgeCount(); i++) {
-      data->setOutEdgeValue( data->getOutEdgeID(i), mLong(i+3) );
+      data->setOutEdgeValue( data->getOutEdgeID(i), mLong(1) );
     }
   }
 
