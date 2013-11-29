@@ -12,11 +12,11 @@ inputgraph=$(basename $1)
 workers=$2    # workers can be > number of EC2 instances
 dynamic=$3    # dynamic partitioning
 
-logfile=sssp_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)".txt
+logfile=wcc_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)".txt
 
 
 # -np indicates number of processors
 # should probably not go above 2, to avoid contention
 #
 # pagerank
-mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 5 -s 40 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 6 -s 40 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
