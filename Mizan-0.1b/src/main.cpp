@@ -21,6 +21,7 @@
 #include "algorithms/pageRankTopK.h"
 #include "algorithms/AdSim.h"
 #include "algorithms/SSSP.h"
+#include "algorithms/WCC.h"
 //#include "algorithms/MST.h"
 #include "tools/argParser.h"
 #include "algorithms/maxAggregator.h"
@@ -135,8 +136,8 @@ int main(int argc, char** argv) {
                                             myArgs.fs, myArgs.migration);
 
     // use combiner for better network efficiency
-    //SSSPCombiner ssspc;
-    //mmk->registerMessageCombiner(&ssspc);
+    SSSPCombiner ssspc;
+    mmk->registerMessageCombiner(&ssspc);
 
     mmk->setVoteToHalt(groupVoteToHalt);
 
@@ -144,7 +145,28 @@ int main(int argc, char** argv) {
     myWorkerID = mmk->getPEID();
     delete mmk;
 
-  }/* else if (myArgs.algorithm == 6) {
+  } else if (myArgs.algorithm == 6) {
+    groupVoteToHalt = true;
+    storageType = OutNbrStore;       // only store outgoing edge values
+
+    WCC wcc(myArgs.superSteps);
+
+    Mizan<mLong, mLong, mLong, mLong> * mmk =
+      new Mizan<mLong, mLong, mLong, mLong>(myArgs.communication, &wcc, storageType,
+                                            inputBaseFile, myArgs.clusterSize,
+                                            myArgs.fs, myArgs.migration);
+
+    // use combiner for better network efficiency
+    WCCCombiner wccc;
+    mmk->registerMessageCombiner(&wccc);
+
+    mmk->setVoteToHalt(groupVoteToHalt);
+
+    mmk->run(argc, argv);
+    myWorkerID = mmk->getPEID();
+    delete mmk;
+
+  } /* else if (myArgs.algorithm == 7) {
     groupVoteToHalt = true;
     storageType = InOutNbrStore;      // undirected edge is InOut
 

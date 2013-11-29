@@ -54,7 +54,8 @@ public:
        "  2) TopK PageRank\n"
        "  3) Diameter Estimation\n"
        "  4) Ad Simulation\n"
-       "  5) Single Source Shortest Path")
+       "  5) Single Source Shortest Path"
+       "  6) Weakly Connected Components")
       ("supersteps,s", boost::program_options::value<int>(&args.superSteps),
        "Linux user name, required in case of\n"
        "using option (-fs 1)")
