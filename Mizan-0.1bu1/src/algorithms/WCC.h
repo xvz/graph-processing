@@ -31,7 +31,9 @@ public:
       minCompID = min(minCompID, messages->getNext());
     }
 
-    if (minCompID != INF) {
+    // send message if minCompID is not INF
+    if (minCompID == INF) {
+    } else {
       mManager->sendMessage(dst, minCompID);
     }
   }
