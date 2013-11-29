@@ -31,7 +31,9 @@ public:
       minDist = min(minDist, messages->getNext());
     }
 
-    mManager->sendMessage(dst, minDist);
+    if (minDist != INF) {
+      mManager->sendMessage(dst, minDist);
+    }
   }
 };
 

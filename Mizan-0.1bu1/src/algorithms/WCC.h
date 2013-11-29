@@ -31,7 +31,9 @@ public:
       minCompID = min(minCompID, messages->getNext());
     }
 
-    mManager->sendMessage(dst, minCompID);
+    if (minCompID != INF) {
+      mManager->sendMessage(dst, minCompID);
+    }
   }
 };
 
