@@ -124,7 +124,8 @@ int main(int argc, char** argv) {
     delete mmk;
     
   } else if (myArgs.algorithm == 5) {
-    groupVoteToHalt = true;
+    // NOTE: this should be FALSE so halted vertices wake on incoming message
+    groupVoteToHalt = false;
     storageType = OutNbrStore;       // only store outgoing edge values
 
     // XXX: source ID is hard coded
@@ -146,7 +147,8 @@ int main(int argc, char** argv) {
     delete mmk;
 
   } else if (myArgs.algorithm == 6) {
-    groupVoteToHalt = true;
+    // NOTE: this should be FALSE so halted vertices wake on incoming message
+    groupVoteToHalt = false;
     storageType = OutNbrStore;       // only store outgoing edge values
 
     WCC wcc(myArgs.superSteps);

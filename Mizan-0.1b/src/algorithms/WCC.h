@@ -78,17 +78,17 @@ public:
 
     // if new component ID is smaller, notify neighbours
     // OR, if first supersteps, send message
-    if (newCompID < currCompID || data->getCurrentSS() == 0) {
+    if (newCompID < currCompID || data->getCurrentSS() == 1) {
       data->setVertexValue(newCompID);
 
       for (int i = 0; i < data->getOutEdgeCount(); i++) {
         // (outEdgeValue is the value of an outgoing edge)
         comm->sendMessage(data->getOutEdgeID(i), newCompID);
       }
-    } else {
-      // TODO: Mizan never wakes up a vertex after receiving a message?!
-      data->voteToHalt();
     }
+
+    // always vote to halt
+    data->voteToHalt();
   }
 };
 #endif /* WCC_H_ */

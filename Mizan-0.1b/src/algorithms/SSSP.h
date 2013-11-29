@@ -100,10 +100,10 @@ public:
         comm->sendMessage(data->getOutEdgeID(i),
                           mLong(newDist.getValue() + data->getOutEdgeValue(i).getValue()));
       }
-    } else {
-      // TODO: Mizan never wakes up a vertex after receiving a message?!
-      data->voteToHalt();
     }
+
+    // always vote to halt
+    data->voteToHalt();
   }
 };
 #endif /* SSSP_H_ */
