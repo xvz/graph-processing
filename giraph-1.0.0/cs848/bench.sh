@@ -4,11 +4,11 @@ WORKERS=4
 ./sssp.sh google-giraph.txt ${WORKERS} 0
 ./sssp.sh google-giraph.txt ${WORKERS} 0
 ./sssp.sh google-giraph.txt ${WORKERS} 0
-
+ 
 ./sssp.sh amazon-giraph.txt ${WORKERS} 0
 ./sssp.sh amazon-giraph.txt ${WORKERS} 0
 ./sssp.sh amazon-giraph.txt ${WORKERS} 0
-
+ 
 ./sssp.sh patents-giraph.txt ${WORKERS} 3858241
 ./sssp.sh patents-giraph.txt ${WORKERS} 3858241
 ./sssp.sh patents-giraph.txt ${WORKERS} 3858241
