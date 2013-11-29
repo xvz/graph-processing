@@ -81,20 +81,14 @@ public:
     if (newCompID < currCompID || data->getCurrentSS() == 0) {
       data->setVertexValue(newCompID);
 
-      // if maximum number of supersteps not reached, send messages
-      // (otherwise, terminate via vote to halt)
-      if (data->getCurrentSS() <= maxSuperStep) {
-        for (int i = 0; i < data->getOutEdgeCount(); i++) {
-          // (outEdgeValue is the value of an outgoing edge)
-          comm->sendMessage(data->getOutEdgeID(i), newCompID);
-        }
-      } else {
-        data->voteToHalt();
+      for (int i = 0; i < data->getOutEdgeCount(); i++) {
+        // (outEdgeValue is the value of an outgoing edge)
+        comm->sendMessage(data->getOutEdgeID(i), newCompID);
       }
+    } else {
+      // TODO: Mizan never wakes up a vertex after receiving a message?!
+      data->voteToHalt();
     }
-
-    // always vote to halt
-    data->voteToHalt();
   }
 };
 #endif /* WCC_H_ */

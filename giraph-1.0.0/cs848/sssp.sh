@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]; then
-    echo "usage: $0 [input graph] [workers]"
+if [ $# -ne 3 ]; then
+    echo "usage: $0 [input graph] [workers] [source vertex]"
     exit -1
 fi
 
@@ -10,9 +10,11 @@ fi
 inputgraph=$(basename $1)
 
 workers=$2    # workers can be > number of EC2 instances
+src=$3
 
 outputdir=/user/ubuntu/giraph-output/sssp
 
 hadoop dfs -rmr ${outputdir}
 
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsVertex -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./sssp_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)".txt
+# NOTE: use -h after org.apache.giraph.GiraphRunner for help
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsVertex -ca SimpleShortestPathsVertex.sourceId=${src} -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./sssp_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)".txt

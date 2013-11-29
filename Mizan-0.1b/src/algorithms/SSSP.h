@@ -86,7 +86,7 @@ public:
     mLong newDist = isSrc(data->getVertexID()) ? mLong(0) : INF;
 
     while (messages->hasNext()) {
-      //printf("receiving msg %d %ld\n", data->getCurrentSS(), data->getVertexID().getValue());
+      // cout << "receiving msg at ss=" << data->getCurrentSS() << " at id=" << data->getVertexID().getValue() << endl;
       newDist = min(newDist, messages->getNext());
     }
 
@@ -94,22 +94,16 @@ public:
     if (newDist < currDist) {
       data->setVertexValue(newDist);
 
-      // if maximum number of supersteps not reached, send messages
-      // (otherwise, terminate via vote to halt)
-      if (data->getCurrentSS() <= maxSuperStep) {
-        for (int i = 0; i < data->getOutEdgeCount(); i++) {
-          // (outEdgeValue is the value of an outgoing edge)
-          comm->sendMessage(data->getOutEdgeID(i),
-                            mLong(newDist.getValue() + data->getOutEdgeValue(i).getValue()));
-          //printf("sending msg %d %ld\n", data->getCurrentSS(), data->getVertexID().getValue());
-        }
-      } else {
-        data->voteToHalt();
+      for (int i = 0; i < data->getOutEdgeCount(); i++) {
+        // cout << "sending msg at ss=" << data->getCurrentSS() << " to id=" << data->getOutEdgeID(i).getValue() << endl;
+        // (outEdgeValue is the value of an outgoing edge)
+        comm->sendMessage(data->getOutEdgeID(i),
+                          mLong(newDist.getValue() + data->getOutEdgeValue(i).getValue()));
       }
+    } else {
+      // TODO: Mizan never wakes up a vertex after receiving a message?!
+      data->voteToHalt();
     }
-
-    // always vote to halt
-    data->voteToHalt();
   }
 };
 #endif /* SSSP_H_ */
