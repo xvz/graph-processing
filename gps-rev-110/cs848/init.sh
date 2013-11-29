@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 read -p "Any key to continue..." none
 
