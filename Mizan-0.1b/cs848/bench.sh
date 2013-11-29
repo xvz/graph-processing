@@ -1,6 +1,17 @@
 #!/bin/bash
 WORKERS=4
 
+#./premizan.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1 3858241
+#./sssp.sh patents.txt ${WORKERS} 1 3858241
+#./sssp.sh patents.txt ${WORKERS} 1 3858241
+# 
+#./sssp.sh patents.txt ${WORKERS} 2 3858241
+#./sssp.sh patents.txt ${WORKERS} 2 3858241
+#./sssp.sh patents.txt ${WORKERS} 2 3858241
+
+
+
 #./premizan.sh google.txt ${WORKERS} 1
 ./sssp.sh google.txt ${WORKERS} 1 0
 ./sssp.sh google.txt ${WORKERS} 1 0
@@ -18,15 +29,6 @@ WORKERS=4
 ./sssp.sh amazon.txt ${WORKERS} 2 0
 ./sssp.sh amazon.txt ${WORKERS} 2 0
 ./sssp.sh amazon.txt ${WORKERS} 2 0
-
-#./premizan.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1 3858241
-./sssp.sh patents.txt ${WORKERS} 1 3858241
-./sssp.sh patents.txt ${WORKERS} 1 3858241
-
-./sssp.sh patents.txt ${WORKERS} 2 3858241
-./sssp.sh patents.txt ${WORKERS} 2 3858241
-./sssp.sh patents.txt ${WORKERS} 2 3858241
 
 
 #./premizan.sh google.txt ${WORKERS} 1
