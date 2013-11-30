@@ -24,7 +24,7 @@ WORKERS=4
 # 
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
 
 ./wcc.sh google.txt ${WORKERS}
 ./wcc.sh google.txt ${WORKERS}

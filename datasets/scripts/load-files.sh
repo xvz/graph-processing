@@ -13,6 +13,12 @@ hadoop dfs -put patents-giraph.txt ./giraph-input
 hadoop dfs -put road-giraph.txt ./giraph-input
 hadoop dfs -put retweet-giraph.txt ./giraph-input
 
+hadoop dfs -put amazon.txt ./giraph-input
+hadoop dfs -put google.txt ./giraph-input
+hadoop dfs -put patents.txt ./giraph-input
+hadoop dfs -put road.txt ./giraph-input
+hadoop dfs -put retweet.txt ./giraph-input
+
 # gps
 hadoop dfs -rmr ./gps-input
 hadoop dfs -mkdir ./gps-input
