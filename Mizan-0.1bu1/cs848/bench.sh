@@ -5,14 +5,43 @@ WORKERS=4
 #./premizan.sh amazon.txt ${WORKERS} 1
 #./premizan.sh patents.txt ${WORKERS} 1
 
+
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+# 
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+# 
+# 
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+# 
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+# 
+# 
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+# 
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+
+
+
 # use src 3858241
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-# 
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
+./sssp.sh patents.txt ${WORKERS} 1
+./sssp.sh patents.txt ${WORKERS} 1
+./sssp.sh patents.txt ${WORKERS} 1
+ 
+./sssp.sh patents.txt ${WORKERS} 2
+./sssp.sh patents.txt ${WORKERS} 2
+./sssp.sh patents.txt ${WORKERS} 2
 
 
 
@@ -26,13 +55,13 @@ WORKERS=4
 #./sssp.sh google.txt ${WORKERS} 2
 
 # use src 0
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+# 
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
 
 
 
