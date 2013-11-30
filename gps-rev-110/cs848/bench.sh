@@ -9,9 +9,9 @@ WORKERS=4
 #./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
 #./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
 # 
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 3858241
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 3858241
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 3858241
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 # 
 # 
 #./pagerank.sh google-gps-noval.txt ${WORKERS}
