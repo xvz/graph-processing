@@ -19,3 +19,5 @@ case $3 in
     [2]*) ./hadoop_run_range.sh $inputgraph $2 true 2>&1 | tee -a ../../cs848/${logfile};;
     *) echo "Error: invalid partition type!";;
 esac
+
+touch premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"_done.txt

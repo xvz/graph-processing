@@ -5,7 +5,6 @@ WORKERS=4
 #./premizan.sh amazon.txt ${WORKERS} 1
 #./premizan.sh patents.txt ${WORKERS} 1
 
-
 #./wcc.sh google.txt ${WORKERS} 1
 #./wcc.sh google.txt ${WORKERS} 1
 #./wcc.sh google.txt ${WORKERS} 1
