@@ -61,8 +61,9 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
     int currentComponent = getValue().get();
 
     // First superstep is special, because we can simply look at the neighbors
-    // NO! Bugfix: first superstep, we assign value to be vertex id
+    // NO! Bugfix: send messages to all neighbours
     if (getSuperstep() == 0) {
+      // NOTE: vertex values are IDs by default
       // currentComponent = getId().get();
       // setValue(new IntWritable(currentComponent));
 
@@ -109,8 +110,8 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
     if (changed) {
       setValue(new IntWritable(currentComponent));
       sendMessageToAllEdges(getValue());
-    } else {
-      voteToHalt();
     }
+
+    voteToHalt();
   }
 }
