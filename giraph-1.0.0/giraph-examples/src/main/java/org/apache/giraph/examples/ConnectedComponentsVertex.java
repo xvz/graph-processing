@@ -63,8 +63,8 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
     // First superstep is special, because we can simply look at the neighbors
     // NO! Bugfix: first superstep, we assign value to be vertex id
     if (getSuperstep() == 0) {
-      currentComponent = getId().get();
-      setValue(new IntWritable(currentComponent));
+      // currentComponent = getId().get();
+      // setValue(new IntWritable(currentComponent));
 
       // indiscriminately send messages to all neighbours,
       // as this mirrors GPS and Mizan implementations
@@ -109,7 +109,8 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
     if (changed) {
       setValue(new IntWritable(currentComponent));
       sendMessageToAllEdges(getValue());
+    } else {
+      voteToHalt();
     }
-    voteToHalt();
   }
 }
