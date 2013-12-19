@@ -1,9 +1,14 @@
 #!/bin/bash
 WORKERS=4
 
-#./premizan.sh google.txt ${WORKERS} 1
-#./premizan.sh amazon.txt ${WORKERS} 1
-#./premizan.sh patents.txt ${WORKERS} 1
+for((i=1;i<=2;i++)); do
+    ./premizan.sh google.txt ${WORKERS} 1
+    touch premizan_google.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
+    ./premizan.sh amazon.txt ${WORKERS} 1
+    touch premizan_amazon.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
+    ./premizan.sh patents.txt ${WORKERS} 1
+    touch premizan_patents.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
+done
 
 #./wcc.sh google.txt ${WORKERS} 1
 #./wcc.sh google.txt ${WORKERS} 1
@@ -46,17 +51,17 @@ WORKERS=4
 
 
 # use src 6009554
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
- 
-./sssp.sh patents.txt ${WORKERS} 2
-./sssp.sh patents.txt ${WORKERS} 2
-./sssp.sh patents.txt ${WORKERS} 2
-
-./sssp.sh patents.txt ${WORKERS} 3
-./sssp.sh patents.txt ${WORKERS} 3
-./sssp.sh patents.txt ${WORKERS} 3
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+# 
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+# 
+#./sssp.sh patents.txt ${WORKERS} 3
+#./sssp.sh patents.txt ${WORKERS} 3
+#./sssp.sh patents.txt ${WORKERS} 3
 
 
 
