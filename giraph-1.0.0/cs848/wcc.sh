@@ -16,4 +16,4 @@ outputdir=/user/ubuntu/giraph-output/wcc
 
 hadoop dfs -rmr ${outputdir}
 
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.ConnectedComponentsVertex -vif org.apache.giraph.io.formats.IntIntNullTextInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./wcc_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)".txt
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.ConnectedComponentsVertex -vif org.apache.giraph.io.formats.JsonLongLongLongLongVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./wcc_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)".txt

@@ -22,8 +22,8 @@ package org.apache.giraph.examples;
 // b/c of checkstyle errors
 //import org.apache.giraph.edge.Edge;
 import org.apache.giraph.graph.Vertex;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.LongWritable;
+//import org.apache.hadoop.io.NullWritable;
 
 import java.io.IOException;
 
@@ -42,13 +42,17 @@ import java.io.IOException;
  * "PEGASUS: Mining Peta-Scale Graphs", 2010
  *
  * http://www.cs.cmu.edu/~ukang/papers/PegasusKAIS.pdf
+ *
+ * NOTE: we use LongWritable for edge weights due to known bug with
+ * NullWritable: https://issues.apache.org/jira/browse/GIRAPH-216
+ *
  */
 @Algorithm(
     name = "Connected components",
     description = "Finds connected components of the graph"
 )
-public class ConnectedComponentsVertex extends Vertex<IntWritable,
-    IntWritable, NullWritable, IntWritable> {
+public class ConnectedComponentsVertex extends Vertex<LongWritable,
+    LongWritable, LongWritable, LongWritable> {
   /**
    * Propagates the smallest vertex id to all neighbors. Will always choose to
    * halt and only reactivate if a smaller id has been sent to it.
@@ -57,49 +61,26 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
    * @throws IOException
    */
   @Override
-  public void compute(Iterable<IntWritable> messages) throws IOException {
-    int currentComponent = getValue().get();
+  public void compute(Iterable<LongWritable> messages) throws IOException {
+    long currentComponent = getValue().get();
 
-    // First superstep is special, because we can simply look at the neighbors
-    // NO! Bugfix: send messages to all neighbours
+    // in first superstep, load proper vertex values and then broadcast
     if (getSuperstep() == 0) {
-      // NOTE: vertex values are IDs by default
-      // currentComponent = getId().get();
-      // setValue(new IntWritable(currentComponent));
+      currentComponent = getId().get();
+      setValue(new LongWritable(currentComponent));
 
       // indiscriminately send messages to all neighbours,
       // as this mirrors GPS and Mizan implementations
       sendMessageToAllEdges(getValue());
 
-      // do NOT vote to halt
+      voteToHalt();
       return;
     }
 
-//  for (Edge<IntWritable, NullWritable> edge : getEdges()) {
-//    int neighbor = edge.getTargetVertexId().get();
-//    if (neighbor < currentComponent) {
-//      currentComponent = neighbor;
-//    }
-//  }
-//  // Only need to send value if it is not the own id
-//  if (currentComponent != getValue().get()) {
-//    setValue(new IntWritable(currentComponent));
-//    for (Edge<IntWritable, NullWritable> edge : getEdges()) {
-//      IntWritable neighbor = edge.getTargetVertexId();
-//      if (neighbor.get() > currentComponent) {
-//        sendMessage(neighbor, getValue());
-//      }
-//    }
-//  }
-//
-//  voteToHalt();
-//  return;
-//}
-
     boolean changed = false;
     // did we get a smaller id ?
-    for (IntWritable message : messages) {
-      int candidateComponent = message.get();
+    for (LongWritable message : messages) {
+      long candidateComponent = message.get();
       if (candidateComponent < currentComponent) {
         currentComponent = candidateComponent;
         changed = true;
@@ -108,7 +89,7 @@ public class ConnectedComponentsVertex extends Vertex<IntWritable,
 
     // propagate new component id to the neighbors
     if (changed) {
-      setValue(new IntWritable(currentComponent));
+      setValue(new LongWritable(currentComponent));
       sendMessageToAllEdges(getValue());
     }
 
