@@ -101,12 +101,13 @@ use namespace std;
 
 
 // phases/stages of computation
-#define PHASE_0     mLong(0)
-#define PHASE_1A    mLong(1)
+#define PHASE_1     mLong(0)
+#define PHASE_2A    mLong(1)
 #define PHASE_2B    mLong(2)
 #define PHASE_3A    mLong(3)
 #define PHASE_3B    mLong(4)
-#define PHASE_4     mLong(5)
+#define PHASE_4A    mLong(5)
+#define PHASE_4B    mLong(6)
 
 
 #define RESET       mLong(0xDEADBEEF)
@@ -297,80 +298,77 @@ public:
       pointer = min_edge_ID;
 
       // send message to pointer (potential supervertex)
-
-      // TODO: maxSuperStep limit
-      mLong msg_q[MSG_QUESTION_LEN] = {MSG_QUESTION, id};
+      mLong msg_q[MSG_QUESTION_LEN] = {MSG_QUESTION, my_ID};
       comm->sendMessage(pointer, mLongArray(MSG_QUESTION_LEN, msg_q));
 
       phase = PHASE_2B;
       break;
-    }
 
-    break;
+    case PHASE_2B:
+      mLongArray msg;
+      mLong msg_type;
+      mLong msg_ID;   // question
+      mLong msg_supervertex_ID, msg_is_supervertex;  // answer
 
-  case PHASE_2B:
-    mLongArray msg;
-    mLong msg_type;
-    mLong msg_ID;   // question
-    mLong msg_supervertex_ID, msg_is_supervertex;  // answer
+      vector<mLong> sources;
+      boolean is_ptr_supervertex = false;
 
-    vector<mLong> sources;
-    boolean is_ptr_supervertex = false;
+      while (messages->hasNext()) {
+        msg = messages->getNext();
 
-    while (messages->hasNext()) {
-      msg = messages->getNext();
+        msg_type = msg.getArray()[0];
 
-      msg_type = msg.getArray()[0];
+        switch (msg_type) {
+        case MSG_QUESTION:
+          msg_ID = msg.getArray()[1];
 
-      switch (msg_type) {
-      case MSG_QUESTION:
-        msg_ID = msg.getArray()[1];
+          // save source vertex ID, so we can send response
+          // to them later on (after receiving all msgs)
+          sources.push_back(msg_ID);
 
-        // save source vertex ID, so we can send response
-        // to them later on (after receiving all msgs)
-        sources.push_back(msg_ID);
+          // check if there is a cycle
+          // (aka, if the vertex we picked also picked us)
+          if ( msg_ID == pointer ) {
+            // smaller ID always wins & becomes supervertex
+            if ( my_ID < msg_ID ) {
+              pointer = my_ID;        // I am the supervertex
+              type = TYPE_SUPERVERTEX;
+              aggregate("counter", mLong(1));
+            } else {
+              type = TYPE_POINTS_AT_SUPERVERTEX;
+            }
 
-        // check if there is a cycle
-        // (aka, if the vertex we picked also picked us)
-        if ( msg_ID == pointer ) {
-          // smaller ID always wins & becomes supervertex
-          if ( my_ID < msg_ID ) {
-            pointer = my_ID;        // I am the supervertex
-            type = TYPE_SUPERVERTEX;
+            is_ptr_supervertex = true;
+          }
+          // otherwise, type is still TYPE_UNKNOWN
+
+          break;
+
+        case MSG_ANSWER:
+          // our pointer replied w/ possible information
+          // about who our supervertex is
+          msg_supervertex_ID = msg.getArray()[1];
+          msg_is_supervertex = msg.getArray()[2];
+
+          // ignore msgs that haven't found a supervertex
+          if ( msg_is_supervertex == MSG_TRUE ) {
+            if ( msg_supervertex_ID != pointer ) {
+              // somebody propagated supervertex ID down to us
+              type = TYPE_POINTS_AT_SUBVERTEX;
+              pointer = msg_supervertex_ID;
+            } else {
+              // otherwise, supervertex directly informed us
+              type = TYPE_POINTS_AT_SUPERVERTEX;
+            }
             aggregate("counter", mLong(1));
-          } else {
-            type = TYPE_POINTS_AT_SUPERVERTEX;
           }
 
-          is_ptr_supervertex = true;
+          break;
+
+        default:
+          // TODO: PANIC!!!
         }
-        // otherwise, type is still TYPE_UNKNOWN
-
-        break;
-
-      case MSG_ANSWER:
-        // our pointer replied w/ possible information
-        // about who our supervertex is
-        msg_supervertex_ID = msg.getArray()[1];
-        msg_is_supervertex = msg.getArray()[2];
-
-        // ignore msgs that haven't found a supervertex
-        if ( msg_is_supervertex == MSG_TRUE ) {
-          if ( msg_supervertex_ID != pointer ) {
-            // somebody propagated supervertex ID down to us
-            type = TYPE_POINTS_AT_SUBVERTEX;
-            pointer = msg_supervertex_ID;
-          } else {
-            // otherwise, supervertex directly informed us
-            type = TYPE_POINTS_AT_SUPERVERTEX;
-          }
-          aggregate("counter", mLong(1));
-        }
-
-      default:
-        // TODO: PANIC!!!
       }
-
       // send answers to all question messages we received
       //
       // NOTE: we wait until we receive all messages b/c we
@@ -516,6 +514,7 @@ public:
             child_edges[msg_dst_ID] = msg_edge_val;
           } else {
             // otherwise, set it to minimum of two
+            // TODO: bug, need to look at weight
             child_edges[msg_dst_ID] = min(edge_val, msg_edge_val);
           }
         }
