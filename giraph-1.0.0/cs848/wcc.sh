@@ -5,7 +5,6 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
-# NOTE: WCC reads Mizan format graphs!!
 # place input in /user/ubuntu/giraph-input/
 # output is in /user/ubuntu/giraph-output/
 inputgraph=$(basename $1)
