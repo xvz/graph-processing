@@ -256,6 +256,12 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         // to them later on (after receiving all msgs)
         sources.add(senderId);
 
+        // if already done, no need to do more checks
+        if (this.type != MSTVertexType.TYPE_UNKNOWN) {
+          isPointerSupervertex = true;
+          break;
+        }
+
         // check if there is a cycle (if the vertex we picked also picked us)
         // NOTE: cycle is unique b/c edge weights are unique
         if (senderId == this.pointer) {
@@ -359,7 +365,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_CLEAN),
                               new MSTMsgContentLong(getId().get(), pointer));
 
-    LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " + pointer);
+    //LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " + pointer);
 
     sendMessageToAllEdges(msg);
 
