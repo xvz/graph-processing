@@ -160,7 +160,9 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       break;
 
     case PHASE_4B:
-      //LOG.info(getId() + ": phase 4B");
+      if (getId().get() % 100 == 0) {
+        LOG.info(getId() + ": phase 4B");
+      }
       phase4B(messages);
       break;
 
@@ -298,8 +300,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         boolean isSupervertex =
           (message.getValue().getSecond() == 0) ? false : true;
 
-        //LOG.info(getId() + ": received answer from " +
-        //         supervertexId + ", " + isSupervertex);
+        if (getId().get() % 10000 == 0) {
+          LOG.info(getId() + ": received answer from " +
+                   supervertexId + ", " + isSupervertex);
+        }
 
         if (isSupervertex) {
           if (supervertexId != pointer) {
