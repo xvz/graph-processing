@@ -22,7 +22,6 @@ import org.apache.giraph.edge.Edge;
 import org.apache.giraph.edge.EdgeFactory;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexInputFormat;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.giraph.examples.MinimumSpanningTreeVertex.MSTEdgeValue;
@@ -90,18 +89,22 @@ public class JsonLongMSTVertexInputFormat extends
     protected Iterable<Edge<LongWritable, MSTEdgeValue>> getEdges(
         JSONArray jsonVertex) throws JSONException, IOException {
 
-      LongWritable src = getId(jsonVertex);
+      long src = jsonVertex.getLong(0);
 
       JSONArray jsonEdgeArray = jsonVertex.getJSONArray(2);
       List<Edge<LongWritable, MSTEdgeValue>> edges =
           Lists.newArrayListWithCapacity(jsonEdgeArray.length());
 
+      long dst;
+      double weight;
+
       for (int i = 0; i < jsonEdgeArray.length(); ++i) {
         JSONArray jsonEdge = jsonEdgeArray.getJSONArray(i);
-        LongWritable dst = new LongWritable(jsonEdge.getLong(0));
-        DoubleWritable weight = new DoubleWritable(jsonEdge.getDouble(1));
+        dst = jsonEdge.getLong(0);
+        weight = jsonEdge.getDouble(1);
 
-        edges.add(EdgeFactory.create(dst, new MSTEdgeValue(weight, src, dst)));
+        edges.add(EdgeFactory.create(new LongWritable(dst),
+                                     new MSTEdgeValue(weight, src, dst)));
       }
       return edges;
     }

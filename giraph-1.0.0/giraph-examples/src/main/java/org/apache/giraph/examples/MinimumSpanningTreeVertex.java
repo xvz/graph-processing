@@ -31,7 +31,6 @@ import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
 import org.apache.giraph.master.DefaultMasterCompute;
 //import org.apache.giraph.worker.WorkerContext;
-import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -40,6 +39,13 @@ import org.apache.log4j.Logger;
 
 /**
  * Distributed MST implementation.
+ *
+ * Based on parallel Boruvka's algorithm described in
+ * "Optimizing Graph Algorithms on Pregel-like Systems"
+ * <http://ilpubs.stanford.edu:8090/1077/>
+ *
+ * Outputs vertex values that give the edges belonging to the MST.
+ * These edges are outputted with weights, source, and destination.
  */
 @Algorithm(
     name = "Minimum spanning tree"
@@ -119,7 +125,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     switch(phase) {
     case PHASE_1:
-      LOG.info(getId() + ": phase 1");
+      //LOG.info(getId() + ": phase 1");
       //for (Edge<LongWritable, MSTEdgeValue> edge : getEdges()) {
       //  LOG.info("  edges to " +
       //           edge.getTargetVertexId() + " with " + edge.getValue());
@@ -129,32 +135,32 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       // fall through
 
     case PHASE_2A:
-      LOG.info(getId() + ": phase 2A");
+      //LOG.info(getId() + ": phase 2A");
       phase2A();
       break;
 
     case PHASE_2B:
-      LOG.info(getId() + ": phase 2B");
+      //LOG.info(getId() + ": phase 2B");
       phase2B(messages);
       break;
 
     case PHASE_3A:
-      LOG.info(getId() + ": phase 3A");
+      //LOG.info(getId() + ": phase 3A");
       phase3A();
       break;
 
     case PHASE_3B:
-      LOG.info(getId() + ": phase 3B");
+      //LOG.info(getId() + ": phase 3B");
       phase3B(messages);
       // fall through
 
     case PHASE_4A:
-      LOG.info(getId() + ": phase 4A");
+      //LOG.info(getId() + ": phase 4A");
       phase4A();
       break;
 
     case PHASE_4B:
-      LOG.info(getId() + ": phase 4B");
+      //LOG.info(getId() + ": phase 4B");
       phase4B(messages);
       break;
 
@@ -189,9 +195,9 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       //
       // NOTE: we don't bother with epsilon for == comparison,
       // because it'll fall under the "<" case
-      if (eVal.getWeight().get() < minWeight ||
-          (eVal.getWeight().get() == minWeight && eId < minId)) {
-        minWeight = eVal.getWeight().get();
+      if (eVal.getWeight() < minWeight ||
+          (eVal.getWeight() == minWeight && eId < minId)) {
+        minWeight = eVal.getWeight();
         minId = eId;
         // must make copy, b/c edges get invalidated upon iterating
         minEdge = new MSTEdgeValue(eVal);
@@ -219,13 +225,12 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   private void phase2A() {
     this.type = MSTVertexType.TYPE_UNKNOWN;
 
-    LongWritable ptr = new LongWritable(this.pointer);
     MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_QUESTION),
-                                    new MSTMsgContentLong(getId()));
+                                    new MSTMsgContentLong(getId().get()));
 
     // send query to pointer (potential supervertex)
     //LOG.info(getId() + ": sending question to " + pointer);
-    sendMessage(ptr, msg);
+    sendMessage(new LongWritable(pointer), msg);
 
     this.phase = MSTPhase.PHASE_2B;
   }
@@ -243,7 +248,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
       case MSTMsgType.MSG_QUESTION:
-        long senderId = message.getValue().getFirst().get();
+        long senderId = message.getValue().getFirst();
 
         //LOG.info(getId() + ": received question from " + senderId);
 
@@ -283,9 +288,9 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         }
 
         // we still care, so parse answer message
-        long supervertexId = message.getValue().getFirst().get();
+        long supervertexId = message.getValue().getFirst();
         boolean isSupervertex =
-          (message.getValue().getSecond().get() == 0) ? false : true;
+          (message.getValue().getSecond() == 0) ? false : true;
 
         //LOG.info(getId() + ": received answer from " +
         //         supervertexId + ", " + isSupervertex);
@@ -306,15 +311,13 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         } else {
           // otherwise, our pointer didn't know who supervertex is,
           // so resend question to it
-          LongWritable ptr = new LongWritable(this.pointer);
           MSTMessage msg = new MSTMessage(
                              new MSTMsgType(MSTMsgType.MSG_QUESTION),
-                             new MSTMsgContentLong(getId()));
+                             new MSTMsgContentLong(getId().get()));
 
           //LOG.info(getId() + ": resending question to " + pointer);
 
-          sendMessage(ptr, msg);
-
+          sendMessage(new LongWritable(pointer), msg);
         }
         break;
 
@@ -330,11 +333,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     // NOTE: we wait until we receive all messages b/c we
     // don't know which (if any) of them will be a cycle
     if (sources.size() != 0) {
-      LongWritable ptr = new LongWritable(this.pointer);
-      LongWritable bool = new LongWritable(isPointerSupervertex ? 1 : 0);
+      long bool = isPointerSupervertex ? 1 : 0;
 
       MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_ANSWER),
-                                      new MSTMsgContentLong(ptr, bool));
+                                      new MSTMsgContentLong(pointer, bool));
 
       for (long src : sources) {
         sendMessage(new LongWritable(src), msg);
@@ -354,9 +356,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     aggregate(SUPERVERTEX_AGG, new LongWritable(-1));
 
     // send our neighbours <my ID, my supervertex's ID>
-    LongWritable ptr = new LongWritable(pointer);
     MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_CLEAN),
-                         new MSTMsgContentLong(getId(), ptr));
+                              new MSTMsgContentLong(getId().get(), pointer));
 
     LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " + pointer);
 
@@ -380,8 +381,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
       case MSTMsgType.MSG_CLEAN:
-        long senderId = message.getValue().getFirst().get();
-        long supervertexId = message.getValue().getSecond().get();
+        long senderId = message.getValue().getFirst();
+        long supervertexId = message.getValue().getSecond();
 
         //LOG.info(getId() + ": received MSG_CLEAN from " + senderId);
 
@@ -422,7 +423,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           } else {
             // if edge (u, v's supervertex) already exists, pick the
             // one with the minimum weight---this saves work in phase 4B
-            if (eVal.getWeight().get() < eValExisting.getWeight().get()) {
+            if (eVal.getWeight() < eValExisting.getWeight()) {
               setEdgeValue(new LongWritable(supervertexId), eVal);
             }
           }
@@ -455,11 +456,11 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     if (type != MSTVertexType.TYPE_SUPERVERTEX) {
       // send my supervertex all my edges, if I have any left
       if (getNumEdges() != 0) {
-        LongWritable ptr = new LongWritable(pointer);
         MSTMessage msg = new MSTMessage(
                            new MSTMsgType(MSTMsgType.MSG_EDGES),
                            new MSTMsgContentEdges(getNumEdges(), getEdges()));
-        sendMessage(ptr, msg);
+
+        sendMessage(new LongWritable(pointer), msg);
       }
       voteToHalt();
 
@@ -502,7 +503,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
           } else {
             // otherwise, choose one w/ minimum weight
-            if (eVal.getWeight().get() < eValExisting.getWeight().get()) {
+            if (eVal.getWeight() < eValExisting.getWeight()) {
               setEdgeValue(eId, eVal);
             }
           }
@@ -606,17 +607,15 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    */
   public static class MSTEdgeValue implements Writable {
     /**/
-    private DoubleWritable weight; /** edge weight **/
-    private LongWritable src;      /** original edge source **/
-    private LongWritable dst;      /** original edge destination **/
+    private double weight; /** edge weight **/
+    private long src;      /** original edge source **/
+    private long dst;      /** original edge destination **/
 
     /**
      * Default edge constructor.
      */
     public MSTEdgeValue() {
-      weight = new DoubleWritable();
-      src = new LongWritable();
-      dst = new LongWritable();
+      // all 0s
     }
 
     /**
@@ -626,8 +625,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      * @param src Original source vertex.
      * @param dst Original destination vertex.
      */
-    public MSTEdgeValue(DoubleWritable weight,
-                        LongWritable src, LongWritable dst) {
+    public MSTEdgeValue(double weight, long src, long dst) {
       this.weight = weight;
       this.src = src;
       this.dst = dst;
@@ -639,41 +637,42 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      * @param val MSTEdgeValue to be copied.
      */
     public MSTEdgeValue(MSTEdgeValue val) {
-      this.weight = new DoubleWritable(val.weight.get());
-      this.src = new LongWritable(val.src.get());
-      this.dst = new LongWritable(val.dst.get());
+      this.weight = val.weight;
+      this.src = val.src;
+      this.dst = val.dst;
     }
 
-    public DoubleWritable getWeight() {
+    public double getWeight() {
       return weight;
     }
 
-    public LongWritable getSrc() {
+    public long getSrc() {
       return src;
     }
 
-    public LongWritable getDst() {
+    public long getDst() {
       return dst;
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
-      weight.readFields(in);
-      src.readFields(in);
-      dst.readFields(in);
+      // less wasteful than casting to *Writable object and
+      // using their readFields()
+      weight = in.readDouble();
+      src = in.readLong();
+      dst = in.readLong();
     }
 
     @Override
     public void write(DataOutput out) throws IOException {
-      weight.write(out);
-      src.write(out);
-      dst.write(out);
+      out.writeDouble(weight);
+      out.writeLong(src);
+      out.writeLong(dst);
     }
 
     @Override
     public String toString() {
-      return "weight: " + weight.toString() +
-        " src: " + src.toString() + " dst: " + dst.toString();
+      return "weight=" + weight + " src=" + src + " dst=" + dst;
     }
   }
 
@@ -834,14 +833,14 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      *
      * @return First field of message
      */
-    LongWritable getFirst();
+    long getFirst();
 
     /**
      * Get second field of message content.
      *
      * @return Second field of message
      */
-    LongWritable getSecond();
+    long getSecond();
 
     /**
      * Get the edges from the message content.
@@ -861,7 +860,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      *   MSG_ANSWER:   pointer vertex ID
      *   MSG_CLEAN:    source vertex ID
      */
-    private LongWritable first;
+    private long first;
 
     /**
      * Second field is different depending on message type.
@@ -869,14 +868,13 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      *   MSG_ANSWER:   true (1) or false (0)
      *   MSG_CLEAN:    supervertex ID (of source vertex)
      */
-    private LongWritable second;
+    private long second;
 
     /**
      * Default constructor.
      */
     public MSTMsgContentLong() {
-      first = new LongWritable();
-      second = new LongWritable();
+      // all 0s
     }
 
     /**
@@ -884,9 +882,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      *
      * @param first First and only field.
      */
-    public MSTMsgContentLong(LongWritable first) {
+    public MSTMsgContentLong(long first) {
       this.first = first;
-      this.second = new LongWritable();
     }
 
     /**
@@ -895,16 +892,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      * @param first First field.
      * @param second Second field.
      */
-    public MSTMsgContentLong(LongWritable first, LongWritable second) {
+    public MSTMsgContentLong(long first, long second) {
       this.first = first;
       this.second = second;
     }
 
-    public LongWritable getFirst() {
+    public long getFirst() {
       return first;
     }
 
-    public LongWritable getSecond() {
+    public long getSecond() {
       return second;
     }
 
@@ -919,19 +916,19 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     @Override
     public void readFields(DataInput in) throws IOException {
-      first.readFields(in);
-      second.readFields(in);
+      first = in.readLong();
+      second = in.readLong();
     }
 
     @Override
     public void write(DataOutput out) throws IOException {
-      first.write(out);
-      second.write(out);
+      out.writeLong(first);
+      out.writeLong(second);
     }
 
     @Override
     public String toString() {
-      return "first: " + first.toString() + " second: " + second.toString();
+      return "first=" + first + " second=" + second;
     }
   }
 
@@ -963,15 +960,17 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       // NOTE: we don't actually store numEdges, as it's not needed
       this.edges = new ArrayList<Edge<LongWritable, MSTEdgeValue>>(numEdges);
 
-      LongWritable eId;
+      long eId;
       MSTEdgeValue eVal;
 
+      // TODO: would it be more efficient just to keep iterator reference,
+      // given that messages are almost always written shortly after creation?
       for (Edge<LongWritable, MSTEdgeValue> e : edges) {
         // not safe to keep reference, so create copy
-        eId = e.getTargetVertexId();
+        eId = e.getTargetVertexId().get();
         eVal = e.getValue();
 
-        this.edges.add(EdgeFactory.create(new LongWritable(eId.get()),
+        this.edges.add(EdgeFactory.create(new LongWritable(eId),
                                           new MSTEdgeValue(eVal)));
       }
 
@@ -981,19 +980,19 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     /**
      * Irrelevant for this type of message.
      *
-     * @return null
+     * @return 0
      */
-    public LongWritable getFirst() {
-      return null;
+    public long getFirst() {
+      return 0;
     }
 
     /**
      * Irrelevant for this type of message.
      *
-     * @return null
+     * @return 0
      */
-    public LongWritable getSecond() {
-      return null;
+    public long getSecond() {
+      return 0;
     }
 
     public ArrayList<Edge<LongWritable, MSTEdgeValue>> getEdges() {
