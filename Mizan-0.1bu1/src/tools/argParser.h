@@ -55,7 +55,8 @@ public:
        "  3) Diameter Estimation\n"
        "  4) Ad Simulation\n"
        "  5) Single Source Shortest Path"
-       "  6) Weakly Connected Components")
+       "  6) Weakly Connected Components"
+       "  7) Minimum Spanning Tree")
       ("supersteps,s", boost::program_options::value<int>(&args.superSteps),
        "Linux user name, required in case of\n"
        "using option (-fs 1)")

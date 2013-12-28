@@ -111,10 +111,9 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     LongWritable numDone = getAggregatedValue(COUNTER_AGG);
     LongWritable numSupervertex = getAggregatedValue(SUPERVERTEX_AGG);
 
-    if (phase == MSTPhase.PHASE_2B) {
-      if (numDone.get() == numSupervertex.get()) {
-        this.phase = MSTPhase.PHASE_3A;
-      }
+    if (phase == MSTPhase.PHASE_2B &&
+        numDone.get() == numSupervertex.get()) {
+      this.phase = MSTPhase.PHASE_3A;
     }
 
     // special halting condition if only 1 supervertex is left
@@ -245,10 +244,19 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     ArrayList<Long> sources = new ArrayList<Long>();
     boolean isPointerSupervertex = false;
 
+    long myId = getId().get();
+
+    // question messages
+    long senderId;
+
+    // answer messages
+    long supervertexId;
+    boolean isSupervertex;
+
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
       case MSTMsgType.MSG_QUESTION:
-        long senderId = message.getValue().getFirst();
+        senderId = message.getValue().getFirst();
 
         //LOG.info(getId() + ": received question from " + senderId);
 
@@ -263,11 +271,11 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         }
 
         // check if there is a cycle (if the vertex we picked also picked us)
-        // NOTE: cycle is unique b/c edge weights are unique
+        // NOTE: cycle is unique b/c pointer choice is unique
         if (senderId == this.pointer) {
           // smaller ID always wins & becomes supervertex
-          if (getId().get() < senderId) {
-            this.pointer = getId().get();        // I am the supervertex
+          if (myId < senderId) {
+            this.pointer = myId;        // I am the supervertex
             this.type = MSTVertexType.TYPE_SUPERVERTEX;
           } else {
             this.type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
@@ -294,9 +302,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         }
 
         // we still care, so parse answer message
-        long supervertexId = message.getValue().getFirst();
-        boolean isSupervertex =
-          (message.getValue().getSecond() == 0) ? false : true;
+        supervertexId = message.getValue().getFirst();
+        isSupervertex = (message.getValue().getSecond() == 0) ? false : true;
 
         //LOG.info(getId() + ": received answer from " +
         //         supervertexId + ", " + isSupervertex);
@@ -319,7 +326,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           // so resend question to it
           MSTMessage msg = new MSTMessage(
                              new MSTMsgType(MSTMsgType.MSG_QUESTION),
-                             new MSTMsgContentLong(getId().get()));
+                             new MSTMsgContentLong(myId));
 
           //LOG.info(getId() + ": resending question to " + pointer);
 
@@ -356,7 +363,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    * Phase 3A: notify neighbours of supervertex ID
    */
   private void phase3A() {
-    // Reset aggregator counters in worker, to reduce contention.
     // This is dumb... there's probably a better way.
     aggregate(COUNTER_AGG, new LongWritable(-1));
     aggregate(SUPERVERTEX_AGG, new LongWritable(-1));
@@ -383,12 +389,18 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
 
+    long senderId;
+    long supervertexId;
+    MSTEdgeValue eTmp;
+    MSTEdgeValue eVal;
+    MSTEdgeValue eValExisting;
+
     // receive messages from PHASE_3A
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
       case MSTMsgType.MSG_CLEAN:
-        long senderId = message.getValue().getFirst();
-        long supervertexId = message.getValue().getSecond();
+        senderId = message.getValue().getFirst();
+        supervertexId = message.getValue().getSecond();
 
         //LOG.info(getId() + ": received MSG_CLEAN from " + senderId);
 
@@ -409,18 +421,17 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           }
 
           // get value of edge (u, v)
-          MSTEdgeValue tmp = getEdgeValue(new LongWritable(senderId));
-          if (tmp == null) {
+          eTmp = getEdgeValue(new LongWritable(senderId));
+          if (eTmp == null) {
             LOG.error("Invalid (null) edge value in PHASE_3B.");
           }
 
           // have to make copy of value, b/c next getEdgeValue()
           // call will invalidate it
-          MSTEdgeValue eVal = new MSTEdgeValue(tmp);
+          eVal = new MSTEdgeValue(eTmp);
 
           // get value of edge (u, v's supervertex)
-          MSTEdgeValue eValExisting =
-            getEdgeValue(new LongWritable(supervertexId));
+          eValExisting = getEdgeValue(new LongWritable(supervertexId));
 
           if (eValExisting == null) {
             // edge doesn't exist, so just add this
@@ -485,16 +496,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    * @param messages Incoming messages
    */
   private void phase4B(Iterable<MSTMessage> messages) {
+    LongWritable eId;
+    MSTEdgeValue eVal;
+    MSTEdgeValue eValExisting;
+
     // receive messages from PHASE_4A
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
       case MSTMsgType.MSG_EDGES:
         ArrayList<Edge<LongWritable, MSTEdgeValue>> edges =
           message.getValue().getEdges();
-
-        LongWritable eId;
-        MSTEdgeValue eVal;
-        MSTEdgeValue eValExisting;
 
         // merge children's edges (and our edges),
         // by picking ones with minimum weight
@@ -518,7 +529,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         break;
 
       default:
-        LOG.error("Invalid message type in PHASE_4B.");
+        LOG.error("Invalid message type [" +
+                  message.getType() + "] in PHASE_4B.");
       }
     }
 

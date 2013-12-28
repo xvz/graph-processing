@@ -22,7 +22,7 @@
 #include "algorithms/AdSim.h"
 #include "algorithms/SSSP.h"
 #include "algorithms/WCC.h"
-//#include "algorithms/MST.h"
+#include "algorithms/MST.h"
 #include "tools/argParser.h"
 #include "algorithms/maxAggregator.h"
 #include "general.h"
@@ -168,9 +168,9 @@ int main(int argc, char** argv) {
     myWorkerID = mmk->getPEID();
     delete mmk;
 
-  } /* else if (myArgs.algorithm == 7) {
+  } else if (myArgs.algorithm == 7) {
     groupVoteToHalt = true;
-    storageType = InOutNbrStore;      // undirected edge is InOut
+    storageType = OutNbrStore;      // undirected edge is InOut
 
     MST mst(myArgs.superSteps);
 
@@ -179,26 +179,22 @@ int main(int argc, char** argv) {
                                                       inputBaseFile, myArgs.clusterSize,
                                                       myArgs.fs, myArgs.migration);
 
-    // use combiner for better network efficiency
-    MSTCombiner mstc;
-    mmk->registerMessageCombiner(&mstc);
-
     // aggregator needed for superbarriers
     // included from MST header
     char* counterAgg_name = "counter";
-    countAggregator counterAgg;
+    sumAggregator counterAgg;
     mmk->registerAggregator(counterAgg_name, &counterAgg);
 
-    char* maxAgg_name = "max";
-    countAggregator maxAgg;
-    mmk->registerAggregator(maxAgg_name, &maxAgg);
+    char* supervertexAgg_name = "supervertex";
+    sumAggregator supervertexAgg;
+    mmk->registerAggregator(supervertexAgg_name, &supervertexAgg);
 
     mmk->setVoteToHalt(groupVoteToHalt);
 
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-    }*/
+    }
 
 #ifdef Verbose
   if (myWorkerID == 0) {
