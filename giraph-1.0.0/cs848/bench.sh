@@ -13,15 +13,15 @@ WORKERS=4
 #./sssp.sh patents-giraph.txt ${WORKERS} 6009554
 #./sssp.sh patents-giraph.txt ${WORKERS} 6009554
 # 
-# 
-#./pagerank.sh google-giraph.txt ${WORKERS}
-#./pagerank.sh google-giraph.txt ${WORKERS}
-#./pagerank.sh google-giraph.txt ${WORKERS}
-# 
+ 
 #./pagerank.sh amazon-giraph.txt ${WORKERS}
 #./pagerank.sh amazon-giraph.txt ${WORKERS}
 #./pagerank.sh amazon-giraph.txt ${WORKERS}
-# 
+ 
+#./pagerank.sh google-giraph.txt ${WORKERS}
+#./pagerank.sh google-giraph.txt ${WORKERS}
+#./pagerank.sh google-giraph.txt ${WORKERS}
+ 
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #./pagerank.sh patents-giraph.txt ${WORKERS}
@@ -39,14 +39,26 @@ WORKERS=4
 #./wcc.sh patents-giraph.txt ${WORKERS}
 
 
-./mst.sh amazon-mst-giraph.txt ${WORKERS}
-./mst.sh amazon-mst-giraph.txt ${WORKERS}
-./mst.sh amazon-mst-giraph.txt ${WORKERS}
+#./mst.sh amazon-mst-giraph.txt ${WORKERS}
+#./mst.sh amazon-mst-giraph.txt ${WORKERS}
+#./mst.sh amazon-mst-giraph.txt ${WORKERS}
 
-./mst.sh google-mst-giraph.txt ${WORKERS}
-./mst.sh google-mst-giraph.txt ${WORKERS}
-./mst.sh google-mst-giraph.txt ${WORKERS}
+#./mst.sh google-mst-giraph.txt ${WORKERS}
+#./mst.sh google-mst-giraph.txt ${WORKERS}
+#./mst.sh google-mst-giraph.txt ${WORKERS}
 
 #./mst.sh patents-mst-giraph.txt ${WORKERS}
 #./mst.sh patents-mst-giraph.txt ${WORKERS}
 #./mst.sh patents-mst-giraph.txt ${WORKERS}
+
+#./mstmizan.sh amazon-mstdumb-giraph.txt ${WORKERS}
+#./mstmizan.sh amazon-mstdumb-giraph.txt ${WORKERS}
+#./mstmizan.sh amazon-mstdumb-giraph.txt ${WORKERS}
+
+#./mstmizan.sh google-mstdumb-giraph.txt ${WORKERS}
+#./mstmizan.sh google-mstdumb-giraph.txt ${WORKERS}
+#./mstmizan.sh google-mstdumb-giraph.txt ${WORKERS}
+
+./mstmizan.sh patents-mstdumb-giraph.txt ${WORKERS}
+./mstmizan.sh patents-mstdumb-giraph.txt ${WORKERS}
+./mstmizan.sh patents-mstdumb-giraph.txt ${WORKERS}
