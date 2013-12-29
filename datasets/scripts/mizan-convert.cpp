@@ -27,8 +27,8 @@ static void usage(char **argv) {
   std::cout << "                order of how vertices are listed in input file)" << std::endl;
   std::cout << std::endl;
   std::cout << "out-format: 1. Mizan to Giraph" << std::endl;
-  std::cout << "            2. Mizan to GPS (no values)" << std::endl;
-  std::cout << "            3. Mizan to GPS (vertex + edge values, no vertex value)" << std::endl;
+  std::cout << "            2. Mizan to GPS (no values/weights)" << std::endl;
+  std::cout << "            3. Mizan to GPS (edge weights, no vertex value)" << std::endl;
 }
 
 static inline void get_edge_weight(std::ifstream &ifs, int in_format, long &edge_weight) {
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
 
   case M_TO_GPS_VAL:
     while (!ifs.eof()) {
-      // format: vertex-id vertex-val edge-dst edge-val ...
+      // format: vertex-id edge-dst edge-val ...
       ofs << curr_id << " " << edge_dst << " " << edge_weight;
 
       ifs >> vertex_id;
