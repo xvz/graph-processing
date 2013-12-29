@@ -16,7 +16,7 @@ logname=mst_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 
 cd ../master-scripts/
 
-# there are 3 versions of MST... all with horrendously undescriptive names
+# there are 3 versions of MST... all with hard to decipher names
 #
 # edgesatrootpjonebyone uses standard Boruvka (no optimizations)
 # edgesatselfpjonebyone uses "edge cleaning on demand" (ECOD)
