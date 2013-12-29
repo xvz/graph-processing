@@ -16,9 +16,14 @@ logname=mst_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 
 cd ../master-scripts/
 
-# NOTE: numMaxIterations can be set, but we do not set it
-# this is to be fair with Giraph and Mizan (both do not max ss termination)
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.mst.MSTJobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
+# there are 3 versions of MST... all with horrendously undescriptive names
+#
+# edgesatrootpjonebyone uses standard Boruvka (no optimizations)
+# edgesatselfpjonebyone uses "edge cleaning on demand" (ECOD)
+# edgeshybridpjonebyone uses "storing edges at subvertices" (SEAS)+ECOD??
+#
+# see GPS algorithm paper for more info
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
 
 cd ../cs848/
 
