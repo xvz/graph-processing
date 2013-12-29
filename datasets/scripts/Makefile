@@ -5,7 +5,7 @@ clean:
 	rm -f mst-convert
 
 mizan-convert: mizan-convert.cpp
-	g++ mizan-convert.cpp -o mizan-convert
+	g++ -Wall mizan-convert.cpp -o mizan-convert
 
 mst-convert: mst-convert.cpp
-	g++ mst-convert.cpp -o mst-convert
+	g++ -std=c++0x -Wall mst-convert.cpp -o mst-convert

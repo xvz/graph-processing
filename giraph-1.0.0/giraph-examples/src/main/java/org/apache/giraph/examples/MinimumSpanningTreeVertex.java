@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
     name = "Minimum spanning tree"
 )
 public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
-    MinimumSpanningTreeVertex.MSTEdgeValue,
+    MinimumSpanningTreeVertex.MSTVertexValue,
     MinimumSpanningTreeVertex.MSTEdgeValue,
     MinimumSpanningTreeVertex.MSTMessage> {
 
@@ -63,44 +63,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   /** Total supervertex aggregator name */
   private static String SUPERVERTEX_AGG = "supervertex";
 
-  /** Current computation phase **/
-  private static enum MSTPhase {
-    /** missing a javadoc comment. here it is. **/
-    PHASE_1,  /** find min-weight edge **/
-    PHASE_2A, /** question phase **/
-    PHASE_2B, /** Q /and/ A phase **/
-    PHASE_3A, /** send supervertex IDs **/
-    PHASE_3B, /** receive PHASE_3A messages **/
-    PHASE_4A, /** send edges to supervertex **/
-    PHASE_4B; /** receive/merge edges **/
-  }
-
-  /** Status/type of this vertex **/
-  private static enum MSTVertexType {
-    /** missing a javadoc comment. here it is. **/
-    TYPE_UNKNOWN,               /** initial state in PHASE_2A **/
-    TYPE_SUPERVERTEX,           /** supervertex **/
-    TYPE_POINTS_AT_SUPERVERTEX, /** child of supervertex **/
-    TYPE_POINTS_AT_SUBVERTEX;   /** child of child of supervertex**/
-  }
-
-  /** A phase **/
-  private MSTPhase phase;
-  /** A status/type **/
-  private MSTVertexType type;
-
-  /** A pointer (potential supervertex) **/
-  private long pointer;
-
-
   @Override
   public void compute(Iterable<MSTMessage> messages) {
     if (getSuperstep() == 0) {
-      phase = MSTPhase.PHASE_1;
+      getValue().setPhase(MSTPhase.PHASE_1);
 
       // need to set up correct number of supervertices on first superstep
       aggregate(SUPERVERTEX_AGG, new LongWritable(1));
     }
+
+    MSTPhase phase = getValue().getPhase();
 
     // PHASE_2B is special, because it can repeat an indeterminate
     // number of times. Hence, a "superbarrier" is needed.
@@ -113,7 +85,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     if (phase == MSTPhase.PHASE_2B &&
         numDone.get() == numSupervertex.get()) {
-      this.phase = MSTPhase.PHASE_3A;
+      getValue().setPhase(MSTPhase.PHASE_3A);
     }
 
     // special halting condition if only 1 supervertex is left
@@ -205,13 +177,15 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     // store minimum weight edge value as vertex value
     if (minEdge != null) {
-      setValue(minEdge);
+      getValue().setWeight(minEdge.getWeight());
+      getValue().setSrc(minEdge.getSrc());
+      getValue().setDst(minEdge.getDst());
     }
 
     // technically part of PHASE_2A
-    this.pointer = minId;
+    getValue().setPointer(minId);
 
-    this.phase = MSTPhase.PHASE_2A;
+    getValue().setPhase(MSTPhase.PHASE_2A);
 
     //LOG.info(getId() + ": min edge is " + minEdge +
     //         " and value is " + getValue());
@@ -222,16 +196,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    * This is a special case of Phase 2B (only questions, no answers).
    */
   private void phase2A() {
-    this.type = MSTVertexType.TYPE_UNKNOWN;
+    getValue().setType(MSTVertexType.TYPE_UNKNOWN);
 
     MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_QUESTION),
                                     new MSTMsgContentLong(getId().get()));
 
     // send query to pointer (potential supervertex)
-    //LOG.info(getId() + ": sending question to " + pointer);
-    sendMessage(new LongWritable(pointer), msg);
+    //LOG.info(getId() + ": sending question to " + getValue().getPointer());
+    sendMessage(new LongWritable(getValue().getPointer()), msg);
 
-    this.phase = MSTPhase.PHASE_2B;
+    getValue().setPhase(MSTPhase.PHASE_2B);
   }
 
   /**
@@ -245,6 +219,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     boolean isPointerSupervertex = false;
 
     long myId = getId().get();
+    MSTVertexType type = getValue().getType();
+    long pointer = getValue().getPointer();
 
     // question messages
     long senderId;
@@ -265,20 +241,20 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         sources.add(senderId);
 
         // if already done, no need to do more checks
-        if (this.type != MSTVertexType.TYPE_UNKNOWN) {
+        if (type != MSTVertexType.TYPE_UNKNOWN) {
           isPointerSupervertex = true;
           break;
         }
 
         // check if there is a cycle (if the vertex we picked also picked us)
         // NOTE: cycle is unique b/c pointer choice is unique
-        if (senderId == this.pointer) {
+        if (senderId == pointer) {
           // smaller ID always wins & becomes supervertex
           if (myId < senderId) {
-            this.pointer = myId;        // I am the supervertex
-            this.type = MSTVertexType.TYPE_SUPERVERTEX;
+            pointer = myId;        // I am the supervertex
+            type = MSTVertexType.TYPE_SUPERVERTEX;
           } else {
-            this.type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
+            type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
           }
 
           isPointerSupervertex = true;
@@ -296,7 +272,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         // about who our supervertex is
 
         // if we don't care about answers any more, break
-        if (this.type != MSTVertexType.TYPE_UNKNOWN) {
+        if (type != MSTVertexType.TYPE_UNKNOWN) {
           //LOG.info(getId() + ": ignoring answers");
           break;
         }
@@ -311,11 +287,11 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         if (isSupervertex) {
           if (supervertexId != pointer) {
             // somebody propagated supervertex ID down to us
-            this.type = MSTVertexType.TYPE_POINTS_AT_SUBVERTEX;
-            this.pointer = supervertexId;
+            type = MSTVertexType.TYPE_POINTS_AT_SUBVERTEX;
+            pointer = supervertexId;
           } else {
             // otherwise, supervertex directly informed us
-            this.type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
+            type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
           }
 
           // increment counter aggregator (i.e., we're done this phase)
@@ -356,6 +332,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       }
     }
 
+    // update vertex value
+    getValue().setType(type);
+    getValue().setPointer(pointer);
+
     // phase change occurs in compute()
   }
 
@@ -369,13 +349,15 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     // send our neighbours <my ID, my supervertex's ID>
     MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_CLEAN),
-                              new MSTMsgContentLong(getId().get(), pointer));
+                              new MSTMsgContentLong(getId().get(),
+                                                    getValue().getPointer()));
 
-    //LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " + pointer);
+    //LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " +
+    //         getValue().getPointer());
 
     sendMessageToAllEdges(msg);
 
-    this.phase = MSTPhase.PHASE_3B;
+    getValue().setPhase(MSTPhase.PHASE_3B);
   }
 
   /**
@@ -388,6 +370,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //  LOG.info(getId() + ": before 3B...edge to " +
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
+
+    long pointer = getValue().getPointer();
 
     long senderId;
     long supervertexId;
@@ -408,7 +392,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         // so delete our outgoing edge to v (i.e., delete (u,v)).
         //
         // Note that v will delete edge (v, u).
-        if (supervertexId == this.pointer) {
+        if (supervertexId == pointer) {
           removeEdges(new LongWritable(senderId));
 
         } else {
@@ -462,13 +446,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //}
 
     // supervertices also go to phase 4A (b/c they need to wait for msgs)
-    this.phase = MSTPhase.PHASE_4A;
+    getValue().setPhase(MSTPhase.PHASE_4A);
   }
 
   /**
    * Phase 4A: send adjacency list to supervertex
    */
   private void phase4A() {
+    MSTVertexType type = getValue().getType();
+    long pointer = getValue().getPointer();
+
     // terminate if not supervertex
     if (type != MSTVertexType.TYPE_SUPERVERTEX) {
       // send my supervertex all my edges, if I have any left
@@ -483,7 +470,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     } else {
       // we are supervertex, so move to next phase
-      this.phase = MSTPhase.PHASE_4B;
+      getValue().setPhase(MSTPhase.PHASE_4B);
 
       // increment total supervertex counter
       aggregate(SUPERVERTEX_AGG, new LongWritable(1));
@@ -538,7 +525,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     // its children NO LONGER participate in MST
 
     // back to phase 1
-    this.phase = MSTPhase.PHASE_1;
+    getValue().setPhase(MSTPhase.PHASE_1);
   }
 
   /******************** MASTER/WORKER/MISC CLASSES ********************/
@@ -595,7 +582,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    */
   public static class MinimumSpanningTreeVertexOutputFormat extends
       TextVertexOutputFormat<LongWritable,
-         MinimumSpanningTreeVertex.MSTEdgeValue,
+         MinimumSpanningTreeVertex.MSTVertexValue,
          MinimumSpanningTreeVertex.MSTEdgeValue> {
     @Override
     public TextVertexWriter createVertexWriter(TaskAttemptContext context)
@@ -609,13 +596,230 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     public class MinimumSpanningTreeVertexWriter extends TextVertexWriter {
       @Override
       public void writeVertex(
-          Vertex<LongWritable, MinimumSpanningTreeVertex.MSTEdgeValue,
+          Vertex<LongWritable, MinimumSpanningTreeVertex.MSTVertexValue,
                  MinimumSpanningTreeVertex.MSTEdgeValue, ?> vertex)
         throws IOException, InterruptedException {
         getRecordWriter().write(
             new Text(vertex.getId().toString()),
-            new Text(vertex.getValue().toString()));
+            new Text(vertex.getValue().toOutputString()));
       }
+    }
+  }
+
+  /******************** MST VERTEX VALUE INNER CLASSES ********************/
+  /**
+   * Current computation phase
+   */
+  public static enum MSTPhase {
+    /** missing a javadoc comment. here it is. **/
+    PHASE_1(0),  /** find min-weight edge **/
+    PHASE_2A(1), /** question phase **/
+    PHASE_2B(2), /** Q /and/ A phase **/
+    PHASE_3A(3), /** send supervertex IDs **/
+    PHASE_3B(4), /** receive PHASE_3A messages **/
+    PHASE_4A(5), /** send edges to supervertex **/
+    PHASE_4B(6); /** receive/merge edges **/
+
+    /** Array of all possible enums **/
+    // apparently calling values() is expensive, so store it
+    static final MSTPhase[] VALUES = MSTPhase.values();
+
+    /** Integer value **/
+    private int i;
+
+    /**
+     * Default constructor.
+     *
+     * @param i An integer.
+     */
+    MSTPhase(int i) {
+      this.i = i;
+    }
+
+    /**
+     * Get numeric value of enum.
+     *
+     * @return The numeric value.
+     */
+    public int get() {
+      return i;
+    }
+  }
+
+  /**
+   * Status/type of this vertex
+   */
+  public static enum MSTVertexType {
+    /** missing a javadoc comment. here it is. **/
+    TYPE_UNKNOWN(0),               /** initial state in PHASE_2A **/
+    TYPE_SUPERVERTEX(1),           /** supervertex **/
+    TYPE_POINTS_AT_SUPERVERTEX(2), /** child of supervertex **/
+    TYPE_POINTS_AT_SUBVERTEX(3);   /** child of child of supervertex**/
+
+    /** Array of all possible enums **/
+    static final MSTVertexType[] VALUES = MSTVertexType.values();
+
+    /** Integer value **/
+    private int i;
+
+    /**
+     * Default constructor.
+     *
+     * @param i An integer.
+     */
+    MSTVertexType(int i) {
+      this.i = i;
+    }
+
+    /**
+     * Get numeric value of enum.
+     *
+     * @return The numeric value.
+     */
+    public int get() {
+      return i;
+    }
+  }
+
+  /**
+   * Vertex value type used by {@link MinimumSpanningTreeVertex}.
+   */
+  public static class MSTVertexValue implements Writable {
+    /**/
+    private double weight;       /** edge weight **/
+    private long src;            /** original edge source **/
+    private long dst;            /** original edge destination **/
+    private MSTPhase phase;      /** current computation phase **/
+    private MSTVertexType type;  /** vertex type **/
+    private long pointer;        /** (potential) supervertex **/
+
+    /**
+     * Default edge constructor.
+     */
+    public MSTVertexValue() {
+      phase = MSTPhase.PHASE_1;
+      type = MSTVertexType.TYPE_UNKNOWN;
+      // rest all 0s
+    }
+
+    /**
+     * Edge constructor. Objects passed in must NOT be modified.
+     *
+     * @param weight Weight.
+     * @param src Original source vertex.
+     * @param dst Original destination vertex.
+     * @param phase Computation phase.
+     * @param type Vertex type.
+     * @param pointer Pointer/supervertex.
+     */
+    public MSTVertexValue(double weight, long src, long dst,
+                        MSTPhase phase, MSTVertexType type, long pointer) {
+      this.weight = weight;
+      this.src = src;
+      this.dst = dst;
+      this.phase = phase;
+      this.type = type;
+      this.pointer = pointer;
+    }
+
+    /**
+     * Copy constructor.
+     *
+     * @param val MSTVertexValue to be copied.
+     */
+    public MSTVertexValue(MSTVertexValue val) {
+      this.weight = val.weight;
+      this.src = val.src;
+      this.dst = val.dst;
+      this.phase = val.phase;
+      this.type = val.type;
+      this.pointer = val.pointer;
+    }
+
+    public double getWeight() {
+      return weight;
+    }
+
+    public long getSrc() {
+      return src;
+    }
+
+    public long getDst() {
+      return dst;
+    }
+
+    public MSTPhase getPhase() {
+      return phase;
+    }
+
+    public MSTVertexType getType() {
+      return type;
+    }
+
+    public long getPointer() {
+      return pointer;
+    }
+
+    // vertex value can have setters
+    public void setWeight(double weight) {
+      this.weight = weight;
+    }
+
+    public void setSrc(long src) {
+      this.src = src;
+    }
+
+    public void setDst(long dst) {
+      this.dst = dst;
+    }
+
+    public void setPhase(MSTPhase phase) {
+      this.phase = phase;
+    }
+
+    public void setType(MSTVertexType type) {
+      this.type = type;
+    }
+
+    public void setPointer(long pointer) {
+      this.pointer = pointer;
+    }
+
+    @Override
+    public void readFields(DataInput in) throws IOException {
+      // less wasteful than casting to *Writable object and
+      // using their readFields()
+      weight = in.readDouble();
+      src = in.readLong();
+      dst = in.readLong();
+      phase = MSTPhase.VALUES[in.readInt()];
+      type = MSTVertexType.VALUES[in.readInt()];
+      pointer = in.readLong();
+    }
+
+    @Override
+    public void write(DataOutput out) throws IOException {
+      out.writeDouble(weight);
+      out.writeLong(src);
+      out.writeLong(dst);
+      out.writeInt(phase.get());
+      out.writeInt(type.get());
+      out.writeLong(pointer);
+    }
+
+    @Override
+    public String toString() {
+      return "weight=" + weight + " src=" + src + " dst=" + dst +
+        " phase=" + phase + " type=" + type + " pointer=" + pointer;
+    }
+
+    /**
+     * Returns string for outputing relevant stored data.
+     *
+     * @return String with weight, src, and dst only.
+     */
+    public String toOutputString() {
+      return "weight=" + weight + " src=" + src + " dst=" + dst;
     }
   }
 
@@ -637,7 +841,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     }
 
     /**
-     * Edge constructor. Objects passed in must NOT be modified.
+     * Edge constructor.
      *
      * @param weight Weight.
      * @param src Original source vertex.
@@ -768,6 +972,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    */
   public static class MSTMsgType implements Writable {
     // NOTE: cannot use enum, b/c this must be *mutable*!!
+    // (i.e., "type" field must be able to change dynamically)
     /** valid values **/
     public static final int MSG_INVALID = 0;  /**/
     public static final int MSG_QUESTION = 1; /**/

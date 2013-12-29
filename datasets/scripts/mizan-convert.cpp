@@ -14,26 +14,24 @@
 #define M_TO_GPS_NOVAL   2
 #define M_TO_GPS_VAL     3
 
-using namespace std;
-
 static long counter = 1;
 
 static void usage(char **argv) {
-  cout << "usage: " << argv[0] << " input-file output-file in-format out-format" << endl;
-  cout << endl;
-  cout << "in-format:  1. No values in input file (format: node-id node-dst)" << endl;
-  cout << "            2. Values in input file (format: node-id node-dst weight)" << endl;
-  cout << "            3. Same as 1, but set output edge weights to 1." << endl;
-  cout << "            4. Same as 1, but output unique sequential edge weights" << endl;
-  cout << "               (i.e., fake weights are assigned sequentially in" << endl;
-  cout << "                order of how vertices are listed in input file)" << endl;
-  cout << endl;
-  cout << "out-format: 1. Mizan to Giraph" << endl;
-  cout << "            2. Mizan to GPS (no values)" << endl;
-  cout << "            3. Mizan to GPS (vertex + edge values, no vertex value)" << endl;
+  std::cout << "usage: " << argv[0] << " input-file output-file in-format out-format" << std::endl;
+  std::cout << std::endl;
+  std::cout << "in-format:  1. No values in input file (format: node-id node-dst)" << std::endl;
+  std::cout << "            2. Values in input file (format: node-id node-dst weight)" << std::endl;
+  std::cout << "            3. Same as 1, but set output edge weights to 1." << std::endl;
+  std::cout << "            4. Same as 1, but output unique sequential edge weights" << std::endl;
+  std::cout << "               (i.e., fake weights are assigned sequentially in" << std::endl;
+  std::cout << "                order of how vertices are listed in input file)" << std::endl;
+  std::cout << std::endl;
+  std::cout << "out-format: 1. Mizan to Giraph" << std::endl;
+  std::cout << "            2. Mizan to GPS (no values)" << std::endl;
+  std::cout << "            3. Mizan to GPS (vertex + edge values, no vertex value)" << std::endl;
 }
 
-static inline void get_edge_weight(ifstream &ifs, int in_format, long &edge_weight) {
+static inline void get_edge_weight(std::ifstream &ifs, int in_format, long &edge_weight) {
   switch (in_format) {
   case M_IN_NOVAL:
     edge_weight = 0;
@@ -53,7 +51,7 @@ static inline void get_edge_weight(ifstream &ifs, int in_format, long &edge_weig
     break;
 
   default:
-    cout << "Invalid in-format: " << in_format << "!" << endl;
+    std::cout << "Invalid in-format: " << in_format << "!" << std::endl;
   }
 }
 
@@ -68,8 +66,8 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-  ifstream ifs(argv[1], ifstream::in);
-  ofstream ofs(argv[2], ofstream::out);
+  std::ifstream ifs(argv[1], std::ifstream::in);
+  std::ofstream ofs(argv[2], std::ofstream::out);
   int in_format = atoi(argv[3]);
   int out_format = atoi(argv[4]);
 
@@ -110,7 +108,7 @@ int main(int argc, char **argv) {
         get_edge_weight(ifs, in_format, edge_weight);
       }
 
-      ofs << "]]" << endl;
+      ofs << "]]" << std::endl;
 
       // new vertex_id found. carry over edge_dst too.
       curr_id = vertex_id;
@@ -134,7 +132,7 @@ int main(int argc, char **argv) {
         get_edge_weight(ifs, in_format, edge_weight);
       }
 
-      ofs << endl;
+      ofs << std::endl;
 
       // new vertex_id found. carry over edge_dst too.
       curr_id = vertex_id;
@@ -158,7 +156,7 @@ int main(int argc, char **argv) {
         get_edge_weight(ifs, in_format, edge_weight);
       }
 
-      ofs << endl;
+      ofs << std::endl;
 
       // new vertex_id found. carry over edge_dst too.
       curr_id = vertex_id;
@@ -166,7 +164,7 @@ int main(int argc, char **argv) {
     break;
 
   default:
-    cout << "Invalid out-format: " << out_format << "!" << endl;
+    std::cout << "Invalid out-format: " << out_format << "!" << std::endl;
   }
 
   ifs.close();

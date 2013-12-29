@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <string>
-//#include <random>
+#include <random>
 #include <algorithm>
 #include <climits>
 #include <fstream>
@@ -9,7 +9,10 @@
 #include <map>
 
 
-using namespace std;
+#define M_TO_RANDOM    1
+#define M_TO_VERTEXID  2
+#define M_TO_NOWEIGHT  3
+
 
 /**
  * Class represeting <src, dst> key for edge values
@@ -33,7 +36,7 @@ public:
     return src == rhs.src && dst == rhs.dst;
   }
 
-  friend ostream& operator<<(ostream& os, const KeyPair& p) {
+  friend std::ostream& operator<<(std::ostream& os, const KeyPair& p) {
     return os << p.src << " " << p.dst;
   }
 };
@@ -68,67 +71,140 @@ public:
  * Usage message
  */
 static void usage(char **argv) {
-  cout << "usage: " << argv[0] << " input-file output-file" << endl;
+  std::cout << "usage: " << argv[0] << " input-file output-file out-format" << std::endl;
+  std::cout << std::endl;
+  std::cout << "out-format: 1. Undirected graph, pseudo-random unique weights." << std::endl;
+  std::cout << "            2. Undirected graph, deterministic non-unique weights using smallest vertex ID + 1." << std::endl;
+  std::cout << "            3. For Mizan, undirected graph with no weights." << std::endl;
+
 }
 
 /**
  * Main
  */
 int main(int argc, char **argv) {
-  if ( argc < 3 ) {
+  if ( argc < 4 ) {
     usage(argv);
     return -1;
   }
 
-  ifstream ifscount(argv[1], ifstream::in);
-  ofstream ofs(argv[2], ofstream::out);
+  std::ifstream ifscount(argv[1], std::ifstream::in);
+  std::ofstream ofs(argv[2], std::ofstream::out);
+  int out_format = atoi(argv[3]);
 
-  if (!ifscount || !ofs ) {
+  if (!ifscount || !ofs || 
+      (out_format < M_TO_RANDOM || out_format > M_TO_NOWEIGHT)) {
     usage(argv);
     return -1;
   }
 
   // count number of input lines
-  int len = count(istreambuf_iterator<char>(ifscount),
-                  istreambuf_iterator<char>(), '\n');
+  int len = std::count(std::istreambuf_iterator<char>(ifscount),
+                       std::istreambuf_iterator<char>(), '\n');
   ifscount.close();
 
-  // make unique weights (not all of these will be used
-  // because we don't know what % of edges are undirected)
-  vector<long> *weights = new vector<long>(len);
-  for (int i = 0; i < len; i++) {
-    weights->at(i) = i+1;
+  std::vector<long> *weights;
+
+  if (out_format == M_TO_RANDOM) {
+    // make unique weights (not all of these will be used
+    // because we don't know what % of edges are undirected)
+    weights = new std::vector<long>(len);
+
+    for (int i = 0; i < len; i++) {
+      weights->at(i) = i+1;
+    }
+
+    std::default_random_engine gen(time(NULL));
+
+    // shuffle using built-in Knuth-Fisher-Yates shuffle
+    std::shuffle(weights->begin(), weights->end(), gen);
   }
-  // shuffle using built-in Knuth-Fisher-Yates shuffle
-  random_shuffle(weights->begin(), weights->end());
 
   // read input and fill map
-  ifstream ifs(argv[1], ifstream::in);
+  std::ifstream ifs(argv[1], std::ifstream::in);
 
-  long src, dst;
-  map<KeyPair, long> *graph = new map<KeyPair, long>();
+  long src, dst, weight;
+  std::map<KeyPair, long> *graph = new std::map<KeyPair, long>();
 
   int i = 0;
-  while (!ifs.eof()) {
-    ifs >> src;
-    ifs >> dst;
 
-    // if we haven't already been added to map by a previous edge
-    if (graph->find(KeyPair(dst, src)) == graph->end()) {
-      // store both out-edge and in-edge, to make graph undirected,
-      // and add (same) unique weight to both
-      graph->insert(pair<KeyPair,long>(KeyPair(src, dst), weights->at(i)));
-      graph->insert(pair<KeyPair,long>(KeyPair(dst, src), weights->at(i)));
-      i++;
+  switch (out_format) {
+  case M_TO_RANDOM:
+    while (!ifs.eof()) {
+      ifs >> src;
+      ifs >> dst;
+
+      // if we haven't already been added to map by a previous edge
+      if (graph->find(KeyPair(dst, src)) == graph->end()) {
+        // store both out-edge and in-edge, to make graph undirected,
+        // and add (same) unique weight to both
+        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), weights->at(i)));
+        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), weights->at(i)));
+        i++;
+      }
     }
+    break;
+
+  case M_TO_VERTEXID:
+    while (!ifs.eof()) {
+      ifs >> src;
+      ifs >> dst;
+
+      // if we haven't already been added to map by a previous edge
+      if (graph->find(KeyPair(dst, src)) == graph->end()) {
+        // store both out-edge and in-edge, to make graph undirected
+        // and deterministic weight (min of src/dst)
+        weight = ((src < dst) ? src : dst) + 1;
+        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), weight));
+        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), weight));
+        i++;
+      }
+    }
+    break;
+
+  case M_TO_NOWEIGHT:
+    while (!ifs.eof()) {
+      ifs >> src;
+      ifs >> dst;
+
+      // if we haven't already been added to map by a previous edge
+      if (graph->find(KeyPair(dst, src)) == graph->end()) {
+        // store both out-edge and in-edge, to make graph undirected
+        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), 0));
+        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), 0));
+        i++;
+      }
+    }
+    break;
+
+  default:
+    std::cout << "Invalid out-format: " << out_format << "!" << std::endl;
   }
+
   ifs.close();
 
   // write output
-  for (map<KeyPair, long>::iterator it=graph->begin(); it != graph->end(); ++it) {
-    ofs << it->first << " " << it->second << "\n"; // endl;
-  }
-  ofs.close();
+  switch (out_format) {
+  case M_TO_RANDOM:
+    // fall through
 
+  case M_TO_VERTEXID:
+    for (std::map<KeyPair, long>::iterator it=graph->begin(); it != graph->end(); ++it) {
+      ofs << it->first << " " << it->second << "\n"; // std::endl;
+    }
+    break;
+
+  case M_TO_NOWEIGHT:
+    for (std::map<KeyPair, long>::iterator it=graph->begin(); it != graph->end(); ++it) {
+      ofs << it->first << "\n"; // std::endl;
+    }
+    break;
+
+  default:
+    std::cout << "Invalid out-format: " << out_format << "!" << std::endl;
+  }
+
+  ofs.close();
+    
   return 0;
 }

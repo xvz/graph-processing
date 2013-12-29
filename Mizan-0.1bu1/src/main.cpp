@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-    
+
   } else if (myArgs.algorithm == 3) {
     groupVoteToHalt = true;
     storageType = InNbrStore;
@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-    
+
   } else if (myArgs.algorithm == 4) {
     groupVoteToHalt = false;
     storageType = InOutNbrStore;
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-    
+
   } else if (myArgs.algorithm == 5) {
     // NOTE: this should be FALSE so halted vertices wake on incoming message
     groupVoteToHalt = false;
@@ -170,14 +170,14 @@ int main(int argc, char** argv) {
 
   } else if (myArgs.algorithm == 7) {
     groupVoteToHalt = true;
-    storageType = OutNbrStore;      // undirected edge is InOut
+    storageType = OutNbrStore;
 
     MST mst(myArgs.superSteps);
 
-    Mizan<mLong, mLongArray, mLongArray, mLong> * mmk =
-      new Mizan<mLong, mLongArray,mLongArray, mLong>(myArgs.communication, &mst, storageType,
-                                                      inputBaseFile, myArgs.clusterSize,
-                                                      myArgs.fs, myArgs.migration);
+    Mizan<mLong, mMSTVertexValue, mLongArray, mLong> * mmk =
+      new Mizan<mLong, mMSTVertexValue, mLongArray, mLong>(myArgs.communication, &mst, storageType,
+                                                           inputBaseFile, myArgs.clusterSize,
+                                                           myArgs.fs, myArgs.migration);
 
     // aggregator needed for superbarriers
     // included from MST header
@@ -194,7 +194,7 @@ int main(int argc, char** argv) {
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
     delete mmk;
-    }
+  }
 
 #ifdef Verbose
   if (myWorkerID == 0) {

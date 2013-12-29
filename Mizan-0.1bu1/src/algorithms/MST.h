@@ -1,32 +1,38 @@
 /*
  * MST.h
  *
- * Created on: Nov 17 2013
+ * Created on: Dec 27 2013
  * Authors: Jack Jin, Jenny Wang, Young Han
  *
- * This implementation follows the distributed Boruvka's algorithm
+ * This implementation follows the parallel Boruvka's algorithm
  * described in http://ilpubs.stanford.edu:8090/1077/
  */
 
 #ifndef MST_H_
 #define MST_H_
 
-#include <map>
+#include <vector>
 #include "../IsuperStep.h"
-// #include "../Icombiner.h"
+#include "../IAggregator.h"
 #include "../dataManager/dataStructures/data/mLong.h"
 #include "../dataManager/dataStructures/data/mLongArray.h"
 
+#include "../dataManager/dataStructures/data/mMSTVertexValue.h"
+
+// NOTE: we don't actually use this, because Mizan does not
+// support separate edge value type.
+// Currently, edge value type is just the vertex value type.
+#include "../dataManager/dataStructures/data/mMSTEdgeValue.h"
+
+// This is to indicate which types should be mMSTEdgeValue.
+// Note the "Val" instead of "Value", to avoid clashing types.
+typedef mMSTVertexValue mMSTEdgeVal;
 
 /******************** Message "Type" ********************/
 /*
- * This is super-duper hacky..
- *
- * Since we don't have any clue how to implement half of the
- * functions needed to properly implement complex data types,
- * we hack one together that uses mLong arrays. Note that this
- * assumes edge weights are mLong.
- *
+ * This is super hacky. We do this for convenience, to avoid
+ * yet another complex data type. This assumes edge weights
+ * are mLongs (as does mMSTEdgeValue).
  *
  * MST Messages are laid out as an array of mLongs:
  * [ TYPE, FIRST, SECOND, .... ]
@@ -67,8 +73,8 @@
  */
 
 // boolean values, as mLongs
-#define MSG_TRUE       (mLong(0))
-#define MSG_FALSE      (mLong(1))
+#define MSG_FALSE      (mLong(0))
+#define MSG_TRUE       (mLong(1))
 
 // message sizes
 #define MSG_QUESTION_LEN  2
@@ -77,33 +83,21 @@
 #define MSG_EDGES_LEN     2   // NOT including adjacency list
 #define MSG_EDGES_PARTS   4
 
-/******************** Vertex/Edge Value Types ********************/
-
-// Vertex value & edge value are both arrays.
-// They are of same type and length.
+// needed for MSG_EDGES
 #define EDGE_VAL_LEN      3
-#define VERTEX_VAL_LEN    EDGE_VAL_LEN
+#define I_WEIGHT          0
+#define I_SRC             1
+#define I_DST             2
 
-// Indices to value arrays.
-// For vertex values, these indicate weight/src/dst
-// of a picked edge. For edge values, this is that
-// edge's original parameters.
-#define I_WEIGHT    0
-#define I_SRC       1
-#define I_DST       2
-
-// Macro shorthands for accessing *primitive type* values
-#define WEIGHT(a)   (a[I_WEIGHT].getValue())
-#define SRC(a)      (a[I_SRC].getValue())
-#define DST(a)      (a[I_DST].getValue())
 
 /******************** Misc Constants ********************/
-#define INF         LLONG_MAX
-#define RESET       mLong(LLONG_MAX)
+#define INF               LLONG_MAX
 
-#define SUPERVERTEX_AGG  "supervertex"
-#define COUNTER_AGG      "counter"
-
+#define SUPERVERTEX_AGG   "supervertex"
+#define COUNTER_AGG       "counter"
+// TODO: hack to avoid aggregator doubling bug
+#define AGG_INCREMENT     mLong(0xDEADBEEF)
+#define AGG_DECREMENT     mLong(0xBEEFDEAD)
 
 /*-------------------- MST Implementation --------------------*/
 /**
@@ -116,28 +110,21 @@ public:
   }
 
   void aggregate(mLong value) {
-    setValue(mLong(getValue().getValue() + value.getValue()));
+    //std::cout << "Aggregate called " << getValue().getValue() << " " << value.getValue() << std::endl;
+
+    // TODO: hack to avoid aggregator doubling bug
+    if (value == AGG_INCREMENT) {
+      setValue(mLong(getValue().getValue() + 1));
+      return;
+    }
+
+    if (value == AGG_DECREMENT) {
+      setValue(mLong(getValue().getValue() - 1));
+      return;
+    }
   }
-};
 
-
-// phases of computation
-enum MSTPhase {
-  PHASE_1,   // find min-weight edge
-  PHASE_2A,  // question phase
-  PHASE_2B,  // Q /and/ A phase
-  PHASE_3A,  // send supervertex IDs
-  PHASE_3B,  // receive PHASE_3A messages
-  PHASE_4A,  // send edges to supervertex
-  PHASE_4B   // receive/merge edges
-};
-
-// vertex types
-enum MSTVertexType {
-  TYPE_UNKNOWN,                 // initial state in Phase 2A
-  TYPE_SUPERVERTEX,             // supervertex
-  TYPE_POINTS_AT_SUPERVERTEX,   // child of supervertex
-  TYPE_POINTS_AT_SUBVERTEX      // child of child of supervertex
+  ~sumAggregator() {}
 };
 
 // message types
@@ -159,12 +146,8 @@ enum MSTMsgType {
  *
  * For MST, vertex and edge values are both mLong
  */
-class MST: public IsuperStep<mLong, mLongArray, mLongArray, mLong> {
+class MST: public IsuperStep<mLong, mMSTVertexValue, mLongArray, mLong> {
 private:
-  MSTPhase phase;
-  MSTVertexType type;
-  long long pointer;       // vertex ID of this vertex's (potential) supervertex
-
   // C++ refresher:
   // --------------------
   // This is SAFE despite mLongArray() constructor only
@@ -182,79 +165,106 @@ private:
   // means ptr to arg is not mutable, but type *arg means pointer
   // itself can be pointed to something else.
 
+  /******************** Aggregator Hack ********************/
+  // TODO: These are global per-worker variables used to get
+  // around issues w/ sum aggregator.
+  int prevSS;
+  bool goPhase3A;
 
   /******************** COMPUTATIONAL PHASES ********************/
   /**
    * Phase 1: find minimum weight edge
    */
-  void phase1(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data) {
+  void phase1(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data) {
     // initialize some minimum stats
     long long minWeight = INF;
     long long minId = data->getVertexID().getValue();
-    mLong minEdge[VERTEX_VAL_LEN];
+    mMSTEdgeVal minEdge;
 
     long long eId = data->getVertexID().getValue();
-    mLong *eVal = NULL;
+    mMSTEdgeVal eVal;
 
     // find minimum weight edge
     for (int i = 0; i < data->getOutEdgeCount(); i++ ) {
       eId = data->getOutEdgeID(i).getValue();
-      eVal = data->getOutEdgeValue(i).getArray();
+      eVal = data->getOutEdgeValue(i);
 
       // NOTE: eId is not necessarily same as e.getDst(),
       // as getDst() returns the *original* destination
 
       // break ties by picking vertex w/ smaller destination ID
-      if (WEIGHT(eVal) < minWeight ||
-          (WEIGHT(eVal) == minWeight && eId < minId)) {
-        minWeight = WEIGHT(eVal);
+      if (eVal.getWeight() < minWeight ||
+          (eVal.getWeight() == minWeight && eId < minId)) {
+        minWeight = eVal.getWeight();
         minId = eId;
 
-        // make copy of the edge
-        minEdge[I_WEIGHT] = eVal[I_WEIGHT];
-        minEdge[I_SRC] = eVal[I_SRC];
-        minEdge[I_DST] = eVal[I_DST];
+        // make copy of the edge (via operator=)
+        minEdge = eVal;
       }
     }
 
     // store minimum weight edge value as vertex value
-    data->setVertexValue(mLongArray(VERTEX_VAL_LEN, minEdge));
+    mMSTVertexValue vVal = data->getVertexValue();
+    vVal.setWeight(minEdge.getWeight());
+    vVal.setSrc(minEdge.getSrc());
+    vVal.setDst(minEdge.getDst());
 
     // technically part of PHASE_2A
-    pointer = minId;
+    vVal.setPointer(minId);
 
-    phase = PHASE_2A;
+    vVal.setPhase(PHASE_2A);
+    data->setVertexValue(vVal);
+
+    //std::cout << data->getVertexID().toString()
+    //          << ": min edge is " << minEdge.toString()
+    //          << " and value is " << vVal.toString() << std::endl;
   }
 
   /**
    * Phase 2A: send out questions
    * This is a special case of Phase 2B (only questions, no answers).
    */
-  void phase2A(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm) {
+  void phase2A(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm) {
     // initial setup for question phase
-    type = TYPE_UNKNOWN;
+    mMSTVertexValue vVal = data->getVertexValue();
+    MSTVertexType type = TYPE_UNKNOWN;
 
     // send query to pointer (potential supervertex)
-    mLong msg[MSG_QUESTION_LEN] = {mLong(MSG_QUESTION), data->getVertexID()};
-    comm->sendMessage(mLong(pointer), mLongArray(MSG_QUESTION_LEN, msg));
+    //std::cout << data->getVertexID().toString()
+    //          << ": sending question to " << vVal.getPointer() << std::endl;
 
-    phase = PHASE_2B;
+    // NOTE: must create new[] due to way mLongArray constructor is written
+    // passing in array allocated on stack will blow up when delete[] is called
+    mLong *msg = new mLong[MSG_QUESTION_LEN];
+    msg[0] = mLong(MSG_QUESTION);
+    msg[1] = data->getVertexID();
+
+    comm->sendMessage(mLong(vVal.getPointer()),
+                      mLongArray(MSG_QUESTION_LEN, msg));
+
+    // update vertex value
+    vVal.setType(type);
+    vVal.setPhase(PHASE_2B);
+    data->setVertexValue(vVal);
   }
 
   /**
    * Phase 2B: respond to questions with answers, and send questions
    * This phase can repeat for multiple supersteps.
    */
-  void phase2B(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm,
+  void phase2B(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm,
                messageIterator<mLongArray> * messages) {
 
     // sources may be huge, so allocate from heap
-    std::vector<long long> *sources = new vector<long long>();
+    std::vector<long long> *sources = new std::vector<long long>();
     bool isPointerSupervertex = false;
 
     long long myId = data->getVertexID().getValue();
+    mMSTVertexValue vVal = data->getVertexValue();
+    MSTVertexType type = vVal.getType();
+    long long pointer = vVal.getPointer();
 
     mLongArray message;
     MSTMsgType msgType;
@@ -273,6 +283,9 @@ private:
       switch (msgType) {
       case MSG_QUESTION:
         senderId = message.getArray()[1].getValue();
+
+        //std::cout << data->getVertexID().toString()
+        //          << ": received question from " << senderId << std::endl;
 
         // save source vertex ID, so we can send response
         // to them later on (after receiving all msgs)
@@ -299,7 +312,7 @@ private:
 
           // increment counter aggregator (i.e., we're done this phase,
           // future answers messages will be ignored---see below)
-          data->aggregate(COUNTER_AGG, mLong(1));
+          data->aggregate(COUNTER_AGG, AGG_INCREMENT);
         }
 
         // otherwise, type is still TYPE_UNKNOWN
@@ -311,12 +324,19 @@ private:
 
         // if we don't care about answers any more, break
         if (type != TYPE_UNKNOWN) {
+          //std::cout << data->getVertexID().toString()
+          //          << ": ignoring answers " << std::endl;
           break;
         }
 
         // we still care, so parse answer message
         supervertexId = message.getArray()[1].getValue();
         isSupervertex = message.getArray()[2];
+
+        //std::cout << data->getVertexID().toString()
+        //          << ": received answer from " << supervertexId
+        //          << ", " << isSupervertex.getValue() << std::endl;
+
 
         if (isSupervertex == MSG_TRUE) {
           if (supervertexId != pointer) {
@@ -329,18 +349,33 @@ private:
           }
 
           // increment counter aggregator (i.e., we're done this phase)
-          data->aggregate(COUNTER_AGG, mLong(1));
+          data->aggregate(COUNTER_AGG, AGG_INCREMENT);
+
+          // stragglers always increment aggregator from here
+          // TODO: this is a hack---if we are last one to increment
+          // COUNTER_AGG to completion, record some flag variables
+          if (data->getAggregatorValue(COUNTER_AGG).getValue() == 
+              data->getAggregatorValue(SUPERVERTEX_AGG).getValue()) {
+            prevSS = data->getCurrentSS();
+            goPhase3A = true;
+          }
 
         } else {
           // otherwise, our pointer didn't know who supervertex is,
           // so resend question to it
-          mLong msg[MSG_QUESTION_LEN] = {mLong(MSG_QUESTION), myId};
+          mLong *msg = new mLong[MSG_QUESTION_LEN];
+          msg[0] = mLong(MSG_QUESTION);
+          msg[1] = mLong(myId);
+
+          //std::cout << data->getVertexID().toString()
+          //          << ": resending question to " << pointer << std::endl;
+
           comm->sendMessage(mLong(pointer), mLongArray(MSG_QUESTION_LEN, msg));
         }
         break;
 
       default:
-        cout << "Invalid message type [" << msgType << "] in PHASE_2B." << endl;
+        std::cout << "Invalid message type [" << msgType << "] in PHASE_2B." << std::endl;
       }
     }
 
@@ -351,7 +386,11 @@ private:
     if (sources->size() != 0) {
       mLong boolean = isPointerSupervertex ? MSG_TRUE : MSG_FALSE;
 
-      mLong msg[MSG_ANSWER_LEN] = {mLong(MSG_ANSWER), mLong(pointer), boolean};
+      mLong *msg = new mLong[MSG_ANSWER_LEN];
+      msg[0] = mLong(MSG_ANSWER);
+      msg[1] = mLong(pointer);
+      msg[2] = boolean;
+
       mLongArray msgArr = mLongArray(MSG_ANSWER_LEN, msg);
 
       for (int i = 0; i < sources->size(); i++) {
@@ -360,6 +399,12 @@ private:
     }
 
     delete sources;
+    sources = NULL;
+
+    // update vertex value
+    vVal.setType(type);
+    vVal.setPointer(pointer);
+    data->setVertexValue(vVal);
 
     // phase change occurs in compute()
   }
@@ -368,31 +413,48 @@ private:
   /**
    * Phase 3A: notify neighbours of supervertex ID
    */
-  void phase3A(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm) {
+  void phase3A(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm) {
 
     // This is dumb... there's probably a better way.
-    data->aggregate(COUNTER_AGG, mLong(-1));
-    data->aggregate(SUPERVERTEX_AGG, mLong(-1));
+    data->aggregate(COUNTER_AGG, AGG_DECREMENT);
+    data->aggregate(SUPERVERTEX_AGG, AGG_DECREMENT);
+
+    mMSTVertexValue vVal = data->getVertexValue();
 
     // send our neighbours <my ID, my supervertex's ID>
-    mLong msg[MSG_CLEAN_LEN] =
-      {mLong(MSG_CLEAN), data->getVertexID().getValue(), mLong(pointer)};
+    mLong *msg = new mLong[MSG_CLEAN_LEN];
+    msg[0] = mLong(MSG_CLEAN);
+    msg[1] = data->getVertexID();
+    msg[2] = mLong(vVal.getPointer());
+
     mLongArray msgArr(MSG_CLEAN_LEN, msg);
+
+    //std::cout << data->getVertexID().toString()
+    //          << ": sending MSG_CLEAN, my supervertex is " << vVal.getPointer() << std::endl;
 
     for (int i = 0; i < data->getOutEdgeCount(); i++) {
       comm->sendMessage(data->getOutEdgeID(i), msgArr);
     }
 
-    phase = PHASE_3B;
+    // update vertex value
+    vVal.setPhase(PHASE_3B);
+    data->setVertexValue(vVal);
   }
 
   /**
    * Phase 3B: receive supervertex ID messages
    */
-  void phase3B(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm,
+  void phase3B(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm,
                messageIterator<mLongArray> * messages) {
+
+    // TODO: hack---after everyone executes phase 3A,
+    // we can reset boolean flag to false
+    goPhase3A = false;    
+
+    mMSTVertexValue vVal = data->getVertexValue();
+    long long pointer = vVal.getPointer();
 
     // receive messages from PHASE_3A
     mLongArray message;
@@ -400,8 +462,8 @@ private:
 
     mLong senderId;
     mLong supervertexId;
-    mLong *eVal;
-    mLong *eValExisting;
+    mMSTEdgeVal eVal;
+    mMSTEdgeVal eValExisting;
 
     // receive message from PHASE_3A
     while (messages->hasNext()) {
@@ -430,44 +492,50 @@ private:
           }
 
           // get value of edge (u, v)
-          eVal = data->getOutEdgeValue(senderId).getArray();
+          eVal = data->getOutEdgeValue(senderId);
 
           if (!data->hasOutEdge(supervertexId)) {
             // edge doesn't exist, so just add this
             data->addOutEdge(supervertexId);
-            data->setOutEdgeValue(supervertexId, mLongArray(EDGE_VAL_LEN, eVal));
+            data->setOutEdgeValue(supervertexId, eVal);
 
           } else {
             // if edge (u, v's supervertex) already exists, pick the
             // one with the minimum weight---this saves work in phase 4B
 
             // get value of edge (u, v's supervertex)
-            eValExisting = data->getOutEdgeValue(supervertexId).getArray();
+            eValExisting = data->getOutEdgeValue(supervertexId);
 
-            if (WEIGHT(eVal) < WEIGHT(eValExisting)) {
-              data->setOutEdgeValue(supervertexId, mLongArray(EDGE_VAL_LEN, eVal));
+            if (eVal.getWeight() < eValExisting.getWeight()) {
+              data->setOutEdgeValue(supervertexId, eVal);
             }
           }
 
           // delete edge (u, v)
           data->delOutEdge(senderId);
         }
-
+        break;
+        
       default:
-        cout << "Invalid message type [" << msgType << "] in PHASE_3B." << endl;
+        std::cout << "Invalid message type [" << msgType << "] in PHASE_3B." << std::endl;
       }
     }
 
     // supervertices also go to phase 4A (b/c they need to wait for msgs)
-    phase = PHASE_4A;
+    vVal.setPhase(PHASE_4A);
+    data->setVertexValue(vVal);
   }
 
 
   /**
    * Phase 4A: send adjacency list to supervertex
    */
-  void phase4A(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm) {
+  void phase4A(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm) {
+
+    mMSTVertexValue vVal = data->getVertexValue();
+    MSTVertexType type = vVal.getType();
+    long long pointer = vVal.getPointer();
 
     // terminate if not supervertex
     if (type != TYPE_SUPERVERTEX) {
@@ -484,40 +552,40 @@ private:
         msg[1] = mLong(numEdges);
 
         int offset;
-        mLong *eVal;
+        mMSTEdgeVal eVal;
 
         // ick... this really, really ought to be in its own class
         for (int i = 0; i < numEdges; i++) {
           offset = MSG_EDGES_PARTS*i+MSG_EDGES_LEN;
-          eVal = data->getOutEdgeValue(i).getArray();
+          eVal = data->getOutEdgeValue(i);
 
           msg[offset] = data->getOutEdgeID(i);
-          msg[offset+1+I_WEIGHT] = eVal[I_WEIGHT];
-          msg[offset+1+I_SRC] = eVal[I_SRC];
-          msg[offset+1+I_DST] = eVal[I_DST];
+          msg[offset+1+I_WEIGHT] = mLong(eVal.getWeight());
+          msg[offset+1+I_SRC] = mLong(eVal.getSrc());
+          msg[offset+1+I_DST] = mLong(eVal.getDst());
         }
 
         comm->sendMessage(mLong(pointer), mLongArray(msgLen, msg));
 
-        // msg passed by value, so safe to delete
-        delete msg;
+        // NOTE: must NOT delete[] msg, as mLongArray retains a pointer to it
       }
       data->voteToHalt();
 
     } else {
       // we are supervertex, so move to next phase
-      phase = PHASE_4B;
+      vVal.setPhase(PHASE_4B);
+      data->setVertexValue(vVal);      
 
       // increment total supervertex counter
-      data->aggregate(SUPERVERTEX_AGG, mLong(1));
+      data->aggregate(SUPERVERTEX_AGG, AGG_INCREMENT);
     }
   }
 
   /**
    * Phase 4B: receive adjacency lists
    */
-  void phase4B(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm,
+  void phase4B(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm,
                messageIterator<mLongArray> * messages) {
 
     mLongArray message;
@@ -527,9 +595,9 @@ private:
     int numEdges;
     int offset;
     mLong eId;
-    mLong eVal[EDGE_VAL_LEN];
-    mLong *eValExisting;
-    
+    mMSTEdgeVal eVal;
+    mMSTEdgeVal eValExisting;
+
     // receive messages from PHASE_4A
     while (messages->hasNext()) {
       message = messages->getNext();
@@ -546,21 +614,21 @@ private:
           offset = MSG_EDGES_PARTS*i+MSG_EDGES_LEN;
 
           eId = edges[offset];
-          eVal[I_WEIGHT] = edges[offset+1+I_WEIGHT];
-          eVal[I_SRC] = edges[offset+1+I_SRC];
-          eVal[I_DST] = edges[offset+1+I_DST];
+          eVal = mMSTEdgeVal(edges[offset+1+I_WEIGHT].getValue(),
+                             edges[offset+1+I_SRC].getValue(),
+                             edges[offset+1+I_DST].getValue());
 
           if (!data->hasOutEdge(eId)) {
             // if no out-edge exists, add new one
             data->addOutEdge(eId);
-            data->setOutEdgeValue(eId, mLongArray(EDGE_VAL_LEN, eVal));
+            data->setOutEdgeValue(eId, eVal);
 
           } else {
             // otherwise, choose one w/ minimum weight
-            eValExisting = data->getOutEdgeValue(eId).getArray();
+            eValExisting = data->getOutEdgeValue(eId);
 
-            if (WEIGHT(eVal) < WEIGHT(eValExisting)) {
-              data->setOutEdgeValue(eId, mLongArray(EDGE_VAL_LEN, eVal));
+            if (eVal.getWeight() < eValExisting.getWeight()) {
+              data->setOutEdgeValue(eId, eVal);
             }
           }
         }
@@ -568,7 +636,7 @@ private:
         break;
 
       default:
-        cout << "Invalid message type [" << msgType << "] in PHASE_4B." << endl;
+        std::cout << "Invalid message type [" << msgType << "] in PHASE_4B." << std::endl;
       }
     }
 
@@ -576,7 +644,9 @@ private:
     // its children NO LONGER participate in MST
 
     // back to phase 1
-    phase = PHASE_1;
+    mMSTVertexValue vVal = data->getVertexValue();
+    vVal.setPhase(PHASE_1);
+    data->setVertexValue(vVal);
   }
 
 public:
@@ -587,33 +657,37 @@ public:
    */
   MST(int maxSS) {}
 
-  void initialize(userVertexObject<mLong, mLongArray, mLongArray, mLong> * data) {
-    mLong val[VERTEX_VAL_LEN];       // dummy initial value
-    data->setVertexValue(mLongArray(VERTEX_VAL_LEN, val));
+  void initialize(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data) {
+    data->setVertexValue(mMSTVertexValue());   // dummy initial value
 
     mLong myId = data->getVertexID();
     mLong eId;
-    mLong eVal[EDGE_VAL_LEN];
+    long long weight;
+    mMSTEdgeVal eVal;
 
+    //std::cout << data->getVertexID().toString() << ": with edges:" << std::endl;
     for (int i = 0; i < data->getOutEdgeCount(); i++ ) {
       eId = data->getOutEdgeID(i);
-      
-      eVal[I_WEIGHT] = (myId < eId) ? myId : eId;
-      eVal[I_SRC] = myId;
-      eVal[I_DST] = eId;
 
-      data->setOutEdgeValue(eId, mLongArray(EDGE_VAL_LEN, eVal));
+      // + 1 to deal with vertex ID possibly being 0
+      weight = ((myId < eId) ? myId : eId).getValue() + 1;
+      eVal = mMSTEdgeVal(weight, myId.getValue(), eId.getValue());
+
+      data->setOutEdgeValue(eId, eVal);
+      //std::cout << "  " << eVal.toString() << std::endl;
     }
 
-    phase = PHASE_1;
-
     // need to set up correct number of supervertices on first superstep
-    data->aggregate(SUPERVERTEX_AGG, mLong(1));
+    data->aggregate(SUPERVERTEX_AGG, AGG_INCREMENT);
+
+    // TODO: hack to avoid aggregator bug
+    prevSS = 0;
+    goPhase3A = false;
   }
 
   void compute(messageIterator<mLongArray> * messages,
-               userVertexObject<mLong, mLongArray, mLongArray, mLong> * data,
-               messageManager<mLong, mLongArray, mLongArray, mLong> * comm) {
+               userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data,
+               messageManager<mLong, mMSTVertexValue, mLongArray, mLong> * comm) {
 
     // PHASE_2B is special, because it can repeat an indeterminate
     // number of times. Hence, a "superbarrier" is needed.
@@ -624,9 +698,18 @@ public:
     long long numDone = data->getAggregatorValue(COUNTER_AGG).getValue();
     long long numSupervertex = data->getAggregatorValue(SUPERVERTEX_AGG).getValue();
 
+    //std::cout << data->getVertexID().toString()
+    //          << ": numDone=" << numDone
+    //          << ", numSupervertex=" << numSupervertex << std::endl;
 
-    if (phase == PHASE_2B &&
-        numDone == numSupervertex) {
+    MSTPhase phase = data->getVertexValue().getPhase();
+
+    // TODO: first line is a hack---we proceed to phase 3A only
+    // when we are the next direct superstep after COUNTER_AGG
+    // was incremented to equal to SUPERVERTEX_AGG
+    if ((data->getCurrentSS() == prevSS+1 && goPhase3A) &&
+        phase == PHASE_2B && numDone == numSupervertex) {
+      // no need to update vertex value, b/c this is beginning of a superstep
       phase = PHASE_3A;
     }
 
@@ -638,42 +721,42 @@ public:
 
     switch(phase) {
     case PHASE_1:   // find minimum-weight edge
-      //cout << data->getVertexID() << ": phase 1" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 1" << std::endl;
       phase1(data);
       // fall through
 
     case PHASE_2A:
-      //cout << data->getVertexID() << ": phase 2A" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 2A" << std::endl;
       phase2A(data, comm);
       break;
 
     case PHASE_2B:
-     //cout << data->getVertexID() << ": phase 2B" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 2B" << std::endl;
       phase2B(data, comm, messages);
       break;
 
     case PHASE_3A:
-      //cout << data->getVertexID() << ": phase 3A" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 3A" << std::endl;
       phase3A(data, comm);
       break;
 
     case PHASE_3B:
-      //cout << data->getVertexID() << ": phase 3B" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 3B" << std::endl;
       phase3B(data, comm, messages);
       // fall through
 
     case PHASE_4A:
-      //cout << data->getVertexID() << ": phase 4A" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 4A" << std::endl;
       phase4A(data, comm);
       break;
 
     case PHASE_4B:
-      //cout << data->getVertexID() << ": phase 4B" << endl;
+      //std::cout << data->getVertexID().toString() << ": phase 4B" << std::endl;
       phase4B(data, comm, messages);
       break;
 
     default:
-      cout << "Invalid computation phase." << endl;
+      std::cout << "Invalid computation phase." << std::endl;
       break;
     }
   }

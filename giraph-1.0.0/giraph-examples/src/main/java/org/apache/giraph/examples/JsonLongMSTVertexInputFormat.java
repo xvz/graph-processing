@@ -24,6 +24,7 @@ import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexInputFormat;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.giraph.examples.MinimumSpanningTreeVertex.MSTVertexValue;
 import org.apache.giraph.examples.MinimumSpanningTreeVertex.MSTEdgeValue;
 import org.apache.giraph.examples.MinimumSpanningTreeVertex.MSTMessage;
 import org.apache.hadoop.mapreduce.InputSplit;
@@ -43,7 +44,7 @@ import java.util.List;
   * and message types.
   */
 public class JsonLongMSTVertexInputFormat extends
-  TextVertexInputFormat<LongWritable, MSTEdgeValue, MSTEdgeValue> {
+  TextVertexInputFormat<LongWritable, MSTVertexValue, MSTEdgeValue> {
 
   @Override
   public TextVertexReader createVertexReader(InputSplit split,
@@ -52,7 +53,7 @@ public class JsonLongMSTVertexInputFormat extends
   }
 
  /**
-  * VertexReader that features <code>double</code> vertex
+  * VertexReader that features <code>MSTVertexValue</code> vertex
   * values and <code>MSTEdgeValue</code> out-edge weights. The
   * files should be in the following JSON format:
   * JSONArray(<vertex id>, <vertex value>,
@@ -78,11 +79,11 @@ public class JsonLongMSTVertexInputFormat extends
     }
 
     @Override
-    protected MSTEdgeValue getValue(JSONArray jsonVertex) throws
+    protected MSTVertexValue getValue(JSONArray jsonVertex) throws
       JSONException, IOException {
-      // ignore whatever is in jsonVertex, and return dummy MSTEdgeValue
+      // ignore whatever is in jsonVertex, and return dummy MSTVertexValue
       // instead (this will be replaced during computation)
-      return new MSTEdgeValue();
+      return new MSTVertexValue();
     }
 
     @Override
@@ -110,7 +111,7 @@ public class JsonLongMSTVertexInputFormat extends
     }
 
     @Override
-    protected Vertex<LongWritable, MSTEdgeValue, MSTEdgeValue, MSTMessage>
+    protected Vertex<LongWritable, MSTVertexValue, MSTEdgeValue, MSTMessage>
     handleException(Text line, JSONArray jsonVertex, JSONException e) {
       throw new IllegalArgumentException(
           "Couldn't get vertex from line " + line, e);
