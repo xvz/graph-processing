@@ -222,6 +222,11 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     MSTVertexType type = getValue().getType();
     long pointer = getValue().getPointer();
 
+    // if already done, our pointer is our supervertex
+    if (type != MSTVertexType.TYPE_UNKNOWN) {
+      isPointerSupervertex = true;
+    }
+
     // question messages
     long senderId;
 
@@ -242,7 +247,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
         // if already done, no need to do more checks
         if (type != MSTVertexType.TYPE_UNKNOWN) {
-          isPointerSupervertex = true;
           break;
         }
 
