@@ -294,6 +294,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
             type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
           }
 
+          isPointerSupervertex = true;
+
           // increment counter aggregator (i.e., we're done this phase)
           aggregate(COUNTER_AGG, new LongWritable(1));
 
