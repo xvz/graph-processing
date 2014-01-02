@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.apache.giraph.aggregators.LongSumAggregator;
 import org.apache.giraph.edge.Edge;
+import org.apache.giraph.edge.MutableEdge;
 import org.apache.giraph.edge.EdgeFactory;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
@@ -36,6 +37,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.log4j.Logger;
+
+import java.util.Iterator;
 
 /**
  * Distributed MST implementation.
@@ -480,6 +483,15 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
                            new MSTMsgContentEdges(getNumEdges(), getEdges()));
 
         sendMessage(new LongWritable(pointer), msg);
+
+        // delete existing edges explicitly---this seems to help w/ performance
+        Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
+            getMutableEdges().iterator();
+
+        while (itr.hasNext()) {
+          itr.next();
+          itr.remove();
+        }
       }
       voteToHalt();
 
