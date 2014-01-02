@@ -575,6 +575,11 @@ private:
           msg[offset+1+I_WEIGHT] = mLong(eVal.getWeight());
           msg[offset+1+I_SRC] = mLong(eVal.getSrc());
           msg[offset+1+I_DST] = mLong(eVal.getDst());
+
+          // delete existing edges explicitly
+          // this saves on memory and *should* help w/ performance,
+          // provided graph mutations are not *too* expensive
+          data->delOutEdge(data->getOutEdgeID(i));
         }
 
         comm->sendMessage(mLong(pointer), mLongArray(msgLen, msg));
