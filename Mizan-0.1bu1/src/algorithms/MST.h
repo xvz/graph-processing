@@ -180,6 +180,7 @@ private:
     long long minWeight = INF;
     long long minId = data->getVertexID().getValue();
     mMSTEdgeVal minEdge;
+    bool foundMinEdge = false;
 
     long long eId = data->getVertexID().getValue();
     mMSTEdgeVal eVal;
@@ -200,14 +201,21 @@ private:
 
         // make copy of the edge (via operator=)
         minEdge = eVal;
+        foundMinEdge = true;
       }
     }
 
-    // store minimum weight edge value as vertex value
     mMSTVertexValue vVal = data->getVertexValue();
-    vVal.setWeight(minEdge.getWeight());
-    vVal.setSrc(minEdge.getSrc());
-    vVal.setDst(minEdge.getDst());
+
+    // store minimum weight edge value as vertex value
+    if (foundMinEdge) {
+      vVal.setWeight(minEdge.getWeight());
+      vVal.setSrc(minEdge.getSrc());
+      vVal.setDst(minEdge.getDst());
+    } else {
+      // this is an error
+      std::cout << "No minimum edge for " << data->getVertexID().getValue() << " found in PHASE_1." << std::endl;
+    }
 
     // technically part of PHASE_2A
     vVal.setPointer(minId);
@@ -301,7 +309,11 @@ private:
         // NOTE: cycle is unique b/c pointer choice is unique
         if ( senderId == pointer ) {
           // smaller ID always wins & becomes supervertex
-          if ( myId < senderId ) {
+          //
+          // NOTE: = MUST be used here, in case there is a self-cycle
+          // (i.e., vertex with an edge to itself), as otherwise the
+          // vertex type will be incorrectly set to non-supervertex
+          if ( myId <= senderId ) {
             pointer = myId;        // I am the supervertex
             type = TYPE_SUPERVERTEX;
           } else {
@@ -575,9 +587,6 @@ private:
       // we are supervertex, so move to next phase
       vVal.setPhase(PHASE_4B);
       data->setVertexValue(vVal);      
-
-      // increment total supervertex counter
-      data->aggregate(SUPERVERTEX_AGG, AGG_INCREMENT);
     }
   }
 
@@ -643,10 +652,18 @@ private:
     // all that's left now is a graph w/ supervertices
     // its children NO LONGER participate in MST
 
-    // back to phase 1
-    mMSTVertexValue vVal = data->getVertexValue();
-    vVal.setPhase(PHASE_1);
-    data->setVertexValue(vVal);
+    // if no more edges, then this supervertex is done
+    if (data->getOutEdgeCount() == 0) {
+      data->voteToHalt();
+    } else {
+      // otherwise, increment total supervertex counter
+      data->aggregate(SUPERVERTEX_AGG, AGG_INCREMENT);
+
+      // and go back to phase 1
+      mMSTVertexValue vVal = data->getVertexValue();
+      vVal.setPhase(PHASE_1);
+      data->setVertexValue(vVal);
+    }
   }
 
 public:
@@ -659,6 +676,14 @@ public:
 
   void initialize(userVertexObject<mLong, mMSTVertexValue, mLongArray, mLong> * data) {
     data->setVertexValue(mMSTVertexValue());   // dummy initial value
+
+    // if we are unconnected, just terminate
+    if (data->getOutEdgeCount() == 0) {
+      // TODO: is this safe to do here? otherwise move it into
+      // compute with extra condition that SS is == 1
+      data->voteToHalt();
+      return;
+    }
 
     mLong myId = data->getVertexID();
     mLong eId;
@@ -713,11 +738,7 @@ public:
       phase = PHASE_3A;
     }
 
-    // special halting condition if only 1 supervertex is left
-    if (phase == PHASE_1 && numSupervertex == 1) {
-      data->voteToHalt();
-      return;
-    }
+    // algorithm termination is in phase4B
 
     switch(phase) {
     case PHASE_1:   // find minimum-weight edge

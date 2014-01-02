@@ -183,7 +183,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       getValue().setSrc(minEdge.getSrc());
       getValue().setDst(minEdge.getDst());
     } else {
-      LOG.error("No minimum edge for" + getId() + "found in Phase_1.");
+      // this is an error
+      LOG.error("No minimum edge for " + getId() + " found in PHASE_1.");
     }
 
     // technically part of PHASE_2A
@@ -261,7 +262,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           //
           // NOTE: = MUST be used here, in case there is a self-cycle
           // (i.e., vertex with an edge to itself), as otherwise the
-          // vertex will be incorrectly set to a non-supervertex
+          // vertex type will be incorrectly set to non-supervertex
           if (myId <= senderId) {
             pointer = myId;        // I am the supervertex
             type = MSTVertexType.TYPE_SUPERVERTEX;
