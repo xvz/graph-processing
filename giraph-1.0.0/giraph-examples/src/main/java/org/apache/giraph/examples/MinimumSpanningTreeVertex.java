@@ -94,18 +94,11 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       getValue().setPhase(MSTPhase.PHASE_3A);
     }
 
-    //if (getSuperstep() > 40) {
-    //  LOG.info(getId() + ": aggregators, done: " +
-    //           numDone + " supervert: " + numSupervertex);
-    //}
-
     // algorithm termination is in phase4B
 
     switch(phase) {
     case PHASE_1:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 1");
-      //}
+      //LOG.info(getId() + ": phase 1");
       //for (Edge<LongWritable, MSTEdgeValue> edge : getEdges()) {
       //  LOG.info("  edges to " +
       //           edge.getTargetVertexId() + " with " + edge.getValue());
@@ -115,44 +108,32 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       // fall through
 
     case PHASE_2A:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 2A");
-      //}
+      //LOG.info(getId() + ": phase 2A");
       phase2A();
       break;
 
     case PHASE_2B:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 2B");
-      //}
+      //LOG.info(getId() + ": phase 2B");
       phase2B(messages);
       break;
 
     case PHASE_3A:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 3A");
-      //}
+      //LOG.info(getId() + ": phase 3A");
       phase3A();
       break;
 
     case PHASE_3B:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 3B");
-      //}
+      //LOG.info(getId() + ": phase 3B");
       phase3B(messages);
       // fall through
 
     case PHASE_4A:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 4A");
-      //}
+      //LOG.info(getId() + ": phase 4A");
       phase4A();
       break;
 
     case PHASE_4B:
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": phase 4B");
-      //}
+      //LOG.info(getId() + ": phase 4B");
       phase4B(messages);
       break;
 
@@ -210,10 +191,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     getValue().setPhase(MSTPhase.PHASE_2A);
 
-    //if (getSuperstep() > 40) {
-    //  LOG.info(getId() + ": min edge is " + minEdge +
-    //           " and value is " + getValue());
-    //}
+    //LOG.info(getId() + ": min edge is " + minEdge +
+    //         " and value is " + getValue());
   }
 
   /**
@@ -227,9 +206,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
                                     new MSTMsgContentLong(getId().get()));
 
     // send query to pointer (potential supervertex)
-    //if (getSuperstep() > 40) {
-    //  LOG.info(getId() + ": sending question to " + getValue().getPointer());
-    //}
+    //LOG.info(getId() + ": sending question to " + getValue().getPointer());
     sendMessage(new LongWritable(getValue().getPointer()), msg);
 
     getValue().setPhase(MSTPhase.PHASE_2B);
@@ -266,9 +243,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       case MSTMsgType.MSG_QUESTION:
         senderId = message.getValue().getFirst();
 
-        //if (getSuperstep() > 40) {
-        //  LOG.info(getId() + ": received question from " + senderId);
-        //}
+        //LOG.info(getId() + ": received question from " + senderId);
 
         // save source vertex ID, so we can send response
         // to them later on (after receiving all msgs)
@@ -318,10 +293,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         supervertexId = message.getValue().getFirst();
         isSupervertex = (message.getValue().getSecond() == 0) ? false : true;
 
-        //if (getSuperstep() > 40) {
-        //  LOG.info(getId() + ": received answer from " +
-        //           supervertexId + ", " + isSupervertex);
-        //}
+        //LOG.info(getId() + ": received answer from " +
+        //         supervertexId + ", " + isSupervertex);
 
         if (isSupervertex) {
           if (supervertexId != pointer) {
@@ -345,10 +318,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
                              new MSTMsgType(MSTMsgType.MSG_QUESTION),
                              new MSTMsgContentLong(myId));
 
-          //if (getSuperstep() > 40) {
-          //  LOG.info(getId() + ": resending question to " + pointer);
-          //}
-
+          //LOG.info(getId() + ": resending question to " + pointer);
           sendMessage(new LongWritable(pointer), msg);
         }
         break;
@@ -370,9 +340,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       MSTMessage msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_ANSWER),
                                       new MSTMsgContentLong(pointer, bool));
 
-      //if (getSuperstep() > 40) {
-      //  LOG.info(getId() + ": sent " + pointer + ", " + isPointerSupervertex);
-      //}
+      //LOG.info(getId() + ": sent " + pointer + ", " + isPointerSupervertex);
 
       for (long src : sources) {
         sendMessage(new LongWritable(src), msg);
@@ -399,10 +367,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
                               new MSTMsgContentLong(getId().get(),
                                                     getValue().getPointer()));
 
-    //if (getSuperstep() > 40) {
-    //  LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " +
-    //           getValue().getPointer());
-    //}
+    //LOG.info(getId() + ": sending MSG_CLEAN, my supervertex is " +
+    //         getValue().getPointer());
     sendMessageToAllEdges(msg);
 
     getValue().setPhase(MSTPhase.PHASE_3B);
