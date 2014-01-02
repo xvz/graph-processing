@@ -1251,7 +1251,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       MSTEdgeValue val;
 
       for (int i = 0; i < numEdges; i++) {
-        // not safe to keep reference, so create copy
         id = new LongWritable();
         val = new MSTEdgeValue();
 
