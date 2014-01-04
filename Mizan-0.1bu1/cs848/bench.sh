@@ -1,22 +1,22 @@
 #!/bin/bash
 WORKERS=4
 
-for((i=1;i<=2;i++)); do
+#for((i=1;i<=2;i++)); do
     ./premizan.sh google.txt ${WORKERS} 1
     touch premizan_google.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
     ./premizan.sh amazon.txt ${WORKERS} 1
     touch premizan_amazon.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
     ./premizan.sh patents.txt ${WORKERS} 1
     touch premizan_patents.txt_4_1_"$(date +%F-%H-%M-%S)"_done.txt
-done
+#done
 
-#./wcc.sh google.txt ${WORKERS} 1
-#./wcc.sh google.txt ${WORKERS} 1
-#./wcc.sh google.txt ${WORKERS} 1
-# 
-#./wcc.sh google.txt ${WORKERS} 2
-#./wcc.sh google.txt ${WORKERS} 2
-#./wcc.sh google.txt ${WORKERS} 2
+./wcc.sh google.txt ${WORKERS} 1
+./wcc.sh google.txt ${WORKERS} 1
+./wcc.sh google.txt ${WORKERS} 1
+ 
+./wcc.sh google.txt ${WORKERS} 2
+./wcc.sh google.txt ${WORKERS} 2
+./wcc.sh google.txt ${WORKERS} 2
 # 
 # 
 #./wcc.sh amazon.txt ${WORKERS} 1
