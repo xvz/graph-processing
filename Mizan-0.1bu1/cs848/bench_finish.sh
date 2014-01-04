@@ -15,8 +15,11 @@ for ((i = 1; i <= 4; i++)); do
 
     # change to same directory as master
     # append final network usage
+    ssh cloud${i} "cd ${dir}; cat /proc/net/dev >> ./${netfile}"
+
     # could use `jobs -p` for kill, but difficult b/c we're ssh-ing
-    ssh cloud${i} "cd ${dir}; cat /proc/net/dev >> ./${netfile}; kill $(ps -e | grep sar | sed 's/ .*//g')"
+    # must use ''s otherwise $ is evaluated too early
+    ssh cloud${i} 'kill $(pgrep sar)'
 done
 
 # get files

@@ -1,10 +1,13 @@
 #!/bin/bash
 WORKERS=4
 
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
-# 
+./sssp.sh google-gps-noval.txt ${WORKERS} 0
+sleep 60   # need delay, otherwise will fail
+./sssp.sh google-gps-noval.txt ${WORKERS} 0
+sleep 60
+./sssp.sh google-gps-noval.txt ${WORKERS} 0
+sleep 60
+ 
 #./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
 #./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
 #./sssp.sh amazon-gps-noval.txt ${WORKERS} 0

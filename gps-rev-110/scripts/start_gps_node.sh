@@ -36,8 +36,9 @@ fi
 echo "-Xincgc -Xms$XMS_SIZE -Xmx$XMX_SIZE"
 
 # To automate running GPS, use the following hack:
-# - have master node (which is also a slave) be LAST one in slave file
-# - master must have modified scripts/start_gps_node.sh that does not have "&" at the end
+# - for start_gps_node.sh, last slave in slaves file should NOT have "&" at end
 #
 # This enables this script to run until computation is completed
+#
+# This can't be done on master, b/c server is also started first
 /home/ubuntu/jdk1.6.0_30/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar ${GPS_DIR}/gps_node_runner.jar -machineid ${2} -ofp /user/${USER}/gps/output/${OUTPUT_FILE_NAME} ${5} &> ${GPS_LOG_DIRECTORY}/${4}-machine${2}-output.txt &

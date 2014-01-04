@@ -32,6 +32,3 @@ cd ../cs848/
 ## get stats (see debug_site.sh for debug naming convention)
 hadoop dfs -get /user/ubuntu/gps/output/quick-start-machine-stats ./${logfile}
 hadoop dfs -mv /user/ubuntu/gps/output/quick-start-machine-stats /user/ubuntu/gps/stats-${logname}
-
-# sleep a bit, to prevent next run from failing
-#sleep 30

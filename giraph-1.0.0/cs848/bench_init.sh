@@ -15,5 +15,6 @@ for ((i = 1; i <= 4; i++)); do
     # change to same directory as master
     # start sysstat for memory, 1s intervals
     # print initial network usage
-    ssh cloud${i} "cd ${dir}; sar -r 1 > ./${memfile}&; cat /proc/net/dev > ./${netfile}"
+    # NOTE: & is like variant of ;, so don't need both
+    ssh cloud${i} "cd ${dir}; sar -r 1 > ./${memfile} & cat /proc/net/dev > ./${netfile}"
 done
