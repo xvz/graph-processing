@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-if [ $# -ne 2 ]; then
-    echo "usage: $0 [input graph] [workers]"
+if [ $# -ne 3 ]; then
+    echo "usage: $0 [input graph] [workers] [dynamic partitioning]"
     exit -1
 fi
 
@@ -10,9 +10,9 @@ fi
 inputgraph=$(basename $1)
 
 workers=$2    # workers can be > number of EC2 instances
-dynamic=1     # dynamic partitioning (we only ever use hash)
+dynamic=$3    # dynamic partitioning
 
-logname=wcc_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logname=wcc_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}.txt       # Mizan stats (incl. running time)
 
 
