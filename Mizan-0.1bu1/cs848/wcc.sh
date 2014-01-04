@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [workers] [dynamic partitioning]"
+if [ $# -ne 2 ]; then
+    echo "usage: $0 [input graph] [workers]"
     exit -1
 fi
 
@@ -10,8 +10,17 @@ fi
 inputgraph=$(basename $1)
 
 workers=$2    # workers can be > number of EC2 instances
-dynamic=$3    # dynamic partitioning
+dynamic=1     # dynamic partitioning (we only ever use hash)
 
-logfile=wcc_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)".txt
+logname=wcc_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logfile=${logname}.txt       # Mizan stats (incl. running time)
 
+
+## start logging memory + network usage
+./bench_init.sh ${logname}
+
+## start algorithm run
 mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 6 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
+
+## finish logging memory + network usage
+./bench_finish.sh ${logname}

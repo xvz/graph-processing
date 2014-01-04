@@ -15,7 +15,19 @@ outputdir=/user/ubuntu/giraph-output/pagerank
 
 hadoop dfs -rmr ${outputdir}
 
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankVertex -c org.apache.giraph.combiner.DoubleSumCombiner -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.examples.SimplePageRankVertex\$SimplePageRankVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./pagerank_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)".txt
+## log names
+logname=pagerank_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logfile=${logname}.txt       # running time
+
+
+## start logging memory + network usage
+./bench_init.sh ${logname}
+
+## start algorithm run
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankVertex -c org.apache.giraph.combiner.DoubleSumCombiner -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.examples.SimplePageRankVertex\$SimplePageRankVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./${logfile}
 
 # mc not needed b/c we don't want aggregators: -mc org.apache.giraph.examples.SimplePageRankVertex\$SimplePageRankVertexMasterCompute 
 # alternative output format: -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat 
+
+## finish logging memory + network usage
+./bench_finish.sh ${logname}
