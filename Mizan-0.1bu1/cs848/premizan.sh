@@ -8,8 +8,11 @@ fi
 
 inputgraph=$(basename $1)
 
-logfile=premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)".txt
+logname=premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"
+logfile=${logname}.txt
 
+## start logging memory + network usage
+./bench_init.sh ${logname}
 
 cd ../preMizan/hadoopScripts/
 
@@ -20,4 +23,8 @@ case $3 in
     *) echo "Error: invalid partition type!";;
 esac
 
+cd ../../cs848/
 touch premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"_done.txt
+
+## finish logging memory + network usage
+./bench_finish.sh ${logname}
