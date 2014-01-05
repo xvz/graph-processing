@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKERS=4
+WORKERS=8
 
 ./pagerank.sh amazon-giraph.txt ${WORKERS}
 ./pagerank.sh amazon-giraph.txt ${WORKERS}

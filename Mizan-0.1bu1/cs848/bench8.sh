@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKERS=4
+WORKERS=8
 
 #for((i=1;i<=5;i++)); do
     ./premizan.sh google.txt ${WORKERS} 1
@@ -7,6 +7,10 @@ WORKERS=4
     ./premizan.sh patents.txt ${WORKERS} 1
 #done
 
+#===============================================
+#===============================================
+#===============================================
+
 ./pagerank.sh amazon.txt ${WORKERS} 1
 ./pagerank.sh amazon.txt ${WORKERS} 1
 ./pagerank.sh amazon.txt ${WORKERS} 1
@@ -51,6 +55,9 @@ WORKERS=4
 ./pagerank.sh patents.txt ${WORKERS} 2
 ./pagerank.sh patents.txt ${WORKERS} 2
 
+#===============================================
+#===============================================
+#===============================================
 
 ## use src 0
 #./sssp.sh google.txt ${WORKERS} 1
@@ -99,6 +106,9 @@ WORKERS=4
 #./sssp.sh patents.txt ${WORKERS} 2
 #./sssp.sh patents.txt ${WORKERS} 2
 
+#===============================================
+#===============================================
+#===============================================
 
 #./wcc.sh amazon.txt ${WORKERS} 1
 #./wcc.sh amazon.txt ${WORKERS} 1
@@ -143,3 +153,49 @@ WORKERS=4
 #./wcc.sh patents.txt ${WORKERS} 2
 #./wcc.sh patents.txt ${WORKERS} 2
 
+#===============================================
+#===============================================
+#===============================================
+
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 1
+# 
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+#./mst.sh amazon-mst-mizan.txt ${WORKERS} 2
+# 
+# 
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+#./mst.sh google-mst-mizan.txt ${WORKERS} 1
+# 
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+#./mst.sh google-mst-mizan.txt ${WORKERS} 2
+# 
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 1
+# 
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+#./mst.sh patents-mst-mizan.txt ${WORKERS} 2
