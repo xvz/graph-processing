@@ -8,12 +8,15 @@ fi
 logname=$1
 dir=$PWD
 
-for ((i = 1; i <= 4; i++)); do
+for ((i = 0; i <= 4; i++)); do
+    cpufile=${logname}_${i}_cpu.txt   # cpu usage
     netfile=${logname}_${i}_net.txt   # network usage
     memfile=${logname}_${i}_mem.txt   # memory usage
+    nbtfile=${logname}_${i}_nbt.txt   # network bytes total
 
     # change to same directory as master
-    # start sysstat for memory, 1s intervals
-    # print initial network usage
-    ssh cloud${i} "cd ${dir}; sar -r 1 > ./${memfile} & cat /proc/net/dev > ./${netfile}"
+    # start sysstat for cpu, memory, and network usage (1s intervals)
+    # print initial network bytes
+    # NOTE: & is like variant of ;, so don't need both
+    ssh cloud${i} "cd ${dir}; sar 1 > ./${cpufile} & sar -r 1 > ./${memfile} & sar -n DEV 1 > ./${netfile} & cat /proc/net/dev > ./${nbtfile}"
 done

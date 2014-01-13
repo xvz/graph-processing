@@ -23,7 +23,7 @@ package org.apache.giraph.examples;
 //import org.apache.giraph.edge.Edge;
 import org.apache.giraph.graph.Vertex;
 import org.apache.hadoop.io.LongWritable;
-//import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.NullWritable;
 
 import java.io.IOException;
 
@@ -42,17 +42,13 @@ import java.io.IOException;
  * "PEGASUS: Mining Peta-Scale Graphs", 2010
  *
  * http://www.cs.cmu.edu/~ukang/papers/PegasusKAIS.pdf
- *
- * NOTE: we use LongWritable for edge weights due to known bug with
- * NullWritable: https://issues.apache.org/jira/browse/GIRAPH-216
- *
  */
 @Algorithm(
     name = "Connected components",
     description = "Finds connected components of the graph"
 )
 public class ConnectedComponentsVertex extends Vertex<LongWritable,
-    LongWritable, LongWritable, LongWritable> {
+    LongWritable, NullWritable, LongWritable> {
   /**
    * Propagates the smallest vertex id to all neighbors. Will always choose to
    * halt and only reactivate if a smaller id has been sent to it.

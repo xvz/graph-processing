@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 
   } else if (myArgs.algorithm == 3) {
     groupVoteToHalt = true;
-    storageType = InNbrStore;
+    storageType = OutNbrStore;   // to match Giraph and GPS
     dimEst dE(myArgs.superSteps);
 
     Mizan<mLong, mLongArray, mLongArray, mLong> * mmk =
