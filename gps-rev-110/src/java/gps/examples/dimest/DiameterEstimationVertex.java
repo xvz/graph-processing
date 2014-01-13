@@ -10,13 +10,13 @@ import gps.writable.LongArrayWritable;
 
 /**
  * GPS implementation of Flajolet-Martin diameter estimation.
- * 
+ *
  * @author Young
  */
 public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, LongArrayWritable> {
 
-	public static int DEFAULT_NUM_MAX_ITERATIONS = 30;
-	public static int numMaxIterations;
+  public static int DEFAULT_NUM_MAX_ITERATIONS = 30;
+  public static int numMaxIterations;
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
@@ -27,27 +27,26 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
   /** Bit shift constant **/
   private static final long V1 = 1;
 
+  public DiameterEstimationVertex(CommandLine line) {
+    String otherOptsStr = line.getOptionValue(GPSNodeRunner.OTHER_OPTS_OPT_NAME);
+    System.out.println("otherOptsStr: " + otherOptsStr);
+    numMaxIterations = DEFAULT_NUM_MAX_ITERATIONS;
+    if (otherOptsStr != null) {
+      String[] split = otherOptsStr.split("###");
+      for (int index = 0; index < split.length; ) {
+        String flag = split[index++];
+        String value = split[index++];
+        if ("-max".equals(flag)) {
+          numMaxIterations = Integer.parseInt(value);
+          System.out.println("numMaxIterations: " + numMaxIterations);
+        }
+      }
+    }
+  }
 
-	public DiameterEstimationVertex(CommandLine line) {
-		String otherOptsStr = line.getOptionValue(GPSNodeRunner.OTHER_OPTS_OPT_NAME);
-		System.out.println("otherOptsStr: " + otherOptsStr);
-		numMaxIterations = DEFAULT_NUM_MAX_ITERATIONS;
-		if (otherOptsStr != null) {
-			String[] split = otherOptsStr.split("###");
-			for (int index = 0; index < split.length; ) {
-				String flag = split[index++];
-				String value = split[index++];
-				if ("-max".equals(flag)) {
-					numMaxIterations = Integer.parseInt(value);
-					System.out.println("numMaxIterations: " + numMaxIterations);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void compute(Iterable<LongArrayWritable> incomingMessages, int superstepNo) {
-		if (superstepNo == 1) {
+  @Override
+  public void compute(Iterable<LongArrayWritable> incomingMessages, int superstepNo) {
+    if (superstepNo == 1) {
       long[] value = new long[K];
       int finalBitCount = 63;
       long rndVal = 0;
@@ -58,10 +57,10 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       }
 
       LongArrayWritable arr = new LongArrayWritable(value);
-			sendMessages(getNeighborIds(), arr);
+      sendMessages(getNeighborIds(), arr);
       setValue(arr);
       return;
-		}
+    }
 
     // get direct reference to vertex value's array
     long[] newBitmask = getValue().get();
@@ -70,7 +69,7 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
     long[] tmpBitmask;
     long tmp;
 
-		for (LongArrayWritable message : incomingMessages) {
+    for (LongArrayWritable message : incomingMessages) {
       tmpBitmask = message.get();
 
       // both arrays are of length K
@@ -83,7 +82,7 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
         // check if there's a change
         isChanged = isChanged || (tmp != newBitmask[i]);
       }
-		}
+    }
 
     // if steady state or max supersteps met, terminate
     if (!isChanged || (superstepNo >= numMaxIterations)) {
@@ -95,7 +94,7 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       //LOG.info(getId() + ": not halting... sending messages");
       sendMessages(getNeighborIds(), getValue());
     }
-	}
+  }
 
   // Source: Mizan, which took this from Pegasus
   /**
@@ -123,44 +122,44 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
     return j;
   }
 
-	@Override
-	public LongArrayWritable getInitialValue(int id) {
-		return new LongArrayWritable();
-	}
+  @Override
+  public LongArrayWritable getInitialValue(int id) {
+    return new LongArrayWritable();
+  }
 
-	/**
-	 * Factory class for {@link DiameterEstimationVertex}.
-	 * 
-	 * @author Young
-	 */
-	public static class DiameterEstimationVertexFactory extends NullEdgeVertexFactory<LongArrayWritable, LongArrayWritable> {
+  /**
+   * Factory class for {@link DiameterEstimationVertex}.
+   *
+   * @author Young
+   */
+  public static class DiameterEstimationVertexFactory extends NullEdgeVertexFactory<LongArrayWritable, LongArrayWritable> {
 
-		@Override
-		public NullEdgeVertex<LongArrayWritable, LongArrayWritable> newInstance(CommandLine commandLine) {
-			return new DiameterEstimationVertex(commandLine);
-		}
-	}
+    @Override
+    public NullEdgeVertex<LongArrayWritable, LongArrayWritable> newInstance(CommandLine commandLine) {
+      return new DiameterEstimationVertex(commandLine);
+    }
+  }
 
-	public static class JobConfiguration extends GPSJobConfiguration {
+  public static class JobConfiguration extends GPSJobConfiguration {
 
-		@Override
-		public Class<?> getVertexFactoryClass() {
-			return DiameterEstimationVertexFactory.class;
-		}
+    @Override
+    public Class<?> getVertexFactoryClass() {
+      return DiameterEstimationVertexFactory.class;
+    }
 
-		@Override
-		public Class<?> getVertexClass() {
-			return DiameterEstimationVertex.class;
-		}
+    @Override
+    public Class<?> getVertexClass() {
+      return DiameterEstimationVertex.class;
+    }
 
-		@Override
-		public Class<?> getVertexValueClass() {
-			return LongArrayWritable.class;
-		}
+    @Override
+    public Class<?> getVertexValueClass() {
+      return LongArrayWritable.class;
+    }
 
-		@Override
-		public Class<?> getMessageValueClass() {
-			return LongArrayWritable.class;
-		}
-	}
+    @Override
+    public Class<?> getMessageValueClass() {
+      return LongArrayWritable.class;
+    }
+  }
 }
