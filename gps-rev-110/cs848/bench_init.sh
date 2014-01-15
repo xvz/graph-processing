@@ -8,7 +8,7 @@ fi
 logname=$1
 dir=$PWD
 
-for ((i = 0; i <= 4; i++)); do
+for ((i = 1; i <= 2; i++)); do
     cpufile=${logname}_${i}_cpu.txt   # cpu usage
     netfile=${logname}_${i}_net.txt   # network usage
     memfile=${logname}_${i}_mem.txt   # memory usage

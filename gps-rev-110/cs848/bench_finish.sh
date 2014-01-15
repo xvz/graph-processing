@@ -9,7 +9,7 @@ logname=$1
 
 dir=$PWD   # so logs show up in right place
 
-for ((i = 0; i <= 4; i++)); do
+for ((i = 1; i <= 2; i++)); do
     nbtfile=${logname}_${i}_nbt.txt   # network bytes total
 
     # change to same directory as master
@@ -22,7 +22,7 @@ for ((i = 0; i <= 4; i++)); do
 done
 
 # get files
-for ((i = 0; i <= 4; i++)); do
+for ((i = 1; i <= 2; i++)); do
     cpufile=${logname}_${i}_cpu.txt   # cpu usage
     netfile=${logname}_${i}_net.txt   # network usage
     memfile=${logname}_${i}_mem.txt   # memory usage
