@@ -5,10 +5,27 @@ if [ $# -ne 1 ]; then
     exit -1
 fi
 
+hostname=$(hostname)
+
+if [[ "$hostname" == "cloud0" ]]; then
+    name=cloud
+    nodes=4
+elif [[ "$hostname" == "cld0" ]]; then
+    name=cld
+    nodes=8
+elif [[ "$hostname" == "c0" ]]; then
+    name=c
+    nodes=16
+else
+    echo "Invalid hostname"
+    exit
+fi
+
+
 logname=$1
 dir=$PWD
 
-for ((i = 0; i <= 4; i++)); do
+for ((i = 0; i <= ${nodes}; i++)); do
     cpufile=${logname}_${i}_cpu.txt   # cpu usage
     netfile=${logname}_${i}_net.txt   # network usage
     memfile=${logname}_${i}_mem.txt   # memory usage
@@ -18,5 +35,5 @@ for ((i = 0; i <= 4; i++)); do
     # start sysstat for cpu, memory, and network usage (1s intervals)
     # print initial network bytes
     # NOTE: & is like variant of ;, so don't need both
-    ssh cloud${i} "cd ${dir}; sar 1 > ./${cpufile} & sar -r 1 > ./${memfile} & sar -n DEV 1 > ./${netfile} & cat /proc/net/dev > ./${nbtfile}"
+    ssh ${name}${i} "cd ${dir}; sar 1 > ./${cpufile} & sar -r 1 > ./${memfile} & sar -n DEV 1 > ./${netfile} & cat /proc/net/dev > ./${nbtfile}"
 done
