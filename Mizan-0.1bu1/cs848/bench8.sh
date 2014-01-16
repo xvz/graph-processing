@@ -23,49 +23,49 @@ WORKERS=8
 #===============================================
 #===============================================
 
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
- 
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-
-
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
- 
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
- 
- 
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
- 
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+# 
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+# 
+# 
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+# 
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+# 
+# 
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+# 
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
 
 #===============================================
 #===============================================
