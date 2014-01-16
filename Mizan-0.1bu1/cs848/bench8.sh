@@ -1,11 +1,23 @@
 #!/bin/bash
 WORKERS=8
 
-#for((i=1;i<=5;i++)); do
-    ./premizan.sh google.txt ${WORKERS} 1
-    ./premizan.sh amazon.txt ${WORKERS} 1
-    ./premizan.sh patents.txt ${WORKERS} 1
-#done
+./premizan.sh google.txt ${WORKERS} 1
+./premizan.sh google.txt ${WORKERS} 1
+./premizan.sh google.txt ${WORKERS} 1
+./premizan.sh google.txt ${WORKERS} 1
+./premizan.sh google.txt ${WORKERS} 1
+
+./premizan.sh amazon.txt ${WORKERS} 1
+./premizan.sh amazon.txt ${WORKERS} 1
+./premizan.sh amazon.txt ${WORKERS} 1
+./premizan.sh amazon.txt ${WORKERS} 1
+./premizan.sh amazon.txt ${WORKERS} 1
+
+./premizan.sh patents.txt ${WORKERS} 1
+./premizan.sh patents.txt ${WORKERS} 1
+./premizan.sh patents.txt ${WORKERS} 1
+./premizan.sh patents.txt ${WORKERS} 1
+./premizan.sh patents.txt ${WORKERS} 1
 
 #===============================================
 #===============================================
