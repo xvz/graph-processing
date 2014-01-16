@@ -72,35 +72,35 @@ WORKERS=20
 #===============================================
 
 ## use src 0
-#./sssp.sh livejournal.txt ${WORKERS} 1
-#./sssp.sh livejournal.txt ${WORKERS} 1
-#./sssp.sh livejournal.txt ${WORKERS} 1
-#./sssp.sh livejournal.txt ${WORKERS} 1
-#./sssp.sh livejournal.txt ${WORKERS} 1
-#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
 # 
-#./sssp.sh livejournal.txt ${WORKERS} 2
-#./sssp.sh livejournal.txt ${WORKERS} 2
-#./sssp.sh livejournal.txt ${WORKERS} 2
-#./sssp.sh livejournal.txt ${WORKERS} 2
-#./sssp.sh livejournal.txt ${WORKERS} 2
-#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh patents.txt ${WORKERS} 2
 #
 #
 ## use src 0
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
-#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
+#./sssp.sh livejournal.txt ${WORKERS} 1
 # 
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
-#./sssp.sh patents.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
+#./sssp.sh livejournal.txt ${WORKERS} 2
 #
 #
 ## use src 1

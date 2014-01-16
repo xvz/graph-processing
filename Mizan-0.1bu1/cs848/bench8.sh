@@ -72,35 +72,35 @@ WORKERS=8
 #===============================================
 
 ## use src 0
-#./sssp.sh google.txt ${WORKERS} 1
-#./sssp.sh google.txt ${WORKERS} 1
-#./sssp.sh google.txt ${WORKERS} 1
-#./sssp.sh google.txt ${WORKERS} 1
-#./sssp.sh google.txt ${WORKERS} 1
-#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
 # 
-#./sssp.sh google.txt ${WORKERS} 2
-#./sssp.sh google.txt ${WORKERS} 2
-#./sssp.sh google.txt ${WORKERS} 2
-#./sssp.sh google.txt ${WORKERS} 2
-#./sssp.sh google.txt ${WORKERS} 2
-#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
 #
 #
 ## use src 0
-#./sssp.sh amazon.txt ${WORKERS} 1
-#./sssp.sh amazon.txt ${WORKERS} 1
-#./sssp.sh amazon.txt ${WORKERS} 1
-#./sssp.sh amazon.txt ${WORKERS} 1
-#./sssp.sh amazon.txt ${WORKERS} 1
-#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
 # 
-#./sssp.sh amazon.txt ${WORKERS} 2
-#./sssp.sh amazon.txt ${WORKERS} 2
-#./sssp.sh amazon.txt ${WORKERS} 2
-#./sssp.sh amazon.txt ${WORKERS} 2
-#./sssp.sh amazon.txt ${WORKERS} 2
-#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
 #
 #
 ## use src 6009554
