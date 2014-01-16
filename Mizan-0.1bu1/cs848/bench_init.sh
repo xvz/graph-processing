@@ -35,5 +35,5 @@ for ((i = 0; i <= ${nodes}; i++)); do
     # start sysstat for cpu, memory, and network usage (1s intervals)
     # print initial network bytes
     # NOTE: & is like variant of ;, so don't need both
-    ssh ${name}${i} "cd ${dir}; sar 1 > ./${cpufile} & sar -r 1 > ./${memfile} & sar -n DEV 1 > ./${netfile} & cat /proc/net/dev > ./${nbtfile}"
+    ssh ${name}${i} "cd ${dir}; sar 1 > ./logs/${cpufile} & sar -r 1 > ./logs/${memfile} & sar -n DEV 1 > ./logs/${netfile} & cat /proc/net/dev > ./logs/${nbtfile}"
 done

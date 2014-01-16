@@ -21,7 +21,7 @@ logfile=${logname}.txt       # Mizan stats (incl. running time)
 
 ## start algorithm run
 # pagerank stops in 30 supersteps, like Giraph
-mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 1 -s 30 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./${logfile}
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 1 -s 30 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}

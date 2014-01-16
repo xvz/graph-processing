@@ -24,7 +24,7 @@ logfile=${logname}.txt       # running time
 ./bench_init.sh ${logname}
 
 ## start algorithm run
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.DiameterEstimationVertex -vif org.apache.giraph.examples.JsonLongLongArrayInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.examples.DiameterEstimationVertex\$DiameterEstimationVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./${logfile}
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.DiameterEstimationVertex -vif org.apache.giraph.examples.JsonLongLongArrayInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.examples.DiameterEstimationVertex\$DiameterEstimationVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}

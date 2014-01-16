@@ -35,5 +35,5 @@ cd ../cs848/
 ./bench_finish.sh ${logname}
 
 ## get stats (see debug_site.sh for debug naming convention)
-hadoop dfs -get /user/ubuntu/gps/output/quick-start-machine-stats ./${logfile}
-hadoop dfs -mv /user/ubuntu/gps/output/quick-start-machine-stats /user/ubuntu/gps/stats-${logname}
+hadoop dfs -get /user/ubuntu/gps/output/quick-start-machine-stats ./logs/${logfile}
+#hadoop dfs -mv /user/ubuntu/gps/output/quick-start-machine-stats /user/ubuntu/gps/stats-${logname}
