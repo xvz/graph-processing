@@ -19,5 +19,5 @@ fi
 cd ~/hadoop-1.0.4/conf/
 
 for ((i=1;i<=${nodes};i++)); do
-    scp ./* ${name}$i:~/hadoop-1.0.4/conf/
+    scp -o StrictHostKeyChecking=no ./* ${name}$i:~/hadoop-1.0.4/conf/
 done
