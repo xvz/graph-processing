@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 read -p "Any key to continue..." none
 
@@ -40,5 +40,5 @@ c16" > machines
 
 else
     echo "Invalid hostname"
-    exit
+    exit -1
 fi

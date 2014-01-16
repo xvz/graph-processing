@@ -46,9 +46,9 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   @Override
   public void compute(Iterable<LongArrayWritable> incomingMessages, int superstepNo) {
-    if (superstepNo == 0) {
-      System.out.println("in superstep 0");
+    System.out.println("started compute!");
 
+    if (superstepNo == 1) {
       long[] value = new long[K];
       int finalBitCount = 63;
       long rndVal = 0;
@@ -61,10 +61,12 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       LongArrayWritable arr = new LongArrayWritable(value);
       sendMessages(getNeighborIds(), arr);
       setValue(arr);
+
+      System.out.println("done superstep 1 " + getValue());
       return;
     }
 
-    System.out.println("in superstep not-0");
+    System.out.println("in superstep not-0: " + getValue());
 
     // get direct reference to vertex value's array
     long[] newBitmask = getValue().get();
@@ -128,6 +130,7 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   @Override
   public LongArrayWritable getInitialValue(int id) {
+    System.out.println("returning initial value!");
     return new LongArrayWritable();
   }
 

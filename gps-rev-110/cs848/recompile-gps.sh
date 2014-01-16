@@ -13,7 +13,7 @@ elif [[ "$hostname" == "c0" ]]; then
     nodes=16
 else
     echo "Invalid hostname"
-    exit
+    exit -1
 fi
 
 cd ~/gps-rev-110/local-master-scripts/

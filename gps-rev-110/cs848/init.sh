@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 read -p "Any key to continue..." none
 
@@ -74,7 +74,7 @@ c16" > slaves
 
 else
     echo "Invalid hostname"
-    exit
+    exit -1
 fi
 
 hadoop dfs -mkdir /user/ubuntu/gps-machine-config/

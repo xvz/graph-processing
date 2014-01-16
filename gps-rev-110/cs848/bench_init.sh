@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ $# -ne 1 ]; then
     echo "usage: $0 [log-name]"
@@ -18,7 +18,7 @@ elif [[ "$hostname" == "c0" ]]; then
     nodes=16
 else
     echo "Invalid hostname"
-    exit
+    exit -1
 fi
 
 
