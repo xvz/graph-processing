@@ -41,4 +41,4 @@ echo "-Xincgc -Xms$XMS_SIZE -Xmx$XMX_SIZE"
 # This enables this script to run until computation is completed
 #
 # This can't be done on master, b/c server is also started first
-/home/young/cs848/jdk1.6.0_30/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar ${GPS_DIR}/gps_node_runner.jar -machineid ${2} -ofp /user/${USER}/gps/output/${OUTPUT_FILE_NAME} ${5} &> ${GPS_LOG_DIRECTORY}/${4}-machine${2}-output.txt &
+/home/ubuntu/jdk1.6.0_30/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar ${GPS_DIR}/gps_node_runner.jar -machineid ${2} -ofp /user/${USER}/gps/output/${OUTPUT_FILE_NAME} ${5} &> ${GPS_LOG_DIRECTORY}/${4}-machine${2}-output.txt &
