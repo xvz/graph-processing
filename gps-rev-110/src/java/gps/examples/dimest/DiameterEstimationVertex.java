@@ -1,4 +1,4 @@
-package gps.examples.pagerank;
+package gps.examples.dimest;
 
 import org.apache.commons.cli.CommandLine;
 
@@ -46,7 +46,9 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   @Override
   public void compute(Iterable<LongArrayWritable> incomingMessages, int superstepNo) {
-    if (superstepNo == 1) {
+    if (superstepNo == 0) {
+      System.out.println("in superstep 0");
+
       long[] value = new long[K];
       int finalBitCount = 63;
       long rndVal = 0;
@@ -61,6 +63,8 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       setValue(arr);
       return;
     }
+
+    System.out.println("in superstep not-0");
 
     // get direct reference to vertex value's array
     long[] newBitmask = getValue().get();

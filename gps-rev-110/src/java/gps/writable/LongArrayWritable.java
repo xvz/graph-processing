@@ -1,5 +1,6 @@
 package gps.writable;
 
+import java.util.Arrays;
 import org.apache.mina.core.buffer.IoBuffer;
 
 public class LongArrayWritable extends MinaWritable {
@@ -76,5 +77,10 @@ public class LongArrayWritable extends MinaWritable {
   @Override
   public void combine(byte[] messageQueue, byte[] tmpArray) {
     // Nothing to do. This writable is not combinable.
+  }
+
+  @Override
+  public String toString() {
+    return Arrays.toString(value);
   }
 }
