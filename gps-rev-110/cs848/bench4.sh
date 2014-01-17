@@ -1,84 +1,84 @@
 #!/bin/bash
 WORKERS=4
 
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60    # need delay, otherwise will fail
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} false
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 0
 sleep 60
 
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60    # need delay, otherwise will fail
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh amazon-gps-noval.txt ${WORKERS} true
-sleep 60
-
-
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} false
-sleep 60
-
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh google-gps-noval.txt ${WORKERS} true
+./pagerank.sh amazon-gps-noval.txt ${WORKERS} 1
 sleep 60
 
 
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh google-gps-noval.txt ${WORKERS} 0
 sleep 60
 
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh google-gps-noval.txt ${WORKERS} 1
+sleep 60
+
+
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
+sleep 60
+
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
 
 
@@ -86,250 +86,250 @@ sleep 60
 ##===============================================
 ##===============================================
 
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 false
-#sleep 60
-# 
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
 # 
-#
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
 # 
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 0
+#sleep 60
+# 
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh google-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
 #
 #
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
 #
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
  
 #===============================================
 #===============================================
 #===============================================
 
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} false
-#sleep 60
-# 
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh amazon-gps-noval.txt ${WORKERS} true
-#sleep 60
-#
-#
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} false
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 0
 #sleep 60
 # 
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh google-gps-noval.txt ${WORKERS} true
+#./wcc.sh amazon-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#
+#
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 0
+#sleep 60
+# 
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh google-gps-noval.txt ${WORKERS} 1
 #sleep 60
 # 
 #
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
 #
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
 
 #===============================================
 #===============================================
 #===============================================
 
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} false
-#sleep 60
-# 
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh amazon-mst-gps.txt ${WORKERS} true
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 0
 #sleep 60
 # 
-#
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} false
+#./mst.sh amazon-mst-gps.txt ${WORKERS} 1
 #sleep 60
 # 
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh google-mst-gps.txt ${WORKERS} true
+#./mst.sh google-mst-gps.txt ${WORKERS} 0
+#sleep 60
+# 
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh google-mst-gps.txt ${WORKERS} 1
 #sleep 60
 #
 #
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
 #
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60

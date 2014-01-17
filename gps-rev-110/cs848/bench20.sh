@@ -1,84 +1,84 @@
 #!/bin/bash
 WORKERS=8
 
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60    # need delay, otherwise will fail
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} false
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 0
 sleep 60
 
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60    # need delay, otherwise will fail
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh patents-gps-noval.txt ${WORKERS} true
-sleep 60
-
-
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} false
-sleep 60
-
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
-sleep 60
-./pagerank.sh livejournal-gps-noval.txt ${WORKERS} true
+./pagerank.sh patents-gps-noval.txt ${WORKERS} 1
 sleep 60
 
 
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} false
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 0
 sleep 60
 
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
 sleep 60
-./pagerank.sh orkut-gps-noval.txt ${WORKERS} true
+./pagerank.sh livejournal-gps-noval.txt ${WORKERS} 1
+sleep 60
+
+
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 0
+sleep 60
+
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
+sleep 60
+./pagerank.sh orkut-gps-noval.txt ${WORKERS} 1
 sleep 60
 
 
@@ -86,250 +86,250 @@ sleep 60
 ##===============================================
 ##===============================================
 
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 false
-#sleep 60
-# 
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
-#sleep 60
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
 # 
-#
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 false
+#./sssp.sh patents-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
 # 
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
 #sleep 60
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 true
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 0
+#sleep 60
+# 
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
+#sleep 60
+#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0 1
 #sleep 60
 #
 #
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 false
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 0
 #sleep 60
 #
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 true
+#./sssp.sh orkut-gps-noval.txt ${WORKERS} 6009554 1
 #sleep 60
  
 #===============================================
 #===============================================
 #===============================================
 
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} false
-#sleep 60
-# 
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#./wcc.sh patents-gps-noval.txt ${WORKERS} true
-#sleep 60
-#
-#
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
-#sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} false
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 0
 #sleep 60
 # 
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS} true
+#./wcc.sh patents-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#
+#
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 0
+#sleep 60
+# 
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
+#sleep 60
+#./wcc.sh livejournal-gps-noval.txt ${WORKERS} 1
 #sleep 60
 # 
 #
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} false
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 0
 #sleep 60
 #
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
-#./wcc.sh orkut-gps-noval.txt ${WORKERS} true
+#./wcc.sh orkut-gps-noval.txt ${WORKERS} 1
 #sleep 60
 
 #===============================================
 #===============================================
 #===============================================
 
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} false
-#sleep 60
-# 
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
-#sleep 60
-#./mst.sh patents-mst-gps.txt ${WORKERS} true
+#./mst.sh patents-mst-gps.txt ${WORKERS} 0
 #sleep 60
 # 
-#
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} false
+#./mst.sh patents-mst-gps.txt ${WORKERS} 1
 #sleep 60
 # 
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh livejournal-mst-gps.txt ${WORKERS} true
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 0
+#sleep 60
+# 
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
+#sleep 60
+#./mst.sh livejournal-mst-gps.txt ${WORKERS} 1
 #sleep 60
 #
 #
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} false
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 0
 #sleep 60
 #
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60
-#./mst.sh orkut-mst-gps.txt ${WORKERS} true
+#./mst.sh orkut-mst-gps.txt ${WORKERS} 1
 #sleep 60

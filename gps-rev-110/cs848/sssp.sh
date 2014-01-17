@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 [input graph] [ec2 nodes] [source vertex] [dynamic (true/false)]"
+    echo "usage: $0 [input graph] [ec2 nodes] [source vertex] [dynamic]"
     exit -1
 fi
 
@@ -13,11 +13,18 @@ inputgraph=$(basename $1)
 nodes=$2
 src=$3
 
-# true to use dynamic repartitioning
+# 1 to use dynamic repartitioning, 0 for none
 dynamic=$4
 
+if [[ ${dynamic} == "1" ]]; then
+    # just to be safe, only include this flag when doing dynamic partitioning
+    dynamicflag="-dynamic true"
+else
+    dynamicflag=""
+fi
 
-logname=sssp_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
+
+logname=sssp_${inputgraph}_${nodes}_${dynamic}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}.txt       # GPS statistics (incl running time)
 
 ## start logging memory + network usage
@@ -28,11 +35,11 @@ cd ../master-scripts/
 
 # this sssp assigns edge weight of 1 to all edges
 # input graph must have no edge weights
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -dynamic ${dynamic} -other root###${src}"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config ${dynamicflag} -other root###${src}"
 
 # edgevaluesssp is for when input graph has edge weights
 # input graph must have edge weights, but no vertex values
-#./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.edgevaluesssp.EdgeValueSSSPVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other root###${src}"
+#./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.edgevaluesssp.EdgeValueSSSPVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config ${dynamicflag} -other root###${src}"
 
 ## finish logging memory + network usage
 cd ../cs848/
