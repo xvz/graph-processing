@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [ec2 nodes] [source vertex]"
+    echo "usage: $0 [input graph] [ec2 nodes] [source vertex] [dynamic (true/false)]"
     exit -1
 fi
 
@@ -12,6 +12,10 @@ inputgraph=$(basename $1)
 # nodes should be number of EC2 instances
 nodes=$2
 src=$3
+
+# true to use dynamic repartitioning
+dynamic=$4
+
 
 logname=sssp_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}.txt       # GPS statistics (incl running time)
@@ -24,7 +28,7 @@ cd ../master-scripts/
 
 # this sssp assigns edge weight of 1 to all edges
 # input graph must have no edge weights
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other root###${src}"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -dynamic ${dynamic} -other root###${src}"
 
 # edgevaluesssp is for when input graph has edge weights
 # input graph must have edge weights, but no vertex values
