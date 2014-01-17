@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [ec2 nodes] [dynamic]"
+if [ $# -ne 2 ]; then
+    echo "usage: $0 [input graph] [ec2 nodes]"
     exit -1
 fi
 
@@ -12,18 +12,7 @@ inputgraph=$(basename $1)
 # nodes should be number of EC2 instances
 nodes=$2
 
-# 1 to use dynamic repartitioning, 0 for none
-dynamic=$3
-
-if [[ ${dynamic} == "1" ]]; then
-    # just to be safe, only include this flag when doing dynamic partitioning
-    dynamicflag="-dynamic true"
-else
-    dynamicflag=""
-fi
-
-
-logname=dimest_${inputgraph}_${nodes}_${dynamic}_"$(date +%F-%H-%M-%S)"
+logname=dimest_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}.txt       # GPS statistics (incl running time)
 
 ## start logging memory + network usage
@@ -34,7 +23,7 @@ cd ../master-scripts/
 
 # NOTE: max controls max number of supersteps
 # max must be 30, to match Giraph
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.dimest.DiameterEstimationVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config ${dynamicflag} -other -max###30"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.dimest.DiameterEstimationVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###30"
 
 ## finish logging memory + network usage
 cd ../cs848/
