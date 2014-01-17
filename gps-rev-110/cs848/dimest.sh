@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     echo "usage: $0 [input graph] [ec2 nodes] [dynamic (true/false)]"
     exit -1
 fi
