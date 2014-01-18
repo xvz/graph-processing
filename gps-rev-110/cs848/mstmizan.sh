@@ -13,7 +13,7 @@ inputgraph=$(basename $1)
 nodes=$2
 
 logname=mstmizan_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
-logfile=${logname}.txt       # GPS statistics (incl running time)
+logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 ## start logging memory + network usage
 ./bench_init.sh ${logname}
@@ -26,7 +26,7 @@ cd ../master-scripts/
 # edgesatrootpjonebyone uses standard Boruvka (no optimizations)
 # edgesatselfpjonebyone uses "storing edges at subvertices" (SEAS)
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
-# edgeshybridpjonebyone uses SEAS for few iteratins then default... but not published
+# edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
 ./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
 
 ## finish logging memory + network usage

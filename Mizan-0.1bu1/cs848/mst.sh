@@ -12,7 +12,7 @@ inputgraph=$(basename $1)
 workers=$2    # workers can be > number of EC2 instances
 dynamic=$3    # dynamic partitioning
 
-logname=sssp_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)"
+logname=mst_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 
 
@@ -20,7 +20,7 @@ logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 ./bench_init.sh ${logname}
 
 ## start algorithm run
-mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 5 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 7 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}

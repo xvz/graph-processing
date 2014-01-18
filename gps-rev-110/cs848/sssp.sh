@@ -14,7 +14,7 @@ nodes=$2
 src=$3
 
 logname=sssp_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
-logfile=${logname}.txt       # GPS statistics (incl running time)
+logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 ## start logging memory + network usage
 ./bench_init.sh ${logname}

@@ -17,7 +17,7 @@ hadoop dfs -rmr ${outputdir}
 
 ## log names
 logname=mst_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
-logfile=${logname}.txt       # running time
+logfile=${logname}_time.txt       # running time
 
 
 ## start logging memory + network usage

@@ -13,7 +13,7 @@ workers=$2    # workers can be > number of EC2 instances
 dynamic=$3    # dynamic partitioning
 
 logname=wcc_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)"
-logfile=${logname}.txt       # Mizan stats (incl. running time)
+logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 
 
 ## start logging memory + network usage
