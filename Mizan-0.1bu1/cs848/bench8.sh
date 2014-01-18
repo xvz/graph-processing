@@ -23,87 +23,87 @@ WORKERS=8
 #===============================================
 #===============================================
 
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
-./pagerank.sh amazon.txt ${WORKERS} 1
- 
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
-./pagerank.sh amazon.txt ${WORKERS} 2
- 
- 
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
-./pagerank.sh google.txt ${WORKERS} 1
- 
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
-./pagerank.sh google.txt ${WORKERS} 2
- 
- 
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
-./pagerank.sh patents.txt ${WORKERS} 1
- 
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
-./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+#./pagerank.sh amazon.txt ${WORKERS} 1
+# 
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+#./pagerank.sh amazon.txt ${WORKERS} 2
+# 
+# 
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+#./pagerank.sh google.txt ${WORKERS} 1
+# 
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+#./pagerank.sh google.txt ${WORKERS} 2
+# 
+# 
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+#./pagerank.sh patents.txt ${WORKERS} 1
+# 
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
+#./pagerank.sh patents.txt ${WORKERS} 2
 
 #===============================================
 #===============================================
 #===============================================
 
-# use src 0
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
-./sssp.sh amazon.txt ${WORKERS} 1
- 
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-./sssp.sh amazon.txt ${WORKERS} 2
-
-
-# use src 0
-./sssp.sh google.txt ${WORKERS} 1
-./sssp.sh google.txt ${WORKERS} 1
-./sssp.sh google.txt ${WORKERS} 1
-./sssp.sh google.txt ${WORKERS} 1
-./sssp.sh google.txt ${WORKERS} 1
-./sssp.sh google.txt ${WORKERS} 1
- 
-./sssp.sh google.txt ${WORKERS} 2
-./sssp.sh google.txt ${WORKERS} 2
-./sssp.sh google.txt ${WORKERS} 2
-./sssp.sh google.txt ${WORKERS} 2
-./sssp.sh google.txt ${WORKERS} 2
-./sssp.sh google.txt ${WORKERS} 2
+## use src 0
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+#./sssp.sh amazon.txt ${WORKERS} 1
+# 
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+#./sssp.sh amazon.txt ${WORKERS} 2
+# 
+# 
+## use src 0
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+#./sssp.sh google.txt ${WORKERS} 1
+# 
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
+#./sssp.sh google.txt ${WORKERS} 2
 #
 #
-## use src 6009554
+# use src 6009554
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
@@ -122,48 +122,48 @@ WORKERS=8
 #===============================================
 #===============================================
 
-./wcc.sh amazon.txt ${WORKERS} 1
-./wcc.sh amazon.txt ${WORKERS} 1
-./wcc.sh amazon.txt ${WORKERS} 1
-./wcc.sh amazon.txt ${WORKERS} 1
-./wcc.sh amazon.txt ${WORKERS} 1
-./wcc.sh amazon.txt ${WORKERS} 1
- 
-./wcc.sh amazon.txt ${WORKERS} 2
-./wcc.sh amazon.txt ${WORKERS} 2
-./wcc.sh amazon.txt ${WORKERS} 2
-./wcc.sh amazon.txt ${WORKERS} 2
-./wcc.sh amazon.txt ${WORKERS} 2
-./wcc.sh amazon.txt ${WORKERS} 2
- 
- 
-./wcc.sh google.txt ${WORKERS} 1
-./wcc.sh google.txt ${WORKERS} 1
-./wcc.sh google.txt ${WORKERS} 1
-./wcc.sh google.txt ${WORKERS} 1
-./wcc.sh google.txt ${WORKERS} 1
-./wcc.sh google.txt ${WORKERS} 1
- 
-./wcc.sh google.txt ${WORKERS} 2
-./wcc.sh google.txt ${WORKERS} 2
-./wcc.sh google.txt ${WORKERS} 2
-./wcc.sh google.txt ${WORKERS} 2
-./wcc.sh google.txt ${WORKERS} 2
-./wcc.sh google.txt ${WORKERS} 2
- 
-./wcc.sh patents.txt ${WORKERS} 1
-./wcc.sh patents.txt ${WORKERS} 1
-./wcc.sh patents.txt ${WORKERS} 1
-./wcc.sh patents.txt ${WORKERS} 1
-./wcc.sh patents.txt ${WORKERS} 1
-./wcc.sh patents.txt ${WORKERS} 1
- 
-./wcc.sh patents.txt ${WORKERS} 2
-./wcc.sh patents.txt ${WORKERS} 2
-./wcc.sh patents.txt ${WORKERS} 2
-./wcc.sh patents.txt ${WORKERS} 2
-./wcc.sh patents.txt ${WORKERS} 2
-./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+#./wcc.sh amazon.txt ${WORKERS} 1
+# 
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+#./wcc.sh amazon.txt ${WORKERS} 2
+# 
+# 
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+#./wcc.sh google.txt ${WORKERS} 1
+# 
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+#./wcc.sh google.txt ${WORKERS} 2
+# 
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+#./wcc.sh patents.txt ${WORKERS} 1
+# 
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
+#./wcc.sh patents.txt ${WORKERS} 2
 
 #===============================================
 #===============================================
@@ -211,3 +211,50 @@ WORKERS=8
 #./mst.sh patents-mst-mizan.txt ${WORKERS} 2
 #./mst.sh patents-mst-mizan.txt ${WORKERS} 2
 #./mst.sh patents-mst-mizan.txt ${WORKERS} 2
+
+#===============================================
+#===============================================
+#===============================================
+
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+ 
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+ 
+ 
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+ 
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+ 
+./dimest.sh patents.txt ${WORKERS} 1
+./dimest.sh patents.txt ${WORKERS} 1
+./dimest.sh patents.txt ${WORKERS} 1
+./dimest.sh patents.txt ${WORKERS} 1
+./dimest.sh patents.txt ${WORKERS} 1
+./dimest.sh patents.txt ${WORKERS} 1
+ 
+./dimest.sh patents.txt ${WORKERS} 2
+./dimest.sh patents.txt ${WORKERS} 2
+./dimest.sh patents.txt ${WORKERS} 2
+./dimest.sh patents.txt ${WORKERS} 2
+./dimest.sh patents.txt ${WORKERS} 2
+./dimest.sh patents.txt ${WORKERS} 2
