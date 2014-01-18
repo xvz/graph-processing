@@ -8,6 +8,10 @@ import gps.node.GPSJobConfiguration;
 import gps.node.GPSNodeRunner;
 import gps.writable.LongArrayWritable;
 
+
+import java.util.Arrays;
+
+
 /**
  * GPS implementation of Flajolet-Martin diameter estimation.
  *
@@ -15,7 +19,7 @@ import gps.writable.LongArrayWritable;
  */
 public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, LongArrayWritable> {
 
-  public static int DEFAULT_NUM_MAX_ITERATIONS = 30;
+  public static int DEFAULT_NUM_MAX_ITERATIONS = 100;
   public static int numMaxIterations;
 
   /** K is number of bitstrings to use,
@@ -23,9 +27,9 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
   public static final int K = 32;
 
   /** Bit shift constant **/
-  private static final long V62 = 62;
+  private static final int V62 = 62;
   /** Bit shift constant **/
-  private static final long V1 = 1;
+  private static final int V1 = 1;
 
   public DiameterEstimationVertex(CommandLine line) {
     String otherOptsStr = line.getOptionValue(GPSNodeRunner.OTHER_OPTS_OPT_NAME);
@@ -46,8 +50,6 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   @Override
   public void compute(Iterable<LongArrayWritable> incomingMessages, int superstepNo) {
-    System.out.println("started compute!");
-
     if (superstepNo == 1) {
       long[] value = new long[K];
       int finalBitCount = 63;
@@ -62,14 +64,24 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       sendMessages(getNeighborIds(), arr);
       setValue(arr);
 
-      System.out.println("done superstep 1 " + getValue());
+      //System.out.println(getId() + ": done superstep 1... " + getValue());
       return;
     }
 
-    System.out.println("in superstep not-0: " + getValue());
+    //System.out.println(getId() + ": normal superstep... " + getValue());
 
     // get direct reference to vertex value's array
     long[] newBitmask = getValue().get();
+
+    // Some vertices have in-edges but no out-edges, so they're NOT
+    // listed in the input graphs (from SNAP). This causes a new
+    // vertex to be added during the 2nd superstep, and its value
+    // to be non-initialized (i.e., empty array []). Since such
+    // vertices have no out-edges, we can just halt.
+    if (newBitmask.length == 0) {
+      voteToHalt();
+      return;
+    }
 
     boolean isChanged = false;
     long[] tmpBitmask;
@@ -77,6 +89,12 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
     for (LongArrayWritable message : incomingMessages) {
       tmpBitmask = message.get();
+      
+//      if (tmpBitmask.length == 0) {
+//        System.out.println(getId() + ": got empty message??");
+//      } else {
+//        System.out.println(getId() + ": got " + message);
+//      }
 
       // both arrays are of length K
       for (int i = 0; i < K; i++) {
@@ -90,14 +108,17 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
       }
     }
 
+    //System.out.println(getId() + ": final array is " + getValue());
+
     // if steady state or max supersteps met, terminate
     if (!isChanged || (superstepNo >= numMaxIterations)) {
-      //LOG.info(getId() + ": voting to halt");
+      //System.out.println(getId() + ": voting to halt");
       voteToHalt();
 
     } else {
+      //System.out.println(getId() + ": not halting... sending message");
+
       // otherwise, send our neighbours our bitstrings
-      //LOG.info(getId() + ": not halting... sending messages");
       sendMessages(getNeighborIds(), getValue());
     }
   }
@@ -130,7 +151,6 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   @Override
   public LongArrayWritable getInitialValue(int id) {
-    System.out.println("returning initial value!");
     return new LongArrayWritable();
   }
 

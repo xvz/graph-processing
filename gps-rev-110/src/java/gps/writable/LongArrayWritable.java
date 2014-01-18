@@ -38,6 +38,7 @@ public class LongArrayWritable extends MinaWritable {
   @Override
   public void write(IoBuffer ioBuffer) {
     ioBuffer.putInt(value.length);
+
     for (long longValue : value) {
       ioBuffer.putLong(longValue);
     }
@@ -47,6 +48,7 @@ public class LongArrayWritable extends MinaWritable {
   public void read(IoBuffer ioBuffer) {
     int length = ioBuffer.getInt();
     this.value = new long[length];
+
     for (int i = 0; i < length; ++i) {
       this.value[i] = ioBuffer.getLong();
     }
@@ -55,22 +57,29 @@ public class LongArrayWritable extends MinaWritable {
   @Override
   public int read(byte[] byteArray, int index) {
     int length = readIntegerFromByteArray(byteArray, index);
+
     this.value = new long[length];
+    index += 4;
+
     for (int i = 0; i < length; ++i) {
-      index += 8;
       this.value[i] = readLongFromByteArray(byteArray, index);
+      index += 8;
     }
+
     return 4 + (8*length);
   }
 
   @Override
   public int read(IoBuffer ioBuffer, byte[] byteArray, int index) {
     int length = ioBuffer.getInt();
-    writeLongToByteArrayFromIndexZero(byteArray, length, index);
+    writeIntegerToByteArray(byteArray, length, index);
+    index += 4;
+
     for (int i = 0; i < length; ++i) {
-      index += 8;
       ioBuffer.get(byteArray, index, 8);
+      index += 8;
     }
+
     return 4 + (8*length);
   }
 
