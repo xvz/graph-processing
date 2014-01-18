@@ -25,6 +25,7 @@ import java.io.IOException;
 //import java.util.List;
 import java.util.ArrayList;
 import org.apache.giraph.aggregators.LongSumAggregator;
+import org.apache.giraph.aggregators.IntOverwriteAggregator;
 import org.apache.giraph.edge.Edge;
 import org.apache.giraph.edge.MutableEdge;
 import org.apache.giraph.edge.EdgeFactory;
@@ -32,6 +33,7 @@ import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
 import org.apache.giraph.master.DefaultMasterCompute;
 //import org.apache.giraph.worker.WorkerContext;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -61,10 +63,13 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   /** Logger */
   private static final Logger LOG =
       Logger.getLogger(MinimumSpanningTreeVertex.class);
+
   /** Counter aggregator name */
   private static String COUNTER_AGG = "counter";
   /** Total supervertex aggregator name */
   private static String SUPERVERTEX_AGG = "supervertex";
+  /** Computation phase aggregator name */
+  private static String PHASE_AGG = "phase";
 
   @Override
   public void compute(Iterable<MSTMessage> messages) {
@@ -75,28 +80,14 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         return;
       }
 
-      getValue().setPhase(MSTPhase.PHASE_1);
-
       // need to set up correct number of supervertices on first superstep
       aggregate(SUPERVERTEX_AGG, new LongWritable(1));
     }
 
-    MSTPhase phase = getValue().getPhase();
+    IntWritable phaseInt = getAggregatedValue(PHASE_AGG);
+    MSTPhase phase = MSTPhase.VALUES[phaseInt.get()];
 
-    // PHASE_2B is special, because it can repeat an indeterminate
-    // number of times. Hence, a "superbarrier" is needed.
-    // This has to be done separately due to the "lagged" nature
-    // of aggregated values.
-    //
-    // proceed to PHASE_3A iff all supervertices are done PHASE_2B
-    LongWritable numDone = getAggregatedValue(COUNTER_AGG);
-    LongWritable numSupervertex = getAggregatedValue(SUPERVERTEX_AGG);
-
-    if (phase == MSTPhase.PHASE_2B &&
-        numDone.get() == numSupervertex.get()) {
-      getValue().setPhase(MSTPhase.PHASE_3A);
-    }
-
+    // phase transitions are in master.compute()
     // algorithm termination is in phase4B
 
     switch(phase) {
@@ -142,7 +133,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     default:
       LOG.error("Invalid computation phase.");
-      break;
     }
   }
 
@@ -193,7 +183,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     // technically part of PHASE_2A
     getValue().setPointer(minId);
 
-    getValue().setPhase(MSTPhase.PHASE_2A);
+    // go to phase 2A
 
     //LOG.info(getId() + ": min edge is " + minEdge +
     //         " and value is " + getValue());
@@ -213,7 +203,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //LOG.info(getId() + ": sending question to " + getValue().getPointer());
     sendMessage(new LongWritable(getValue().getPointer()), msg);
 
-    getValue().setPhase(MSTPhase.PHASE_2B);
+    // go to phase 2B
   }
 
   /**
@@ -269,8 +259,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           if (myId <= senderId) {
             pointer = myId;        // I am the supervertex
             type = MSTVertexType.TYPE_SUPERVERTEX;
+            //LOG.info(getId() + ": I am a supervertex");
           } else {
             type = MSTVertexType.TYPE_POINTS_AT_SUPERVERTEX;
+            //LOG.info(getId() + ": I point to supervertex" + senderId);
           }
 
           isPointerSupervertex = true;
@@ -330,7 +322,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       default:
         LOG.error("Invalid message type [" +
                   message.getType() + "] in PHASE_2B.");
-        break;
       }
     }
 
@@ -355,7 +346,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     getValue().setType(type);
     getValue().setPointer(pointer);
 
-    // phase change occurs in compute()
+    // phase change occurs in master.compute()
   }
 
   /**
@@ -375,7 +366,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //         getValue().getPointer());
     sendMessageToAllEdges(msg);
 
-    getValue().setPhase(MSTPhase.PHASE_3B);
+    // go to phase 3B
   }
 
   /**
@@ -464,7 +455,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //}
 
     // supervertices also go to phase 4A (b/c they need to wait for msgs)
-    getValue().setPhase(MSTPhase.PHASE_4A);
   }
 
   /**
@@ -494,11 +484,9 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         }
       }
       voteToHalt();
-
-    } else {
-      // we are supervertex, so move to next phase
-      getValue().setPhase(MSTPhase.PHASE_4B);
     }
+
+    // otherwise, we are supervertex, so move to next phase
   }
 
   /**
@@ -556,7 +544,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       aggregate(SUPERVERTEX_AGG, new LongWritable(1));
 
       // and go back to phase 1
-      getValue().setPhase(MSTPhase.PHASE_1);
     }
   }
 
@@ -606,6 +593,73 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       registerPersistentAggregator(COUNTER_AGG, LongSumAggregator.class);
       registerPersistentAggregator(SUPERVERTEX_AGG,
                                    LongSumAggregator.class);
+
+      // Note that this aggregator is NOT set by workers or vertices.
+      // It's only used by master to keep track of global phase.
+      registerPersistentAggregator(PHASE_AGG, IntOverwriteAggregator.class);
+    }
+
+    @Override
+    public void compute() {
+      // special case for first superstep
+      if (getSuperstep() == 0) {
+        setAggregatedValue(PHASE_AGG, new IntWritable(MSTPhase.PHASE_1.get()));
+        return;
+      }
+
+      IntWritable phaseInt = getAggregatedValue(PHASE_AGG);
+      MSTPhase phase = MSTPhase.VALUES[phaseInt.get()];
+      MSTPhase newphase = null;
+
+      switch (phase) {
+      case PHASE_1:
+        // no need to set PHASE_AGG to PHASE_2A, because it's ran
+        // in the same superstep as PHASE_1
+
+        // fall through
+
+      case PHASE_2A:
+        newphase = MSTPhase.PHASE_2B;
+        break;
+
+      case PHASE_2B:
+        LongWritable numDone = getAggregatedValue(COUNTER_AGG);
+        LongWritable numSupervertex = getAggregatedValue(SUPERVERTEX_AGG);
+
+        // PHASE_2B is special, because it can repeat an indeterminate
+        // number of times. Hence, a "superbarrier" is needed.
+        // This has to be done separately due to the "lagged" nature
+        // of aggregated values.
+        //
+        // proceed to PHASE_3A iff all supervertices are done PHASE_2B
+        if (numDone.get() == numSupervertex.get()) {
+          newphase = MSTPhase.PHASE_3A;
+        } else {
+          newphase = MSTPhase.PHASE_2B;
+        }
+        break;
+
+      case PHASE_3A:
+        newphase = MSTPhase.PHASE_3B;
+        break;
+
+      case PHASE_3B:
+        // same as PHASE_1, this falls through
+        // fall through
+
+      case PHASE_4A:
+        newphase = MSTPhase.PHASE_4B;
+        break;
+
+      case PHASE_4B:
+        newphase = MSTPhase.PHASE_1;
+        break;
+
+      default:
+        LOG.error("Invalid computation phase.");
+      }
+
+      setAggregatedValue(PHASE_AGG, new IntWritable(newphase.get()));
     }
   }
 
@@ -721,7 +775,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     private double weight;       /** edge weight **/
     private long src;            /** original edge source **/
     private long dst;            /** original edge destination **/
-    private MSTPhase phase;      /** current computation phase **/
     private MSTVertexType type;  /** vertex type **/
     private long pointer;        /** (potential) supervertex **/
 
@@ -729,7 +782,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      * Default edge constructor.
      */
     public MSTVertexValue() {
-      phase = MSTPhase.PHASE_1;
       type = MSTVertexType.TYPE_UNKNOWN;
       // rest all 0s
     }
@@ -740,16 +792,14 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      * @param weight Weight.
      * @param src Original source vertex.
      * @param dst Original destination vertex.
-     * @param phase Computation phase.
      * @param type Vertex type.
      * @param pointer Pointer/supervertex.
      */
     public MSTVertexValue(double weight, long src, long dst,
-                        MSTPhase phase, MSTVertexType type, long pointer) {
+                          MSTVertexType type, long pointer) {
       this.weight = weight;
       this.src = src;
       this.dst = dst;
-      this.phase = phase;
       this.type = type;
       this.pointer = pointer;
     }
@@ -763,7 +813,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       this.weight = val.weight;
       this.src = val.src;
       this.dst = val.dst;
-      this.phase = val.phase;
       this.type = val.type;
       this.pointer = val.pointer;
     }
@@ -778,10 +827,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
     public long getDst() {
       return dst;
-    }
-
-    public MSTPhase getPhase() {
-      return phase;
     }
 
     public MSTVertexType getType() {
@@ -805,10 +850,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       this.dst = dst;
     }
 
-    public void setPhase(MSTPhase phase) {
-      this.phase = phase;
-    }
-
     public void setType(MSTVertexType type) {
       this.type = type;
     }
@@ -824,7 +865,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       weight = in.readDouble();
       src = in.readLong();
       dst = in.readLong();
-      phase = MSTPhase.VALUES[in.readInt()];
       type = MSTVertexType.VALUES[in.readInt()];
       pointer = in.readLong();
     }
@@ -834,7 +874,6 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       out.writeDouble(weight);
       out.writeLong(src);
       out.writeLong(dst);
-      out.writeInt(phase.get());
       out.writeInt(type.get());
       out.writeLong(pointer);
     }
@@ -842,7 +881,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     @Override
     public String toString() {
       return "weight=" + weight + " src=" + src + " dst=" + dst +
-        " phase=" + phase + " type=" + type + " pointer=" + pointer;
+        " type=" + type + " pointer=" + pointer;
     }
 
     /**
