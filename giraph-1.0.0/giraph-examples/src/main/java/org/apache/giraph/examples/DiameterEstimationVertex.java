@@ -47,7 +47,7 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
     DiameterEstimationVertex.LongArrayWritable> {
 
   /** Number of supersteps for this test */
-  public static final int MAX_SUPERSTEPS = 30;
+  public static final int MAX_SUPERSTEPS = 100;
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
@@ -87,6 +87,16 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
 
     // get direct reference to vertex value's array
     long[] newBitmask = getValue().get();
+
+    // Some vertices have in-edges but no out-edges, so they're NOT
+    // listed in the input graphs (from SNAP). This causes a new
+    // vertex to be added during the 2nd superstep, and its value
+    // to be non-initialized (i.e., empty array []). Since such
+    // vertices have no out-edges, we can just halt.
+    if (newBitmask.length == 0) {
+      voteToHalt();
+      return;
+    }
 
     boolean isChanged = false;
     long[] tmpBitmask;
