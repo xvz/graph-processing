@@ -59,15 +59,19 @@ public:
                messageManager<mLong, mLongArray, mLongArray, mLong> * comm) {
 
     mLong * newBitMask = new mLong[k];
-    mLong * oldBitMask = data->getVertexValue().getArray();
-
+    //mLong * oldBitMask = data->getVertexValue().getArray();
+     
     for (int i = 0; i < k; i++) {
-      newBitMask[i] = oldBitMask[i];
+      // TODO: need to do this, b/c of weird bug where oldBitMask[31] has wrong value
+      newBitMask[i] = data->getVertexValue().getArray()[i]; //oldBitMask[i];
     }
+
+    //std::cout << "value: " << newBitMask[31].getValue() << " " << oldBitMask[31].getValue() << " " << data->getVertexValue().getArray()[31].getValue() << std::endl;
 
     mLongArray tmpArray;
     mLong * tmpBitMask;
 
+    bool isChanged = false;
     long long a;
     long long b;
     long long c;
@@ -79,12 +83,14 @@ public:
         b = tmpBitMask[i].getValue();
         c = a | b;
         newBitMask[i].setValue(c);
+
+        isChanged = isChanged || (a != c);
       }
     }
 
     mLongArray outArray(k, newBitMask);
 
-    if ((outArray == data->getVertexValue() && data->getCurrentSS() != 1) ||
+    if ((!isChanged && data->getCurrentSS() != 1) ||
          data->getCurrentSS() > maxSuperStep) {
       data->voteToHalt();
 
