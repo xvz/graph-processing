@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
   int myWorkerID;
 
   if (myArgs.algorithm == 1) {
-    groupVoteToHalt = true;
+    groupVoteToHalt = false;      // vertices should wake from incoming messages
     storageType = OutNbrStore;
     pageRank us(myArgs.superSteps);
     pageRankCombiner prc;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
     delete mmk;
 
   } else if (myArgs.algorithm == 3) {
-    groupVoteToHalt = true;
+    groupVoteToHalt = false;     // vertices need to wake up on incoming messages
     storageType = OutNbrStore;   // to match Giraph and GPS
     dimEst dE(myArgs.superSteps);
 
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
     delete mmk;
 
   } else if (myArgs.algorithm == 7) {
-    groupVoteToHalt = true;
+    groupVoteToHalt = false;
     storageType = OutNbrStore;
 
     MST mst(myArgs.superSteps);
