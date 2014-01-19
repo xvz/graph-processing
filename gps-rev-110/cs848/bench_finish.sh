@@ -25,7 +25,7 @@ fi
 logname=$1
 dir=$PWD   # so logs show up in right place
 
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 0; i <= ${nodes}; i++)); do
     nbtfile=${logname}_${i}_nbt.txt   # network bytes total
 
     # change to same directory as master
