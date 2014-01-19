@@ -16,6 +16,9 @@ elif [[ "$hostname" == "cld0" ]]; then
 elif [[ "$hostname" == "c0" ]]; then
     name=c
     nodes=16
+elif [[ "$hostname" == "cx0" ]]; then
+    name=cx
+    nodes=32
 else
     echo "Invalid hostname"
     exit -1

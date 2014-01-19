@@ -72,8 +72,76 @@ c16" > slaves
 14 c15 54015
 15 c16 54016" > cs848.cfg
 
+elif [[ "$hostname" == "cx0" ]]; then
+    echo "cx1
+cx2
+cx3
+cx4
+cx5
+cx6
+cx7
+cx8
+cx9
+cx10
+cx11
+cx12
+cx13
+cx14
+cx15
+cx16
+cx17
+cx18
+cx19
+cx20
+cx21
+cx22
+cx23
+cx24
+cx25
+cx26
+cx27
+cx28
+cx29
+cx30
+cx31
+cx32" > slaves
+
+    echo "-1 cx0 54000
+0 cx1 54001
+1 cx2 54002
+2 cx3 54003
+3 cx4 54004
+4 cx5 54005
+5 cx6 54006
+6 cx7 54007
+7 cx8 54008
+8 cx9 54009
+9 cx10 54010
+10 cx11 54011
+11 cx12 54012
+12 cx13 54013
+13 cx14 54014
+14 cx15 54015
+15 cx16 54016
+16 cx17 54017
+17 cx18 54018
+18 cx19 54019
+19 cx20 54020
+20 cx21 54021
+21 cx22 54022
+22 cx23 54023
+23 cx24 54024
+24 cx25 54025
+25 cx26 54026
+26 cx27 54027
+27 cx28 54028
+28 cx29 54029
+29 cx30 54030
+30 cx31 54031
+31 cx32 54032" > cs848.cfg
+  
 else
-    echo "Invalid hostname"
+     echo "Invalid hostname"
     exit -1
 fi
 
