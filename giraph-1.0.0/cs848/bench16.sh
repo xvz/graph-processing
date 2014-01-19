@@ -2,49 +2,49 @@
 WORKERS=16
 
 #./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
-./pagerank.sh patents-giraph.txt ${WORKERS}
-
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-./pagerank.sh livejournal-giraph.txt ${WORKERS}
-
-./pagerank.sh orkut-giraph.txt ${WORKERS}
-./pagerank.sh orkut-giraph.txt ${WORKERS}
-./pagerank.sh orkut-giraph.txt ${WORKERS}
-./pagerank.sh orkut-giraph.txt ${WORKERS}
-./pagerank.sh orkut-giraph.txt ${WORKERS}
-./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
+#./pagerank.sh patents-giraph.txt ${WORKERS}
+# 
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
+#./pagerank.sh orkut-giraph.txt ${WORKERS}
 
 #===============================================
 #===============================================
 #===============================================
 
-./sssp.sh patents-giraph.txt ${WORKERS} 0
-./sssp.sh patents-giraph.txt ${WORKERS} 0
-./sssp.sh patents-giraph.txt ${WORKERS} 0
-./sssp.sh patents-giraph.txt ${WORKERS} 0
-./sssp.sh patents-giraph.txt ${WORKERS} 0
-./sssp.sh patents-giraph.txt ${WORKERS} 0
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+# 
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
  
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
-./sssp.sh livejournal-giraph.txt ${WORKERS} 0
- 
-./sssp.sh orkut-giraph.txt ${WORKERS} 1
-./sssp.sh orkut-giraph.txt ${WORKERS} 1
-./sssp.sh orkut-giraph.txt ${WORKERS} 1
-./sssp.sh orkut-giraph.txt ${WORKERS} 1
-./sssp.sh orkut-giraph.txt ${WORKERS} 1
+#./sssp.sh orkut-giraph.txt ${WORKERS} 1
+#./sssp.sh orkut-giraph.txt ${WORKERS} 1
+#./sssp.sh orkut-giraph.txt ${WORKERS} 1
+#./sssp.sh orkut-giraph.txt ${WORKERS} 1
+#./sssp.sh orkut-giraph.txt ${WORKERS} 1
 ./sssp.sh orkut-giraph.txt ${WORKERS} 1
 
 #===============================================

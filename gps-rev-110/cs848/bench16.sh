@@ -45,17 +45,17 @@ sleep 45
 ##===============================================
 ##===============================================
 
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
-./sssp.sh patents-gps-noval.txt ${WORKERS} 0
+./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
 sleep 45
  
 ./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0

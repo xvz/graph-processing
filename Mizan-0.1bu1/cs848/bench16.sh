@@ -71,7 +71,7 @@ WORKERS=16
 #===============================================
 #===============================================
 
-## use src 0
+## use src 6009554
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
