@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKERS=20
+WORKERS=16
 
 ./pagerank.sh patents-gps-noval.txt ${WORKERS}
 sleep 30    # need delay, otherwise will fail

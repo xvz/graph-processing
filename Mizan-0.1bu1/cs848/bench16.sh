@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKERS=20
+WORKERS=16
 
 ./premizan.sh patents.txt ${WORKERS} 1
 ./premizan.sh patents.txt ${WORKERS} 1

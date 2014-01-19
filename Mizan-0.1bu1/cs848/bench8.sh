@@ -216,34 +216,34 @@ WORKERS=8
 #===============================================
 #===============================================
 
-./dimest.sh amazon.txt ${WORKERS} 1
-./dimest.sh amazon.txt ${WORKERS} 1
-./dimest.sh amazon.txt ${WORKERS} 1
-./dimest.sh amazon.txt ${WORKERS} 1
-./dimest.sh amazon.txt ${WORKERS} 1
-./dimest.sh amazon.txt ${WORKERS} 1
- 
-./dimest.sh amazon.txt ${WORKERS} 2
-./dimest.sh amazon.txt ${WORKERS} 2
-./dimest.sh amazon.txt ${WORKERS} 2
-./dimest.sh amazon.txt ${WORKERS} 2
-./dimest.sh amazon.txt ${WORKERS} 2
-./dimest.sh amazon.txt ${WORKERS} 2
- 
- 
-./dimest.sh google.txt ${WORKERS} 1
-./dimest.sh google.txt ${WORKERS} 1
-./dimest.sh google.txt ${WORKERS} 1
-./dimest.sh google.txt ${WORKERS} 1
-./dimest.sh google.txt ${WORKERS} 1
-./dimest.sh google.txt ${WORKERS} 1
- 
-./dimest.sh google.txt ${WORKERS} 2
-./dimest.sh google.txt ${WORKERS} 2
-./dimest.sh google.txt ${WORKERS} 2
-./dimest.sh google.txt ${WORKERS} 2
-./dimest.sh google.txt ${WORKERS} 2
-./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 1
+#./dimest.sh amazon.txt ${WORKERS} 1
+#./dimest.sh amazon.txt ${WORKERS} 1
+#./dimest.sh amazon.txt ${WORKERS} 1
+#./dimest.sh amazon.txt ${WORKERS} 1
+#./dimest.sh amazon.txt ${WORKERS} 1
+# 
+#./dimest.sh amazon.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 2
+#./dimest.sh amazon.txt ${WORKERS} 2
+# 
+# 
+#./dimest.sh google.txt ${WORKERS} 1
+#./dimest.sh google.txt ${WORKERS} 1
+#./dimest.sh google.txt ${WORKERS} 1
+#./dimest.sh google.txt ${WORKERS} 1
+#./dimest.sh google.txt ${WORKERS} 1
+#./dimest.sh google.txt ${WORKERS} 1
+# 
+#./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh google.txt ${WORKERS} 2
+#./dimest.sh google.txt ${WORKERS} 2
  
 ./dimest.sh patents.txt ${WORKERS} 1
 ./dimest.sh patents.txt ${WORKERS} 1

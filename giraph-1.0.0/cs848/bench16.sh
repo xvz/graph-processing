@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKERS=20
+WORKERS=16
 
 ./pagerank.sh patents-giraph.txt ${WORKERS}
 ./pagerank.sh patents-giraph.txt ${WORKERS}
