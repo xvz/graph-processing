@@ -9,7 +9,7 @@ fi
 inputgraph=$(basename $1)
 
 logname=premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"
-logfile=${logname}.txt
+logfile=${logname}_time.txt
 
 ## start logging memory + network usage
 ./bench_init.sh ${logname}
@@ -24,7 +24,7 @@ case $3 in
 esac
 
 cd ../../cs848/
-touch ./logs/premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"_done.txt
+touch ./logs/premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"_done_time.txt
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}
