@@ -51,7 +51,7 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
-  public static final int K = 32;
+  public static final int K = 8;
 
   /** Logger */
   private static final Logger LOG =

@@ -21,11 +21,11 @@ WORKERS=8
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #./pagerank.sh patents-giraph.txt ${WORKERS}
-
-#===============================================
-#===============================================
-#===============================================
-
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
 #./sssp.sh amazon-giraph.txt ${WORKERS} 0
 #./sssp.sh amazon-giraph.txt ${WORKERS} 0
 #./sssp.sh amazon-giraph.txt ${WORKERS} 0
@@ -46,11 +46,11 @@ WORKERS=8
 #./sssp.sh patents-giraph.txt ${WORKERS} 6009554
 #./sssp.sh patents-giraph.txt ${WORKERS} 6009554
 #./sssp.sh patents-giraph.txt ${WORKERS} 6009554
-
-#===============================================
-#===============================================
-#===============================================
-
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
 #./wcc.sh amazon-giraph.txt ${WORKERS}
 #./wcc.sh amazon-giraph.txt ${WORKERS}
 #./wcc.sh amazon-giraph.txt ${WORKERS}
@@ -89,13 +89,18 @@ WORKERS=8
 #./mst.sh google-mst-giraph.txt ${WORKERS}
 #./mst.sh google-mst-giraph.txt ${WORKERS}
 #./mst.sh google-mst-giraph.txt ${WORKERS}
- 
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
-#./mst.sh patents-mst-giraph.txt ${WORKERS}
+# 
+./mst.sh patents-mst-giraph.txt ${WORKERS}
+sleep 30
+./mst.sh patents-mst-giraph.txt ${WORKERS}
+sleep 30
+./mst.sh patents-mst-giraph.txt ${WORKERS}
+sleep 30
+./mst.sh patents-mst-giraph.txt ${WORKERS}
+sleep 30
+./mst.sh patents-mst-giraph.txt ${WORKERS}
+sleep 30
+./mst.sh patents-mst-giraph.txt ${WORKERS}
 
 #===============================================
 #===============================================
@@ -139,10 +144,10 @@ WORKERS=8
 #./dimest.sh google-giraph.txt ${WORKERS}
 #./dimest.sh google-giraph.txt ${WORKERS}
 #./dimest.sh google-giraph.txt ${WORKERS}
- 
-./dimest.sh patents-giraph.txt ${WORKERS}
-./dimest.sh patents-giraph.txt ${WORKERS}
-./dimest.sh patents-giraph.txt ${WORKERS}
-./dimest.sh patents-giraph.txt ${WORKERS}
-./dimest.sh patents-giraph.txt ${WORKERS}
-./dimest.sh patents-giraph.txt ${WORKERS}
+# 
+#./dimest.sh patents-giraph.txt ${WORKERS}
+#./dimest.sh patents-giraph.txt ${WORKERS}
+#./dimest.sh patents-giraph.txt ${WORKERS}
+#./dimest.sh patents-giraph.txt ${WORKERS}
+#./dimest.sh patents-giraph.txt ${WORKERS}
+#./dimest.sh patents-giraph.txt ${WORKERS}

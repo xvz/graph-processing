@@ -33,8 +33,7 @@ private:
 
 public:
   dimEst(int inMaxSS) {
-    // set to 32 as per HADI paper
-    k = 32;
+    k = 8;
     maxSuperStep = inMaxSS;
 
     generator = new boost::mt19937(std::time(0));

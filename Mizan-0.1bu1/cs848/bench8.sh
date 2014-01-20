@@ -66,11 +66,11 @@ WORKERS=8
 #./pagerank.sh patents.txt ${WORKERS} 2
 #./pagerank.sh patents.txt ${WORKERS} 2
 #./pagerank.sh patents.txt ${WORKERS} 2
-
-#===============================================
-#===============================================
-#===============================================
-
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
 ## use src 0
 #./sssp.sh amazon.txt ${WORKERS} 1
 #./sssp.sh amazon.txt ${WORKERS} 1
@@ -103,7 +103,7 @@ WORKERS=8
 #./sssp.sh google.txt ${WORKERS} 2
 #
 #
-# use src 6009554
+## use src 6009554
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
 #./sssp.sh patents.txt ${WORKERS} 1
@@ -216,34 +216,34 @@ WORKERS=8
 #===============================================
 #===============================================
 
-#./dimest.sh amazon.txt ${WORKERS} 1
-#./dimest.sh amazon.txt ${WORKERS} 1
-#./dimest.sh amazon.txt ${WORKERS} 1
-#./dimest.sh amazon.txt ${WORKERS} 1
-#./dimest.sh amazon.txt ${WORKERS} 1
-#./dimest.sh amazon.txt ${WORKERS} 1
-# 
-#./dimest.sh amazon.txt ${WORKERS} 2
-#./dimest.sh amazon.txt ${WORKERS} 2
-#./dimest.sh amazon.txt ${WORKERS} 2
-#./dimest.sh amazon.txt ${WORKERS} 2
-#./dimest.sh amazon.txt ${WORKERS} 2
-#./dimest.sh amazon.txt ${WORKERS} 2
-# 
-# 
-#./dimest.sh google.txt ${WORKERS} 1
-#./dimest.sh google.txt ${WORKERS} 1
-#./dimest.sh google.txt ${WORKERS} 1
-#./dimest.sh google.txt ${WORKERS} 1
-#./dimest.sh google.txt ${WORKERS} 1
-#./dimest.sh google.txt ${WORKERS} 1
-# 
-#./dimest.sh google.txt ${WORKERS} 2
-#./dimest.sh google.txt ${WORKERS} 2
-#./dimest.sh google.txt ${WORKERS} 2
-#./dimest.sh google.txt ${WORKERS} 2
-#./dimest.sh google.txt ${WORKERS} 2
-#./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+./dimest.sh amazon.txt ${WORKERS} 1
+ 
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+./dimest.sh amazon.txt ${WORKERS} 2
+ 
+ 
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+./dimest.sh google.txt ${WORKERS} 1
+ 
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
+./dimest.sh google.txt ${WORKERS} 2
  
 ./dimest.sh patents.txt ${WORKERS} 1
 ./dimest.sh patents.txt ${WORKERS} 1
