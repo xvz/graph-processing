@@ -119,15 +119,15 @@ public class ArrayBackedIncomingMessageStorage<M extends MinaWritable>
 			int possibleNewArrayLengthTmp = -1;
 			int newArrayLengthTmp = -1;
 
-      // FIX: changed 64 to to 512 to give larger initial byte buffer
+      // FIX: changed 64 to to 128 to give larger initial byte buffer
       // this is needed for diameter estimation
-			if (messageQueueIndex >= (messageQueue.length - 512)) {// 64)) {
+			if (messageQueueIndex >= (messageQueue.length - 128)) {// 64)) {
 				expandedMessageQueue = true;
 
         // FIX: resize based on message queue INDEX rather than length
         // this grows the array faster, but is more reliable
 				int possibleNewArrayLength = messageQueue.length > 80000 ? (int) (messageQueue.length * 1.2)
-					: Math.max(messageQueueIndex * 2, 512); //Math.max(messageQueue.length * 2, 64);
+					: Math.max(messageQueueIndex * 2, 128); //Math.max(messageQueue.length * 2, 64);
 
 				possibleNewArrayLengthTmp = possibleNewArrayLength;
 				int newArrayLength = Math.max(2, possibleNewArrayLength);

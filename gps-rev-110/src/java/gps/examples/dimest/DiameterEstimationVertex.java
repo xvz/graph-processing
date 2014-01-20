@@ -24,7 +24,7 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
-  public static final int K = 32;
+  public static final int K = 8;
 
   /** Bit shift constant **/
   private static final int V62 = 62;
