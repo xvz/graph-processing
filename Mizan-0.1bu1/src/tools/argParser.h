@@ -114,6 +114,7 @@ public:
         }
       }
       if (vm.count("migration")) {
+        migration = (vm["migration"].as<int>());
         if (migration == 1) {
           args.migration = NONE;
         } else if (migration == 2) {
