@@ -131,84 +131,84 @@ WORKERS=8
 #===============================================
 #===============================================
 
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh amazon-mst-gps.txt ${WORKERS}
-sleep 45
- 
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh google-mst-gps.txt ${WORKERS}
-sleep 45
- 
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
-./mst.sh patents-mst-gps.txt ${WORKERS}
-sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#sleep 45
+# 
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh google-mst-gps.txt ${WORKERS}
+#sleep 45
+# 
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-gps.txt ${WORKERS}
+#sleep 45
 
 #===============================================
 #===============================================
 #===============================================
 
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-#./dimest.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh amazon-gps-noval.txt ${WORKERS}
+sleep 45
+ 
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh google-gps-noval.txt ${WORKERS}
+sleep 45
+ 
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-gps-noval.txt ${WORKERS}
+sleep 45
