@@ -468,18 +468,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     if (type != MSTVertexType.TYPE_SUPERVERTEX) {
       // send my supervertex all my edges, if I have any left
       if (getNumEdges() != 0) {
-        MSTMessage msg = new MSTMessage(
-                           new MSTMsgType(MSTMsgType.MSG_EDGES),
-                           new MSTMsgContentEdges(getNumEdges(), getEdges()));
-
-        sendMessage(new LongWritable(pointer), msg);
-
-        // delete existing edges explicitly---this seems to help w/ performance
         Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
             getMutableEdges().iterator();
 
+        MSTMessage msg;
         while (itr.hasNext()) {
-          itr.next();
+          msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
+                               new MSTMsgContentEdge(itr.next()));
+          sendMessage(new LongWritable(pointer), msg);
+
+          // delete edge---this helps w/ performance & memory
           itr.remove();
         }
       }
@@ -502,26 +500,22 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     // receive messages from PHASE_4A
     for (MSTMessage message : messages) {
       switch(message.getType().get()) {
-      case MSTMsgType.MSG_EDGES:
-        ArrayList<Edge<LongWritable, MSTEdgeValue>> edges =
-          message.getValue().getEdges();
+      case MSTMsgType.MSG_EDGE:
+        // merge children's edge with our edges
+        Edge<LongWritable, MSTEdgeValue> e = message.getValue().getEdge();
 
-        // merge children's edges (and our edges),
-        // by picking ones with minimum weight
-        for (Edge<LongWritable, MSTEdgeValue> e : edges) {
-          eId = e.getTargetVertexId();
-          eVal = e.getValue();
-          eValExisting = getEdgeValue(eId);
+        eId = e.getTargetVertexId();
+        eVal = e.getValue();
+        eValExisting = getEdgeValue(eId);
 
-          if (eValExisting == null) {
-            // if no out-edge exists, add new one
-            addEdge(e);
+        if (eValExisting == null) {
+          // if no out-edge exists, add new one
+          addEdge(e);
 
-          } else {
-            // otherwise, choose one w/ minimum weight
-            if (eVal.getWeight() < eValExisting.getWeight()) {
-              setEdgeValue(eId, eVal);
-            }
+        } else {
+          // otherwise, choose one w/ minimum weight
+          if (eVal.getWeight() < eValExisting.getWeight()) {
+            setEdgeValue(eId, eVal);
           }
         }
 
@@ -1016,8 +1010,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       type.readFields(in);
 
       switch(type.get()) {
-      case MSTMsgType.MSG_EDGES:
-        value = new MSTMsgContentEdges();
+      case MSTMsgType.MSG_EDGE:
+        value = new MSTMsgContentEdge();
         break;
       default:
         value = new MSTMsgContentLong();
@@ -1049,7 +1043,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     public static final int MSG_QUESTION = 1; /**/
     public static final int MSG_ANSWER = 2;   /**/
     public static final int MSG_CLEAN = 3;    /**/
-    public static final int MSG_EDGES = 4;    /**/
+    public static final int MSG_EDGE = 4;    /**/
 
     /** A type. **/
     private int type;
@@ -1064,7 +1058,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     /**
      * Value constructor.
      *
-     * @param type A type. Must be between one of MSG_INVALID, ..., MSG_EDGES.
+     * @param type A type. Must be between one of MSG_INVALID, ..., MSG_EDGE.
      */
     MSTMsgType(int type) {
       this.type = type;
@@ -1102,8 +1096,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       case MSG_CLEAN:
         out = "MSG_CLEAN";
         break;
-      case MSG_EDGES:
-        out = "MSG_EDGES";
+      case MSG_EDGE:
+        out = "MSG_EDGE";
         break;
       default:
         out = "MSG_INVALID";
@@ -1137,15 +1131,15 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     long getSecond();
 
     /**
-     * Get the edges from the message content.
+     * Get an edge from the message content.
      *
-     * @return Edges stored in message
+     * @return Edge stored in message
      */
-    ArrayList<Edge<LongWritable, MSTEdgeValue>> getEdges();
+    Edge<LongWritable, MSTEdgeValue> getEdge();
   }
 
   /**
-   * Message value class for all but MSG_EDGES.
+   * Message value class for all but MSG_EDGE.
    */
   public static class MSTMsgContentLong implements MSTMsgContent {
     /**
@@ -1181,7 +1175,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     }
 
     /**
-     * Constructor for all message types except MSG_QUESTION, MSG_EDGES.
+     * Constructor for all message types except MSG_QUESTION, MSG_EDGE.
      *
      * @param first First field.
      * @param second Second field.
@@ -1204,7 +1198,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
      *
      * @return null
      */
-    public ArrayList<Edge<LongWritable, MSTEdgeValue>> getEdges() {
+    public Edge<LongWritable, MSTEdgeValue> getEdge() {
       return null;
     }
 
@@ -1227,48 +1221,33 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   }
 
   /**
-   * Message value class for MSG_EDGES.
+   * Message value class for MSG_EDGE.
+   *
+   * This extends MSTEdgeValue to avoid storing unnecessary objects.
    */
-  public static class MSTMsgContentEdges implements MSTMsgContent {
-    /** Adjacency list to send. Only used for MSG_EDGES message type. **/
-    // NOTE: we use array b/c there are too many requirements w/ OutEdges
-    private ArrayList<Edge<LongWritable, MSTEdgeValue>> edges;
+  public static class MSTMsgContentEdge
+    extends MSTEdgeValue implements MSTMsgContent {
+
+    /** Actual destination of this edge **/
+    // this need not be same as the "original edge destination"
+    private long edgeDst;
 
     /**
      * Default constructor.
      */
-    public MSTMsgContentEdges() {
-      edges = new ArrayList<Edge<LongWritable, MSTEdgeValue>>();
+    public MSTMsgContentEdge() {
+      super();
     }
 
     /**
-     * Constructor taking in edges.
-     * This makes a copy of the edges, so passing in getEdges() is safe.
+     * Constructor taking in an edge.
+     * This makes a deep copy, so removal after this call is safe.
      *
-     * @param numEdges Number of edges.
-     * @param edges Iterator for edges.
+     * @param edge An edge.
      */
-    public MSTMsgContentEdges(int numEdges,
-                         Iterable<Edge<LongWritable, MSTEdgeValue>> edges) {
-
-      // NOTE: we don't actually store numEdges, as it's not needed
-      this.edges = new ArrayList<Edge<LongWritable, MSTEdgeValue>>(numEdges);
-
-      long eId;
-      MSTEdgeValue eVal;
-
-      // TODO: would it be more efficient just to keep iterator reference,
-      // given that messages are almost always written shortly after creation?
-      for (Edge<LongWritable, MSTEdgeValue> e : edges) {
-        // not safe to keep reference, so create copy
-        eId = e.getTargetVertexId().get();
-        eVal = e.getValue();
-
-        this.edges.add(EdgeFactory.create(new LongWritable(eId),
-                                          new MSTEdgeValue(eVal)));
-      }
-
-      //LOG.info("initialized w/ edges: " + this.edges.size() + " " + numEdges);
+    public MSTMsgContentEdge(Edge<LongWritable, MSTEdgeValue> edge) {
+      super(edge.getValue());
+      edgeDst = edge.getTargetVertexId().get();
     }
 
     /**
@@ -1289,55 +1268,27 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       return 0;
     }
 
-    public ArrayList<Edge<LongWritable, MSTEdgeValue>> getEdges() {
-      return edges;
+    /**
+     * Returns the edge.
+     *
+     * @return An edge.
+     */
+    public Edge<LongWritable, MSTEdgeValue> getEdge() {
+      // MSTEdgeValue cast is a slight hack
+      return EdgeFactory.create(new LongWritable(edgeDst),
+                                new MSTEdgeValue((MSTEdgeValue) this));
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
-      int numEdges = in.readInt();
-      edges = new ArrayList<Edge<LongWritable, MSTEdgeValue>>(numEdges);
-
-      LongWritable id;
-      MSTEdgeValue val;
-
-      for (int i = 0; i < numEdges; i++) {
-        id = new LongWritable();
-        val = new MSTEdgeValue();
-
-        id.readFields(in);
-        val.readFields(in);
-
-        edges.add(EdgeFactory.create(id, val));
-      }
-
-      //LOG.info("read some edges: " + (edges == null) +
-      //         " " + edges.size() + " " + numEdges);
-      //
-      //if (edges.size() > 0) {
-      //  for (Edge<LongWritable, MSTEdgeValue> edge : edges) {
-      //    LOG.info("  edges to " +
-      //             edge.getTargetVertexId() + " with " + edge.getValue());
-      //  }
-      //}
+      super.readFields(in);
+      edgeDst = in.readLong();
     }
 
     @Override
     public void write(DataOutput out) throws IOException {
-      out.writeInt(edges.size());
-
-      for (Edge<LongWritable, MSTEdgeValue> e : edges) {
-        e.getTargetVertexId().write(out);
-        e.getValue().write(out);
-      }
-
-      //LOG.info("wrote some edges: " + (edges == null) + " " +  edges.size());
-      //if (edges.size() > 0) {
-      //  for (Edge<LongWritable, MSTEdgeValue> edge : edges) {
-      //    LOG.info("  edges to " +
-      //             edge.getTargetVertexId() + " with " + edge.getValue());
-      //  }
-      //}
+      super.write(out);
+      out.writeLong(edgeDst);
     }
   }
 }
