@@ -50,12 +50,12 @@ WORKERS=16
 #===============================================
 
 ## use src 6009554
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
-./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
+#./sssp.sh patents.txt ${WORKERS} 1
 #
 ## use src 0
 #./sssp.sh livejournal.txt ${WORKERS} 1
@@ -169,3 +169,38 @@ WORKERS=16
 #./dimest.sh orkut.txt ${WORKERS} 1
 #./dimest.sh orkut.txt ${WORKERS} 1
 #./dimest.sh orkut.txt ${WORKERS} 1
+
+#===============================================
+#===============================================
+#===============================================
+
+./pagerank.sh patents.txt ${WORKERS} 3
+./pagerank.sh livejournal.txt ${WORKERS} 3
+./pagerank.sh orkut.txt ${WORKERS} 3
+
+#===============================================
+#===============================================
+#===============================================
+
+## use src 6009554
+#./sssp.sh patents.txt ${WORKERS} 3
+#
+## use src 0
+./sssp.sh livejournal.txt ${WORKERS} 3
+#
+## use src 1
+#./sssp.sh orkut.txt ${WORKERS} 3
+
+#===============================================
+#===============================================
+#===============================================
+
+./wcc.sh patents.txt ${WORKERS} 3
+./wcc.sh livejournal.txt ${WORKERS} 3
+./wcc.sh orkut.txt ${WORKERS} 3
+
+#===============================================
+#===============================================
+#===============================================
+
+./dimest.sh patents.txt ${WORKERS} 3
