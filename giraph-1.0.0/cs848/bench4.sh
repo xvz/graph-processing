@@ -35,80 +35,145 @@ WORKERS=4
 #./pagerank.sh patents-giraph.txt ${WORKERS}
 #stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 #sleep 60
+#
+#
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./pagerank.sh livejournal-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+./pagerank.sh livejournal-giraph.txt ${WORKERS}
+stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+sleep 60
+./pagerank.sh livejournal-giraph.txt ${WORKERS}
+stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+sleep 60
+./pagerank.sh livejournal-giraph.txt ${WORKERS}
+stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+sleep 60
+./pagerank.sh livejournal-giraph.txt ${WORKERS}
+stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+sleep 60
 
-#===============================================
-#===============================================
-#===============================================
 
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#./sssp.sh amazon-giraph.txt ${WORKERS} 0
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+# 
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#./sssp.sh google-giraph.txt ${WORKERS} 0
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+# 
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#
+#
+#./sssp.sh livejournal-giraph.txt ${WORKERS} 0
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
-./sssp.sh amazon-giraph.txt ${WORKERS} 0
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
- 
-./sssp.sh google-giraph.txt ${WORKERS} 0
-./sssp.sh google-giraph.txt ${WORKERS} 0
-./sssp.sh google-giraph.txt ${WORKERS} 0
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
-./sssp.sh google-giraph.txt ${WORKERS} 0
-./sssp.sh google-giraph.txt ${WORKERS} 0
-./sssp.sh google-giraph.txt ${WORKERS} 0
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
- 
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+./sssp.sh livejournal-giraph.txt ${WORKERS} 0
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
-./sssp.sh patents-giraph.txt ${WORKERS} 6009554
+#
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#./wcc.sh amazon-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+# 
+#./wcc.sh google-giraph.txt ${WORKERS}
+#./wcc.sh google-giraph.txt ${WORKERS}
+#./wcc.sh google-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./wcc.sh google-giraph.txt ${WORKERS}
+#./wcc.sh google-giraph.txt ${WORKERS}
+#./wcc.sh google-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+# 
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#./wcc.sh patents-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+
+
+#./wcc.sh livejournal-giraph.txt ${WORKERS}
+#stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
+#sleep 60
+./wcc.sh livejournal-giraph.txt ${WORKERS}
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
- 
-#===============================================
-#===============================================
-#===============================================
- 
-./wcc.sh amazon-giraph.txt ${WORKERS}
-./wcc.sh amazon-giraph.txt ${WORKERS}
-./wcc.sh amazon-giraph.txt ${WORKERS}
+./wcc.sh livejournal-giraph.txt ${WORKERS}
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
-./wcc.sh amazon-giraph.txt ${WORKERS}
-./wcc.sh amazon-giraph.txt ${WORKERS}
-./wcc.sh amazon-giraph.txt ${WORKERS}
+./wcc.sh livejournal-giraph.txt ${WORKERS}
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
- 
-./wcc.sh google-giraph.txt ${WORKERS}
-./wcc.sh google-giraph.txt ${WORKERS}
-./wcc.sh google-giraph.txt ${WORKERS}
+./wcc.sh livejournal-giraph.txt ${WORKERS}
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
-./wcc.sh google-giraph.txt ${WORKERS}
-./wcc.sh google-giraph.txt ${WORKERS}
-./wcc.sh google-giraph.txt ${WORKERS}
+./wcc.sh livejournal-giraph.txt ${WORKERS}
 stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
 sleep 60
- 
-./wcc.sh patents-giraph.txt ${WORKERS}
-./wcc.sh patents-giraph.txt ${WORKERS}
-./wcc.sh patents-giraph.txt ${WORKERS}
-stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
-sleep 60
-./wcc.sh patents-giraph.txt ${WORKERS}
-./wcc.sh patents-giraph.txt ${WORKERS}
-./wcc.sh patents-giraph.txt ${WORKERS}
-stop-all.sh; for ((i=0; i<=4; i++)); do ssh cloud$i 'kill $(pgrep java)'; done; start-all.sh
-sleep 60
+
+
 
 #===============================================
 #===============================================

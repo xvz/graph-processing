@@ -29,7 +29,7 @@ XMX_SIZE=3072M  # max heap size
 OUTPUT_FILE_NAME=${4}-output-${2}-of-${3}
 if [ ${2} -eq -1 ]; then
     XMS_SIZE=50M
-    XMX_SIZE=50M
+    XMX_SIZE=512M
     OUTPUT_FILE_NAME=${4}-machine-stats
 fi
 
