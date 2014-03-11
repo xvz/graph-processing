@@ -130,10 +130,7 @@ int main(int argc, char **argv) {
 
   switch (out_format) {
   case M_TO_RANDOM:
-    while (!ifs.eof()) {
-      ifs >> src;
-      ifs >> dst;
-
+    while (ifs >> src >> dst) {
       // if we haven't already been added to map by a previous edge
       if (graph->find(KeyPair(dst, src)) == graph->end()) {
         // store both out-edge and in-edge, to make graph undirected,
@@ -146,10 +143,7 @@ int main(int argc, char **argv) {
     break;
 
   case M_TO_VERTEXID:
-    while (!ifs.eof()) {
-      ifs >> src;
-      ifs >> dst;
-
+    while (ifs >> src >> dst) {
       // if we haven't already been added to map by a previous edge
       if (graph->find(KeyPair(dst, src)) == graph->end()) {
         // store both out-edge and in-edge, to make graph undirected
@@ -163,10 +157,7 @@ int main(int argc, char **argv) {
     break;
 
   case M_TO_NOWEIGHT:
-    while (!ifs.eof()) {
-      ifs >> src;
-      ifs >> dst;
-
+    while (ifs >> src >> dst) {
       // if we haven't already been added to map by a previous edge
       if (graph->find(KeyPair(dst, src)) == graph->end()) {
         // store both out-edge and in-edge, to make graph undirected

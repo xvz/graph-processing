@@ -90,27 +90,27 @@ int main(int argc, char **argv) {
   ifs >> edge_dst;
   get_edge_weight(ifs, in_format, edge_weight);
   
+  // NOTE: eof() DOES happen to work here, b/c inner while(ifs >> ...)
+  // statement breaks when no data is left *and* this failure sets
+  // EOF flag correctly & in time for eof() to see
   switch (out_format) {
   case M_TO_GIRAPH:
     while (!ifs.eof()) {
       // format: [vertex-id, vertex-val, [[edge-dst,edge-val],...]]
       ofs << "[" << curr_id << ",0,[[" << edge_dst << "," << edge_weight << "]";
-      
-      ifs >> vertex_id;
-      ifs >> edge_dst;
-      get_edge_weight(ifs, in_format, edge_weight);
 
-      while ( vertex_id == curr_id && !ifs.eof() ) {
-        ofs << ",[" << edge_dst << "," << edge_weight << "]";
-
-        ifs >> vertex_id;
-        ifs >> edge_dst;
+      while (ifs >> vertex_id >> edge_dst) {
         get_edge_weight(ifs, in_format, edge_weight);
+        if (vertex_id != curr_id) {
+          break;
+        }
+
+        ofs << ",[" << edge_dst << "," << edge_weight << "]";
       }
 
       ofs << "]]" << std::endl;
 
-      // new vertex_id found. carry over edge_dst too.
+      // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
     }
     break;
@@ -118,23 +118,20 @@ int main(int argc, char **argv) {
   case M_TO_GPS_NOVAL:
     while (!ifs.eof()) {
       // format: vertex-id edge-dst ...
-      ofs  << curr_id << " " << edge_dst;
+      ofs << curr_id << " " << edge_dst;
 
-      ifs >> vertex_id;
-      ifs >> edge_dst;
-      get_edge_weight(ifs, in_format, edge_weight);
-
-      while ( vertex_id == curr_id && !ifs.eof() ) {
-        ofs << " " << edge_dst;
-
-        ifs >> vertex_id;
-        ifs >> edge_dst;
+      while (ifs >> vertex_id >> edge_dst) {
         get_edge_weight(ifs, in_format, edge_weight);
+        if (vertex_id != curr_id) {
+          break;
+        }
+
+        ofs << " " << edge_dst;
       }
 
       ofs << std::endl;
 
-      // new vertex_id found. carry over edge_dst too.
+      // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
     }
     break;
@@ -144,21 +141,18 @@ int main(int argc, char **argv) {
       // format: vertex-id edge-dst edge-val ...
       ofs << curr_id << " " << edge_dst << " " << edge_weight;
 
-      ifs >> vertex_id;
-      ifs >> edge_dst;
-      get_edge_weight(ifs, in_format, edge_weight);
-
-      while ( vertex_id == curr_id && !ifs.eof() ) {
-        ofs << " " << edge_dst << " " << edge_weight;
-
-        ifs >> vertex_id;
-        ifs >> edge_dst;
+      while (ifs >> vertex_id >> edge_dst) {
         get_edge_weight(ifs, in_format, edge_weight);
+        if (vertex_id != curr_id) {
+          break;
+        }
+
+        ofs << " " << edge_dst << " " << edge_weight;
       }
 
       ofs << std::endl;
 
-      // new vertex_id found. carry over edge_dst too.
+      // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
     }
     break;
