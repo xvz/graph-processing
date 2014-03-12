@@ -5,7 +5,7 @@ if [ $# -ne 3 ]; then
     exit -1
 fi
 
-# place input in /user/ubuntu/giraph-input/
+# place input in /user/ubuntu/input/
 # output is in /user/ubuntu/giraph-output/
 inputgraph=$(basename $1)
 
@@ -26,7 +26,7 @@ logfile=${logname}_time.txt       # running time
 
 ## start algorithm run
 # NOTE: use -h after org.apache.giraph.GiraphRunner for help
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsVertex -ca SimpleShortestPathsVertex.sourceId=${src} -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsVertex -ca SimpleShortestPathsVertex.sourceId=${src} -vif org.apache.giraph.examples.SimpleShortestPathsInputFormat -vip /user/ubuntu/input/${inputgraph} -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}

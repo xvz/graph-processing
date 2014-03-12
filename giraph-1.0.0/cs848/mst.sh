@@ -5,7 +5,7 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
-# place input in /user/ubuntu/giraph-input/
+# place input in /user/ubuntu/input/
 # output is in /user/ubuntu/giraph-output/
 inputgraph=$(basename $1)
 
@@ -24,7 +24,7 @@ logfile=${logname}_time.txt       # running time
 ./bench_init.sh ${logname}
 
 ## start algorithm run
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.MinimumSpanningTreeVertex -vif org.apache.giraph.examples.JsonLongMSTVertexInputFormat -vip /user/ubuntu/giraph-input/${inputgraph} -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute -of org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.MinimumSpanningTreeVertex -vif org.apache.giraph.examples.MinimumSpanningTreeInputFormat -vip /user/ubuntu/input/${inputgraph} -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute -of org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 # -wc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexWorkerContext
 # see giraph-core/.../utils/ConfigurationUtils.java for command line opts
