@@ -36,13 +36,18 @@ import java.io.IOException;
 import java.util.List;
 
 /**
-  * VertexInputFormat that reads in <code>long</code> vertex IDs,
-  * <code>double</code> vertex values and <code>float</code>
-  * out-edge weights, and <code>double</code> message types,
-  * specified in JSON format. Output graph has <code>long</code>
-  * vertex IDs, but MST-specific vertex value, out-edge weight
-  * and message types.
-  */
+ * ***DEPRECATED***
+ * We no longer use Json format for input. Instead, we use simple
+ * text input format. See the new MinimumSpanningTreeInputFormat.
+ * ***DEPRECATED***
+ *
+ * VertexInputFormat that reads in <code>long</code> vertex IDs,
+ * <code>double</code> vertex values and <code>float</code>
+ * out-edge weights, and <code>double</code> message types,
+ * specified in JSON format. Output graph has <code>long</code>
+ * vertex IDs, but MST-specific vertex value, out-edge weight
+ * and message types.
+ */
 public class JsonLongMSTVertexInputFormat extends
   TextVertexInputFormat<LongWritable, MSTVertexValue, MSTEdgeValue> {
 
