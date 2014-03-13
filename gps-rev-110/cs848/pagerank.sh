@@ -5,7 +5,7 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
-# place input in /user/ubuntu/gps-input/
+# place input in /user/ubuntu/input/
 # output is in /user/ubuntu/gps/output/
 inputgraph=$(basename $1)
 
@@ -23,7 +23,7 @@ cd ../master-scripts/
 
 # NOTE: max controls max number of supersteps
 # max must be 30, to match Giraph
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###30"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.pagerank.PageRankVertex###JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config -other -max###30"
 
 ## finish logging memory + network usage
 cd ../cs848/

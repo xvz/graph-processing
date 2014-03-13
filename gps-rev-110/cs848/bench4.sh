@@ -1,214 +1,214 @@
 #!/bin/bash
 WORKERS=4
 
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45    # need delay, otherwise will fail
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh google-gps-noval.txt ${WORKERS}
+#./pagerank.sh amazon-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-# 
-##===============================================
-##===============================================
-##===============================================
-# 
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh amazon-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh google-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./sssp.sh google-gps-noval.txt ${WORKERS} 0
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
 # 
 ##===============================================
 ##===============================================
 ##===============================================
 # 
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh amazon-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./wcc.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh google-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh google-gps-noval.txt ${WORKERS}
+#./sssp.sh amazon-adj.txt ${WORKERS} 0
 #sleep 45
 # 
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./sssp.sh google-adj.txt ${WORKERS} 0
+#sleep 45
+# 
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
+#sleep 45
+# 
+##===============================================
+##===============================================
+##===============================================
+# 
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh amazon-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh google-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./wcc.sh patents-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh patents-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh patents-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh patents-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh patents-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
 
 #===============================================
 #===============================================
 #===============================================
 
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh amazon-mst-gps.txt ${WORKERS}
-#sleep 45
-# 
-#./mst.sh google-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh google-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh google-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh google-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh google-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh google-mst-gps.txt ${WORKERS}
+#./mst.sh amazon-mst-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh google-mst-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./mst.sh patents-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
 
 ##===============================================
 ##===============================================
 ##===============================================
  
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh amazon-gps-noval.txt ${WORKERS}
-sleep 45
- 
-./dimest.sh google-gps-noval.txt ${WORKERS}
-sleep 45
-./dimest.sh google-gps-noval.txt ${WORKERS}
-sleep 45
-./dimest.sh google-gps-noval.txt ${WORKERS}
-sleep 45
-./dimest.sh google-gps-noval.txt ${WORKERS}
-sleep 45
-./dimest.sh google-gps-noval.txt ${WORKERS}
-sleep 45
-./dimest.sh google-gps-noval.txt ${WORKERS}
+./dimest.sh amazon-adj.txt ${WORKERS}
 sleep 45
  
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh google-adj.txt ${WORKERS}
+sleep 45
+ 
+./dimest.sh patents-adj.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-adj.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-adj.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-adj.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-adj.txt ${WORKERS}
+sleep 45
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45

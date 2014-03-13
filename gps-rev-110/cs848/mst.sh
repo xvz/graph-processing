@@ -5,7 +5,7 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
-# place input in /user/ubuntu/gps-input/
+# place input in /user/ubuntu/input/
 # output is in /user/ubuntu/gps/output/
 inputgraph=$(basename $1)
 
@@ -27,7 +27,7 @@ cd ../master-scripts/
 # edgesatselfpjonebyone uses "storing edges at subvertices" (SEAS)
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
 # edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
-./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/gps-input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
+./start_gps_nodes.sh ${nodes} quick-start "-ifs /user/ubuntu/input/${inputgraph} -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration -mcfg /user/ubuntu/gps-machine-config/cs848.cfg -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
 
 ## finish logging memory + network usage
 cd ../cs848/

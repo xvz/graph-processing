@@ -1,43 +1,43 @@
 #!/bin/bash
 WORKERS=32
 
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45    # need delay, otherwise will fail
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./pagerank.sh livejournal-gps-noval.txt ${WORKERS}
+#./pagerank.sh patents-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./pagerank.sh orkut-gps-noval.txt ${WORKERS}
+#./pagerank.sh livejournal-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./pagerank.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./pagerank.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./pagerank.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./pagerank.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./pagerank.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./pagerank.sh orkut-adj.txt ${WORKERS}
 #sleep 45
 # 
 # 
@@ -45,170 +45,170 @@ WORKERS=32
 ###===============================================
 ###===============================================
 # 
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
-#./sssp.sh patents-gps-noval.txt ${WORKERS} 6009554
-#sleep 45
-# 
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
-#sleep 45
-#./sssp.sh livejournal-gps-noval.txt ${WORKERS} 0
+#./sssp.sh patents-adj.txt ${WORKERS} 6009554
 #sleep 45
 # 
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
 #sleep 45
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
 #sleep 45
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
 #sleep 45
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
 #sleep 45
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
 #sleep 45
-#./sssp.sh orkut-gps-noval.txt ${WORKERS} 1
+#./sssp.sh livejournal-adj.txt ${WORKERS} 0
+#sleep 45
+# 
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
+#sleep 45
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
+#sleep 45
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
+#sleep 45
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
+#sleep 45
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
+#sleep 45
+#./sssp.sh orkut-adj.txt ${WORKERS} 1
 #sleep 45
 # 
 ##===============================================
 ##===============================================
 ##===============================================
 # 
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh patents-gps-noval.txt ${WORKERS}
-#sleep 45
-# 
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
-#sleep 45
-#./wcc.sh livejournal-gps-noval.txt ${WORKERS}
+#./wcc.sh patents-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
 #sleep 45
-#./wcc.sh orkut-gps-noval.txt ${WORKERS}
+#./wcc.sh livejournal-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./wcc.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh orkut-adj.txt ${WORKERS}
+#sleep 45
+#./wcc.sh orkut-adj.txt ${WORKERS}
 #sleep 45
 
 #===============================================
 #===============================================
 #===============================================
 
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh patents-mst-gps.txt ${WORKERS}
-#sleep 45
-# 
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
-#sleep 45
-#./mst.sh livejournal-mst-gps.txt ${WORKERS}
+#./mst.sh patents-mst-adj.txt ${WORKERS}
 #sleep 45
 # 
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
 #sleep 45
-#./mst.sh orkut-mst-gps.txt ${WORKERS}
+#./mst.sh livejournal-mst-adj.txt ${WORKERS}
+#sleep 45
+# 
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
+#sleep 45
+#./mst.sh orkut-mst-adj.txt ${WORKERS}
 #sleep 45
 
 #===============================================
 #===============================================
 #===============================================
 
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh patents-gps-noval.txt ${WORKERS}
+./dimest.sh patents-adj.txt ${WORKERS}
 sleep 45
  
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh livejournal-gps-noval.txt ${WORKERS}
+./dimest.sh livejournal-adj.txt ${WORKERS}
 sleep 45
  
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
-./dimest.sh orkut-gps-noval.txt ${WORKERS}
+./dimest.sh orkut-adj.txt ${WORKERS}
 sleep 45
