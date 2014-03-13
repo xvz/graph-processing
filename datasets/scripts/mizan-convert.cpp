@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
         ofs << ",[" << edge_dst << "," << edge_weight << "]";
       }
 
-      ofs << "]]" << std::endl;
+      ofs << "]]\n";
 
       // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
         ofs << " " << edge_dst;
       }
 
-      ofs << std::endl;
+      ofs << "\n";
 
       // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
@@ -150,7 +150,7 @@ int main(int argc, char **argv) {
         ofs << " " << edge_dst << " " << edge_weight;
       }
 
-      ofs << std::endl;
+      ofs << "\n";
 
       // new vertex_id found. carry over edge_dst and edge_weight too.
       curr_id = vertex_id;
@@ -162,6 +162,7 @@ int main(int argc, char **argv) {
   }
 
   ifs.close();
+  ofs.flush();
   ofs.close();
   return 0;
 }
