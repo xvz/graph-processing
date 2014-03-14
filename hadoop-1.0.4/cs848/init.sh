@@ -41,7 +41,7 @@ echo '<?xml version="1.0"?>
   <property>
     <name>fs.default.name</name>' > core-site.xml
 # hack to expand ${hostname} but not ${user.name}
-echo "    <value>hdfs://${hostname}:9000</value>" >> core-site.xml
+echo "    <value>hdfs://${hostname}:54310</value>" >> core-site.xml
 echo '  </property>
   <property>
     <name>fs.checkpoint.edits.dir</name>
@@ -90,14 +90,14 @@ echo '  </property>
   </property>
   <property>
     <name>mapreduce.job.counters.max</name>
-    <value>100000</value>
+    <value>1000000</value>
   </property>
   <property>
     <name>mapreduce.job.counters.limit</name>
-    <value>100000</value>
+    <value>1000000</value>
   </property>
   <property>
     <name>mapred.child.java.opts</name>
-    <value>-Xmx1024m</value>
+    <value>-Xmx7300m</value>
   </property>
 </configuration>' >> mapred-site.xml

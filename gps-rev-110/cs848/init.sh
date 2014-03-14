@@ -24,7 +24,7 @@ done
 
 # create machine config file
 for ((i = 0; i <= ${nodes}; i++)); do
-    echo "$((-1 + ${i})) ${name}${i} $((54000 + ${i}))" >> cs848.cfg
+    echo "$((-1 + ${i})) ${name}${i} $((55000 + ${i}))" >> cs848.cfg
 done
 
 # upload machine config file to HDFS
