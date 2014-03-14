@@ -19,9 +19,10 @@ mvn clean install -Phadoop_1.0 -DskipTests -pl giraph-examples -Dfindbugs.skip
 
 
 for ((i=1;i<=${nodes};i++)); do
-    scp ./giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-examples/target/
+    scp ./giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-examples/target/ &
 
-    scp ./giraph-core/target/giraph-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-core/target/
+    scp ./giraph-core/target/giraph-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-core/target/ &
 done
+wait
 
 echo "OK."

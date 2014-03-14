@@ -15,5 +15,6 @@ esac
 cd ~/hadoop-1.0.4/conf/
 
 for ((i=1;i<=${nodes};i++)); do
-    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}$i:~/hadoop-1.0.4/conf/
+    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}$i:~/hadoop-1.0.4/conf/ &
 done
+wait

@@ -13,6 +13,7 @@ case ${hostname} in
 esac
 
 for ((i=1;i<=${nodes};i++)); do
-    sudo scp -o StrictHostKeyChecking=no /etc/hosts ${name}$i:/etc/hosts
-    sudo ssh -o StrictHostKeyChecking=no ${name}$i "echo \"${name}${i}\" > /etc/hostname"
+    sudo scp -o StrictHostKeyChecking=no /etc/hosts ${name}$i:/etc/hosts &
+    sudo ssh -o StrictHostKeyChecking=no ${name}$i "echo \"${name}${i}\" > /etc/hostname" &
 done
+wait

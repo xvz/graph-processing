@@ -12,11 +12,8 @@ case ${hostname} in
     *) echo "Invalid hostname"; exit -1;;
 esac
 
-stop-all.sh
-
+# cleans up rogue stat programs
 for ((i = 0; i <= ${nodes}; i++)); do
-    ssh ${name}${i} 'kill $(pgrep java)' &
+    ssh ${name}${i} 'kill $(pgrep sar); kill $(pgrep free)' &
 done
 wait
-
-start-all.sh

@@ -17,7 +17,8 @@ cd ~/gps-rev-110/local-master-scripts/
 
 cd ~/gps-rev-110/
 for ((i=1;i<=${nodes};i++)); do
-    scp ./gps_node_runner.jar ${name}$i:~/gps-rev-110/gps_node_runner.jar
+    scp ./gps_node_runner.jar ${name}$i:~/gps-rev-110/gps_node_runner.jar &
 done
+wait
 
 echo "OK."
