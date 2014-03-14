@@ -37,18 +37,11 @@ for ((i = 0; i <= ${nodes}; i++)); do
 
     # could use `jobs -p` for kill, but difficult b/c we're ssh-ing
     # must use ''s otherwise $ is evaluated too early
-    ssh ${name}${i} 'kill $(pgrep sar)'
+    ssh ${name}${i} 'kill $(pgrep sar); kill $(pgrep free)'
 done
 
 # get files
 for ((i = 1; i <= ${nodes}; i++)); do
-    cpufile=${logname}_${i}_cpu.txt   # cpu usage
-    netfile=${logname}_${i}_net.txt   # network usage
-    memfile=${logname}_${i}_mem.txt   # memory usage
-    nbtfile=${logname}_${i}_nbt.txt   # network bytes total
-
-    scp ubuntu@${name}${i}:${dir}/logs/${cpufile} ./logs/ 
-    scp ubuntu@${name}${i}:${dir}/logs/${netfile} ./logs/ 
-    scp ubuntu@${name}${i}:${dir}/logs/${memfile} ./logs/ 
-    scp ubuntu@${name}${i}:${dir}/logs/${nbtfile} ./logs/ 
+    # use compression to speed things up
+    rsync -avz ubuntu@${name}${i}:${dir}/logs/${logname}_${i}_*.txt ./logs/
 done
