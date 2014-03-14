@@ -2,22 +2,15 @@
 
 hostname=$(hostname)
 
-if [[ "$hostname" == "cloud0" ]]; then
-    name=cloud
-    nodes=4
-elif [[ "$hostname" == "cld0" ]]; then
-    name=cld
-    nodes=8
-elif [[ "$hostname" == "c0" ]]; then
-    name=c
-    nodes=16
-elif [[ "$hostname" == "cx0" ]]; then
-    name=cx
-    nodes=32
-else
-    echo "Invalid hostname"
-    exit -1
-fi
+case ${hostname} in
+    "cloud0") name=cloud; nodes=4;;
+    "cld0") name=cld; nodes=8;;
+    "c0") name=c; nodes=16;;
+    "cx0") name=cx; nodes=32;;
+    "cy0") name=cy; nodes=64;;
+    "cz0") name=cz; nodes=128;;
+    *) echo "Invalid hostname"; exit -1;;
+esac
 
 # recompile Mizan
 touch ../src/main.cpp

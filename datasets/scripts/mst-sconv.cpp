@@ -36,6 +36,9 @@
  * (Doing -n -k1,2 is not enough, as second field is not sorted w/ "-n")
  *
  * The output graph should also be sorted in the same manner.
+ *
+ * Note: use "sort -nk1 -nk2 --parallel=N -S 3G -c input" to check if
+ * the input is sorted---this will save some time.
  */
 
 #include <cstdlib>
