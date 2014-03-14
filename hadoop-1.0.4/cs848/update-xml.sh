@@ -23,4 +23,5 @@ cd ~/hadoop-1.0.4/conf/
 
 for ((i=1;i<=${nodes};i++)); do
     scp -o StrictHostKeyChecking=no ./* ${name}$i:~/hadoop-1.0.4/conf/
+#    rsync -v ./* ${name}$i:~/hadoop-1.0.4/conf/
 done
