@@ -1,63 +1,32 @@
-#!/bin/bash
+#!/bin/bash -e
 
-read -p "Any key to continue..." none
+read -p "Enter to continue..." none
+
+hostname=$(hostname)
+
+case ${hostname} in
+    "cloud0") size=1;;
+    "cld0") size=1;;
+    "c0") size=2;;
+    "cx0") size=2;;
+    "cy0") size=3;;
+    "cz0") size=3;;
+    *) echo "Invalid hostname"; exit -1;;
+esac
+
 
 cd ../raw/
-
-# giraph
-hadoop dfs -rmr ./giraph-input
-hadoop dfs -mkdir ./giraph-input
-hadoop dfs -put amazon-giraph.txt ./giraph-input
-hadoop dfs -put google-giraph.txt ./giraph-input
-hadoop dfs -put patents-giraph.txt ./giraph-input
-hadoop dfs -put road-giraph.txt ./giraph-input
-hadoop dfs -put retweet-giraph.txt ./giraph-input
-
-hadoop dfs -put amazon.txt ./giraph-input
-hadoop dfs -put google.txt ./giraph-input
-hadoop dfs -put patents.txt ./giraph-input
-hadoop dfs -put road.txt ./giraph-input
-hadoop dfs -put retweet.txt ./giraph-input
-
-# gps
-hadoop dfs -rmr ./gps-input
-hadoop dfs -mkdir ./gps-input
-hadoop dfs -put amazon-gps-noval.txt ./gps-input
-hadoop dfs -put google-gps-noval.txt ./gps-input
-hadoop dfs -put patents-gps-noval.txt ./gps-input
-hadoop dfs -put road-gps-noval.txt ./gps-input
-hadoop dfs -put retweet-gps-noval.txt ./gps-input
-
-#hadoop dfs -put amazon-gps-val.txt ./gps-input
-#hadoop dfs -put google-gps-val.txt ./gps-input
-#hadoop dfs -put patents-gps-val.txt ./gps-input
-#hadoop dfs -put road-gps-val.txt ./gps-input
-#hadoop dfs -put retweet-gps-val.txt ./gps-input
-
-# mizan
-hadoop dfs -rmr ./input
 hadoop dfs -mkdir ./input
-hadoop dfs -put amazon.txt ./input
-hadoop dfs -put google.txt ./input
-hadoop dfs -put patents.txt ./input
-hadoop dfs -put road.txt ./input
-hadoop dfs -put retweet.txt ./input
 
-#read -p "Load big files? (y/n): " yn
-# 
-#if [[ "$yn" == "y" ]]; then
-#    # giraph
-#    hadoop dfs -put livejournal-giraph.txt ./giraph-input
-#    hadoop dfs -put orkut-giraph.txt ./giraph-input
-# 
-#    # gps
-#    hadoop dfs -put livejournal-gps-noval.txt ./gps-input
-#    hadoop dfs -put orkut-gps-noval.txt ./gps-input
-# 
-#    hadoop dfs -put livejournal-gps-val.txt ./gps-input
-#    hadoop dfs -put orkut-gps-val.txt ./gps-input
-# 
-#    # mizan
-#    hadoop dfs -put livejournal.txt ./input
-#    hadoop dfs -put orkut.txt ./input
-#fi
+case ${size} in
+    1)  hadoop dfs -put amazon*.txt ./input/;
+        hadoop dfs -put google*.txt ./input/;
+        hadoop dfs -put patents*.txt ./input/;;
+    2)  hadoop dfs -put patents*.txt ./input/;
+        hadoop dfs -put livejournal*.txt ./input/;
+        hadoop dfs -put orkut*.txt ./input/;;
+    3)  hadoop dfs -put orkut*.txt ./input/;
+        hadoop dfs -put arabic*.txt ./input/;
+        hadoop dfs -put twitter*.txt ./input/;;
+    *) echo "Invalid size"; exit -1;;
+esac 

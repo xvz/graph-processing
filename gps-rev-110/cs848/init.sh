@@ -14,12 +14,12 @@ case ${hostname} in
     *) echo "Invalid hostname"; exit -1;;
 esac
 
-rm -f slaves
+rm -f ../master-scripts/slaves
 rm -f cs848.cfg
 
 # create slaves file
 for ((i = 1; i <= ${nodes}; i++)); do
-    echo "${name}${i}" >> slaves
+    echo "${name}${i}" >> ../master-scripts/slaves
 done
 
 # create machine config file
