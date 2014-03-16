@@ -72,7 +72,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   private static String PHASE_AGG = "phase";
 
   @Override
-  public void compute(Iterable<MSTMessage> messages) {
+  public void compute(Iterable<MSTMessage> messages) throws IOException {
     if (getSuperstep() == 0) {
       // if we are unconnected, just terminate
       if (getNumEdges() == 0) {
@@ -374,7 +374,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    *
    * @param messages Incoming messages
    */
-  private void phase3B(Iterable<MSTMessage> messages) {
+  private void phase3B(Iterable<MSTMessage> messages) throws IOException {
     //for (Edge<LongWritable, MSTEdgeValue> edge : getEdges()) {
     //  LOG.info(getId() + ": before 3B...edge to " +
     //           edge.getTargetVertexId() + " with " + edge.getValue());
@@ -402,7 +402,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
         //
         // Note that v will delete edge (v, u).
         if (supervertexId == pointer) {
-          removeEdges(new LongWritable(senderId));
+          removeEdgesRequest(getId(), new LongWritable(senderId));
 
         } else {
           // Otherwise, delete edge (u,v) and add edge (u, v's supervertex).
@@ -428,7 +428,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
           if (eValExisting == null) {
             // edge doesn't exist, so just add this
-            addEdge(EdgeFactory.create(new LongWritable(supervertexId), eVal));
+            addEdgeRequest(getId(),
+                   EdgeFactory.create(new LongWritable(supervertexId), eVal));
 
           } else {
             // if edge (u, v's supervertex) already exists, pick the
@@ -439,7 +440,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           }
 
           // delete edge (u, v)
-          removeEdges(new LongWritable(senderId));
+          removeEdgesRequest(getId(), new LongWritable(senderId));
         }
         break;
 
@@ -478,6 +479,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           sendMessage(new LongWritable(pointer), msg);
 
           // delete edge---this helps w/ performance & memory
+          // TODO: change this to a request
           itr.remove();
         }
       }
@@ -492,7 +494,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
    *
    * @param messages Incoming messages
    */
-  private void phase4B(Iterable<MSTMessage> messages) {
+  private void phase4B(Iterable<MSTMessage> messages) throws IOException {
     LongWritable eId;
     MSTEdgeValue eVal;
     MSTEdgeValue eValExisting;
@@ -510,7 +512,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
         if (eValExisting == null) {
           // if no out-edge exists, add new one
-          addEdge(e);
+          addEdgeRequest(getId(), e);
 
         } else {
           // otherwise, choose one w/ minimum weight
