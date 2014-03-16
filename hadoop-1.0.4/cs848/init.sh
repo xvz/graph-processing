@@ -74,11 +74,11 @@ echo '  </property>
   </property>
   <property>
     <name>mapred.tasktracker.map.tasks.maximum</name>
-    <value>10</value>
+    <value>5</value>
   </property>
   <property>
     <name>mapred.tasktracker.reduce.tasks.maximum</name>
-    <value>10</value>
+    <value>5</value>
   </property>
   <property>
     <name>mapred.map.tasks</name>
@@ -98,6 +98,6 @@ echo '  </property>
   </property>
   <property>
     <name>mapred.child.java.opts</name>
-    <value>-Xmx7300m</value>
+    <value>-Xmx7000m</value>
   </property>
 </configuration>' >> mapred-site.xml
