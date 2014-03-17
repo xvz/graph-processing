@@ -65,4 +65,9 @@
     <Method name="compute"/>
     <Bug pattern="SF_SWITCH_FALLTHROUGH"/>
   </Match>
+  <Match>
+    <Class name="org.apache.giraph.examples.MSTOriginalVertex"/>
+    <Method name="compute"/>
+    <Bug pattern="SF_SWITCH_FALLTHROUGH"/>
+  </Match>
 </FindBugsFilter>
