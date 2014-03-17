@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import org.apache.giraph.aggregators.LongSumAggregator;
 import org.apache.giraph.aggregators.IntOverwriteAggregator;
 import org.apache.giraph.edge.Edge;
-//import org.apache.giraph.edge.MutableEdge;
+import org.apache.giraph.edge.MutableEdge;
 import org.apache.giraph.edge.EdgeFactory;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
@@ -40,7 +40,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.log4j.Logger;
 
-//import java.util.Iterator;
+import java.util.Iterator;
 
 /**
  * Distributed MST implementation.
@@ -55,14 +55,14 @@ import org.apache.log4j.Logger;
 @Algorithm(
     name = "Minimum spanning tree"
 )
-public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
-    MinimumSpanningTreeVertex.MSTVertexValue,
-    MinimumSpanningTreeVertex.MSTEdgeValue,
-    MinimumSpanningTreeVertex.MSTMessage> {
+public class MSTOriginalVertex extends Vertex<LongWritable,
+    MSTOriginalVertex.MSTVertexValue,
+    MSTOriginalVertex.MSTEdgeValue,
+    MSTOriginalVertex.MSTMessage> {
 
   /** Logger */
   private static final Logger LOG =
-      Logger.getLogger(MinimumSpanningTreeVertex.class);
+      Logger.getLogger(MSTOriginalVertex.class);
 
   /** Counter aggregator name */
   private static String COUNTER_AGG = "counter";
@@ -119,13 +119,12 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     case PHASE_3B:
       //LOG.info(getId() + ": phase 3B");
       phase3B(messages);
+      // fall through
+
+    case PHASE_4A:
+      //LOG.info(getId() + ": phase 4A");
+      phase4A();
       break;
-    //  // fall through
-    //
-    //case PHASE_4A:
-    //  //LOG.info(getId() + ": phase 4A");
-    //  phase4A();
-    //  break;
 
     case PHASE_4B:
       //LOG.info(getId() + ": phase 4B");
@@ -381,17 +380,13 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
 
-    MSTVertexType type = getValue().getType();
     long pointer = getValue().getPointer();
 
     long senderId;
     long supervertexId;
-
     MSTEdgeValue eTmp;
     MSTEdgeValue eVal;
     MSTEdgeValue eValExisting;
-
-    MSTMessage msg;
 
     // receive messages from PHASE_3A
     for (MSTMessage message : messages) {
@@ -410,60 +405,40 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           removeEdges(new LongWritable(senderId));
 
         } else {
-          // If we are supervertex, then just change destination of edge
-          if (type == MSTVertexType.TYPE_SUPERVERTEX) {
-            // if sender is its own supervertex, no need to change edge
-            if (supervertexId == senderId) {
-              break;
-            }
+          // Otherwise, delete edge (u,v) and add edge (u, v's supervertex).
+          // In phase 4, this will become (u's supervertex, v's supervertex)
 
-            // get value of edge (u, v)
-            eTmp = getEdgeValue(new LongWritable(senderId));
-            if (eTmp == null) {
-              LOG.error("Invalid (null) edge value in PHASE_3B.");
-            }
-
-            // have to make copy of value, b/c next getEdgeValue()
-            // call will invalidate it
-            eVal = new MSTEdgeValue(eTmp);
-
-            // get value of edge (u, v's supervertex)
-            eValExisting = getEdgeValue(new LongWritable(supervertexId));
-
-            if (eValExisting == null) {
-              // edge doesn't exist, so just add this
-              addEdge(EdgeFactory.create(new LongWritable(supervertexId),
-                                         eVal));
-
-            } else {
-              // if edge (u, v's supervertex) already exists, pick the
-              // one with the minimum weight---this saves work in phase 4B
-              if (eVal.getWeight() < eValExisting.getWeight()) {
-                setEdgeValue(new LongWritable(supervertexId), eVal);
-              }
-            }
-
-          } else {
-            // Otherwise, send edge (u, v's supervertex) to u's supervertex
-
-            // get value of edge (u, v)
-            eVal = getEdgeValue(new LongWritable(senderId));
-            if (eVal == null) {
-              LOG.error("Invalid (null) edge value in PHASE_3B.");
-            }
-
-            // send u's supervertex the edge (u, v's supervertex)
-            //
-            // NOTE: we're not actually adding the edge (u, v's supervertex)
-            // to the graph. Instead, we're sending a message that represents
-            // the edge. u's supervertex will process the message and add the
-            // edge (u's supervertex, v's supervertx) to the graph.
-            msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
-                                 new MSTMsgContentEdge(supervertexId, eVal));
-            sendMessage(new LongWritable(pointer), msg);
+          // if sender is its own supervertex, no need to change edges
+          if (supervertexId == senderId) {
+            break;
           }
 
-          // always delete edge (u, v)
+          // get value of edge (u, v)
+          eTmp = getEdgeValue(new LongWritable(senderId));
+          if (eTmp == null) {
+            LOG.error("Invalid (null) edge value in PHASE_3B.");
+          }
+
+          // have to make copy of value, b/c next getEdgeValue()
+          // call will invalidate it
+          eVal = new MSTEdgeValue(eTmp);
+
+          // get value of edge (u, v's supervertex)
+          eValExisting = getEdgeValue(new LongWritable(supervertexId));
+
+          if (eValExisting == null) {
+            // edge doesn't exist, so just add this
+            addEdge(EdgeFactory.create(new LongWritable(supervertexId), eVal));
+
+          } else {
+            // if edge (u, v's supervertex) already exists, pick the
+            // one with the minimum weight---this saves work in phase 4B
+            if (eVal.getWeight() < eValExisting.getWeight()) {
+              setEdgeValue(new LongWritable(supervertexId), eVal);
+            }
+          }
+
+          // delete edge (u, v)
           removeEdges(new LongWritable(senderId));
         }
         break;
@@ -479,43 +454,38 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
 
-    // terimnate if not supervertex
-    // NOTE: all its edges will have been deleted by above process
-    if (type != MSTVertexType.TYPE_SUPERVERTEX) {
-      voteToHalt();
-    }
-    // otherwise, we are supervertex, so move to next phase
+    // supervertices also go to phase 4A (b/c they need to wait for msgs)
   }
 
-  ///**
-  // * Phase 4A: send adjacency list to supervertex
-  // */
-  //private void phase4A() {
-  //  MSTVertexType type = getValue().getType();
-  //  long pointer = getValue().getPointer();
-  //
-  //  // terminate if not supervertex
-  //  if (type != MSTVertexType.TYPE_SUPERVERTEX) {
-  //    // send my supervertex all my edges, if I have any left
-  //    if (getNumEdges() != 0) {
-  //      Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
-  //          getMutableEdges().iterator();
-  //
-  //      MSTMessage msg;
-  //      while (itr.hasNext()) {
-  //        msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
-  //                             new MSTMsgContentEdge(itr.next()));
-  //        sendMessage(new LongWritable(pointer), msg);
-  //
-  //        // delete edge---this helps w/ performance & memory
-  //        itr.remove();
-  //      }
-  //    }
-  //    voteToHalt();
-  //  }
-  //
-  //  // otherwise, we are supervertex, so move to next phase
-  //}
+  /**
+   * Phase 4A: send adjacency list to supervertex
+   */
+  private void phase4A() {
+    MSTVertexType type = getValue().getType();
+    long pointer = getValue().getPointer();
+
+    // terminate if not supervertex
+    if (type != MSTVertexType.TYPE_SUPERVERTEX) {
+      // send my supervertex all my edges, if I have any left
+      if (getNumEdges() != 0) {
+        Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
+            getMutableEdges().iterator();
+
+        MSTMessage msg;
+        while (itr.hasNext()) {
+          msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
+                               new MSTMsgContentEdge(itr.next()));
+          sendMessage(new LongWritable(pointer), msg);
+
+          // delete edge---this helps w/ performance & memory
+          itr.remove();
+        }
+      }
+      voteToHalt();
+    }
+
+    // otherwise, we are supervertex, so move to next phase
+  }
 
   /**
    * Phase 4B: receive adjacency lists
@@ -574,10 +544,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   /******************** MASTER/WORKER/MISC CLASSES ********************/
 
 //  /**
-//   * Worker context used with {@link MinimumSpanningTreeVertex}.
+//   * Worker context used with {@link MSTOriginalVertex}.
 //   * For debugging purposes only.
 //   */
-//  public static class MinimumSpanningTreeVertexWorkerContext extends
+//  public static class MSTOriginalVertexWorkerContext extends
 //      WorkerContext {
 //
 //    @Override
@@ -604,10 +574,10 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 //  }
 
   /**
-   * Master compute associated with {@link MinimumSpanningTreeVertex}.
+   * Master compute associated with {@link MSTOriginalVertex}.
    * It registers required aggregators.
    */
-  public static class MinimumSpanningTreeVertexMasterCompute extends
+  public static class MSTOriginalVertexMasterCompute extends
       DefaultMasterCompute {
     @Override
     public void initialize() throws InstantiationException,
@@ -688,26 +658,26 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   }
 
   /**
-   * Simple VertexOutputFormat that supports {@link MinimumSpanningTreeVertex}
+   * Simple VertexOutputFormat that supports {@link MSTOriginalVertex}
    */
-  public static class MinimumSpanningTreeVertexOutputFormat extends
+  public static class MSTOriginalVertexOutputFormat extends
       TextVertexOutputFormat<LongWritable,
-         MinimumSpanningTreeVertex.MSTVertexValue,
-         MinimumSpanningTreeVertex.MSTEdgeValue> {
+         MSTOriginalVertex.MSTVertexValue,
+         MSTOriginalVertex.MSTEdgeValue> {
     @Override
     public TextVertexWriter createVertexWriter(TaskAttemptContext context)
       throws IOException, InterruptedException {
-      return new MinimumSpanningTreeVertexWriter();
+      return new MSTOriginalVertexWriter();
     }
 
     /**
-     * Simple VertexWriter that supports {@link MinimumSpanningTreeVertex}
+     * Simple VertexWriter that supports {@link MSTOriginalVertex}
      */
-    public class MinimumSpanningTreeVertexWriter extends TextVertexWriter {
+    public class MSTOriginalVertexWriter extends TextVertexWriter {
       @Override
       public void writeVertex(
-          Vertex<LongWritable, MinimumSpanningTreeVertex.MSTVertexValue,
-                 MinimumSpanningTreeVertex.MSTEdgeValue, ?> vertex)
+          Vertex<LongWritable, MSTOriginalVertex.MSTVertexValue,
+                 MSTOriginalVertex.MSTEdgeValue, ?> vertex)
         throws IOException, InterruptedException {
         getRecordWriter().write(
             new Text(vertex.getId().toString()),
@@ -792,7 +762,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   }
 
   /**
-   * Vertex value type used by {@link MinimumSpanningTreeVertex}.
+   * Vertex value type used by {@link MSTOriginalVertex}.
    */
   public static class MSTVertexValue implements Writable {
     /**/
@@ -920,7 +890,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
 
   /******************** MST EDGE VALUE INNER CLASSES ********************/
   /**
-   * Edge value type used by {@link MinimumSpanningTreeVertex}.
+   * Edge value type used by {@link MSTOriginalVertex}.
    */
   public static class MSTEdgeValue implements Writable {
     /**/
@@ -997,7 +967,7 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
   /******************** MST MESSAGE INNER CLASSES ********************/
 
   /**
-   * Message type used by {@link MinimumSpanningTreeVertex}.
+   * Message type used by {@link MSTOriginalVertex}.
    *
    * Essentially a wrapper class containing a type, and a
    * MSTMsgContent value.
@@ -1269,29 +1239,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       super();
     }
 
-    ///**
-    // * Constructor taking in an edge.
-    // * This makes a deep copy, so removal after this call is safe.
-    // *
-    // * @param edge An edge.
-    // */
-    //public MSTMsgContentEdge(Edge<LongWritable, MSTEdgeValue> edge) {
-    //  super(edge.getValue());
-    //  edgeDst = edge.getTargetVertexId().get();
-    //}
-
     /**
-     * Constructor taking in a destination and an edge value.
+     * Constructor taking in an edge.
      * This makes a deep copy, so removal after this call is safe.
      *
-     * @param edgeDst Destination of the edge.
-     * @param edgeVal Value of the edge.
+     * @param edge An edge.
      */
-    public MSTMsgContentEdge(long edgeDst, MSTEdgeValue edgeVal) {
-      super(edgeVal);
-      this.edgeDst = edgeDst;
+    public MSTMsgContentEdge(Edge<LongWritable, MSTEdgeValue> edge) {
+      super(edge.getValue());
+      edgeDst = edge.getTargetVertexId().get();
     }
-
 
     /**
      * Irrelevant for this type of message.
