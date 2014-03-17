@@ -1,7 +1,11 @@
 #!/bin/bash -e
 
-read -p "Enter to continue..." none
+if [ $# -ne 1 ]; then
+    echo "usage: $0 [data size]"
+    exit -1
+fi
 
+size=$1
 hostname=$(hostname)
 
 case ${hostname} in
