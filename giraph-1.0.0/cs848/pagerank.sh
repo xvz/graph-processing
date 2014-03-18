@@ -31,3 +31,6 @@ hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}
+
+## clean up step needed for Giraph
+./kill_java_job.sh

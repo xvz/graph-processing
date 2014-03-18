@@ -14,11 +14,12 @@ esac
 
 cd ~/giraph-1.0.0/
 
+# -pl specifies what packages to compile (e.g., giraph-examples,giraph-core)
+# -Dfindbugs.skip skips "find bugs" stage (saves quite a bit of time)
 mvn clean install -Phadoop_1.0 -DskipTests -pl giraph-examples -Dfindbugs.skip
-#,giraph-core
 
 
-for ((i=1;i<=${nodes};i++)); do
+for ((i = 1; i <= ${nodes}; i++)); do
     scp ./giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-examples/target/ &
 
     scp ./giraph-core/target/giraph-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar ${name}$i:~/giraph-1.0.0/giraph-core/target/ &

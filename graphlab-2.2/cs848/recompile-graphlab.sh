@@ -13,9 +13,10 @@ case ${hostname} in
 esac
 
 # recompile GraphLab
-# todo...
+cd ../release/toolkits/graph_analytics/
+make -j 4
 
-for((i=1;i<=${nodes};i++)); do
+for ((i = 1; i <= ${nodes}; i++)); do
     # rsync is smart, won't copy unchanged files
     rsync -az --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/release/toolkits/ ${name}$i:~/graphlab-2.2/release/toolkits &
     rsync -az --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/deps/local/ ${name}$i:~/graphlab-2.2/deps/local &

@@ -17,7 +17,7 @@ touch ../src/main.cpp
 cd ../Release
 make all
 
-for((i=1;i<=${nodes};i++)); do
+for ((i = 1; i <= ${nodes}; i++)); do
   scp ../Release/Mizan-0.1b ${name}$i:~/Mizan-0.1bu1/Release/ &
 done
 wait

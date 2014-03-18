@@ -21,6 +21,7 @@ package org.apache.giraph.examples;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
+import org.apache.giraph.conf.FloatConfOption;
 import org.apache.giraph.aggregators.DoubleMaxAggregator;
 import org.apache.giraph.aggregators.DoubleMinAggregator;
 import org.apache.giraph.aggregators.LongSumAggregator;
@@ -51,6 +52,11 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
     DoubleWritable, NullWritable, DoubleWritable> {
   /** Number of supersteps for this test */
   public static final int MAX_SUPERSTEPS = 30;
+
+  /** Error threshold for termination **/
+  public static final FloatConfOption ERR_TOLERANCE =
+    new FloatConfOption("SimplePageRankVertex.errTol", (float) 0.01);
+
   /** Logger */
   private static final Logger LOG =
       Logger.getLogger(SimplePageRankVertex.class);
@@ -63,6 +69,9 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
 
   @Override
   public void compute(Iterable<DoubleWritable> messages) {
+    double oldVal = getValue().get();
+    double errTol = (double) ERR_TOLERANCE.get(getConf());
+
     if (getSuperstep() >= 1) {
       double sum = 0;
       for (DoubleWritable message : messages) {
@@ -81,13 +90,24 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
       //    " min=" + getAggregatedValue(MIN_AGG));
     }
 
-    if (getSuperstep() < MAX_SUPERSTEPS) {
+    // Termination condition based on error threshold
+    if (getSuperstep() > 1 &&
+        Math.abs(oldVal - getValue().get()) < errTol) {
+      voteToHalt();
+    } else {
       long edges = getNumEdges();
       sendMessageToAllEdges(
           new DoubleWritable(getValue().get() / edges));
-    } else {
-      voteToHalt();
     }
+
+    // Termination condition based on max supersteps
+    //if (getSuperstep() < MAX_SUPERSTEPS) {
+    //  long edges = getNumEdges();
+    //  sendMessageToAllEdges(
+    //      new DoubleWritable(getValue().get() / edges));
+    //} else {
+    //  voteToHalt();
+    //}
   }
 
   // NOTE: we can't comment these out, as there are test

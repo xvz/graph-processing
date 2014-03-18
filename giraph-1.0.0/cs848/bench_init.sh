@@ -29,6 +29,7 @@ for ((i = 0; i <= ${nodes}; i++)); do
     # change to same directory as master
     # start sysstat for cpu and network usage; free for memory usage (1s intervals)
     # print initial network bytes
+    #
     # NOTE: & is like variant of ;, so don't need both
     # NOTE: grep needs stdbuf correction, otherwise nothing shows up
     ssh ${name}${i} "cd ${dir}; sar 1 > ./logs/${cpufile} & free -s 1 | stdbuf -o0 grep + > ./logs/${memfile} & sar -n DEV 1 | stdbuf -o0 grep 'lo\|eth0' > ./logs/${netfile} & cat /proc/net/dev > ./logs/${nbtfile}" &

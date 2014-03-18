@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import org.apache.giraph.aggregators.LongSumAggregator;
 import org.apache.giraph.aggregators.IntOverwriteAggregator;
 import org.apache.giraph.edge.Edge;
-//import org.apache.giraph.edge.MutableEdge;
+import org.apache.giraph.edge.MutableEdge;
 import org.apache.giraph.edge.EdgeFactory;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
@@ -40,7 +40,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.log4j.Logger;
 
-//import java.util.Iterator;
+import java.util.Iterator;
 
 /**
  * Distributed MST implementation.
@@ -119,13 +119,12 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     case PHASE_3B:
       //LOG.info(getId() + ": phase 3B");
       phase3B(messages);
+      // fall through
+
+    case PHASE_4A:
+      //LOG.info(getId() + ": phase 4A");
+      phase4A();
       break;
-    //  // fall through
-    //
-    //case PHASE_4A:
-    //  //LOG.info(getId() + ": phase 4A");
-    //  phase4A();
-    //  break;
 
     case PHASE_4B:
       //LOG.info(getId() + ": phase 4B");
@@ -381,17 +380,13 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
 
-    MSTVertexType type = getValue().getType();
     long pointer = getValue().getPointer();
 
     long senderId;
     long supervertexId;
-
     MSTEdgeValue eTmp;
     MSTEdgeValue eVal;
     MSTEdgeValue eValExisting;
-
-    MSTMessage msg;
 
     // receive messages from PHASE_3A
     for (MSTMessage message : messages) {
@@ -410,60 +405,45 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
           removeEdges(new LongWritable(senderId));
 
         } else {
-          // If we are supervertex, then just change destination of edge
-          if (type == MSTVertexType.TYPE_SUPERVERTEX) {
-            // if sender is its own supervertex, no need to change edge
-            if (supervertexId == senderId) {
-              break;
-            }
+          // Otherwise, delete edge (u,v) and add edge (u, v's supervertex).
+          // In phase 4, this will become (u's supervertex, v's supervertex)
 
-            // get value of edge (u, v)
-            eTmp = getEdgeValue(new LongWritable(senderId));
-            if (eTmp == null) {
-              LOG.error("Invalid (null) edge value in PHASE_3B.");
-            }
-
-            // have to make copy of value, b/c next getEdgeValue()
-            // call will invalidate it
-            eVal = new MSTEdgeValue(eTmp);
-
-            // get value of edge (u, v's supervertex)
-            eValExisting = getEdgeValue(new LongWritable(supervertexId));
-
-            if (eValExisting == null) {
-              // edge doesn't exist, so just add this
-              addEdge(EdgeFactory.create(new LongWritable(supervertexId),
-                                         eVal));
-
-            } else {
-              // if edge (u, v's supervertex) already exists, pick the
-              // one with the minimum weight---this saves work in phase 4B
-              if (eVal.getWeight() < eValExisting.getWeight()) {
-                setEdgeValue(new LongWritable(supervertexId), eVal);
-              }
-            }
-
-          } else {
-            // Otherwise, send edge (u, v's supervertex) to u's supervertex
-
-            // get value of edge (u, v)
-            eVal = getEdgeValue(new LongWritable(senderId));
-            if (eVal == null) {
-              LOG.error("Invalid (null) edge value in PHASE_3B.");
-            }
-
-            // send u's supervertex the edge (u, v's supervertex)
-            //
-            // NOTE: we're not actually adding the edge (u, v's supervertex)
-            // to the graph. Instead, we're sending a message that represents
-            // the edge. u's supervertex will process the message and add the
-            // edge (u's supervertex, v's supervertx) to the graph.
-            msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
-                                 new MSTMsgContentEdge(supervertexId, eVal));
-            sendMessage(new LongWritable(pointer), msg);
+          // if sender is its own supervertex, no need to change edges
+          if (supervertexId == senderId) {
+            break;
           }
 
-          // always delete edge (u, v)
+          // get value of edge (u, v)
+          eTmp = getEdgeValue(new LongWritable(senderId));
+          if (eTmp == null) {
+            LOG.error("Invalid (null) edge value in PHASE_3B.");
+          }
+
+          // have to make copy of value, b/c next getEdgeValue()
+          // call will invalidate it
+          eVal = new MSTEdgeValue(eTmp);
+
+          // get value of edge (u, v's supervertex)
+          eValExisting = getEdgeValue(new LongWritable(supervertexId));
+
+          if (eValExisting == null) {
+            // edge doesn't exist, so just add this
+            // (this may seem dumb, as we'll be sending this edge in phase 4A,
+            //  but the hope is that we can potentially reduce work by finding
+            //  another edge to v's supervertex---see the below else clause)
+            addEdge(EdgeFactory.create(new LongWritable(supervertexId), eVal));
+
+          } else {
+            // if edge (u, v's supervertex) already exists, pick the
+            // one with the minimum weight---this can potentially reduce
+            // messages sent to u's supervertex in phase 4A and work
+            // u's supervertex needs to do in phase 4B
+            if (eVal.getWeight() < eValExisting.getWeight()) {
+              setEdgeValue(new LongWritable(supervertexId), eVal);
+            }
+          }
+
+          // delete edge (u, v)
           removeEdges(new LongWritable(senderId));
         }
         break;
@@ -479,43 +459,38 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
     //           edge.getTargetVertexId() + " with " + edge.getValue());
     //}
 
-    // terimnate if not supervertex
-    // NOTE: all its edges will have been deleted by above process
-    if (type != MSTVertexType.TYPE_SUPERVERTEX) {
-      voteToHalt();
-    }
-    // otherwise, we are supervertex, so move to next phase
+    // supervertices also go to phase 4A (b/c they need to wait for msgs)
   }
 
-  ///**
-  // * Phase 4A: send adjacency list to supervertex
-  // */
-  //private void phase4A() {
-  //  MSTVertexType type = getValue().getType();
-  //  long pointer = getValue().getPointer();
-  //
-  //  // terminate if not supervertex
-  //  if (type != MSTVertexType.TYPE_SUPERVERTEX) {
-  //    // send my supervertex all my edges, if I have any left
-  //    if (getNumEdges() != 0) {
-  //      Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
-  //          getMutableEdges().iterator();
-  //
-  //      MSTMessage msg;
-  //      while (itr.hasNext()) {
-  //        msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
-  //                             new MSTMsgContentEdge(itr.next()));
-  //        sendMessage(new LongWritable(pointer), msg);
-  //
-  //        // delete edge---this helps w/ performance & memory
-  //        itr.remove();
-  //      }
-  //    }
-  //    voteToHalt();
-  //  }
-  //
-  //  // otherwise, we are supervertex, so move to next phase
-  //}
+  /**
+   * Phase 4A: send adjacency list to supervertex
+   */
+  private void phase4A() {
+    MSTVertexType type = getValue().getType();
+    long pointer = getValue().getPointer();
+
+    // terminate if not supervertex
+    if (type != MSTVertexType.TYPE_SUPERVERTEX) {
+      // send my supervertex all my edges, if I have any left
+      if (getNumEdges() != 0) {
+        Iterator<MutableEdge<LongWritable, MSTEdgeValue>> itr =
+            getMutableEdges().iterator();
+
+        MSTMessage msg;
+        while (itr.hasNext()) {
+          msg = new MSTMessage(new MSTMsgType(MSTMsgType.MSG_EDGE),
+                               new MSTMsgContentEdge(itr.next()));
+          sendMessage(new LongWritable(pointer), msg);
+
+          // delete edge---this can help w/ memory (not so much running time)
+          itr.remove();
+        }
+      }
+      voteToHalt();
+    }
+
+    // otherwise, we are supervertex, so move to next phase
+  }
 
   /**
    * Phase 4B: receive adjacency lists
@@ -557,8 +532,8 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       }
     }
 
-    // all that's left now is a graph w/ supervertices
-    // its children NO LONGER participate in MST
+    // All that's left now is a graph w/ supervertices.
+    // Its children NO LONGER participate in MST.
 
     // if no more edges, then this supervertex is done
     if (getNumEdges() == 0) {
@@ -1269,29 +1244,16 @@ public class MinimumSpanningTreeVertex extends Vertex<LongWritable,
       super();
     }
 
-    ///**
-    // * Constructor taking in an edge.
-    // * This makes a deep copy, so removal after this call is safe.
-    // *
-    // * @param edge An edge.
-    // */
-    //public MSTMsgContentEdge(Edge<LongWritable, MSTEdgeValue> edge) {
-    //  super(edge.getValue());
-    //  edgeDst = edge.getTargetVertexId().get();
-    //}
-
     /**
-     * Constructor taking in a destination and an edge value.
+     * Constructor taking in an edge.
      * This makes a deep copy, so removal after this call is safe.
      *
-     * @param edgeDst Destination of the edge.
-     * @param edgeVal Value of the edge.
+     * @param edge An edge.
      */
-    public MSTMsgContentEdge(long edgeDst, MSTEdgeValue edgeVal) {
-      super(edgeVal);
-      this.edgeDst = edgeDst;
+    public MSTMsgContentEdge(Edge<LongWritable, MSTEdgeValue> edge) {
+      super(edge.getValue());
+      edgeDst = edge.getTargetVertexId().get();
     }
-
 
     /**
      * Irrelevant for this type of message.
