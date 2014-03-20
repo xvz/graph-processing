@@ -38,8 +38,8 @@ mpiexec -f ./machines -n ${workers} \
     --engine ${mode} \
     --format adjgps \
     --graph_opts ingress=random \
-    --graph ${hdfspath}/user/ubuntu/input/${inputgraph} 2>&1 \
-    --saveprefix ${hdfspath}${outputdir} | tee -a ./logs/${logfile}
+    --graph ${hdfspath}/user/ubuntu/input/${inputgraph} \
+    --saveprefix ${hdfspath}${outputdir} 2>&1 | tee -a ./logs/${logfile}
 
 tdone="$(date +%s%N)"
 

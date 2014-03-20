@@ -22,6 +22,7 @@ import java.io.DataOutput;
 import java.io.DataInput;
 import java.io.IOException;
 import java.util.Arrays;
+import org.apache.giraph.conf.IntConfOption;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
 import org.apache.hadoop.io.LongWritable;
@@ -47,7 +48,8 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
     DiameterEstimationVertex.LongArrayWritable> {
 
   /** Max number of supersteps */
-  public static final int MAX_SUPERSTEPS = 300;
+  public static final IntConfOption MAX_SUPERSTEPS =
+    new IntConfOption("SimplePageRankVertex.maxSS", 300);
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
@@ -121,7 +123,7 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
     //LOG.info(getId() + ": final value: " + getValue());
 
     // if steady state or max supersteps met, terminate
-    if (!isChanged || (getSuperstep() >= MAX_SUPERSTEPS)) {
+    if (!isChanged || (getSuperstep() >= MAX_SUPERSTEPS.get(getConf()))) {
       //LOG.info(getId() + ": voting to halt");
       voteToHalt();
 

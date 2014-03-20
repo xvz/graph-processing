@@ -27,6 +27,7 @@ logfile=${logname}_time.txt       # running time
 ## start algorithm run
 hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     org.apache.giraph.examples.DiameterEstimationVertex \
+    -ca SimplePageRankVertex.maxSS=300 \
     -vif org.apache.giraph.examples.DiameterEstimationInputFormat \
     -vip /user/ubuntu/input/${inputgraph} \
     -of org.apache.giraph.examples.DiameterEstimationVertex\$DiameterEstimationVertexOutputFormat \
