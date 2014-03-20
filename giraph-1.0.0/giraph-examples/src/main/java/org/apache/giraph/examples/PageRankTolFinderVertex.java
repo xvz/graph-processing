@@ -19,6 +19,7 @@
 package org.apache.giraph.examples;
 
 import java.io.IOException;
+import org.apache.giraph.conf.IntConfOption;
 import org.apache.giraph.aggregators.DoubleMaxAggregator;
 import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexOutputFormat;
@@ -47,8 +48,9 @@ import org.apache.log4j.Logger;
 )
 public class PageRankTolFinderVertex extends Vertex<LongWritable,
     DoubleWritable, NullWritable, DoubleWritable> {
-  /** Number of supersteps for this test */
-  public static final int MAX_SUPERSTEPS = 100;
+  /** Max number of supersteps */
+  public static final IntConfOption MAX_SUPERSTEPS =
+    new IntConfOption("PageRankTolFinderVertex.maxSS", 100);
 
   /** Logger */
   private static final Logger LOG =
@@ -75,7 +77,7 @@ public class PageRankTolFinderVertex extends Vertex<LongWritable,
     }
 
     // Termination condition based on max supersteps
-    if (getSuperstep() < MAX_SUPERSTEPS) {
+    if (getSuperstep() < MAX_SUPERSTEPS.get(getConf())) {
       long edges = getNumEdges();
       sendMessageToAllEdges(
           new DoubleWritable(getValue().get() / edges));

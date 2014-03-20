@@ -25,7 +25,16 @@ logfile=${logname}_time.txt       # running time
 #./bench_init.sh ${logname}
 
 ## start algorithm run
-hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.PageRankTolFinderVertex -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute -c org.apache.giraph.combiner.DoubleSumCombiner -vif org.apache.giraph.examples.SimplePageRankInputFormat -vip /user/ubuntu/input/${inputgraph} -of org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexOutputFormat -op ${outputdir} -w ${workers} 2>&1 | tee -a ./logs/${logfile}
+hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
+    org.apache.giraph.examples.PageRankTolFinderVertex \
+    -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute \
+    -c org.apache.giraph.combiner.DoubleSumCombiner \
+    -ca PageRankTolFinderVertex.maxSS=100 \
+    -vif org.apache.giraph.examples.SimplePageRankInputFormat \
+    -vip /user/ubuntu/input/${inputgraph} \
+    -of org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexOutputFormat \
+    -op ${outputdir} \
+    -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 # -wc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexWorkerContext
 

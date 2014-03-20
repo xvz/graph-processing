@@ -49,7 +49,7 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
 
   /** Max number of supersteps */
   public static final IntConfOption MAX_SUPERSTEPS =
-    new IntConfOption("SimplePageRankVertex.maxSS", 300);
+    new IntConfOption("DiameterEstimationVertex.maxSS", 300);
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
