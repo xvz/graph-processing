@@ -24,10 +24,10 @@ cd ../master-scripts/
 # NOTE: numMaxIterations can be set, but we do not set it
 # this is to be fair with Giraph and Mizan (both do not max ss termination)
 ./start_gps_nodes.sh ${nodes} quick-start \
-    "-ifs /user/ubuntu/input/${inputgraph}
-     -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml
-     -jc gps.examples.wcc.WeaklyConnectedComponentsVertex###JobConfiguration
-     -mcfg /user/ubuntu/gps-machine-config/cs848.cfg
+    "-ifs /user/ubuntu/input/${inputgraph} \
+     -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml \
+     -jc gps.examples.wcc.WeaklyConnectedComponentsVertex###JobConfiguration \
+     -mcfg /user/ubuntu/gps-machine-config/cs848.cfg \
      -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
 
 ## finish logging memory + network usage

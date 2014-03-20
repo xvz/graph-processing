@@ -98,6 +98,6 @@ echo '  </property>
   </property>
   <property>
     <name>mapred.child.java.opts</name>
-    <value>-Xmx7000m</value>
+    <value>-Xmx3500m</value>
   </property>
 </configuration>' >> mapred-site.xml

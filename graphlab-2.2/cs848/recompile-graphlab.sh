@@ -14,12 +14,13 @@ esac
 
 # recompile GraphLab
 cd ../release/toolkits/graph_analytics/
-make -j 4
+make
 
 for ((i = 1; i <= ${nodes}; i++)); do
-    # rsync is smart, won't copy unchanged files
-    rsync -az --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/release/toolkits/ ${name}$i:~/graphlab-2.2/release/toolkits &
-    rsync -az --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/deps/local/ ${name}$i:~/graphlab-2.2/deps/local &
+    # NOTE: only copy binaries that will actually be used.. it takes too long otherwise
+    scp ./pagerank ${name}$i:$PWD/ &
+    scp ./sssp ${name}$i:$PWD/ &
+    rsync -avz --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/deps/local/ ${name}$i:~/graphlab-2.2/deps/local 
 done
 wait
 

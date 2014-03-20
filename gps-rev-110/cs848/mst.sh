@@ -28,10 +28,10 @@ cd ../master-scripts/
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
 # edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
 ./start_gps_nodes.sh ${nodes} quick-start \
-    "-ifs /user/ubuntu/input/${inputgraph}
-     -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml
-     -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration
-     -mcfg /user/ubuntu/gps-machine-config/cs848.cfg
+    "-ifs /user/ubuntu/input/${inputgraph} \
+     -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml \
+     -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration \
+     -mcfg /user/ubuntu/gps-machine-config/cs848.cfg \
      -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
 
 ## finish logging memory + network usage
