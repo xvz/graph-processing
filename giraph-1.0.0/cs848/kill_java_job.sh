@@ -11,7 +11,7 @@ case ${hostname} in
     "cz0") name=cz; nodes=128;;
     *) echo "Invalid hostname, killing locally...";
        # do a quick kill anyway---useful for testing on a single machine
-       kill $(ps aux | grep "[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/" | awk '{print $2}');
+       kill -9 $(ps aux | grep "[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/" | awk '{print $2}');
        exit -1;;
 esac
 
@@ -21,6 +21,6 @@ esac
 # NOTE: this will kill ALL jobs, including ongoing ones!
 for ((i = 0; i <= ${nodes}; i++)); do
     # [j] is a nifty trick to avoid "grep" showing up as a result
-    ssh ${name}$i "kill \$(ps aux | grep \"[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/\" | awk '{print \$2}')" &
+    ssh ${name}$i "kill -9 \$(ps aux | grep \"[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/\" | awk '{print \$2}')" &
 done
 wait

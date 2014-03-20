@@ -20,6 +20,7 @@ for ((i = 1; i <= ${nodes}; i++)); do
     # NOTE: only copy binaries that will actually be used.. it takes too long otherwise
     scp ./pagerank ${name}$i:$PWD/ &
     scp ./sssp ${name}$i:$PWD/ &
+    scp ./connected_component ${name}$i:$PWD/ &
     rsync -avz --exclude '*.make' --exclude '*.cmake' ~/graphlab-2.2/deps/local/ ${name}$i:~/graphlab-2.2/deps/local 
 done
 wait
