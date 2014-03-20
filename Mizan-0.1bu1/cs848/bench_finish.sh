@@ -35,6 +35,6 @@ wait
 # get files in parallel
 for ((i = 1; i <= ${nodes}; i++)); do
     # use compression to speed things up
-    rsync -avz ubuntu@${name}${i}:${dir}/logs/${logname}_${i}_*.txt ./logs/ &
+    rsync -az ubuntu@${name}${i}:${dir}/logs/${logname}_${i}_*.txt ./logs/ &
 done
 wait

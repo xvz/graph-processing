@@ -70,9 +70,9 @@ int main(int argc, char** argv) {
       mmk->setOutputPath(output.c_str());*/
 
     //User Defined aggregator
-    char * maxAgg = "maxAggregator";
-    maxAggregator maxi;
-    mmk->registerAggregator(maxAgg, &maxi);
+    //char * maxAgg = "maxAggregator";
+    //maxAggregator maxi;
+    //mmk->registerAggregator(maxAgg, &maxi);
 
     mmk->run(argc, argv);
     myWorkerID = mmk->getPEID();
@@ -128,8 +128,7 @@ int main(int argc, char** argv) {
     groupVoteToHalt = false;
     storageType = OutNbrStore;       // only store outgoing edge values
 
-    // XXX: source ID is hard coded
-    SSSP sssp(mLong(0), myArgs.superSteps);
+    SSSP sssp(mLong(myArgs.srcID), myArgs.superSteps);
 
     Mizan<mLong, mLong, mLong, mLong> * mmk =
       new Mizan<mLong, mLong, mLong, mLong>(myArgs.communication, &sssp, storageType,

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 if [ $# -ne 3 ]; then
     echo "usage: $0 [input graph] [workers] [dynamic partitioning]"
@@ -20,7 +20,12 @@ logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 ./bench_init.sh ${logname}
 
 ## start algorithm run
-mpirun -f machines -np ${workers} ../Release/Mizan-0.1b -a 6 -u ubuntu -g ${inputgraph} -w ${workers} -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
+mpirun -f machines -np ${workers} ../Release/Mizan-0.1b \
+    -a 6 \
+    -u ubuntu \
+    -g ${inputgraph} \
+    -w ${workers} \
+    -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ./bench_finish.sh ${logname}

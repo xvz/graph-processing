@@ -74,16 +74,6 @@ public class PageRankTolFinderVertex extends Vertex<LongWritable,
                 new DoubleWritable(Math.abs(oldVal - getValue().get())));
     }
 
-    // Termination condition based on error threshold
-    //if (getSuperstep() > 1 &&
-    //    Math.abs(oldVal - getValue().get()) < 0.000001) {
-    //  voteToHalt();
-    //} else {
-    //  long edges = getNumEdges();
-    //  sendMessageToAllEdges(
-    //      new DoubleWritable(getValue().get() / edges));
-    //}
-
     // Termination condition based on max supersteps
     if (getSuperstep() < MAX_SUPERSTEPS) {
       long edges = getNumEdges();

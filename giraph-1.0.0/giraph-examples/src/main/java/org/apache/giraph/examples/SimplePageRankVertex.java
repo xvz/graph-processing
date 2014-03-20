@@ -21,7 +21,8 @@ package org.apache.giraph.examples;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
-import org.apache.giraph.conf.FloatConfOption;
+import org.apache.giraph.conf.IntConfOption;
+//import org.apache.giraph.conf.FloatConfOption;
 import org.apache.giraph.aggregators.DoubleMaxAggregator;
 import org.apache.giraph.aggregators.DoubleMinAggregator;
 import org.apache.giraph.aggregators.LongSumAggregator;
@@ -50,12 +51,18 @@ import org.apache.log4j.Logger;
 )
 public class SimplePageRankVertex extends Vertex<LongWritable,
     DoubleWritable, NullWritable, DoubleWritable> {
-  /** Number of supersteps for this test */
+  /** Default max number of supersteps */
+  // can't rename this---it's needed by external test classes
   public static final int MAX_SUPERSTEPS = 30;
 
+  /** Configurable max number of supersteps */
+  public static final IntConfOption MAX_SS =
+    new IntConfOption("SimplePageRankVertex.maxSS", MAX_SUPERSTEPS);
+
   /** Error threshold for termination **/
-  public static final FloatConfOption ERR_TOLERANCE =
-    new FloatConfOption("SimplePageRankVertex.errTol", (float) 0.01);
+  // okay to use floats... unless you really want < 2^-149 (~1e-45) tolerance
+  //public static final FloatConfOption ERR_TOLERANCE =
+  //  new FloatConfOption("SimplePageRankVertex.errTol", (float) 0.01);
 
   /** Logger */
   private static final Logger LOG =
@@ -70,7 +77,6 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
   @Override
   public void compute(Iterable<DoubleWritable> messages) {
     double oldVal = getValue().get();
-    double errTol = (double) ERR_TOLERANCE.get(getConf());
 
     if (getSuperstep() >= 1) {
       double sum = 0;
@@ -91,23 +97,40 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
     }
 
     // Termination condition based on error threshold
-    if (getSuperstep() > 1 &&
-        Math.abs(oldVal - getValue().get()) < errTol) {
-      voteToHalt();
-    } else {
-      long edges = getNumEdges();
-      sendMessageToAllEdges(
-          new DoubleWritable(getValue().get() / edges));
-    }
+    //
+    // TODO: cannot just use voteToHalt()---a halted vertex stops sending
+    // messages to its neighbour, causing the PageRank value to deviate
+    // drastically (and in some cases, never converge).
+    //
+    // A possible solution is to use an aggregator to track the number
+    // of vertices that have converged, and have everyone voteToHalt()
+    // *simultaneously* when # vertices converged == # total vertices.
+    // But this is convoluted so we stick with max superstep termination.
+    //
+    // Some semi-pseudo-code is given below...
+    //
+    //if ( ((LongWritable) getAggregatedValue(DONE_COUNTER)).get()
+    //     == getTotalNumVertices() ) {
+    //  voteToHalt();
+    //} else {
+    //  long edges = getNumEdges();
+    //  sendMessageToAllEdges(new DoubleWritable(getValue().get() / edges));
+    //
+    //  double errTol = (double) ERR_TOLERANCE.get(getConf());
+    //
+    //  if (getSuperstep() > 1 && isFirstTimeConverged &&
+    //      Math.abs(oldVal - getValue().get()) < errTol) {
+    //    aggregator(DONE_COUNTER, new LongWritable(1));
+    //  }
+    //}
 
     // Termination condition based on max supersteps
-    //if (getSuperstep() < MAX_SUPERSTEPS) {
-    //  long edges = getNumEdges();
-    //  sendMessageToAllEdges(
-    //      new DoubleWritable(getValue().get() / edges));
-    //} else {
-    //  voteToHalt();
-    //}
+    if (getSuperstep() < MAX_SS.get(getConf())) {
+      long edges = getNumEdges();
+      sendMessageToAllEdges(new DoubleWritable(getValue().get() / edges));
+    } else {
+      voteToHalt();
+    }
   }
 
   // NOTE: we can't comment these out, as there are test

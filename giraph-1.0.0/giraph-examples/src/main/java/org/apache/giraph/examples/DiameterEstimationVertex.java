@@ -46,8 +46,8 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
     DiameterEstimationVertex.LongArrayWritable, NullWritable,
     DiameterEstimationVertex.LongArrayWritable> {
 
-  /** Number of supersteps for this test */
-  public static final int MAX_SUPERSTEPS = 100;
+  /** Max number of supersteps */
+  public static final int MAX_SUPERSTEPS = 300;
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/

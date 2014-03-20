@@ -36,6 +36,8 @@ public:
     args.migration = NONE;
     args.communication = _pt2ptb;
     args.superSteps = 20;
+    //args.errTol = 0.01;
+    args.srcID = 0;
 
     int partition = -1;
     int fileSystem = -1;
@@ -58,8 +60,11 @@ public:
        "  6) Weakly Connected Components"
        "  7) Minimum Spanning Tree")
       ("supersteps,s", boost::program_options::value<int>(&args.superSteps),
-       "Linux user name, required in case of\n"
-       "using option (-fs 1)")
+       "Max number of supersteps")
+      //("tol", boost::program_options::value<double>(&args.errTol),
+      // "Error tolerance threshold, for PageRank")
+      ("src", boost::program_options::value<long>(&args.srcID),
+       "Source vertex ID, for SSSP")
       ("workers,w", boost::program_options::value<int>(&args.clusterSize)->required(),
        "Number of Workers/Partitions")
       ("graph,g",boost::program_options::value<string>()->required(),

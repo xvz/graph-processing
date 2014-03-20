@@ -9,10 +9,11 @@ fi
 # output is in /user/ubuntu/giraph-output/
 inputgraph=$(basename $1)
 
-workers=$2    # workers can be > number of EC2 instances
+# workers can be > number of EC2 instances, but this is inefficient!!
+# use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
+workers=$2
 
-outputdir=/user/ubuntu/giraph-output/pagerank
-
+outputdir=/user/ubuntu/giraph-output/
 hadoop dfs -rmr ${outputdir}
 
 ## log names
