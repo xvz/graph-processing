@@ -18,7 +18,7 @@ hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<value>//g' | s
 workers=$2
 async=$3
 
-if [[ ${async} == 1 ]]; then
+if [[ ${async} -eq 1 ]]; then
     mode="async"
 else
     mode="sync"

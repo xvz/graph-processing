@@ -19,7 +19,7 @@ workers=$2
 src=$3
 async=$4
 
-if [[ ${async} == 1 ]]; then
+if [[ ${async} -eq 1 ]]; then
     mode="async"
 else
     mode="sync"
