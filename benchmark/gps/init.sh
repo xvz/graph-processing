@@ -14,12 +14,14 @@ case ${hostname} in
     *) echo "Invalid hostname"; exit -1;;
 esac
 
-rm -f ../master-scripts/slaves
+rm -f slaves
 rm -f cs848.cfg
 
 # create slaves file
+# NOTE: this is NOT placed in master-script/slaves, b/c we
+# are using our own scripts for starting/stopping GPS nodes
 for ((i = 1; i <= ${nodes}; i++)); do
-    echo "${name}${i}" >> ../master-scripts/slaves
+    echo "${name}${i}" >> slaves
 done
 
 # create machine config file
