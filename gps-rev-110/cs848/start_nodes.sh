@@ -55,7 +55,7 @@ i=0
 # the "|| ..." is a workaround in case the file doesn't end with a newline
 while read slave || [ -n "$slave" ]; do
     ssh $slave "${GPS_DIR}/scripts/start_gps_node.sh ${GPS_DIR}/scripts $i $@" &
-    i=$((i+1))
+    ((i++))
 done < ./slaves
 
 # ...and wait until they're all done
