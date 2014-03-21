@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Does the same thing as master-scripts/stop_gps_nodes.sh, but faster.
-# Also does not require a separate scripts/stop_nodes.sh.
+# Also removes the need for a separate scripts/stop_nodes.sh.
 
 kill -9 $(ps aux | grep "[g]ps_node_runner" | awk '{print $2}')
 

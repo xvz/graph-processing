@@ -7,24 +7,24 @@ fi
 
 source ../common/get-dirs.sh
 
-# place input in /user/ubuntu/input/
-# output is in /user/ubuntu/graphlab-output/
+# place input in /user/${USER}/input/
+# output is in /user/${USER}/graphlab-output/
 inputgraph=$(basename $1)
-outputdir=/user/ubuntu/graphlab-output/
-hadoop dfs -rmr ${outputdir}
+outputdir=/user/${USER}/graphlab-output/
+hadoop dfs -rmr ${outputdir} || true
 
-hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<valued>//g' | sed 's@</value>@@g')
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<value>//g' | sed 's@</value>@@g')
 
 workers=$2
 # NOTE: no asynchronous option for this alg
 
 ## log names
-logname=dimest_${inputgraph}_${workers}_${async}_"$(date +%F-%H-%M-%S)"
+logname=dimest_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt
 
 
 ## start logging memory + network usage
-../common/bench_init.sh ${logname}
+../common/bench-init.sh ${logname}
 
 ## start algorithm run
 tstart="$(date +%s%N)"
@@ -33,8 +33,8 @@ mpiexec -f ./machines -n ${workers} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/approximate_diameter \
     --format adjgps \
     --graph_opts ingress=random \
-    --graph ${hdfspath}/user/ubuntu/input/${inputgraph} \
-    --saveprefix ${hdfspath}${outputdir} 2>&1 | tee -a ./logs/${logfile}
+    --graph ${hdfspath}/user/${USER}/input/${inputgraph} 2>&1 | tee -a ./logs/${logfile}
+# TODO: no saveprefix option
 
 tdone="$(date +%s%N)"
 
@@ -43,4 +43,4 @@ echo "TOTAL TIME (ns): $tdone - $tstart" | tee -a ./logs/${logfile}
 echo "TOTAL TIME (sec): $(perl -e "print $(($tdone - $tstart))/1000000000")" | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
-../common/bench_finish.sh ${logname}
+../common/bench-finish.sh ${logname}

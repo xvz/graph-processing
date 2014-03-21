@@ -5,6 +5,10 @@
 #
 # To change the max JVM heap size for Hadoop mappers
 # (which will only affect Giraph), change GIRAPH_XMX.
+#
+# NOTE: if testing on a single machine (i.e., pseudo-distributed),
+# slaves will have to be edited manually.
+
 GIRAPH_XMX="3500M"
 
 
@@ -33,7 +37,7 @@ echo "<?xml version=\"1.0\"?>
 <configuration>
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/home/ubuntu/hadoop_data/hadoop_tmp-\${user.name}</value>
+    <value>${HADOOP_DATA}/hadoop_tmp-\${user.name}</value>
   </property>
   <property>
     <name>fs.default.name</name>
@@ -41,7 +45,7 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>fs.checkpoint.edits.dir</name>
-    <value>/home/ubuntu/hadoop_data/hadoop_checkpoint-\${user.name}</value>
+    <value>${HADOOP_DATA}/hadoop_checkpoint-\${user.name}</value>
   </property>
 </configuration>" > core-site.xml
 
@@ -76,15 +80,15 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>mapred.local.dir</name>
-    <value>/home/ubuntu/hadoop_data/hadoop_local-\${user.name}</value>
+    <value>${HADOOP_DATA}/hadoop_local-\${user.name}</value>
   </property>
   <property>
     <name>mapred.child.tmp</name>
-    <value>/home/ubuntu/hadoop_data/hadoop_child-\${user.name}</value>
+    <value>${HADOOP_DATA}/hadoop_child-\${user.name}</value>
   </property>
   <property>
     <name>mapred.job.tracker.persist.jobstatus.dir</name>
-    <value>/home/ubuntu/hadoop_jobstatus-\${user.name}</value>
+    <value>/home/${USER}/hadoop_jobstatus-\${user.name}</value>
   </property>
   <property>
     <name>mapred.tasktracker.map.tasks.maximum</name>

@@ -12,7 +12,7 @@
 #
 # NOTE: if the including script will be included in other
 # scripts, use "$(dirname "${BASH_SOURCE[0]}")" as a part
-# of the directory to be safe.
+# of the directory.
 
 hostname=$(hostname)
 
@@ -23,5 +23,9 @@ case ${hostname} in
     "cx0") name=cx; nodes=32;;
     "cy0") name=cy; nodes=64;;
     "cz0") name=cz; nodes=128;;
+    "YBOX") name=YBOX; nodes=-1;;    # for testing on a single machine
     *) echo "Invalid hostname"; exit -1;;
 esac
+
+# Note: when testing on a single machine, setting nodes to -1
+# will prevent bench-init and bench-finish from doing anything.

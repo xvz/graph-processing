@@ -2,9 +2,8 @@
 
 # Initiate GraphLab by creating machine file.
 
-read -p "Enter to continue..." none
-
-source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-hosts.sh
+cd "$(dirname "${BASH_SOURCE[0]}")"
+source ../common/get-hosts.sh
 
 # create machines file
 rm -f machines

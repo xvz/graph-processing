@@ -7,11 +7,11 @@ fi
 
 source ../common/get-dirs.sh
 
-# place input in /user/ubuntu/input/
-# output is in /user/ubuntu/giraph-output/
+# place input in /user/${USER}/input/
+# output is in /user/${USER}/giraph-output/
 inputgraph=$(basename $1)
-outputdir=/user/ubuntu/giraph-output/
-hadoop dfs -rmr ${outputdir}
+outputdir=/user/${USER}/giraph-output/
+hadoop dfs -rmr ${outputdir} || true
 
 # workers can be > number of EC2 instances, but this is inefficient!
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
@@ -29,7 +29,7 @@ logfile=${logname}_time.txt       # running time
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     org.apache.giraph.examples.ConnectedComponentsVertex \
     -vif org.apache.giraph.examples.ConnectedComponentsInputFormat \
-    -vip /user/ubuntu/input/${inputgraph} \
+    -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.io.formats.IdWithValueTextOutputFormat \
     -op ${outputdir} \
     -w ${workers} 2>&1 | tee -a ./logs/${logfile}

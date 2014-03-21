@@ -5,11 +5,9 @@
 # NOTE: "slaves" is NOT placed in master-script/, because we
 # use our own scripts for starting/stopping GPS nodes.
 
-read -p "Enter to continue..." none
-
-commondir=$(dirname "${BASH_SOURCE[0]}")/../common
-source "$commondir"/get-hosts.sh
-source "$commondir"/get-dirs.sh
+cd "$(dirname "${BASH_SOURCE[0]}")"
+source ../common/get-hosts.sh
+source ../common/get-dirs.sh
 
 rm -f slaves
 rm -f machine.cfg
@@ -25,8 +23,14 @@ for ((i = 0; i <= ${nodes}; i++)); do
 done
 
 # upload machine config file to HDFS
-hadoop dfs -mkdir /user/ubuntu/gps-machine-config/
-hadoop dfs -put machine.cfg /user/ubuntu/gps-machine-config/
+hadoop dfsadmin -safemode wait > /dev/null
+hadoop dfs -rmr /user/${USER}/gps-machine-config/ || true
+hadoop dfs -mkdir /user/${USER}/gps-machine-config/
+hadoop dfs -put machine.cfg /user/${USER}/gps-machine-config/
 
-# make tmp directory, where GPS outputs logs
-mkdir "$GPS_LOGS"
+# make GPS log directories if needed
+if [[ ! -d "$GPS_LOGS" ]]; then mkdir -p "$GPS_LOGS"; fi
+for ((i = 1; i <= ${nodes}; i++)); do
+    ssh ${name}${i} "if [[ ! -d \"$GPS_LOGS\" ]]; then mkdir -p \"$GPS_LOGS\"; fi" &
+done
+wait

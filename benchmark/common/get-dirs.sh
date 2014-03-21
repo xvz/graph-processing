@@ -3,17 +3,31 @@
 # Specifies the absolute paths of the systems and other things.
 #
 # Use quotes if path has spaces (e.g., "../bad folder name/"),
-# but be warned that things will break...
+# but be warned that things will break.
 #
 # NOTE: if the including script will be included in other
 # scripts, use "$(dirname "${BASH_SOURCE[0]}")" as a part
-# of the directory to be safe.
+# of the directory.
 
-HADOOP_DIR=/user/ubuntu/hadoop-1.0.4/
-JAVA_DIR=/user/ubuntu/jdk1.6.0_30/
+DIR_PREFIX=/home/ubuntu
+#DIR_PREFIX=/home/young/cs848   # for testing on a single machine
 
-GIRAPH_DIR=/user/ubuntu/giraph-1.0.0/
-GPS_DIR=/user/ubuntu/gps-rev-110/
-GPS_LOGS=/user/ubuntu/var/tmp/
-GRAPHLAB_DIR=/user/ubuntu/graphlab-2.2/
-MIZAN_DIR=/user/ubuntu/Mizan-0.1bu1/
+# location of datasets/input graphs
+DATASET_DIR="$DIR_PREFIX"/datasets/raw/
+
+# $JAVA_DIR/bin/java should be the Java binary that is
+# used by all systems (incl. Hadoop) that need Java
+JAVA_DIR="$DIR_PREFIX"/jdk1.6.0_30/
+
+# HADOOP_DATA is where HDFS files and Hadoop logs are stored
+HADOOP_DIR="$DIR_PREFIX"/hadoop-1.0.4/
+HADOOP_DATA="$DIR_PREFIX"/hadoop_data/
+
+GIRAPH_DIR="$DIR_PREFIX"/giraph-1.0.0/
+
+# These must match "GPS_DIR" and "GPS_LOG_DIRECTORY" of $GPS_DIR/conf/gps-env.sh
+GPS_DIR="$DIR_PREFIX"/gps-rev-110/
+GPS_LOGS="$DIR_PREFIX"/var/tmp/
+
+GRAPHLAB_DIR="$DIR_PREFIX"/graphlab-2.2/
+MIZAN_DIR="$DIR_PREFIX"/Mizan-0.1bu1/

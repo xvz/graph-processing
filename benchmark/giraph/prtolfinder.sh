@@ -7,11 +7,11 @@ fi
 
 source ../common/get-dirs.sh
 
-# place input in /user/ubuntu/input/
-# output is in /user/ubuntu/giraph-output/
+# place input in /user/${USER}/input/
+# output is in /user/${USER}/giraph-output/
 inputgraph=$(basename $1)
-outputdir=/user/ubuntu/giraph-output/
-hadoop dfs -rmr ${outputdir}
+outputdir=/user/${USER}/giraph-output/
+hadoop dfs -rmr ${outputdir} || true
 
 # workers can be > number of EC2 instances, but this is inefficient!
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
@@ -32,7 +32,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
     -c org.apache.giraph.combiner.DoubleSumCombiner \
     -ca PageRankTolFinderVertex.maxSS=100 \
     -vif org.apache.giraph.examples.SimplePageRankInputFormat \
-    -vip /user/ubuntu/input/${inputgraph} \
+    -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexOutputFormat \
     -op ${outputdir} \
     -w ${workers} 2>&1 | tee -a ./logs/${logfile}

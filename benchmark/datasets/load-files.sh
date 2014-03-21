@@ -1,27 +1,34 @@
 #!/bin/bash -e
 
-if [ $# -ne 1 ]; then
-    echo "usage: $0 [data size]"
-    exit -1
+# Loads the input data, based on the cluster size.
+#
+# The size can be specified as an argument. Otherwise,
+# it will be obtained from the hostname of the master.
+
+commondir=$(dirname "${BASH_SOURCE[0]}")/../common
+source "$commondir"/get-dirs.sh
+
+if [ $# -eq 0 ]; then
+    source "$commondir"/get-hosts.sh
+
+    case ${nodes} in
+        4) size=1;;
+        8) size=1;;
+        16) size=2;;
+        32) size=2;;
+        64) size=3;;
+        128) size=3;;
+        *) echo "Invalid number of workers"; exit -1;;
+    esac
+else
+    size=$1
 fi
 
-size=$1
-hostname=$(hostname)
+cd "$DATASET_DIR"
 
-case ${hostname} in
-    "cloud0") size=1;;
-    "cld0") size=1;;
-    "c0") size=2;;
-    "cx0") size=2;;
-    "cy0") size=3;;
-    "cz0") size=3;;
-    *) echo "Invalid hostname"; exit -1;;
-esac
-
-
-cd ../raw/
-hadoop dfs -mkdir ./input
-
+hadoop dfsadmin -safemode wait > /dev/null
+hadoop dfs -mkdir ./input || true    # no problem if it already exists
+ 
 case ${size} in
     1)  hadoop dfs -put amazon*.txt ./input/;
         hadoop dfs -put google*.txt ./input/;
