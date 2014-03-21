@@ -1,11 +1,10 @@
 #!/bin/bash -e
 
-cd ../scripts/
+source ../conf/gps-env.sh
 
-while read slave; do
-    scp ./start_gps_node.sh $slave:$PWD/ &
-    scp ./stop_gps_node.sh $slave:$PWD/ &
-done < ../cs848/slaves
+# the "|| ..." is a workaround in case the file doesn't end with a newline
+while read slave || [ -n "$slave" ]; do
+    scp ../scripts/start_gps_node.sh $slave:${GPS_DIR}/scripts/ &
+    scp ../scripts/stop_gps_node.sh $slave:${GPS_DIR}/scripts/ &
+done < ./slaves
 wait
-
-echo "ssh to $(tail -n 1 ../cs848/slaves) and remove '&' in start_gps_node.sh!!"

@@ -19,23 +19,20 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 ./bench_init.sh ${logname}
 
 ## start algorithm run
-cd ../master-scripts/
-
 # there are 3 versions of MST... according to author, these are:
 #
 # edgesatrootpjonebyone uses standard Boruvka (no optimizations)
 # edgesatselfpjonebyone uses "storing edges at subvertices" (SEAS)
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
 # edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
-./start_gps_nodes.sh ${nodes} quick-start \
-    "-ifs /user/ubuntu/input/${inputgraph} \
-     -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml \
-     -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration \
-     -mcfg /user/ubuntu/gps-machine-config/cs848.cfg \
-     -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config"
+./start_nodes.sh ${nodes} quick-start \
+    -ifs /user/ubuntu/input/${inputgraph} \
+    -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml \
+    -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration \
+    -mcfg /user/ubuntu/gps-machine-config/cs848.cfg \
+    -log4jconfig /home/ubuntu/gps-rev-110/conf/log4j.config
 
 ## finish logging memory + network usage
-cd ../cs848/
 ./bench_finish.sh ${logname}
 
 ## get stats (see debug_site.sh for debug naming convention)

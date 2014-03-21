@@ -9,12 +9,12 @@
 source $1/../conf/gps-env.sh
 
 cd $GPS_DIR
-echo "1: $1"
-echo "2: $2"
-echo "3: $3"
-echo "4: $4"
+#echo "1: $1"
+#echo "2: $2"
+#echo "3: $3"
+#echo "4: $4"
 
-echo `whoami`
+#echo `whoami`
 if [ $# -lt 4 ]
 then
     echo "You have to give at least the worker-id TODO(semih): complete"
@@ -33,12 +33,12 @@ if [ ${2} -eq -1 ]; then
     OUTPUT_FILE_NAME=${4}-machine-stats
 fi
 
-echo "-Xincgc -Xms$XMS_SIZE -Xmx$XMX_SIZE"
+#echo "-Xincgc -Xms$XMS_SIZE -Xmx$XMX_SIZE"
 
-# To automate running GPS, use the following hack:
-# - for start_gps_node.sh, last slave in slaves file should NOT have "&" at end
+# NOTE: - must use ${@:5} because $5 will not be "quoted" (see start_nodes.sh)
+#       - should not have "&" at end, as this is handled in start_nodes.sh
 #
-# This enables this script to run until computation is completed
-#
-# This can't be done on master, b/c server is also started first
-/home/ubuntu/jdk1.6.0_30/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar ${GPS_DIR}/gps_node_runner.jar -machineid ${2} -ofp /user/${USER}/gps/output/${OUTPUT_FILE_NAME} ${5} &> ${GPS_LOG_DIRECTORY}/${4}-machine${2}-output.txt &
+# If using the original gps_start_nodes.sh, one way to get automation is by modifying
+# last slave's start_gps_node.sh to not have the "&". That way, since slaves are
+# started sequentially, the last one will return only when the computation is done.
+/home/ubuntu/jdk1.6.0_30/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar ${GPS_DIR}/gps_node_runner.jar -machineid ${2} -ofp /user/${USER}/gps/output/${OUTPUT_FILE_NAME} ${@:5} &> ${GPS_LOG_DIRECTORY}/${4}-machine${2}-output.txt
