@@ -62,12 +62,12 @@ int main(int argc, char** argv) {
 
     mmk->setVoteToHalt(groupVoteToHalt);
 
-    /*string output;
-      output.append("/user/");
-      output.append(myArgs.hdfsUserName.c_str());
-      output.append("/m_run_output/");
-      output.append(myArgs.graphName.c_str());
-      mmk->setOutputPath(output.c_str());*/
+    string output;
+    output.append("/user/");
+    output.append(myArgs.hdfsUserName.c_str());
+    output.append("/mizan-output/");
+    //output.append(myArgs.graphName.c_str());
+    mmk->setOutputPath(output.c_str());
 
     //User Defined aggregator
     //char * maxAgg = "maxAggregator";
@@ -102,6 +102,14 @@ int main(int argc, char** argv) {
       new Mizan<mLong, mLongArray, mLongArray, mLong>(myArgs.communication, &dE, storageType,
                                                       inputBaseFile, myArgs.clusterSize,
                                                       myArgs.fs, myArgs.migration);
+
+    string output;
+    output.append("/user/");
+    output.append(myArgs.hdfsUserName.c_str());
+    output.append("/mizan-output/");
+    //output.append(myArgs.graphName.c_str());
+    mmk->setOutputPath(output.c_str());
+
     mmk->setVoteToHalt(groupVoteToHalt);
 
     mmk->run(argc, argv);
@@ -139,6 +147,13 @@ int main(int argc, char** argv) {
     SSSPCombiner ssspc;
     mmk->registerMessageCombiner(&ssspc);
 
+    string output;
+    output.append("/user/");
+    output.append(myArgs.hdfsUserName.c_str());
+    output.append("/mizan-output/");
+    //output.append(myArgs.graphName.c_str());
+    mmk->setOutputPath(output.c_str());
+
     mmk->setVoteToHalt(groupVoteToHalt);
 
     mmk->run(argc, argv);
@@ -160,6 +175,13 @@ int main(int argc, char** argv) {
     // use combiner for better network efficiency
     WCCCombiner wccc;
     mmk->registerMessageCombiner(&wccc);
+
+    string output;
+    output.append("/user/");
+    output.append(myArgs.hdfsUserName.c_str());
+    output.append("/mizan-output/");
+    //output.append(myArgs.graphName.c_str());
+    mmk->setOutputPath(output.c_str());
 
     mmk->setVoteToHalt(groupVoteToHalt);
 
@@ -187,6 +209,13 @@ int main(int argc, char** argv) {
     char* supervertexAgg_name = "supervertex";
     sumAggregator supervertexAgg;
     mmk->registerAggregator(supervertexAgg_name, &supervertexAgg);
+
+    string output;
+    output.append("/user/");
+    output.append(myArgs.hdfsUserName.c_str());
+    output.append("/mizan-output/");
+    //output.append(myArgs.graphName.c_str());
+    mmk->setOutputPath(output.c_str());
 
     mmk->setVoteToHalt(groupVoteToHalt);
 

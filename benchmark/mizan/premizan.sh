@@ -15,8 +15,8 @@ source ../common/get-dirs.sh
 scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 
-# place input into /user/${USER}/input (this is where preMizan looks)
-# output of preMizan is in /user/${USER}/m_output/mizan_${inputgraph}_mhash_${workers}
+# place input into /user/${USER}/input/ (this is where preMizan looks)
+# output of preMizan is in /user/${USER}/m_output/mizan_${inputgraph}_mhash_${workers}/
 #  (or _mrange_${workers} if using range partitioning)
 inputgraph=$(basename $1)
 
