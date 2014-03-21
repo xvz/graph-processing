@@ -26,7 +26,7 @@ logfile=${logname}_time.txt       # running time
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-hadoop jar $GIRAPH_DIR/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
+hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     org.apache.giraph.examples.DiameterEstimationVertex \
     -ca DiameterEstimationVertex.maxSS=300 \
     -vif org.apache.giraph.examples.DiameterEstimationInputFormat \

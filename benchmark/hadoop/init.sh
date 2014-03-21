@@ -120,6 +120,6 @@ echo "<?xml version=\"1.0\"?>
 # copy configs to workers
 # (also adds workers to known_hosts, if they're not there already)
 for ((i = 1; i <= ${nodes}; i++)); do
-    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}$i:$HADOOP_DIR/conf/ &
+    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}${i}:${HADOOP_DIR}/conf/ &
 done
 wait

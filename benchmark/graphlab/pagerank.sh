@@ -1,11 +1,20 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ $# -ne 3 ]; then
     echo "usage: $0 [input graph] [workers] [async?]"
     exit -1
 fi
 
+source ../common/get-dirs.sh
+
+# place input in /user/ubuntu/input/
+# output is in /user/ubuntu/graphlab-output/
 inputgraph=$(basename $1)
+outputdir=/user/ubuntu/graphlab-output/
+hadoop dfs -rmr ${outputdir}
+
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<valued>//g' | sed 's@</value>@@g')
+
 workers=$2
 async=$3
 
@@ -15,23 +24,19 @@ else
     mode="sync"
 fi
 
-# WARNING: this assumes port 54310... if HDFS is not on this port, change this!!
-hdfspath=hdfs://$(hostname):54310
-outputdir=/user/ubuntu/graphlab-output/
-hadoop dfs -rmr ${outputdir}
-
+## log names
 logname=pagerank_${inputgraph}_${workers}_${async}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt
 
 
 ## start logging memory + network usage
-./bench_init.sh ${logname}
+../common/bench_init.sh ${logname}
 
 ## start algorithm run
 tstart="$(date +%s%N)"
 
 mpiexec -f ./machines -n ${workers} \
-    ../release/toolkits/graph_analytics/pagerank \
+    "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/pagerank \
     --tol 0.005 \
     --engine ${mode} \
     --format adjgps \
@@ -46,4 +51,4 @@ echo "TOTAL TIME (ns): $tdone - $tstart" | tee -a ./logs/${logfile}
 echo "TOTAL TIME (sec): $(perl -e "print $(($tdone - $tstart))/1000000000")" | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
-./bench_finish.sh ${logname}
+../common/bench_finish.sh ${logname}
