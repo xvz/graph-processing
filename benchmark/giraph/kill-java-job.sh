@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+# Kill all Java instances corresponding to Giraph jobs.
+# This is needed as they don't terminate automatically (they hang around consuming memory).
+#
+# NOTE: this will kill ALL jobs, including ongoing ones!
+#
+# To get rid of terminated running jobs from Hadoop web interface,
+# use "hadoop job -kill job_yyyymmddhhmm_aaaa"
+
+source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
+
+#       # do a quick kill anyway---useful for testing on a single machine
+#       kill -9 $(ps aux | grep "[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/" | awk '{print $2}');
+
+for ((i = 0; i <= ${nodes}; i++)); do
+    # [j] is a nifty trick to avoid "grep" showing up as a result
+    ssh ${name}$i "kill -9 \$(ps aux | grep \"[j]obcache/job_[0-9]\{12\}_[0-9]\{4\}/\" | awk '{print \$2}')" &
+done
+wait

@@ -1,3 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
-java -jar ../debug_monitoring_runner.jar -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -msfp /user/ubuntu/gps/stats-* -port 4444
+# This runs GPS's web interface to view old runs/logs.
+#
+# NOTE: Compile debug_monitoring_runner.jar using $GPS_DIR/make_debug_monitoring_runner_jar.sh
+
+source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-dirs.sh
+
+java -jar "$GPS_DIR"/debug_monitoring_runner.jar -hcf /home/ubuntu/hadoop-1.0.4/conf/core-site.xml -msfp /user/ubuntu/gps/stats-* -port 4444

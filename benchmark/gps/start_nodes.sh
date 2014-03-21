@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
 
-# NOTE: this is the same as ../master-scripts/start_gps_nodes.sh, but
-# is friendlier for automation.
+# Basically master-scripts/start_gps_nodes.sh made friendlier for automation.
+# This also eliminates the need of having scripts/start_gps_node.sh at every worker.
+#
+# To change max JVM heap size for GPS workers, change XMX_SIZE below.
 #
 # To use this, pass in arguments like:
 #
@@ -33,30 +35,44 @@
 # cloud2
 #
 # and similarly for the machine config file.
-
-source ../conf/gps-env.sh
+#
+# Extra note: one way to get automation when using the original gps_start_nodes.sh
+# is by modifying the last slave's start_gps_node.sh to not have the "&". That way,
+# since slaves are started sequentially, the last one will return only when the
+# computation is complete.
 
 if [ $# -lt 3 ]; then
-    echo "usage: $0 [workers] quick-start [args]"
+    echo "usage: $0 [workers] quick-start [gps-args]"
     exit -1
 fi
 
+source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-dirs.sh
+
+
+## start master
 MASTER_GPS_ID=-1
+MASTER_XMS_SIZE=50M     # initial heap size (master)
+MASTER_XMX_SIZE=2048M   # max heap size (master)
 
-# required arguments: my-id scripts-directory args
-# "args" would be: num-workers quick-start args-to-jar-file
-#   (i.e., arguments passed to this file)
-../scripts/start_gps_node.sh ${GPS_DIR}/scripts ${MASTER_GPS_ID} "$@" &
+echo "Starting GPS master -1"
+"$JAVA_DIR"/bin/java -Xincgc -Xms${MASTER_XMS_SIZE} -Xmx${MASTER_XMX_SIZE} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_PS_ID} -ofp /user/ubuntu/gps-output/${2}-machine-stats ${@:3} &> "$GPS_LOGS"/${2}-machine${i}-output.txt &
 
-# start slaves asynchronously (faster this way)...
-i=0
+
+## start slaves asynchronously (faster this way)
+XMS_SIZE=256M   # initial heap size (workers)
+XMX_SIZE=3500M  # max heap size (workers)
 
 # read-in effectively ensures # of workers never exceeds # of lines in "slaves"
 # the "|| ..." is a workaround in case the file doesn't end with a newline
+i=0
 while read slave || [ -n "$slave" ]; do
-    ssh $slave "${GPS_DIR}/scripts/start_gps_node.sh ${GPS_DIR}/scripts $i $@" &
+    echo "Starting GPS worker ${i}"
+
+    OUTPUT_FILE_NAME=${2}-output-${i}-of-${1}
+    ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp /user/ubuntu/gps-output/${OUTPUT_FILE_NAME} ${@:3} &> \"$GPS_LOGS\"/${2}-machine${i}-output.txt" &
+
     ((i++))
 done < ./slaves
 
-# ...and wait until they're all done
+# ...and wait until computation completes
 wait
