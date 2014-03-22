@@ -18,8 +18,11 @@
 #  >> If # workers > # specified machines, we start # of specified machines.
 #
 # To change max JVM heap size for GPS workers, change XMX_SIZE below.
-#
-#
+
+MASTER_XMX_SIZE=2048M   # max heap size (master)
+XMX_SIZE=7000M          # max heap size (workers)
+
+
 # To use this, pass in arguments like:
 #
 #./start-nodes.sh ${nodes} quick-start \
@@ -58,7 +61,10 @@
 # computation is complete.
 
 if [ $# -lt 3 ]; then
-    echo "usage: $0 [workers] quick-start [gps-args]"
+    echo "usage: $0 workers mode gps-args"
+    echo ""
+    echo "mode: use 'quick-start' (without quotes)"
+    echo "gps-args: arguments passed to GPS jar, unquoted"
     exit -1
 fi
 
@@ -70,14 +76,12 @@ OUTPUT_DIR=/user/${USER}/gps/output/
 ## start master
 MASTER_GPS_ID=-1
 MASTER_XMS_SIZE=50M     # initial heap size (master)
-MASTER_XMX_SIZE=2048M   # max heap size (master)
 
 echo "Starting GPS master -1"
 "$JAVA_DIR"/bin/java -Xincgc -Xms${MASTER_XMS_SIZE} -Xmx${MASTER_XMX_SIZE} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOGS_DIR"/${2}-machine${i}-output.txt &
 
 ## start slaves asynchronously (faster this way)
 XMS_SIZE=256M   # initial heap size (workers)
-XMX_SIZE=7000M  # max heap size (workers)
 
 # read-in effectively ensures # of workers never exceeds # of lines in "slaves"
 # the "|| ..." is a workaround in case the file doesn't end with a newline

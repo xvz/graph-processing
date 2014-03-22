@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 [input graph] [workers]"
+    echo "usage: $0 input-graph workers"
     exit -1
 fi
 

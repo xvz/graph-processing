@@ -3,7 +3,7 @@
 # Finish data logging/collection at the master and all workers.
 
 if [ $# -ne 1 ]; then
-    echo "usage: $0 [log-name-prefix]"
+    echo "usage: $0 log-name-prefix"
     exit -1
 fi
 

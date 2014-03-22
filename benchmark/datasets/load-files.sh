@@ -4,6 +4,8 @@
 #
 # The size can be specified as an argument. Otherwise,
 # it will be obtained from the hostname of the master.
+#
+# usage: $0 [size]
 
 commondir=$(dirname "${BASH_SOURCE[0]}")/../common
 source "$commondir"/get-dirs.sh

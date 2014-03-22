@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [workers] [async?]"
+    echo "usage: $0 input-graph workers async"
+    echo ""
+    echo "async: 0 for synchronous engine"
+    echo "       1 for asynchronous engine"
     exit -1
 fi
 

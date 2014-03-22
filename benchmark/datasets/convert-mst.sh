@@ -9,7 +9,7 @@ procs=$(nproc)
 mem=4G
 
 if [ $# -ne 1 ]; then
-    echo "usage: $0 [input graph]"
+    echo "usage: $0 input-graph"
     exit -1
 fi
 

@@ -3,7 +3,10 @@
 # second arg is 1 if graph is for MST (SNAP format w/ edge weights)
 # and 0 otherwise (regular SNAP format)
 if [ $# -ne 2 ]; then
-    echo "usage: $0 [input graph] [mst?]"
+    echo "usage: $0 input-graph do-mst?"
+    echo ""
+    echo "do-mst: 0 converts regular SNAP format (src dst)"
+    echo "        1 converts SNAP with edge weights (src dst weight)"
     exit -1
 fi
 

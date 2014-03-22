@@ -5,7 +5,10 @@
 
 # partition type is either 1 (hash) or 2 (range)
 if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [workers] [partition type]"
+    echo "usage: $0 input-graph workers partition-type"
+    echo ""
+    echo "partition-type: 1 for hash partitioning"
+    echo "                2 for range partitioning"
     exit -1
 fi
 

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [workers] [dynamic partitioning]"
+    echo "usage: $0 input-graph workers migration-mode"
     exit -1
 fi
 

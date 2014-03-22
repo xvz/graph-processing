@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 [input graph] [workers] [source vertex]"
+    echo "usage: $0 input-graph workers source-vertex"
     exit -1
 fi
 

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 [input graph] [workers] [source vertex] [dynamic partitioning]"
+    echo "usage: $0 input-graph workers source-vertex migration-mode"
     exit -1
 fi
 
