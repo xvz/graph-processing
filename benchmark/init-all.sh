@@ -33,9 +33,9 @@ echo "Updating Hadoop configs..."
 echo "Removing old HDFS data and Hadoop logs..."
 
 # do it separately for the master---this is useful when testing on a single machine
-rm -rf "$HADOOP_DATA"; rm -rf "$HADOOP_DIR"/logs/*
+rm -rf "$HADOOP_DATA_DIR"; rm -rf "$HADOOP_DIR"/logs/*
 for ((i = 1; i <= ${nodes}; i++)); do
-    ssh ${name}${i} "rm -rf \"$HADOOP_DATA\"; rm -rf \"$HADOOP_DIR\"/logs/*" &
+    ssh ${name}${i} "rm -rf \"$HADOOP_DATA_DIR\"; rm -rf \"$HADOOP_DIR\"/logs/*" &
 done
 wait
 

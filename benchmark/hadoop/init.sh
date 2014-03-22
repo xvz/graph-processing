@@ -37,7 +37,7 @@ echo "<?xml version=\"1.0\"?>
 <configuration>
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>${HADOOP_DATA}/hadoop_tmp-\${user.name}</value>
+    <value>${HADOOP_DATA_DIR}/hadoop_tmp-\${user.name}</value>
   </property>
   <property>
     <name>fs.default.name</name>
@@ -45,7 +45,7 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>fs.checkpoint.edits.dir</name>
-    <value>${HADOOP_DATA}/hadoop_checkpoint-\${user.name}</value>
+    <value>${HADOOP_DATA_DIR}/hadoop_checkpoint-\${user.name}</value>
   </property>
 </configuration>" > core-site.xml
 
@@ -80,11 +80,11 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>mapred.local.dir</name>
-    <value>${HADOOP_DATA}/hadoop_local-\${user.name}</value>
+    <value>${HADOOP_DATA_DIR}/hadoop_local-\${user.name}</value>
   </property>
   <property>
     <name>mapred.child.tmp</name>
-    <value>${HADOOP_DATA}/hadoop_child-\${user.name}</value>
+    <value>${HADOOP_DATA_DIR}/hadoop_child-\${user.name}</value>
   </property>
   <property>
     <name>mapred.job.tracker.persist.jobstatus.dir</name>
@@ -124,6 +124,6 @@ echo "<?xml version=\"1.0\"?>
 # copy configs to workers
 # (also adds workers to known_hosts, if they're not there already)
 for ((i = 1; i <= ${nodes}; i++)); do
-    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}${i}:${HADOOP_DIR}/conf/ &
+    rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}${i}:"$HADOOP_DIR"/conf/ &
 done
 wait

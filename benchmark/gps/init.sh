@@ -29,8 +29,8 @@ hadoop dfs -mkdir /user/${USER}/gps-machine-config/
 hadoop dfs -put machine.cfg /user/${USER}/gps-machine-config/
 
 # make GPS log directories if needed
-if [[ ! -d "$GPS_LOGS" ]]; then mkdir -p "$GPS_LOGS"; fi
+if [[ ! -d "$GPS_LOGS_DIR" ]]; then mkdir -p "$GPS_LOGS_DIR"; fi
 for ((i = 1; i <= ${nodes}; i++)); do
-    ssh ${name}${i} "if [[ ! -d \"$GPS_LOGS\" ]]; then mkdir -p \"$GPS_LOGS\"; fi" &
+    ssh ${name}${i} "if [[ ! -d \"$GPS_LOGS_DIR\" ]]; then mkdir -p \"$GPS_LOGS_DIR\"; fi" &
 done
 wait

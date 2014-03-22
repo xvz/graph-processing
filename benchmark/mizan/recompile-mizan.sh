@@ -10,7 +10,7 @@ cd "$MIZAN_DIR/Release"
 make all
 
 for ((i = 1; i <= ${nodes}; i++)); do
-  scp ./Mizan-0.1b ${name}${i}:${MIZAN_DIR}/Release/ &
+  scp ./Mizan-0.1b ${name}${i}:"$MIZAN_DIR"/Release/ &
 done
 wait
 

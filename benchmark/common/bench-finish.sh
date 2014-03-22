@@ -21,12 +21,12 @@ for ((i = 0; i <= ${nodes}; i++)); do
     #
     # NOTE: - could use `jobs -p` for kill, but difficult b/c we're ssh-ing
     #       - must escape $ for things that should be evaluated remotely
-    ssh ${name}${i} "cd \"${dir}\"; cat /proc/net/dev >> ./logs/${nbtfile} & kill \$(pgrep sar) & kill \$(pgrep free)" &
+    ssh ${name}${i} "cd \"$dir\"; cat /proc/net/dev >> ./logs/${nbtfile} & kill \$(pgrep sar) & kill \$(pgrep free)" &
 done
 wait
 
 # get workers' files in parallel, with compression to speed things up
 for ((i = 1; i <= ${nodes}; i++)); do
-    rsync -az ubuntu@${name}${i}:${dir}/logs/${logname}_${i}_*.txt ./logs/ &
+    rsync -az ubuntu@${name}${i}:"$dir"/logs/${logname}_${i}_*.txt ./logs/ &
 done
 wait
