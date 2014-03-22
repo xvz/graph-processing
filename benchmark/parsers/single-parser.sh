@@ -91,6 +91,7 @@ elif [[ $system -eq $SYS_GRAPHLAB ]]; then
     time_io=$(perl -e "print( $time_tot - $time_run )")
 
 elif [[ $system -eq $SYS_MIZAN ]]; then
+    # Mizan's premizan logs are distinct from normal algorithm runs
     alg=$(echo "$logname" | sed 's/_.*//g')
     if [[ "$alg" == "premizan" ]]; then
         time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | sed 's/.*: //g')
@@ -121,8 +122,6 @@ for file in "${FILES[@]}"; do
     # convert largest difference into GBytes, and add it on to the existing results
     mem="${mem} $(perl -e "print( (${maxmem} - ${minmem})/(1024*1024) )")"
 done
-
-echo "$mem"
 
 # more hacky perl
 mem_min=$(echo "$mem" | perl -ne 'use List::Util qw(min); @arr = split(" ", $_); print( min @arr )')
