@@ -11,7 +11,7 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/giraph-output/
 inputgraph=$(basename $1)
 outputdir=/user/${USER}/giraph-output/
-hadoop dfs -rmr ${outputdir} || true
+hadoop dfs -rmr "$outputdir" || true
 
 # workers can be > number of EC2 instances, but this is inefficient!
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
@@ -36,7 +36,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
     -vif org.apache.giraph.examples.MinimumSpanningTreeInputFormat \
     -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexOutputFormat \
-    -op ${outputdir} \
+    -op "$outputdir" \
     -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 # -wc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexWorkerContext

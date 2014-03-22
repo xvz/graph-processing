@@ -11,7 +11,7 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/graphlab-output/
 inputgraph=$(basename $1)
 outputdir=/user/${USER}/graphlab-output/
-hadoop dfs -rmr ${outputdir} || true
+hadoop dfs -rmr "$outputdir" || true
 
 hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<value>//g' | sed 's@</value>@@g')
 
@@ -33,7 +33,7 @@ mpiexec -f ./machines -n ${workers} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/approximate_diameter \
     --format adjgps \
     --graph_opts ingress=random \
-    --graph ${hdfspath}/user/${USER}/input/${inputgraph} 2>&1 | tee -a ./logs/${logfile}
+    --graph "$hdfspath"/user/${USER}/input/${inputgraph} 2>&1 | tee -a ./logs/${logfile}
 # TODO: no saveprefix option
 
 tdone="$(date +%s%N)"
