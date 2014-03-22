@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Kill all Java instances corresponding to Giraph jobs.
 # This is needed as they don't terminate automatically (they hang around consuming memory).

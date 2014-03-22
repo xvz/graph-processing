@@ -77,7 +77,7 @@ echo "Starting GPS master -1"
 
 ## start slaves asynchronously (faster this way)
 XMS_SIZE=256M   # initial heap size (workers)
-XMX_SIZE=3500M  # max heap size (workers)
+XMX_SIZE=7000M  # max heap size (workers)
 
 # read-in effectively ensures # of workers never exceeds # of lines in "slaves"
 # the "|| ..." is a workaround in case the file doesn't end with a newline

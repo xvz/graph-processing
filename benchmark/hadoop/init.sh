@@ -9,7 +9,7 @@
 # NOTE: if testing on a single machine (i.e., pseudo-distributed),
 # slaves will have to be edited manually.
 
-GIRAPH_XMX="3500M"
+GIRAPH_XMX="7000M"
 
 
 commondir=$(dirname "${BASH_SOURCE[0]}")/../common
