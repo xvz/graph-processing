@@ -3,20 +3,17 @@
 # This parses a single experiment's logs, extracting
 # running time, total time, min/max/avg per-worker memory usage,
 # and total network I/O across workers.
+#
+# Log files need not be in the working directory ($PWD).
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 system time-logfile"
+    echo "usage: $0 system time-log"
     echo ""
     echo "system: 0 for Giraph, 1 for GPS, 2 for GraphLab, 3 for Mizan"
-    echo "time-logfile: experiment's time log file"
-    echo "    (e.g., pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
+    echo "time-log: experiment's time log file"
+    echo "          (e.g. pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
     exit -1
 fi
-
-cd "$(dirname "${BASH_SOURCE[0]}")"
-
-system=$1
-logname=$(echo $(basename "$2") | sed 's/_time.txt$//g')
 
 # constants
 SYS_GIRAPH=0
@@ -24,21 +21,27 @@ SYS_GPS=1
 SYS_GRAPHLAB=2
 SYS_MIZAN=3
 
-# move to correct directory
-case $system in
-    $SYS_GIRAPH)   cd ../TMP/giraph/;;
-    $SYS_GPS)      cd ../TMP/gps/;;
-    $SYS_GRAPHLAB) cd ../TMP/graphlab/;;
-    $SYS_MIZAN)    cd ../TMP/mizan/;;
-    *) echo "Invalid system"; exit -1;;
-esac
+# args
+system=$1
+logname=$(echo $(basename "$2") | sed 's/_time.txt$//g')
+
+# move to where the logs are
+cd "$(dirname "$2")"
 
 
 ##################################
 # Ensure all files are present
 ##################################
+echo ""
+
+if [[ $system -eq $SYS_MIZAN ]]; then
+    echo "${logname} (excludes premizan times)"
+else
+    echo "${logname}"
+fi
+
 if [[ ! -f "${logname}_time.txt" ]]; then
-    echo "${logname}_time.txt missing!"
+    echo "  ERROR: ${logname}_time.txt missing!"
     exit -1
 fi
 
@@ -47,17 +50,18 @@ nodes=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
 for (( i = 0; i <= $nodes; i++ )); do
     # some files are critical, others are not
     if [[ ! -f "${logname}_${i}_mem.txt" ]]; then
-        echo "${logname}_${i}_mem.txt missing!"
+        echo "  ERROR: ${logname}_${i}_mem.txt missing!"
         exit -1
     elif [[ ! -f "${logname}_${i}_nbt.txt" ]]; then
-        echo "${logname}_${i}_nbt.txt missing!"
+        echo "  ERROR: ${logname}_${i}_nbt.txt missing!"
         exit -1
     elif [[ ! -f "${logname}_${i}_cpu.txt" ]]; then
-        echo "WARNING: ${logname}_${i}_cpu.txt missing!"
+        echo "  WARNING: ${logname}_${i}_cpu.txt missing!"
     elif [[ ! -f "${logname}_${i}_net.txt" ]]; then
-        echo "WARNING: ${logname}_${i}_net.txt missing!"
+        echo "  WARNING: ${logname}_${i}_net.txt missing!"
     fi
 done
+
 
 #######################################
 # Time parsing, unique for each system
@@ -102,7 +106,11 @@ elif [[ $system -eq $SYS_MIZAN ]]; then
         time_tot=$(grep "TIME: Total Running Time =" "${logname}_time.txt" | cut -c 33-100)
         time_io=$(($time_tot - $time_run))
     fi
+else 
+    echo "Invalid system"
+    exit -1
 fi
+
 
 #############################
 # Generic memory parsing
@@ -159,8 +167,6 @@ eth_sent=$(perl -e "print( ${ethsentsum}/(1024*1024*1024) )")
 ##################
 # Output results
 ##################
-echo ""
-echo "${logname} (excludes premizan)"
 echo "------------------------------------------------------------------------------------------------"
 echo " Total time |   IO time |  Running time |   Mem per worker (min/max/avg) |  Net I/O (recv/sent) "
 echo "------------+-----------+---------------+--------------------------------+----------------------"

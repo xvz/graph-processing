@@ -1,29 +1,43 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Wrapper that enables parsing multiple logs via single-parser.
 #
-# A simple way to use this is "./batch-parser.sh *_time.txt",
+# A simple way to use this is "./batch-parser.sh *time.txt",
 # which would run single-parser on each of the matched files.
 #
 # Note that the system type cannot be mixed (i.e., log files
 # must all be from Giraph or all be from GPS, etc.).
 
 if [ $# -lt 2 ]; then
-    echo "usage: $0 system time-logfile [time-logfile ...]"
+    echo "usage: $0 system time-log [time-log ...]"
     echo ""
     echo "system: 0 for Giraph, 1 for GPS, 2 for GraphLab, 3 for Mizan"
-    echo "time-logfile: experiment's time log file"
-    echo "    (e.g., pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
+    echo "time-log: experiment's time log file"
+    echo "          (e.g. pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
     exit -1
 fi
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
+# constants
+SYS_GIRAPH=0
+SYS_GPS=1
+SYS_GRAPHLAB=2
+SYS_MIZAN=3
 
+# check system arg
 system=$1
+case $system in
+    $SYS_GIRAPH) ;;
+    $SYS_GPS) ;;
+    $SYS_GRAPHLAB) ;;
+    $SYS_MIZAN) ;;
+    *) echo "Invalid system"; exit -1;;
+esac
 
 # read remaining args into array of files
 read -a FILES <<< $(echo "${@:2}")
 
+scriptdir=$(dirname "${BASH_SOURCE[0]}")
+
 for file in "${FILES[@]}"; do
-    ./single-parser.sh $system "$file"
+    "$scriptdir"/single-parser.sh $system "$file"
 done
