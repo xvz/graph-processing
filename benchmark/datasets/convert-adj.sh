@@ -11,7 +11,7 @@ if [ $# -ne 2 ]; then
 fi
 
 scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-graph=$(echo "$1" | sed 's/.txt$//g')
+graph=$(echo "$1" | sed "s/.txt$//g")
 domst=$2
 
 if [[ -f "${graph}-adj.txt" ]]; then

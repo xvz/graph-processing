@@ -16,7 +16,7 @@ inputgraph=$(basename $1)
 outputdir=/user/${USER}/graphlab-output/
 hadoop dfs -rmr "$outputdir" || true
 
-hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed 's/.*<value>//g' | sed 's@</value>@@g')
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed "s/.*<value>//g" | sed "s@</value>@@g")
 
 workers=$2
 async=$3

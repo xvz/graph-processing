@@ -9,43 +9,56 @@
 if [ $# -ne 2 ]; then
     echo "usage: $0 system time-log"
     echo ""
-    echo "system: 0 for Giraph, 1 for GPS, 2 for GraphLab, 3 for Mizan"
+    echo "system: 1 for Giraph, 2 for GPS, 3 for GraphLab, 4 for Mizan"
     echo "time-log: experiment's time log file"
     echo "          (e.g. pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
     exit -1
 fi
 
 # constants
-SYS_GIRAPH=0
-SYS_GPS=1
-SYS_GRAPHLAB=2
-SYS_MIZAN=3
+SYS_GIRAPH=1
+SYS_GPS=2
+SYS_GRAPHLAB=3
+SYS_MIZAN=4
 
-# args
+#################
+# Parse args
+#################
+# check system arg
 system=$1
-logname=$(echo $(basename "$2") | sed 's/_time.txt$//g')
+case $system in
+    $SYS_GIRAPH) ;;
+    $SYS_GPS) ;;
+    $SYS_GRAPHLAB) ;;
+    $SYS_MIZAN) ;;
+    *) echo "Invalid system"; exit -1;;
+esac
+
+logname=$(echo $(basename "$2") | sed "s/_time.txt$//g")
 
 # move to where the logs are
 cd "$(dirname "$2")"
 
-
-##################################
-# Ensure all files are present
-##################################
+# initial "header" output, containing extra info where relevant
 echo ""
-
-if [[ $system -eq $SYS_MIZAN ]]; then
-    echo "${logname} (excludes premizan times)"
+if [[ $system -eq $SYS_GIRAPH && -f "${logname}_time.txt" ]]; then
+    jobid=$(grep "Job complete: " "${logname}_time.txt" | cut -c 56-100)
+    echo "${logname} (${jobid})"
+elif [[ $system -eq $SYS_MIZAN && "$(echo "$logname" | sed "s/_.*//g")" != "premizan" ]]; then
+    echo "${logname} (excludes premizan time)"
 else
     echo "${logname}"
 fi
 
+##################################
+# Ensure all files are present
+##################################
 if [[ ! -f "${logname}_time.txt" ]]; then
     echo "  ERROR: ${logname}_time.txt missing!"
     exit -1
 fi
 
-nodes=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
+nodes=$(echo "$logname" | sed "s/_/ /g" | awk '{print $3}')
 
 for (( i = 0; i <= $nodes; i++ )); do
     # some files are critical, others are not
@@ -90,15 +103,15 @@ elif [[ $system -eq $SYS_GPS ]]; then
     time_run=$(perl -e "print( $time_tot - $time_io )")
 
 elif [[ $system -eq $SYS_GRAPHLAB ]]; then
-    time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | sed 's/.*: //g')
-    time_run=$(grep "Finished Running engine" "${logname}_time.txt" | sed 's/.* in //g' | sed 's/ seconds.//g')
+    time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | sed "s/.*: //g")
+    time_run=$(grep "Finished Running engine" "${logname}_time.txt" | sed "s/.* in //g" | sed "s/ seconds.//g")
     time_io=$(perl -e "print( $time_tot - $time_run )")
 
 elif [[ $system -eq $SYS_MIZAN ]]; then
     # Mizan's premizan logs are distinct from normal algorithm runs
-    alg=$(echo "$logname" | sed 's/_.*//g')
+    alg=$(echo "$logname" | sed "s/_.*//g")
     if [[ "$alg" == "premizan" ]]; then
-        time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | sed 's/.*: //g')
+        time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | sed "s/.*: //g")
         time_io=0
         time_run=$time_tot
     else
@@ -106,9 +119,6 @@ elif [[ $system -eq $SYS_MIZAN ]]; then
         time_tot=$(grep "TIME: Total Running Time =" "${logname}_time.txt" | cut -c 33-100)
         time_io=$(($time_tot - $time_run))
     fi
-else 
-    echo "Invalid system"
-    exit -1
 fi
 
 

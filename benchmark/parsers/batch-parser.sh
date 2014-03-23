@@ -11,17 +11,17 @@
 if [ $# -lt 2 ]; then
     echo "usage: $0 system time-log [time-log ...]"
     echo ""
-    echo "system: 0 for Giraph, 1 for GPS, 2 for GraphLab, 3 for Mizan"
+    echo "system: 1 for Giraph, 2 for GPS, 3 for GraphLab, 4 for Mizan"
     echo "time-log: experiment's time log file"
     echo "          (e.g. pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
     exit -1
 fi
 
 # constants
-SYS_GIRAPH=0
-SYS_GPS=1
-SYS_GRAPHLAB=2
-SYS_MIZAN=3
+SYS_GIRAPH=1
+SYS_GPS=2
+SYS_GRAPHLAB=3
+SYS_MIZAN=4
 
 # check system arg
 system=$1
