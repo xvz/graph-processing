@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers source-vertex"
+if [ $# -lt 3 ]; then
+    echo "usage: $0 input-graph workers source-vertex [lalp?] [dynamic migration?]"
     exit -1
 fi
 
@@ -14,6 +14,18 @@ inputgraph=$(basename $1)
 # nodes should be number of EC2 instances
 nodes=$2
 src=$3
+
+if [[ $4 -eq 1 ]]; then
+    lalp="-lalp 100"
+else
+    lalp=""
+fi
+
+if [[ $5 -eq 1 ]]; then
+    dynamic="-dynamic"
+else
+    dynamic=""
+fi
 
 logname=sssp_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
@@ -30,7 +42,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
     -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration \
     -mcfg /user/${USER}/gps-machine-config/machine.cfg \
     -log4jconfig "$GPS_DIR"/conf/log4j.config \
-    -other root###${src}
+    "$lalp $dynamic" -other root###${src}
 
 # edgevaluesssp is for when input graph has edge weights
 # input graph must have edge weights, but no vertex values

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-if [ $# -ne 2 ]; then
-    echo "usage: $0 input-graph workers"
+if [ $# -lt 2 ]; then
+    echo "usage: $0 input-graph workers [lalp?] [dynamic migration?]"
     exit -1
 fi
 
@@ -13,6 +13,18 @@ inputgraph=$(basename $1)
 
 # nodes should be number of EC2 instances
 nodes=$2
+
+if [[ $3 -eq 1 ]]; then
+    lalp="-lalp 100"
+else
+    lalp=""
+fi
+
+if [[ $4 -eq 1 ]]; then
+    dynamic="-dynamic"
+else
+    dynamic=""
+fi
 
 logname=wcc_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
@@ -28,7 +40,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
     -hcf "$HADOOP_DIR"/conf/core-site.xml \
     -jc gps.examples.wcc.WeaklyConnectedComponentsVertex###JobConfiguration \
     -mcfg /user/${USER}/gps-machine-config/machine.cfg \
-    -log4jconfig "$GPS_DIR"/conf/log4j.config
+    "$lalp $dynamic" -log4jconfig "$GPS_DIR"/conf/log4j.config
 
 ## finish logging memory + network usage
 ../common/bench-finish.sh ${logname}
