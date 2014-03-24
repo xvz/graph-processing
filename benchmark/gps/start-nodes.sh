@@ -93,8 +93,9 @@ while read slave || [ -n "$slave" ]; do
 
     ((i++))
     # no need to check if # workers < # slaves... GPS will hang in that situation
-done < ./slaves
+done < "$(dirname "${BASH_SOURCE[0]}")"/slaves
 
 # ...and wait until computation completes
 # NOTE: this script must not have -e, else it will fail while launching slaves
 wait
+echo "Computation complete!"

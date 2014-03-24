@@ -8,5 +8,5 @@ kill -9 $(ps aux | grep "[g]ps_node_runner" | awk '{print $2}')
 # the "|| ..." is a workaround in case the file doesn't end with a newline
 while read slave || [ -n "$slave" ]; do
     ssh $slave "kill -9 \$(ps aux | grep \"[g]ps_node_runner\" | awk '{print \$2}')" &
-done < ./slaves
+done < "$(dirname "${BASH_SOURCE[0]}")"/slaves
 wait
