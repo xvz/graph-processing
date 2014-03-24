@@ -199,10 +199,14 @@ public class ArrayBackedIncomingMessageStorage<M extends MinaWritable>
 				return;
 			}
 			// TODO(semih): This 64 byte buffer may not be very large
-			if (messageQueueIndex >= (messageQueue.length - 64)) {
+      // FIX: changed 64 to to 128 to give larger initial byte buffer
+      // this is needed for diameter estimation
+			if (messageQueueIndex >= (messageQueue.length - 128)) {// 64)) {
+        // FIX: resize based on message queue INDEX rather than length
+        // this grows the array faster, but is more reliable
 				int possibleNewArrayLength =
 					messageQueue.length > 80000 ? (int) (messageQueue.length * 1.2)
-						: Math.max(messageQueue.length * 2, 64);
+						: Math.max(messageQueueIndex * 2, 128); //Math.max(messageQueue.length * 2, 64);
 				int newArrayLength = Math.max(2, possibleNewArrayLength);
 				byte[] newQueue = new byte[newArrayLength];
 				System.arraycopy(messageQueue, 0, newQueue, 0, messageQueueIndex);
