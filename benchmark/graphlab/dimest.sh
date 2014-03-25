@@ -27,20 +27,12 @@ logfile=${logname}_time.txt
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-tstart="$(date +%s%N)"
-
 mpiexec -f ./machines -n ${workers} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/approximate_diameter \
     --format adjgps \
     --graph_opts ingress=random \
     --graph "$hdfspath"/user/${USER}/input/${inputgraph} 2>&1 | tee -a ./logs/${logfile}
 # TODO: no saveprefix option
-
-tdone="$(date +%s%N)"
-
-echo "" | tee -a ./logs/${logfile}
-echo "TOTAL TIME (ns): $tdone - $tstart" | tee -a ./logs/${logfile}
-echo "TOTAL TIME (sec): $(perl -e "print $(($tdone - $tstart))/1000000000")" | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ../common/bench-finish.sh ${logname}
