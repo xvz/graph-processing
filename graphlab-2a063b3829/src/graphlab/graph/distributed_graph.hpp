@@ -2417,6 +2417,9 @@ namespace graphlab {
       } else if (format == "adj") {
         line_parser = builtin_parsers::adj_parser<distributed_graph>;
         load(path, line_parser);
+      } else if (format == "adjgps") {
+        line_parser = builtin_parsers::adjgps_parser<distributed_graph>;
+        load(path, line_parser);
       } else if (format == "tsv") {
         line_parser = builtin_parsers::tsv_parser<distributed_graph>;
         load(path, line_parser);

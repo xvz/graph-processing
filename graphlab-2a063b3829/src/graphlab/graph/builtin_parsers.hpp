@@ -179,6 +179,80 @@ namespace graphlab {
     } // end of adj parser
 #endif
 
+
+#if defined(__cplusplus) && __cplusplus >= 201103L
+    // The spirit parser seems to have issues when compiling under
+    // C++11. Temporary workaround with a hard coded parser. TOFIX
+    //
+    // NOTE: this is an adjacency input format where the input does
+    // not need to specify the number of target vertices---this matches
+    // the input formats used for Giraph and GPS.
+    //
+    // The changes are the commented out lines
+    template <typename Graph>
+    bool adjgps_parser(Graph& graph, const std::string& srcfilename,
+                    const std::string& line) {
+      // If the line is empty simply skip it
+      if(line.empty()) return true;
+      std::stringstream strm(line);
+      vertex_id_type source; 
+      size_t n;
+      strm >> source;
+      if (strm.fail()) return false;
+      //strm >> n;
+      //if (strm.fail()) return true;
+
+      size_t nadded = 0;
+      while (strm.good()) {
+        vertex_id_type target;
+        strm >> target;
+        if (strm.fail()) break;
+        if (source != target) graph.add_edge(source, target);
+        ++nadded;
+      } 
+      //if (n != nadded) return false;
+      return true;
+    } // end of adjgps parser
+
+#else
+
+    template <typename Graph>
+    bool adjgps_parser(Graph& graph, const std::string& srcfilename,
+                    const std::string& line) {
+      // If the line is empty simply skip it
+      if(line.empty()) return true;
+      // We use the boost spirit parser which requires (too) many separate
+      // namespaces so to make things clear we shorten them here.
+      namespace qi = boost::spirit::qi;
+      namespace ascii = boost::spirit::ascii;
+      namespace phoenix = boost::phoenix;
+      vertex_id_type source(-1);
+      //vertex_id_type ntargets(-1);
+      std::vector<vertex_id_type> targets;
+      const bool success = qi::phrase_parse
+        (line.begin(), line.end(),       
+         //  Begin grammar
+         (
+          qi::ulong_[phoenix::ref(source) = qi::_1] >> -qi::char_(",") >>
+          //qi::ulong_[phoenix::ref(ntargets) = qi::_1] >> -qi::char_(",") >>
+          *(qi::ulong_[phoenix::push_back(phoenix::ref(targets), qi::_1)] % -qi::char_(","))
+          )
+         ,
+         //  End grammar
+         ascii::space); 
+      // Test to see if the boost parser was able to parse the line
+      if(!success) { //|| ntargets != targets.size()) {
+        logstream(LOG_ERROR) << "Parse error in vertex prior parser." << std::endl;
+        return false;
+      }
+      for(size_t i = 0; i < targets.size(); ++i) {
+        if(source != targets[i]) graph.add_edge(source, targets[i]);
+      }
+      return true;
+    } // end of adjgps parser
+#endif
+
+
     template <typename Graph>
     struct tsv_writer{
       typedef typename Graph::vertex_type vertex_type;
