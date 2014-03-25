@@ -19,7 +19,7 @@ import java.util.Arrays;
  */
 public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, LongArrayWritable> {
 
-  public static int DEFAULT_NUM_MAX_ITERATIONS = 100;
+  public static int DEFAULT_NUM_MAX_ITERATIONS = 30;
   public static int numMaxIterations;
 
   /** K is number of bitstrings to use,
@@ -104,14 +104,17 @@ public class DiameterEstimationVertex extends NullEdgeVertex<LongArrayWritable, 
         newBitmask[i] = newBitmask[i] | tmpBitmask[i];
 
         // check if there's a change
-        isChanged = isChanged || (tmp != newBitmask[i]);
+        // NOTE: unused for now---to terminate when all vertices converge,
+        // use an aggregator to track # of vertices that have finished
+        //isChanged = isChanged || (tmp != newBitmask[i]);
       }
     }
 
     //System.out.println(getId() + ": final array is " + getValue());
 
-    // if steady state or max supersteps met, terminate
-    if (!isChanged || (superstepNo >= numMaxIterations)) {
+    // WARNING: we cannot terminate based on LOCAL steady state,
+    // we need all vertices computing until the very end
+    if (superstepNo >= numMaxIterations) {
       //System.out.println(getId() + ": voting to halt");
       voteToHalt();
 

@@ -34,15 +34,16 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-# this sssp assigns edge weight of 1 to all edges
-# input graph must have no edge weights
+# This SSSP assigns edge weight of 1 to all edges, without using
+# the boolean trick of SingleSourceAllVerticesShortestPathVertex.
+# Input graph must not have edge weights.
 ./start-nodes.sh ${nodes} quick-start \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \
-    -jc gps.examples.sssp.SingleSourceAllVerticesShortestPathVertex###JobConfiguration \
+    -jc gps.examples.sssp.SSSPVertex###JobConfiguration \
     -mcfg /user/${USER}/gps-machine-config/machine.cfg \
     -log4jconfig "$GPS_DIR"/conf/log4j.config \
-    "$lalp $dynamic" -other root###${src}
+    "$lalp $dynamic" -other -root###${src}
 
 # edgevaluesssp is for when input graph has edge weights
 # input graph must have edge weights, but no vertex values

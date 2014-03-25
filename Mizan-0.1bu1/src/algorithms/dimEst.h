@@ -83,14 +83,17 @@ public:
         c = a | b;
         newBitMask[i].setValue(c);
 
-        isChanged = isChanged || (a != c);
+        // NOTE: unused for now---to terminate when all vertices converge,
+        // use an aggregator to track # of vertices that have finished
+        //isChanged = isChanged || (a != c);
       }
     }
 
     mLongArray outArray(k, newBitMask);
 
-    if ((!isChanged && data->getCurrentSS() != 1) ||
-         data->getCurrentSS() > maxSuperStep) {
+    // WARNING: we cannot terminate based on LOCAL steady state,
+    // we need all vertices computing until the very end
+    if (data->getCurrentSS() >= maxSuperStep) {
       data->voteToHalt();
 
     } else {

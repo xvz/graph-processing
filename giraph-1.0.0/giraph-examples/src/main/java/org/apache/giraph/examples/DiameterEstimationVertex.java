@@ -49,7 +49,7 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
 
   /** Max number of supersteps */
   public static final IntConfOption MAX_SUPERSTEPS =
-    new IntConfOption("DiameterEstimationVertex.maxSS", 300);
+    new IntConfOption("DiameterEstimationVertex.maxSS", 30);
 
   /** K is number of bitstrings to use,
       larger K = more concentrated estimate **/
@@ -116,14 +116,17 @@ public class DiameterEstimationVertex extends Vertex<LongWritable,
         newBitmask[i] = newBitmask[i] | tmpBitmask[i];
 
         // check if there's a change
-        isChanged = isChanged || (tmp != newBitmask[i]);
+        // NOTE: unused for now---to terminate when all vertices converge,
+        // use an aggregator to track # of vertices that have finished
+        //isChanged = isChanged || (tmp != newBitmask[i]);
       }
     }
 
     //LOG.info(getId() + ": final value: " + getValue());
 
-    // if steady state or max supersteps met, terminate
-    if (!isChanged || (getSuperstep() >= MAX_SUPERSTEPS.get(getConf()))) {
+    // WARNING: we cannot terminate based only on LOCAL steady state,
+    // we need all vertices computing until the very end
+    if (getSuperstep() >= MAX_SUPERSTEPS.get(getConf())) {
       //LOG.info(getId() + ": voting to halt");
       voteToHalt();
 

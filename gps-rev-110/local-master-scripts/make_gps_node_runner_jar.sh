@@ -17,7 +17,8 @@ echo "cding into ${GPS_SRC_DIR}"
 cd ${GPS_SRC_DIR}
 
 find java/gps/examples -name \*.java -print > file.list
-$GPS_SRC_DIR/java/gps/node/GPSNodeRunner.java >> file.list
+# TODO: bug fix? works without "echo" so this line might be old code
+#$GPS_SRC_DIR/java/gps/node/GPSNodeRunner.java >> file.list
 echo "compiling GPSNodeRunner to classes directory"
 #javac -verbose \
 javac \

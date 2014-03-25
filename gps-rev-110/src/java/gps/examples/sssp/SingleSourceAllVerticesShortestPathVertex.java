@@ -25,7 +25,7 @@ public class SingleSourceAllVerticesShortestPathVertex extends NullEdgeVertex<In
 			for (int index = 0; index < split.length; ) {
 				String flag = split[index++];
 				String value = split[index++];
-				if ("root".equals(flag)) {
+				if ("-root".equals(flag)) {
 					root = Integer.parseInt(value);
 					System.out.println("sourceId: " + root);
 				}
