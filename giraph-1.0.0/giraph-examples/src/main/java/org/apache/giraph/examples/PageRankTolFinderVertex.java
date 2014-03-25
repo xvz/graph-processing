@@ -67,7 +67,7 @@ public class PageRankTolFinderVertex extends Vertex<LongWritable,
 
     double oldVal = getValue().get();
 
-    if (getSuperstep() == 1) {
+    if (getSuperstep() == 0) {
       // FIX: initial value is 1/|V| (or 1), not 0.15/|V| (or 0.15)
       DoubleWritable vertexValue = new DoubleWritable(1.0);
       //new DoubleWritable(0.15f / getTotalNumVertices());
@@ -109,9 +109,9 @@ public class PageRankTolFinderVertex extends Vertex<LongWritable,
 
     @Override
     public void compute() {
-      // supersteps 0 and 1 have no useful deltas (basically ~0)
-      if (getSuperstep() > 1) {
-        LOG.info("max change = " +
+      // this is result of aggregators from the *previous* superstep
+      if (getSuperstep() > 0) {
+        LOG.info("SS " + (getSuperstep() - 1) + " max change: " +
                  ((DoubleWritable) getAggregatedValue(MAX_AGG)).get());
       }
     }

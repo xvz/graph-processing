@@ -80,7 +80,7 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
     // which is to not divide by |V|. To get the probability value at
     // each vertex, take its PageRank value and divide by |V|.
 
-    if (getSuperstep() == 1) {
+    if (getSuperstep() == 0) {
       // FIX: initial value is 1/|V| (or 1), not 0.15/|V| (or 0.15)
       DoubleWritable vertexValue = new DoubleWritable(1.0);
       // new DoubleWritable(0.15f / getTotalNumVertices());

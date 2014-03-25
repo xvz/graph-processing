@@ -9,8 +9,8 @@
 # scripts, use "$(dirname "${BASH_SOURCE[0]}")" as a part
 # of the directory.
 
-DIR_PREFIX=/home/ubuntu
-#DIR_PREFIX=/home/young/cs848   # for testing on a single machine
+#DIR_PREFIX=/home/ubuntu
+DIR_PREFIX=/home/young/cs848   # for testing on a single machine
 
 # location of datasets/input graphs
 DATASET_DIR="$DIR_PREFIX"/datasets/raw/
