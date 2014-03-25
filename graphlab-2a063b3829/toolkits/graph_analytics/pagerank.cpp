@@ -168,6 +168,8 @@ double pagerank_sum(graph_type::vertex_type v) {
 }
 
 int main(int argc, char** argv) {
+  graphlab::timer total_timer; total_timer.start();
+
   // Initialize control plain using mpi
   graphlab::mpi_tools::init(argc, argv);
   graphlab::distributed_control dc;
@@ -270,6 +272,7 @@ int main(int argc, char** argv) {
 
   // Tear-down communication layer and quit -----------------------------------
   graphlab::mpi_tools::finalize();
+  dc.cout() << "TOTAL TIME (sec): " << total_timer.current_time() << std::endl;
   return EXIT_SUCCESS;
 } // End of main
 
