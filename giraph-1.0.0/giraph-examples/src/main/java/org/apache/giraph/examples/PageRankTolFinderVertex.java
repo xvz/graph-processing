@@ -61,26 +61,35 @@ public class PageRankTolFinderVertex extends Vertex<LongWritable,
 
   @Override
   public void compute(Iterable<DoubleWritable> messages) {
+    // NOTE: We follow GraphLab's alternative way of computing PageRank,
+    // which is to not divide by |V|. To get the probability value at
+    // each vertex, take its PageRank value and divide by |V|.
+
     double oldVal = getValue().get();
 
-    if (getSuperstep() >= 1) {
+    if (getSuperstep() == 1) {
+      // FIX: initial value is 1/|V| (or 1), not 0.15/|V| (or 0.15)
+      DoubleWritable vertexValue = new DoubleWritable(1.0);
+      //new DoubleWritable(0.15f / getTotalNumVertices());
+      setValue(vertexValue);
+
+    } else {
       double sum = 0;
       for (DoubleWritable message : messages) {
         sum += message.get();
       }
-      DoubleWritable vertexValue =
-          new DoubleWritable((0.15f / getTotalNumVertices()) + 0.85f * sum);
+      DoubleWritable vertexValue = new DoubleWritable(0.15f + 0.85f * sum);
+      //new DoubleWritable((0.15f / getTotalNumVertices()) + 0.85f * sum);
       setValue(vertexValue);
-
-      aggregate(MAX_AGG,
-                new DoubleWritable(Math.abs(oldVal - getValue().get())));
     }
+
+    aggregate(MAX_AGG,
+              new DoubleWritable(Math.abs(oldVal - getValue().get())));
 
     // Termination condition based on max supersteps
     if (getSuperstep() < MAX_SUPERSTEPS.get(getConf())) {
       long edges = getNumEdges();
-      sendMessageToAllEdges(
-          new DoubleWritable(getValue().get() / edges));
+      sendMessageToAllEdges(new DoubleWritable(getValue().get() / edges));
     } else {
       voteToHalt();
     }

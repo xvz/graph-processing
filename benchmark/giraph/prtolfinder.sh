@@ -11,7 +11,7 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/giraph-output/
 inputgraph=$(basename $1)
 outputdir=/user/${USER}/giraph-output/
-hadoop dfs -rmr ${outputdir} || true
+hadoop dfs -rmr "$outputdir" || true
 
 # workers can be > number of EC2 instances, but this is inefficient!
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
@@ -34,7 +34,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
     -vif org.apache.giraph.examples.SimplePageRankInputFormat \
     -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexOutputFormat \
-    -op ${outputdir} \
+    -op "$outputdir" \
     -w ${workers} 2>&1 | tee -a ./logs/${logfile}
 
 # -wc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexWorkerContext
@@ -44,7 +44,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
 
 # TODO: get zookeeper id from log
 jobid=$(grep "Running job" ./logs/${logfile} | awk '{print $7}')
-deltas=$(cat $HADOOP_DIR/logs/userlogs/${jobid}/*/syslog | grep "max change" | awk '{print $8}' | tr '\n' ' ')
+deltas=$(cat "$HADOOP_DIR"/logs/userlogs/${jobid}/*/syslog | grep "max change" | awk '{print $8}' | tr '\n' ' ')
 
 echo "" >> ./tolerances.txt
 echo "$(sed 's/-.*//g' <<< ${inputgraph})_deltas = [${deltas}];" >> ./tolerances.txt

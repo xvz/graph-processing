@@ -6,4 +6,4 @@
 
 source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-dirs.sh
 
-java -jar "$GPS_DIR"/debug_monitoring_runner.jar -hcf "$GIRAPH_DIR"/conf/core-site.xml -msfp /user/${USER}/gps/stats-* -port 4444
+java -jar "$GPS_DIR"/debug_monitoring_runner.jar -hcf "$HADOOP_DIR"/conf/core-site.xml -msfp /user/${USER}/gps/stats-* -port 4444

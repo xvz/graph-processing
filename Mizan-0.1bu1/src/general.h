@@ -37,9 +37,8 @@ struct MizanArgs {
 	migrationMode migration;
 	communicationType communication;
 	int superSteps;
-  // NOTE: these are "hacked" in... a better way is for the
+  // NOTE: this is "hacked" in... a better way is for the
   // relevant algorithms to parse a portion of the arguments
-  //double errTol;
   long srcID;
 };
 

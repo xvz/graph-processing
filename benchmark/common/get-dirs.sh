@@ -27,8 +27,7 @@ GIRAPH_DIR="$DIR_PREFIX"/giraph-1.0.0/
 
 # These must match "GPS_DIR" and "GPS_LOG_DIRECTORY" of $GPS_DIR/conf/gps-env.sh
 GPS_DIR="$DIR_PREFIX"/gps-rev-110/
-#GPS_DIR="$DIR_PREFIX"/gps-rev-90/
 GPS_LOGS_DIR="$DIR_PREFIX"/var/tmp/
 
-GRAPHLAB_DIR="$DIR_PREFIX"/graphlab-2.2/
+GRAPHLAB_DIR="$DIR_PREFIX"/graphlab-2a063b3829/
 MIZAN_DIR="$DIR_PREFIX"/Mizan-0.1bu1/

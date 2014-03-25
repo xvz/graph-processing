@@ -36,7 +36,6 @@ public:
     args.migration = NONE;
     args.communication = _pt2ptb;
     args.superSteps = 20;
-    //args.errTol = 0.01;
     args.srcID = 0;
 
     int partition = -1;
@@ -61,8 +60,6 @@ public:
        "  7) Minimum Spanning Tree")
       ("supersteps,s", boost::program_options::value<int>(&args.superSteps),
        "Max number of supersteps")
-      //("tol", boost::program_options::value<double>(&args.errTol),
-      // "Error tolerance threshold, for PageRank")
       ("src", boost::program_options::value<long>(&args.srcID),
        "Source vertex ID, for SSSP")
       ("workers,w", boost::program_options::value<int>(&args.clusterSize)->required(),

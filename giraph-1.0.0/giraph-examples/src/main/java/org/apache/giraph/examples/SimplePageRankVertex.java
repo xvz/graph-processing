@@ -76,15 +76,23 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
 
   @Override
   public void compute(Iterable<DoubleWritable> messages) {
-    double oldVal = getValue().get();
+    // NOTE: We follow GraphLab's alternative way of computing PageRank,
+    // which is to not divide by |V|. To get the probability value at
+    // each vertex, take its PageRank value and divide by |V|.
 
-    if (getSuperstep() >= 1) {
+    if (getSuperstep() == 1) {
+      // FIX: initial value is 1/|V| (or 1), not 0.15/|V| (or 0.15)
+      DoubleWritable vertexValue = new DoubleWritable(1.0);
+      // new DoubleWritable(0.15f / getTotalNumVertices());
+      setValue(vertexValue);
+
+    } else {
       double sum = 0;
       for (DoubleWritable message : messages) {
         sum += message.get();
       }
-      DoubleWritable vertexValue =
-          new DoubleWritable((0.15f / getTotalNumVertices()) + 0.85f * sum);
+      DoubleWritable vertexValue = new DoubleWritable(0.15f + 0.85f * sum);
+      // new DoubleWritable((0.15f / getTotalNumVertices()) + 0.85f * sum);
       setValue(vertexValue);
 
       // NOTE: this logging is unnecessary for benchmarking!
@@ -94,6 +102,14 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
       //LOG.info(getId() + ": PageRank=" + vertexValue +
       //    " max=" + getAggregatedValue(MAX_AGG) +
       //    " min=" + getAggregatedValue(MIN_AGG));
+    }
+
+    // Termination condition based on max supersteps
+    if (getSuperstep() < MAX_SS.get(getConf())) {
+      long edges = getNumEdges();
+      sendMessageToAllEdges(new DoubleWritable(getValue().get() / edges));
+    } else {
+      voteToHalt();
     }
 
     // Termination condition based on error threshold
@@ -123,14 +139,6 @@ public class SimplePageRankVertex extends Vertex<LongWritable,
     //    aggregator(DONE_COUNTER, new LongWritable(1));
     //  }
     //}
-
-    // Termination condition based on max supersteps
-    if (getSuperstep() < MAX_SS.get(getConf())) {
-      long edges = getNumEdges();
-      sendMessageToAllEdges(new DoubleWritable(getValue().get() / edges));
-    } else {
-      voteToHalt();
-    }
   }
 
   // NOTE: we can't comment these out, as there are test
