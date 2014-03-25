@@ -29,13 +29,13 @@ class pageRankCombiner: public Icombiner<mLong, mDouble, mDouble, mLong> {
 
 class pageRank: public IsuperStep<mLong, mDouble, mDouble, mLong> {
 private:
-  int vertexTotal;
+  //int vertexTotal;
   int maxSuperStep;
 
 public:
 
   pageRank(int maxSS) {
-    vertexTotal = 0;
+    //vertexTotal = 0;
     maxSuperStep = maxSS;
   }
   void initialize(userVertexObject<mLong, mDouble, mDouble, mLong> * data) {
