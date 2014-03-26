@@ -54,11 +54,13 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
+#./enable-dimest-fix.sh
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
 #        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 0
 #    done
 #done
+#./disable-dimest-fix.sh
 
 #################
 # LALP Run
@@ -83,11 +85,13 @@ done
 
 # no MST
 
+#./enable-dimest-fix.sh
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 1
+#        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 0
 #    done
 #done
+#./disable-dimest-fix.sh
 
 #################
 # Dynamic Run
@@ -112,8 +116,10 @@ done
 
 # no MST
 
+#./enable-dimest-fix.sh
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 2
+#        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 0
 #    done
 #done
+#./disable-dimest-fix.sh
