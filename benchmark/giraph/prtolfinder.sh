@@ -6,6 +6,7 @@ if [ $# -ne 2 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-hosts.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/giraph-output/
@@ -26,6 +27,8 @@ logfile=${logname}_time.txt       # running time
 #../common/bench-init.sh ${logname}
 
 ## start algorithm run
+# we use default byte array edges (better performance)
+# NOTE: this outputs no data to HDFS
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     org.apache.giraph.examples.PageRankTolFinderVertex \
     -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute \
@@ -42,9 +45,20 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
 ## finish logging memory + network usage
 #../common/bench-finish.sh ${logname}
 
-# TODO: get zookeeper id from log
+
+## get max deltas (changes in PR value) at each superstep
 jobid=$(grep "Running job" ./logs/${logfile} | awk '{print $7}')
-deltas=$(cat "$HADOOP_DIR"/logs/userlogs/${jobid}/*/syslog | grep "max change" | awk '{print $8}' | tr '\n' ' ')
+
+# The master on a cluster will not have anything---this is for local testing
+darray[0]=$(cat "$HADOOP_DIR"/logs/userlogs/${jobid}/*/syslog | grep 'max change' | awk '{print $9}' | tr '\n' ' ')
+
+# NOTE: this is a hack---ZK is located on one of the workers, so just go
+# through everyone and we'll get master.compute()'s output exactly once
+for ((i = 1; i <= ${nodes}; i++)); do
+    darray[${i}]=$(ssh ${name}${i} "cat \"$HADOOP_DIR\"/logs/userlogs/${jobid}/*/syslog | grep 'max change' | awk '{print \$9}' | tr '\n' ' '")
+done
+
+deltas=$(echo "${darray[*]}" | sed -e 's/^ *//' -e 's/ *$//')  # join array and strip whitespace
 
 echo "" >> ./tolerances.txt
 echo "$(sed 's/-.*//g' <<< ${inputgraph})_deltas = [${deltas}];" >> ./tolerances.txt

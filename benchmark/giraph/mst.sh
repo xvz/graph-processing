@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
-if [ $# -ne 2 ]; then
-    echo "usage: $0 input-graph workers"
+if [ $# -ne 3 ]; then
+    echo "usage: $0 input-graph workers edge-type"
+    echo ""
+    echo "edge-type: 0 for byte array edges"
+    echo "           1 for hashmap edges"
     exit -1
 fi
 
@@ -17,8 +20,16 @@ hadoop dfs -rmr "$outputdir" || true
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
 workers=$2
 
+edgetype=$3
+case ${edgetype} in
+    0) edgeclass="";;     # byte array edges are used by default
+    1) edgeclass="-Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMapEdges \
+                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges" ;;
+    *) echo "Invalid edge-type"; exit -1;;
+esac
+
 ## log names
-logname=mst_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logname=mst_${inputgraph}_${workers}_${edgetype}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # running time
 
 
@@ -29,8 +40,7 @@ logfile=${logname}_time.txt       # running time
 # -Dmapred.task.timeout=0 can be used to prevent Giraph job from getting killed after spending 10 mins on one superstep
 # Giraph seems to ignore any mapred.task.timeout specified in Hadoop's mapred-site.xml
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
-    -Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMapEdges \
-    -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges \
+    ${edgeclass} \
     org.apache.giraph.examples.MinimumSpanningTreeVertex \
     -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute \
     -vif org.apache.giraph.examples.MinimumSpanningTreeInputFormat \

@@ -14,8 +14,11 @@ inputgraph=$(basename $1)
 # nodes should be number of EC2 instances
 nodes=$2
 
-logname=mst_${inputgraph}_${nodes}_"$(date +%F-%H-%M-%S)"
+## log names
+# MST can only run in "normal" mode (LALP & dynamic repartitioning cannot be used)
+logname=mst_${inputgraph}_${nodes}_0_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
+
 
 ## start logging memory + network usage
 ../common/bench-init.sh ${logname}

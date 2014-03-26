@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 input-graph workers source-vertex async"
+    echo "usage: $0 input-graph workers engine-mode source-vertex"
     echo ""
-    echo "async: 0 for synchronous engine"
-    echo "       1 for asynchronous engine"
+    echo "engine-mode: 0 for synchronous engine"
+    echo "             1 for asynchronous engine"
     exit -1
 fi
 
@@ -16,20 +16,21 @@ inputgraph=$(basename $1)
 outputdir=/user/${USER}/graphlab-output/
 hadoop dfs -rmr "$outputdir" || true
 
-hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed "s/.*<value>//g" | sed "s@</value>@@g")
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed -e 's/.*<value>//' -e 's@</value>.*@@')
 
 workers=$2
-src=$3
-async=$4
 
-if [[ ${async} -eq 1 ]]; then
-    mode="async"
-else
-    mode="sync"
-fi
+mode=$3
+case ${mode} in
+    0) modeflag="sync";;
+    1) modeflag="async";;
+    *) echo "Invalid engine-mode"; exit -1;;
+esac
+
+src=$4
 
 ## log names
-logname=sssp_${inputgraph}_${workers}_${async}_"$(date +%F-%H-%M-%S)"
+logname=sssp_${inputgraph}_${workers}_${mode}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt
 
 
@@ -39,9 +40,9 @@ logfile=${logname}_time.txt
 ## start algorithm run
 mpiexec -f ./machines -n ${workers} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/sssp \
-    --source $src \
+    --source ${src} \
     --directed 1 \
-    --engine ${mode} \
+    --engine ${modeflag} \
     --format adjgps \
     --graph_opts ingress=random \
     --graph "$hdfspath"/user/${USER}/input/${inputgraph} \

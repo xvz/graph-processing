@@ -13,13 +13,13 @@ inputgraph=$(basename $1)
 outputdir=/user/${USER}/graphlab-output/
 hadoop dfs -rmr "$outputdir" || true
 
-hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed "s/.*<value>//g" | sed "s@</value>@@g")
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed -e 's/.*<value>//' -e 's@</value>.*@@')
 
 workers=$2
-# NOTE: no asynchronous option for this alg
 
 ## log names
-logname=dimest_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+# diameter estimation only supports synchronous mode
+logname=dimest_${inputgraph}_${workers}_0_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt
 
 
@@ -32,7 +32,7 @@ mpiexec -f ./machines -n ${workers} \
     --format adjgps \
     --graph_opts ingress=random \
     --graph "$hdfspath"/user/${USER}/input/${inputgraph} 2>&1 | tee -a ./logs/${logfile}
-# TODO: no saveprefix option
+# NOTE: no saveprefix option, diameters/results are outputted to time log
 
 ## finish logging memory + network usage
 ../common/bench-finish.sh ${logname}

@@ -1,10 +1,10 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers async"
+if [ $# -ne 4 ]; then
+    echo "usage: $0 input-graph workers engine-mode tolerance"
     echo ""
-    echo "async: 0 for synchronous engine"
-    echo "       1 for asynchronous engine"
+    echo "engine-mode: 0 for synchronous engine"
+    echo "             1 for asynchronous engine"
     exit -1
 fi
 
@@ -16,19 +16,21 @@ inputgraph=$(basename $1)
 outputdir=/user/${USER}/graphlab-output/
 hadoop dfs -rmr "$outputdir" || true
 
-hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed "s/.*<value>//g" | sed "s@</value>@@g")
+hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed -e 's/.*<value>//' -e 's@</value>.*@@')
 
 workers=$2
-async=$3
 
-if [[ ${async} -eq 1 ]]; then
-    mode="async"
-else
-    mode="sync"
-fi
+mode=$3
+case ${mode} in
+    0) modeflag="sync";;
+    1) modeflag="async";;
+    *) echo "Invalid engine-mode"; exit -1;;
+esac
+
+tol=$4
 
 ## log names
-logname=pagerank_${inputgraph}_${workers}_${async}_"$(date +%F-%H-%M-%S)"
+logname=pagerank_${inputgraph}_${workers}_${mode}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt
 
 
@@ -38,8 +40,8 @@ logfile=${logname}_time.txt
 ## start algorithm run
 mpiexec -f ./machines -n ${workers} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/pagerank \
-    --tol 0.005 \
-    --engine ${mode} \
+    --tol ${tol} \
+    --engine ${modeflag} \
     --format adjgps \
     --graph_opts ingress=random \
     --graph "$hdfspath"/user/${USER}/input/${inputgraph} \

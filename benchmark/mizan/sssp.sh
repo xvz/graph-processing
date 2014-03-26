@@ -1,7 +1,11 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 input-graph workers source-vertex migration-mode"
+    echo "usage: $0 input-graph workers migration-mode source-vertex"
+    echo ""
+    echo "migration-mode: 0 for static (no dynamic migration)"
+    echo "                1 for delayed migration"
+    echo "                2 for mixed migration"
     exit -1
 fi
 
@@ -14,10 +18,19 @@ source ../common/get-dirs.sh
 inputgraph=$(basename $1)
 
 workers=$2    # workers can be > number of EC2 instances
-src=$3
-dynamic=$4    # dynamic partitioning
 
-logname=sssp_${inputgraph}_${workers}_${dynamic}_"$(date +%F-%H-%M-%S)"
+mode=$3
+case ${mode} in
+    0) modeflag="1";;
+    1) modeflag="2";;
+    2) modeflag="3";;
+    *) echo "Invalid migration-mode"; exit -1;;
+esac
+
+src=$4
+
+## log names
+logname=sssp_${inputgraph}_${workers}_${mode}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 
 
@@ -31,7 +44,7 @@ mpirun -f machines -np ${workers} "$MIZAN_DIR"/Release/Mizan-0.1b \
     -u ${USER} \
     -g ${inputgraph} \
     -w ${workers} \
-    -m ${dynamic} 2>&1 | tee -a ./logs/${logfile}
+    -m ${modeflag} 2>&1 | tee -a ./logs/${logfile}
 
 ## finish logging memory + network usage
 ../common/bench-finish.sh ${logname}

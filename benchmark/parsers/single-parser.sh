@@ -34,7 +34,7 @@ case $system in
     *) echo "Invalid system"; exit -1;;
 esac
 
-logname=$(echo $(basename "$2") | sed "s/_time.txt$//g")
+logname=$(echo $(basename "$2") | sed 's/_time.txt$//g')
 
 # move to where the logs are
 cd "$(dirname "$2")"
@@ -44,7 +44,7 @@ echo ""
 if [[ $system -eq $SYS_GIRAPH && -f "${logname}_time.txt" ]]; then
     jobid=$(grep "Job complete: " "${logname}_time.txt" | cut -c 56-100)
     echo "${logname} (${jobid})"
-elif [[ $system -eq $SYS_MIZAN && "$(echo "$logname" | sed "s/_.*//g")" != "premizan" ]]; then
+elif [[ $system -eq $SYS_MIZAN && $(echo "$logname" | sed 's/_.*//g') != "premizan" ]]; then
     echo "${logname} (excludes premizan time)"
 else
     echo "${logname}"
@@ -58,7 +58,7 @@ if [[ ! -f "${logname}_time.txt" ]]; then
     exit -1
 fi
 
-nodes=$(echo "$logname" | sed "s/_/ /g" | awk '{print $3}')
+nodes=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
 
 for (( i = 0; i <= $nodes; i++ )); do
     # some files are critical, others are not
@@ -80,10 +80,10 @@ done
 # Time parsing, unique for each system
 #######################################
 if [[ $system -eq $SYS_GIRAPH ]]; then
-    setup=$(grep "Setup " "${logname}_time.txt" | sed "s/.*(milliseconds)=//g")
-    input=$(grep "Input superstep " "${logname}_time.txt" | sed "s/.*(milliseconds)=//g")
-    shutdown=$(grep "Shutdown " "${logname}_time.txt" | sed "s/.*(milliseconds)=//g")
-    total=$(grep "Total (mil" "${logname}_time.txt" | sed "s/.*(milliseconds)=//g")
+    setup=$(grep "Setup " "${logname}_time.txt" | sed 's/.*(milliseconds)=//g')
+    input=$(grep "Input superstep " "${logname}_time.txt" | sed 's/.*(milliseconds)=//g')
+    shutdown=$(grep "Shutdown " "${logname}_time.txt" | sed 's/.*(milliseconds)=//g')
+    total=$(grep "Total (mil" "${logname}_time.txt" | sed 's/.*(milliseconds)=//g')
 
     # all times are in ms, so have to convert it to seconds
     # must use perl (or something else) as $((..)) can't handle floats
@@ -109,7 +109,7 @@ elif [[ $system -eq $SYS_GRAPHLAB ]]; then
 
 elif [[ $system -eq $SYS_MIZAN ]]; then
     # Mizan's premizan logs are distinct from normal algorithm runs
-    alg=$(echo "$logname" | sed "s/_.*//g")
+    alg=$(echo "$logname" | sed 's/_.*//g')
     if [[ "$alg" == "premizan" ]]; then
         time_tot=$(grep "TOTAL TIME (sec)" "${logname}_time.txt" | awk '{print $4}')
         time_io=$time_tot

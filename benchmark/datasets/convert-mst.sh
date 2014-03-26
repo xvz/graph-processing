@@ -14,7 +14,7 @@ if [ $# -ne 1 ]; then
 fi
 
 scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-graph=$(echo "$1" | sed "s/.txt$//g")
+graph=$(echo "$1" | sed 's/.txt$//g')
 
 if [[ -f "${graph}-mst.txt" ]]; then
     echo "${graph}-mst.txt already exists. Delete it first."

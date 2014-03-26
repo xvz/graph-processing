@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers source-vertex"
+if [ $# -ne 4 ]; then
+    echo "usage: $0 input-graph workers edge-type source-vertex"
+    echo ""
+    echo "edge-type: 0 for byte array edges"
+    echo "           1 for hashmap edges"
     exit -1
 fi
 
@@ -16,10 +19,19 @@ hadoop dfs -rmr "$outputdir" || true
 # workers can be > number of EC2 instances, but this is inefficient!
 # use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
 workers=$2
-src=$3
+
+edgetype=$3
+case ${edgetype} in
+    0) edgeclass="";;     # byte array edges are used by default
+    1) edgeclass="-Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMapEdges \
+                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges" ;;
+    *) echo "Invalid edge-type"; exit -1;;
+esac
+
+src=$4
 
 ## log names
-logname=sssp_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logname=sssp_${inputgraph}_${workers}_${edgetype}_"$(date +%F-%H-%M-%S)"
 logfile=${logname}_time.txt       # running time
 
 
@@ -28,6 +40,7 @@ logfile=${logname}_time.txt       # running time
 
 ## start algorithm run
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
+    ${edgeclass} \
     org.apache.giraph.examples.SimpleShortestPathsVertex \
     -ca SimpleShortestPathsVertex.sourceId=${src} \
     -vif org.apache.giraph.examples.SimpleShortestPathsInputFormat \
