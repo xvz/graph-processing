@@ -24,7 +24,7 @@ edgetype=$3
 case ${edgetype} in
     0) edgeclass="";;     # byte array edges are used by default
     1) edgeclass="-Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMapEdges \
-                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges" ;;
+                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges";;
     *) echo "Invalid edge-type"; exit -1;;
 esac
 

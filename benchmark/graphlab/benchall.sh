@@ -12,37 +12,37 @@ RUNS=$2
 
 case ${WORKERS} in
     4)   GRAPHS=(amazon google patents);
-         TOL=(...);; # for PageRank
+         TOL=(0.05); # for PageRank
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
-         TOL=(...);; # for PageRank
+         TOL=(0.05);
          SRC=(0 0 6009554);;
     16)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         TOL=(...);; # for PageRank
+         TOL=(0.05);
          SRC=(0 1 3 0 0);;
     32)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         TOL=(...);; # for PageRank
+         TOL=(0.05);
          SRC=(0 1 3 0 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         TOL=(...);; # for PageRank
+         TOL=(0.05);
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
-         TOL=(...);; # for PageRank
+         TOL=(0.05);
          SRC=(0 1 3 0 0);;
-    *) "Invalid workers"; exit -1;;
+    *) echo "Invalid workers"; exit -1;;
 esac
 
 #################
 # Sync run
 #################
 # we split the algs up for simplicity
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${TOL[j]}
     done
 done
 
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
     done
@@ -63,13 +63,13 @@ done
 #################
 # Async Run
 #################
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${TOL[j]}
     done
 done
 
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${SRC[j]}
     done

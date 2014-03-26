@@ -23,7 +23,7 @@ case ${WORKERS} in
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;
-    *) "Invalid workers"; exit -1;;
+    *) echo "Invalid workers"; exit -1;;
 esac
 
 ##################
@@ -36,7 +36,7 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
     done
@@ -71,7 +71,7 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
-for ((j = 0; j <= ${#GRAPHS[@]}; j++)); do
+for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${SRC[j]}
     done
