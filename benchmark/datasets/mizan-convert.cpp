@@ -26,9 +26,9 @@ static void usage(char **argv) {
   std::cout << "               (i.e., fake weights are assigned sequentially in" << std::endl;
   std::cout << "                order of how vertices are listed in input file)" << std::endl;
   std::cout << std::endl;
-  std::cout << "out-format: 1. Mizan to Giraph" << std::endl;
-  std::cout << "            2. Mizan to GPS (no values/weights)" << std::endl;
-  std::cout << "            3. Mizan to GPS (edge weights, no vertex value)" << std::endl;
+  std::cout << "out-format: 1. SNAP to Giraph" << std::endl;
+  std::cout << "            2. SNAP to GPS (no values/weights)" << std::endl;
+  std::cout << "            3. SNAP to GPS (edge weights, no vertex value)" << std::endl;
 }
 
 static inline void get_edge_weight(std::ifstream &ifs, int in_format, long &edge_weight) {
@@ -58,7 +58,7 @@ static inline void get_edge_weight(std::ifstream &ifs, int in_format, long &edge
 /**
  * Converts dataset/graph input formats.
  *
- * NOTE: Does not sort anything! (Sorting is not needed anyway)
+ * NOTE: Does not sort anything!
  */
 int main(int argc, char **argv) {
   if ( argc < 5 ) {
