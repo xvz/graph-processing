@@ -7,6 +7,8 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 WORKERS=$1
 RUNS=$2
 

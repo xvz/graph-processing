@@ -7,6 +7,8 @@ if [ $# -ne 2 ]; then
     exit -1
 fi
 
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
 WORKERS=$1
 RUNS=$2
 
@@ -26,38 +28,48 @@ case ${WORKERS} in
     *) echo "Invalid workers"; exit -1;;
 esac
 
+
+##################
+# Premizan
+##################
+for graph in "${GRAPHS[@]}"; do
+    for ((i = 1; i <= RUNS; i++)); do
+        ./premizan.sh "${graph}.txt" ${WORKERS} 1
+    done
+done
+
 ##################
 # Static run
 ##################
 # we split the algs up for clarity
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 0
+        ./pagerank.sh "${graph}.txt" ${WORKERS} 0
     done
 done
 
 for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
+        ./sssp.sh "${GRAPHS[j]}.txt" ${WORKERS} 0 ${SRC[j]}
     done
 done
 
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}-adj.txt" ${WORKERS} 0
+        ./wcc.sh "${graph}.txt" ${WORKERS} 0
     done
 done
 
 # MST does not work (issues w/ aggregators + graph mutation in 0.1bu1)
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 0
+#        ./mst.sh "${graph}-mst.txt" ${WORKERS} 0
 #    done
 #done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}-adj.txt" ${WORKERS} 0
+#        ./dimest.sh "${graph}.txt" ${WORKERS} 0
 #    done
 #done
 

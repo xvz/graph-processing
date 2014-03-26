@@ -17,19 +17,14 @@ source ./common/get-dirs.sh
 ./hadoop/restart-hadoop.sh
 hadoop dfsadmin -safemode wait > /dev/null
 
-# must cd to the correct directory each time
 echo "Running Giraph experiments..."
-cd ./giraph/
-./bench${nodes}.sh
+./giraph/benchall.sh ${nodes} 5
 
 echo "Running GPS experiments..."
-cd ../gps/
-./bench${nodes}.sh
+./gps/benchall.sh ${nodes} 5
 
 echo "Running GraphLab experiments..."
-cd ../graphlab/
-./bench${nodes}.sh
+./graphlab/benchall.sh ${nodes} 5
 
 echo "Running Mizan experiments..."
-cd ../mizan/
-./bench${nodes}.sh
+./mizan/benchall.sh ${nodes} 5
