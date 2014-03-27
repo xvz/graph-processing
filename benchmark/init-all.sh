@@ -50,13 +50,6 @@ hadoop dfsadmin -safemode wait > /dev/null
 
 
 ###############
-# Datasets
-###############
-#echo "Loading datasets..."
-#./datasets/load-files.sh
-
-
-###############
 # Systems
 ###############
 # nothing to do for Giraph
@@ -69,3 +62,10 @@ echo "Initializing GraphLab..."
 
 echo "Initializing Mizan..."
 ./mizan/init.sh
+
+
+###############
+# Datasets
+###############
+#echo "Loading datasets..."
+#./datasets/load-files.sh
