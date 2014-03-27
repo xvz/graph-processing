@@ -4,7 +4,11 @@
 # This is indiscriminate---it will kill ALL Java processes.
 #
 # NOTE: To programmatically detect when Hadoop is up, use
-# "hadoop dfsadmin -safemode wait"
+# "hadoop dfsadmin -safemode wait" or pass in "1" as arg.
+#
+# usage: ./restart-hadoop.sh [wait?]
+#
+# wait: 0 for no wait, 1 to wait for Hadoop to start
 
 source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-hosts.sh
 
@@ -19,3 +23,8 @@ done
 wait
 
 start-all.sh
+
+if [[ $1 -eq 1 ]]; then
+    # wait until Hadoop is up
+    hadoop dfsadmin -safemode wait
+fi

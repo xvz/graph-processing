@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Simple script to check if workers can be ssh'd to.
 
