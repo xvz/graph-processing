@@ -52,8 +52,8 @@ hadoop dfsadmin -safemode wait > /dev/null
 ###############
 # Datasets
 ###############
-echo "Loading datasets..."
-./datasets/load-files.sh
+#echo "Loading datasets..."
+#./datasets/load-files.sh
 
 
 ###############
