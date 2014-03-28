@@ -65,7 +65,7 @@ done
 
 
 #####################
-# Hash multimap run
+# Hash map run
 #####################
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
