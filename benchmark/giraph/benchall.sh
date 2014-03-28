@@ -64,9 +64,9 @@ done
 #done
 
 
-##################
-# Hash map run
-##################
+#####################
+# Hash multimap run
+#####################
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 1

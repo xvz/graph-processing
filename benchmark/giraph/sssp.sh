@@ -4,7 +4,7 @@ if [ $# -ne 4 ]; then
     echo "usage: $0 input-graph workers edge-type source-vertex"
     echo ""
     echo "edge-type: 0 for byte array edges"
-    echo "           1 for hashmap edges"
+    echo "           1 for hash multimap edges"
     exit -1
 fi
 
@@ -23,8 +23,8 @@ workers=$2
 edgetype=$3
 case ${edgetype} in
     0) edgeclass="";;     # byte array edges are used by default
-    1) edgeclass="-Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMapEdges \
-                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMapEdges";;
+    1) edgeclass="-Dgiraph.inputOutEdgesClass=org.apache.giraph.edge.HashMultimapEdges \
+                  -Dgiraph.outEdgesClass=org.apache.giraph.edge.HashMultimapEdges";;
     *) echo "Invalid edge-type"; exit -1;;
 esac
 
