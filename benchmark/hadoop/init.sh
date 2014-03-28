@@ -104,7 +104,7 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>mapred.reduce.tasks</name>
-    <value>5</value>
+    <value>10</value>    <!-- determines # of reduce tasks for premizan (modhash + 5a/5b) -->
   </property>
   <property>
     <name>mapreduce.job.counters.max</name>
