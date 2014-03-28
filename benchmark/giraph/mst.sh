@@ -29,7 +29,7 @@ case ${edgetype} in
 esac
 
 ## log names
-logname=mst_${inputgraph}_${workers}_${edgetype}_"$(date +%F-%H-%M-%S)"
+logname=mst_${inputgraph}_${workers}_${edgetype}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # running time
 
 
@@ -37,10 +37,11 @@ logfile=${logname}_time.txt       # running time
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-# -Dmapred.task.timeout=0 can be used to prevent Giraph job from getting killed after spending 10 mins on one superstep
+# -Dmapred.task.timeout=0 is needed to prevent Giraph job from getting killed after spending 10 mins on one superstep
 # Giraph seems to ignore any mapred.task.timeout specified in Hadoop's mapred-site.xml
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     ${edgeclass} \
+    -Dmapred.task.timeout=0 \
     org.apache.giraph.examples.MinimumSpanningTreeVertex \
     -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute \
     -vif org.apache.giraph.examples.MinimumSpanningTreeInputFormat \

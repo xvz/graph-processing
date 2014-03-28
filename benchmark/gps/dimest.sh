@@ -29,7 +29,7 @@ case ${mode} in
 esac
 
 ## log names
-logname=dimest_${inputgraph}_${nodes}_${mode}_"$(date +%F-%H-%M-%S)"
+logname=dimest_${inputgraph}_${nodes}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 

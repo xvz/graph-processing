@@ -19,7 +19,7 @@ workers=$2
 
 ## log names
 # diameter estimation only supports synchronous mode
-logname=dimest_${inputgraph}_${workers}_0_"$(date +%F-%H-%M-%S)"
+logname=dimest_${inputgraph}_${workers}_0_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 

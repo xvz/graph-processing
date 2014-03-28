@@ -30,7 +30,7 @@ esac
 src=$4
 
 ## log names
-logname=sssp_${inputgraph}_${workers}_${mode}_"$(date +%F-%H-%M-%S)"
+logname=sssp_${inputgraph}_${workers}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 

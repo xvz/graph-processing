@@ -19,7 +19,7 @@ hadoop dfs -rmr "$outputdir" || true
 workers=$2
 
 ## log names
-logname=prtolfinder_${inputgraph}_${workers}_"$(date +%F-%H-%M-%S)"
+logname=prtolfinder_${inputgraph}_${workers}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # running time
 
 

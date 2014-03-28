@@ -23,7 +23,7 @@ scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 #  (or _mrange_${workers} if using range partitioning)
 inputgraph=$(basename $1)
 
-logname=premizan_${inputgraph}_${2}_${3}_"$(date +%F-%H-%M-%S)"
+logname=premizan_${inputgraph}_${2}_${3}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 ## start logging memory + network usage

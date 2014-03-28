@@ -16,7 +16,7 @@ nodes=$2
 
 ## log names
 # MST can only run in "normal" mode (LALP & dynamic repartitioning cannot be used)
-logname=mst_${inputgraph}_${nodes}_0_"$(date +%F-%H-%M-%S)"
+logname=mst_${inputgraph}_${nodes}_0_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 

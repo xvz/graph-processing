@@ -28,7 +28,7 @@ case ${mode} in
 esac
 
 ## log names
-logname=mst_${inputgraph}_${workers}_${mode}_"$(date +%F-%H-%M-%S)"
+logname=mst_${inputgraph}_${workers}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 
 
