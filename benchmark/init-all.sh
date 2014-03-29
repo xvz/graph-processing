@@ -32,6 +32,8 @@ echo "Updating Hadoop configs..."
 # NOTE: removing HDFS folder will kill targets of symlinks in logs/userlogs/
 echo "Removing old HDFS data and Hadoop logs..."
 
+stop-all.sh > /dev/null   # just in case anything is running
+
 # do it separately for the master---this is useful when testing on a single machine
 rm -rf "$HADOOP_DATA_DIR"; rm -rf "$HADOOP_DIR"/logs/*
 for ((i = 1; i <= ${nodes}; i++)); do
