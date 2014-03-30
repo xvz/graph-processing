@@ -22,9 +22,9 @@ fi
 # convert graph to adjacency format
 echo "Converting to adjacency format..."
 if [[ ${domst} -eq 1 ]]; then
-    "${scriptdir}"/mizan-convert "${graph}.txt" "${graph}-adj.txt" 2 2
+    "${scriptdir}"/snap-convert "${graph}.txt" "${graph}-adj.txt" 2 2
 else
-    "${scriptdir}"/mizan-convert "${graph}.txt" "${graph}-adj.txt" 1 1
+    "${scriptdir}"/snap-convert "${graph}.txt" "${graph}-adj.txt" 1 1
 fi
 
 echo "Done!"

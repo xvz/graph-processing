@@ -1,12 +1,12 @@
-all: mizan-convert mst-convert mst-convert-old
+all: snap-convert mst-convert mst-convert-old
 
 clean:
-	rm -f mizan-convert
+	rm -f snap-convert
 	rm -f mst-convert
 	rm -f mst-convert-old
 
-mizan-convert: mizan-convert.cpp
-	g++ -Wall mizan-convert.cpp -o mizan-convert
+snap-convert: snap-convert.cpp
+	g++ -Wall snap-convert.cpp -o snap-convert
 
 mst-convert: mst-convert.cpp
 	g++ -Wall mst-convert.cpp -o mst-convert
