@@ -38,7 +38,7 @@ fi
 
 echo "Converting to MST format..."
 
-"${scriptdir}"/mst-sconv "${sortedgraph}.txt" "${graph}-mst-unsorted.txt"
+"${scriptdir}"/mst-convert "${sortedgraph}.txt" "${graph}-mst-unsorted.txt"
 
 # sort the output
 echo "Sorting output..."

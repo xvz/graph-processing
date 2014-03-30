@@ -1,15 +1,15 @@
-all: mizan-convert mst-convert mst-sconv
+all: mizan-convert mst-convert mst-convert-old
 
 clean:
 	rm -f mizan-convert
 	rm -f mst-convert
-	rm -f mst-sconv
+	rm -f mst-convert-old
 
 mizan-convert: mizan-convert.cpp
 	g++ -Wall mizan-convert.cpp -o mizan-convert
 
 mst-convert: mst-convert.cpp
-	g++ -std=c++0x -Wall mst-convert.cpp -o mst-convert
+	g++ -Wall mst-convert.cpp -o mst-convert
 
-mst-sconv: mst-sconv.cpp
-	g++ -Wall mst-sconv.cpp -o mst-sconv
+mst-convert-old: mst-convert-old.cpp
+	g++ -std=c++0x -Wall mst-convert-old.cpp -o mst-convert-old

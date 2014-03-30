@@ -1,21 +1,55 @@
+/**
+ * Creates an undirected graph with unique random edge weights.
+ * **WARNING: input MUST be sorted---see below.**
+ * **WARNING2: output graph is NOT sorted.**
+ *
+ * The algorithm proceeds by only storing out-edges of the graph,
+ * effectively deleting any corresponding in-edges. This gives a
+ * directed graph with no undirected edges.
+ *
+ * Here an "in-edge" is an edge (src, dst) such that src > dst.
+ * If src > dst and no edge (dst, src) exists, then it is an out-edge.
+ *
+ * When outputting the out-edges, we output its corresponding
+ * in-edge to produce an undirected graph. A unique random weight
+ * is assigned to pairs of out/in-edges.
+ *
+ *
+ * WARNING: this algorithm only works for SNAP format, where edges
+ * are SORTED by source IDs and then by destination IDs.
+ * Sorting by destination (after sorting by source) is *required*!
+ *
+ * For example,
+ *   1 2
+ *   1 3
+ *   3 10
+ *   3 10000
+ *   4 1
+ *   4 3
+ *   4 5
+ *   10 2
+ *   10 3
+ *   ...
+ *
+ * Sort using, e.g.: sort -nk1 -nk2 --parallel=N -S 3G input > output
+ * This sorts by first field, then second field, both using "-n".
+ * (Doing -n -k1,2 is not enough, as second field is not sorted w/ "-n")
+ *
+ * The output graph should also be sorted in the same manner.
+ *
+ * Note: use "sort -nk1 -nk2 --parallel=N -S 3G -c input" to check if
+ * the input is sorted---this will save some time.
+ */
+
 #include <cstdlib>
 #include <string>
-#include <random>
-#include <algorithm>
-#include <climits>
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <map>
-
-
-#define M_TO_RANDOM    1
-#define M_TO_VERTEXID  2
-#define M_TO_NOWEIGHT  3
-
+#include <queue>
 
 /**
- * Class represeting <src, dst> key for edge values
+ * Class representing <src, dst> key for edge values
  */
 class KeyPair {
 private:
@@ -24,12 +58,23 @@ private:
 public:
   KeyPair(long src, long dst) : src(src), dst(dst) {}
 
+  long getSrc() { return src; }
+  long getDst() { return dst; }
+
   bool operator<(const KeyPair& rhs) const {
     if (src == rhs.src) {
       return dst < rhs.dst;
     }
 
     return src < rhs.src;
+  }
+
+  bool operator>(const KeyPair& rhs) const {
+    if (src == rhs.src) {
+      return dst > rhs.dst;
+    }
+
+    return src > rhs.src;
   }
 
   bool operator==(const KeyPair& rhs) const {
@@ -42,160 +87,152 @@ public:
 };
 
 /**
- * DEPRECATED.
- *
- * Provides a shuffled array of length "size", with unique elements.
- * Uses the Knuth-Fisher-Yates shuffle.
+ * Compare class needed for min-heap.
  */
-//void kfy_shuffle(long *array, int size) {
-//  // use this instead of srand to avoid modulus bias
-//  mt19937 rng(time(0));
-// 
-//  for (int i = 0; i < size; i++) {
-//    array[i] = i+1;
-//  }
-// 
-//  long tmp;
-//  int k;
-//  for (int i = size-1; i > 0; i--) {
-//    uniform_int_distrubition<int> gen(0, i);
-//    k = gen(rng);
-// 
-//    tmp = array[i];
-//    array[i] = array[k];
-//    array[k] = tmp;
-//  }
-//}
+class CompareKeyPair {
+public:
+  bool operator()(const KeyPair& lhs, const KeyPair& rhs) const {
+    return lhs > rhs;
+  }
+};
+
+
+/**
+ * Maximal-length LFSR (i.e., PRBS) with n = 34. This provides
+ * a period of 2^n -1, or 2^34 - 1 unique numbers excluding 0.
+ *
+ * 2^34 - 1 is ~17 billion, so uniqueness will fail if there
+ * are more than 17 bil edges.
+ *
+ * NOTE: n = 64 can return negative values, so keep n < 64
+ * when using long long.
+ *
+ * "state" is a previously returned value or the initial seed.
+ */ 
+long long prbs34(long long state) {
+  // from: http://www.xilinx.com/support/documentation/application_notes/xapp052.pdf
+  // also see wiki article on LFSR
+  //
+  // x^34 + x^27 + x^2 + x + 1
+  // => 0010 0000 0100 0000 0000 0000 0000 0000 0011
+  // => 0x204000003
+  return (state >> 1) ^ (-(state & 1u) & 0x204000003u);
+}
+
 
 /**
  * Usage message
  */
 static void usage(char **argv) {
-  std::cout << "usage: " << argv[0] << " input-file output-file out-format" << std::endl;
+  std::cout << "usage: " << argv[0] << " input-file output-file" << std::endl;
   std::cout << std::endl;
-  std::cout << "out-format: 1. Undirected graph, pseudo-random unique weights." << std::endl;
-  std::cout << "            2. Undirected graph, deterministic non-unique weights using smallest vertex ID + 1." << std::endl;
-  std::cout << "            3. For Mizan, undirected graph with no weights." << std::endl;
-
+  std::cout << "Note: 1. input-file must be sorted by source ID, then destination ID." << std::endl;
+  std::cout << "      2. output-file will NOT be sorted." << std::endl;
 }
+
 
 /**
  * Main
  */
 int main(int argc, char **argv) {
-  if ( argc < 4 ) {
+  if ( argc < 3 ) {
     usage(argv);
     return -1;
   }
 
-  std::ifstream ifscount(argv[1], std::ifstream::in);
-  std::ofstream ofs(argv[2], std::ofstream::out);
-  int out_format = atoi(argv[3]);
-
-  if (!ifscount || !ofs || 
-      (out_format < M_TO_RANDOM || out_format > M_TO_NOWEIGHT)) {
-    usage(argv);
-    return -1;
-  }
-
-  // count number of input lines
-  int len = std::count(std::istreambuf_iterator<char>(ifscount),
-                       std::istreambuf_iterator<char>(), '\n');
-  ifscount.close();
-
-  std::vector<long> *weights;
-
-  if (out_format == M_TO_RANDOM) {
-    // make unique weights (not all of these will be used
-    // because we don't know what % of edges are undirected)
-    weights = new std::vector<long>(len);
-
-    for (int i = 0; i < len; i++) {
-      weights->at(i) = i+1;
-    }
-
-    std::default_random_engine gen(time(NULL));
-
-    // shuffle using built-in Knuth-Fisher-Yates shuffle
-    std::shuffle(weights->begin(), weights->end(), gen);
-  }
-
-  // read input and fill map
   std::ifstream ifs(argv[1], std::ifstream::in);
+  std::ofstream ofs(argv[2], std::ofstream::out);
 
-  long src, dst, weight;
-  std::map<KeyPair, long> *graph = new std::map<KeyPair, long>();
+  if (!ifs || !ofs ) {
+    usage(argv);
+    return -1;
+  }
 
-  int i = 0;
+  std::cout.sync_with_stdio(false);    // don't flush on \n
 
-  switch (out_format) {
-  case M_TO_RANDOM:
-    while (ifs >> src >> dst) {
-      // if we haven't already been added to map by a previous edge
-      if (graph->find(KeyPair(dst, src)) == graph->end()) {
-        // store both out-edge and in-edge, to make graph undirected,
-        // and add (same) unique weight to both
-        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), weights->at(i)));
-        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), weights->at(i)));
-        i++;
+  long src, dst;
+  long long weight;
+  weight = prbs34(time(NULL));
+
+  // our min-heap
+  std::priority_queue<KeyPair, std::vector<KeyPair>, CompareKeyPair> *edges
+    = new std::priority_queue<KeyPair, std::vector<KeyPair>, CompareKeyPair>();
+
+  KeyPair u(0,0), up(0,0), v(0,0), vp(0,0);   // see below
+  bool doPush;
+
+  // NOTE: eof() is unreliable, use ">>" as check instead
+  while (ifs >> src >> dst) {
+    u = KeyPair(src, dst);   // see below
+    up = KeyPair(dst, src);
+
+    doPush = true;
+
+    while (!edges->empty()) {
+      // vp = (vp.src, vp.dst) is v's in-edge
+      // v = (vp.dst, vp.src) is an existing out-edge
+      // u = (src, dst) is potentially new out-edge
+      // up = (dst, src) is in-edge associated w/ u
+      vp = edges->top();
+      v = KeyPair(vp.getDst(), vp.getSrc());
+
+      // if u == vp, then don't write/push u (b/c it's v's in-edge)
+      if (u == vp) {
+        doPush = false;
+      }
+
+      // if u >= vp, then u is v's in-edge (=) or v's in-edge does not exist (>)
+      // hence, it is safe to write out v
+      //
+      // NOTE: u > vp is NOT the same thing as v > (dst, src), as the first field
+      // is compared *before* the second field
+      if (u > vp || u == vp) {
+        ofs << v << " " << weight << "\n";
+        ofs << vp << " " << weight << "\n";
+        weight = prbs34(weight);
+
+        edges->pop();
+      } else {
+        break;
       }
     }
-    break;
 
-  case M_TO_VERTEXID:
-    while (ifs >> src >> dst) {
-      // if we haven't already been added to map by a previous edge
-      if (graph->find(KeyPair(dst, src)) == graph->end()) {
-        // store both out-edge and in-edge, to make graph undirected
-        // and deterministic weight (min of src/dst)
-        weight = ((src < dst) ? src : dst) + 1;
-        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), weight));
-        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), weight));
-        i++;
+    // u is a new out-edge...
+    if (doPush) {
+      if (src == dst) {
+        // self-cycle, so just write out one edge
+        ofs << u << " " << weight << "\n";
+        weight = prbs34(weight);
+
+      } else if (src > dst) {
+        // write it out if src >= dst, b/c (dst, src) cannot exist
+        ofs << u << " " << weight << "\n";
+        ofs << up << " " << weight << "\n";
+        weight = prbs34(weight);
+
+      } else {
+        // otherwise, push it as its in-edge (so it's sorted correctly on min-heap)
+        edges->push(up);
       }
     }
-    break;
-
-  case M_TO_NOWEIGHT:
-    while (ifs >> src >> dst) {
-      // if we haven't already been added to map by a previous edge
-      if (graph->find(KeyPair(dst, src)) == graph->end()) {
-        // store both out-edge and in-edge, to make graph undirected
-        graph->insert(std::pair<KeyPair,long>(KeyPair(src, dst), 0));
-        graph->insert(std::pair<KeyPair,long>(KeyPair(dst, src), 0));
-        i++;
-      }
-    }
-    break;
-
-  default:
-    std::cout << "Invalid out-format: " << out_format << "!" << std::endl;
   }
 
   ifs.close();
 
-  // write output
-  switch (out_format) {
-  case M_TO_RANDOM:
-    // fall through
+  // flush remaining edges to disk
+  while (!edges->empty()) {
+    vp = edges->top();
+    v = KeyPair(vp.getDst(), vp.getSrc());
 
-  case M_TO_VERTEXID:
-    for (std::map<KeyPair, long>::iterator it=graph->begin(); it != graph->end(); ++it) {
-      ofs << it->first << " " << it->second << "\n"; // std::endl;
-    }
-    break;
+    ofs << v << " " << weight << "\n";
+    ofs << vp << " " << weight << "\n";
+    weight = prbs34(weight);
 
-  case M_TO_NOWEIGHT:
-    for (std::map<KeyPair, long>::iterator it=graph->begin(); it != graph->end(); ++it) {
-      ofs << it->first << "\n"; // std::endl;
-    }
-    break;
-
-  default:
-    std::cout << "Invalid out-format: " << out_format << "!" << std::endl;
+    edges->pop();
   }
 
+  ofs.flush();   // just in case...
   ofs.close();
-    
+
   return 0;
 }
