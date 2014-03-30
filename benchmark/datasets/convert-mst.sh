@@ -16,6 +16,11 @@ fi
 scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 graph=$(echo "$1" | sed 's/.txt$//g')
 
+if [[ ! -f "${graph}.txt" ]]; then
+    echo "${graph}.txt does not exist."
+    exit -1
+fi
+
 if [[ -f "${graph}-mst.txt" ]]; then
     echo "${graph}-mst.txt already exists. Delete it first."
     exit -1
