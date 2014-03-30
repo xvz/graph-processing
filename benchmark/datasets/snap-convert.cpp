@@ -4,7 +4,6 @@
 #include <string>
 #include <cerrno>
 
-
 #define F_IN_SNAP        1
 #define F_IN_SNAPWEIGHT  2
 #define F_IN_GEN_UNITY   3
