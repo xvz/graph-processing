@@ -13,7 +13,7 @@ DIR_PREFIX=/home/ubuntu
 #DIR_PREFIX=/home/young/cs848   # for testing on a single machine
 
 # location of datasets/input graphs
-DATASET_DIR="$DIR_PREFIX"/datasets/raw/
+DATASET_DIR="$DIR_PREFIX"/datasets/
 
 # $JAVA_DIR/bin/java should be the Java binary that is
 # used by all systems (incl. Hadoop) that need Java
@@ -27,7 +27,7 @@ GIRAPH_DIR="$DIR_PREFIX"/giraph-1.0.0/
 
 # These must match "GPS_DIR" and "GPS_LOG_DIRECTORY" of $GPS_DIR/conf/gps-env.sh
 GPS_DIR="$DIR_PREFIX"/gps-rev-110/
-GPS_LOGS_DIR="$DIR_PREFIX"/var/tmp/
+GPS_LOG_DIR="$DIR_PREFIX"/var/tmp/
 
 GRAPHLAB_DIR="$DIR_PREFIX"/graphlab-2a063b3829/
 MIZAN_DIR="$DIR_PREFIX"/Mizan-0.1bu1/

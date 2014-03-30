@@ -78,7 +78,7 @@ MASTER_GPS_ID=-1
 MASTER_XMS_SIZE=50M     # initial heap size (master)
 
 echo "Starting GPS master -1"
-"$JAVA_DIR"/bin/java -Xincgc -Xms${MASTER_XMS_SIZE} -Xmx${MASTER_XMX_SIZE} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOGS_DIR"/${2}-machine${i}-output.txt &
+"$JAVA_DIR"/bin/java -Xincgc -Xms${MASTER_XMS_SIZE} -Xmx${MASTER_XMX_SIZE} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOG_DIR"/${2}-machine${i}-output.txt &
 
 ## start slaves asynchronously (faster this way)
 XMS_SIZE=256M   # initial heap size (workers)
@@ -89,7 +89,7 @@ i=0
 while read slave || [ -n "$slave" ]; do
     echo "Starting GPS worker ${i}"
 
-    ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp \"$OUTPUT_DIR\"/${2}-output-${i}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOGS_DIR\"/${2}-machine${i}-output.txt" &
+    ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp \"$OUTPUT_DIR\"/${2}-output-${i}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOG_DIR\"/${2}-machine${i}-output.txt" &
 
     ((i++))
     # no need to check if # workers < # slaves... GPS will hang in that situation
