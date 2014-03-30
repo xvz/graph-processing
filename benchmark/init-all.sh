@@ -18,7 +18,7 @@ source ./common/get-hosts.sh
 source ./common/get-dirs.sh
 
 
-# update workers hostnames
+# update workers' hostnames
 echo "Updating worker hosts..."
 ./common/update-hosts.sh
 

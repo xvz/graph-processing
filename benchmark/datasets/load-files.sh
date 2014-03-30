@@ -30,16 +30,18 @@ cd "$DATASET_DIR"
 
 hadoop dfsadmin -safemode wait > /dev/null
 hadoop dfs -mkdir ./input || true    # no problem if it already exists
- 
+
 case ${size} in
     1)  hadoop dfs -put amazon*.txt ./input/;
         hadoop dfs -put google*.txt ./input/;
         hadoop dfs -put patents*.txt ./input/;;
-    2)  hadoop dfs -put patents*.txt ./input/;
-        hadoop dfs -put livejournal*.txt ./input/;
-        hadoop dfs -put orkut*.txt ./input/;;
-    3)  hadoop dfs -put orkut*.txt ./input/;
+    2)  hadoop dfs -put livejournal*.txt ./input/;
+        hadoop dfs -put orkut*.txt ./input/;
+        hadoop dfs -put arabic*.txt ./input/;;
+    3)  hadoop dfs -put livejournal*.txt ./input/;
+        hadoop dfs -put orkut*.txt ./input/;
         hadoop dfs -put arabic*.txt ./input/;
-        hadoop dfs -put twitter*.txt ./input/;;
+        hadoop dfs -put twitter*.txt ./input/;
+        hadoop dfs -put uk0705*.txt ./input/;;
     *) echo "Invalid size"; exit -1;;
-esac 
+esac

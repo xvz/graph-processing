@@ -17,10 +17,10 @@ case ${WORKERS} in
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         SRC=(0 1 3 0 0);;
-    32)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         SRC=(0 1 3 0 0);;
+    16)  GRAPHS=(livejournal orkut);
+         SRC=(0 1);;
+    32)  GRAPHS=(livejournal orkut arabic);
+         SRC=(0 1 3);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);

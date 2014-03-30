@@ -14,17 +14,17 @@ RUNS=$2
 
 case ${WORKERS} in
     4)   GRAPHS=(amazon google patents);
-         TOL=(0.05); # for PageRank
+         TOL=(0.05 0.05 0.05); # for PageRank
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
-         TOL=(0.05);
+         TOL=(0.05 0.05 0.05);
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut arabic twitter uk0705);
+    16)  GRAPHS=(livejournal orkut arabic);
          TOL=(0.05);
-         SRC=(0 1 3 0 0);;
-    32)  GRAPHS=(livejournal orkut arabic twitter uk0705);
+         SRC=(0 1 3);;
+    32)  GRAPHS=(livejournal orkut arabic);
          TOL=(0.05);
-         SRC=(0 1 3 0 0);;
+         SRC=(0 1 3);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          TOL=(0.05);
          SRC=(0 1 3 0 0);;
