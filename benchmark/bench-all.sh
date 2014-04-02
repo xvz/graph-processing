@@ -3,9 +3,14 @@
 # Runs all the benchmarks. If something fails, it will
 # just continue to the next experiment.
 #
-# The mass-benchmarking scripts are quite primitive,
-# simply because things can and will fail and it's
-# usually easier to intervene manually.
+# The batch-benchmarking scripts are quite primitive, simply because
+# when things fail it's usually easier to intervene manually.
+#
+# We recommend running this with disown or nohup, so that a broken
+# ssh connection doesn't kill the job. For example:
+# ./bench-all.sh &      (this should output "[X] ####"---X is usually 1)
+# disown -h %X          (where X is from above)
+# fg                    (to place job back into foreground)
 
 read -p "Press enter to continue..."
 
