@@ -33,7 +33,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
     org.apache.giraph.examples.PageRankTolFinderVertex \
     -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute \
     -c org.apache.giraph.combiner.DoubleSumCombiner \
-    -ca PageRankTolFinderVertex.maxSS=100 \
+    -ca PageRankTolFinderVertex.maxSS=30 \
     -vif org.apache.giraph.examples.SimplePageRankInputFormat \
     -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexOutputFormat \

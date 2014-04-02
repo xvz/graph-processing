@@ -8,6 +8,9 @@
 #   3. Correct IPs and names of all workers in /etc/hosts
 #   4. Correct JVM Xmx size set for Giraph (see ./hadoop/init.sh)
 #   5. Correct JVM Xmx size set for GPS (see ./gps/start-nodes.sh)
+#   6. Can ssh to all workers (use ./common/ssh-check.sh)
+#
+# Additionally, remove ~/.ssh/known_hosts for both ubuntu and sudo!
 #
 # See ./common/get-hosts.sh for the expected naming formats and prefixes.
 

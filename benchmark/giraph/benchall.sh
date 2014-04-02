@@ -51,11 +51,11 @@ for graph in "${GRAPHS[@]}"; do
 done
 
 # WARNING: this can be VERY slow for large graphs!!
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 0
-    done
-done
+#for graph in "${GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 0
+#    done
+#done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
@@ -85,11 +85,11 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 1
-    done
-done
+#for graph in "${GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 1
+#    done
+#done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do

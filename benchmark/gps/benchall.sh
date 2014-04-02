@@ -53,12 +53,12 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS}
-        sleep 60
-    done
-done
+#for graph in "${GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS}
+#        sleep 60
+#    done
+#done
 
 #./enable-dimest-fix.sh
 #for graph in "${GRAPHS[@]}"; do
