@@ -14,16 +14,22 @@ RUNS=$2
 
 case ${WORKERS} in
     4)   GRAPHS=(amazon google patents);
+         GRAPHS_MST=(amazon google patents);
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
+         GRAPHS_MST=(amazon google patents);
          SRC=(0 0 6009554);;
     16)  GRAPHS=(livejournal orkut arabic);
+         GRAPHS_MST=(livejournal orkut);
          SRC=(0 1 3);;
     32)  GRAPHS=(livejournal orkut arabic);
+         GRAPHS_MST=(livejournal orkut arabic);
          SRC=(0 1 3);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
+         GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
+         GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;
     *) echo "Invalid workers"; exit -1;;
 esac
@@ -32,30 +38,30 @@ esac
 # Byte array run
 ##################
 # we split the algs up for clarity
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 0
-    done
-done
-
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
-    done
-done
-
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}-adj.txt" ${WORKERS} 0
-    done
-done
-
-# WARNING: this can be VERY slow for large graphs!!
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 0
+#        ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 0
 #    done
 #done
+# 
+#for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
+#    done
+#done
+# 
+#for graph in "${GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./wcc.sh "${graph}-adj.txt" ${WORKERS} 0
+#    done
+#done
+
+## WARNING: this can be VERY slow for large graphs!!
+for graph in "${GRAPHS_MST[@]}"; do
+    for ((i = 1; i <= RUNS; i++)); do
+        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 0
+    done
+done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
@@ -67,29 +73,29 @@ done
 #####################
 # Hash map run
 #####################
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 1
-    done
-done
-
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${SRC[j]}
-    done
-done
-
-for graph in "${GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}-adj.txt" ${WORKERS} 1
-    done
-done
-
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 1
+#        ./pagerank.sh "${graph}-adj.txt" ${WORKERS} 1
 #    done
 #done
+# 
+#for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${SRC[j]}
+#    done
+#done
+# 
+#for graph in "${GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./wcc.sh "${graph}-adj.txt" ${WORKERS} 1
+#    done
+#done
+
+for graph in "${GRAPHS_MST[@]}"; do
+    for ((i = 1; i <= RUNS; i++)); do
+        ./mst.sh "${graph}-mst-adj.txt" ${WORKERS} 1
+    done
+done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
