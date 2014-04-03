@@ -267,8 +267,9 @@ int main(int argc, char** argv) {
                false);   // do not save edges
   }
 
-  double totalpr = graph.map_reduce_vertices<double>(pagerank_sum);
-  std::cout << "Totalpr = " << totalpr << "\n";
+  // this interferes with TOTAL TIME print out
+  //double totalpr = graph.map_reduce_vertices<double>(pagerank_sum);
+  //std::cout << "Totalpr = " << totalpr << "\n";
 
   // Tear-down communication layer and quit -----------------------------------
   graphlab::mpi_tools::finalize();
