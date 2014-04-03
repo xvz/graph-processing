@@ -37,8 +37,8 @@ MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" 
 
 # filter only for workers (skipping the master)
 WORKER_IPS=($(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}" \
-              | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' \
-              | uniq | sort -t . -nk1,1 -nk2,2 -nk3,3 -nk4,4))
+               | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' \
+               | uniq | sort -t . -nk1,1 -nk2,2 -nk3,3 -nk4,4))
 
 ####################
 # Output /etc/hosts

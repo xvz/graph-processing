@@ -25,7 +25,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
              | grep 'PublicIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g')
 
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/giraph/logs/*.tar.gz ../results/${nodes}/giraph
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/gps/logs/*.tar.gz ../results/${nodes}/gps
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/graphlab/logs/*.tar.gz  ../results/${nodes}/graphlab
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/mizan/logs/*.tar.gz ../results/${nodes}/mizan
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/giraph/logs/*.tar.gz ../results/giraph/${nodes}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/gps/logs/*.tar.gz ../results/gps/${nodes}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/graphlab/logs/*.tar.gz  ../results/graphlab/${nodes}
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}:~/benchmark/mizan/logs/*.tar.gz ../results/mizan/${nodes}

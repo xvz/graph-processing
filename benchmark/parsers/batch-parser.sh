@@ -13,7 +13,7 @@ if [ $# -lt 2 ]; then
     echo ""
     echo "system: 1 for Giraph, 2 for GPS, 3 for GraphLab, 4 for Mizan"
     echo "time-log: experiment's time log file"
-    echo "          (e.g. pagerank_patents-adj.txt_16_2014-01-01-12-30-50_time.txt)"
+    echo "          (e.g. pagerank_orkut-adj.txt_16_20140101-123050_time.txt)"
     exit -1
 fi
 
