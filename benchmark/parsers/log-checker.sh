@@ -4,9 +4,8 @@
 #
 # A simple way to use this is "./log-checker.sh *time.txt".
 #
-# Note that the *_0_mem.txt matching is for spotting
-# failed GPS runs: GPS doesn't output a _time.txt unless
-# the run is successful.
+# Note that the *_0_mem.txt matching is useful for spotting failed
+# runs too, as bench-init runs before the time log is created.
 
 if [ $# -lt 1 ]; then
     echo "usage: $0 time/mem-log [time/mem-log ...]"
