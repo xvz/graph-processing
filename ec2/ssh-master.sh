@@ -14,11 +14,6 @@ echo "  6) cz0 (128)"
 
 read -p ">> " response
 
-#if [[ ! "$response" =~ ^[0-9]+$ || $response < 1 || $response > 6 ]]; then
-#  echo "Invalid option!"
-#  exit
-#fi
-
 case ${response} in
     1) name=cloud; nodes=4;;
     2) name=cld; nodes=8;;
@@ -30,9 +25,10 @@ case ${response} in
 esac
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
+source ./get-pem.sh
 
 MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
              | grep 'PublicIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g')
 
 # use ec2-user (instead of ubuntu) for instances running non-Ubuntu images
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i young.pem ubuntu@${MASTER_IP}
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}

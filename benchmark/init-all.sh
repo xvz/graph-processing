@@ -4,13 +4,18 @@
 #
 # NOTE: before doing this, ensure the master has:
 #   1. A correct hostname (use "sudo hostname X" to update it without reboot)
-#   2. A correct hostname in /etc/hostname
-#   3. Correct IPs and names of all workers in /etc/hosts
-#   4. Correct JVM Xmx size set for Giraph (see ./hadoop/init.sh)
-#   5. Correct JVM Xmx size set for GPS (see ./gps/start-nodes.sh)
-#   6. Can ssh to all workers (use ./common/ssh-check.sh)
+#      A correct hostname in /etc/hostname
+#      Correct IPs and names of all workers in /etc/hosts
 #
-# Additionally, remove ~/.ssh/known_hosts for both ubuntu and sudo!
+#   2. Correct JVM Xmx size set for Giraph (see ./hadoop/init.sh)
+#      Correct JVM Xmx size set for GPS (see ./gps/start-nodes.sh)
+#
+#   3. No stale fingerprints in known_hosts.
+#
+# For (1), see ../ec2/gen-hosts.sh
+# For (3), delete ~/.ssh/known_hosts for both "ubuntu" and "su"
+#
+# To check connectivity, use ./common/ssh-check.sh
 #
 # See ./common/get-hosts.sh for the expected naming formats and prefixes.
 

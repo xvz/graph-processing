@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
-# Obtains the private IP addresses for the /etc/hosts file.
+# Obtains the private IP addresses of all workers, creates
+# a hosts file and updates the master with a correct hostname,
+# /etc/hostname, and /etc/hosts file.
 #
 # NOTE: This expects the master to be tagged with the name
 # "cw0" or "cx0", etc. and the workers to be ALL tagged with
@@ -28,6 +30,10 @@ case ${WORKERS} in
     *) echo "Invalid option!"; exit -1;;
 esac
 
+cd "$(dirname "${BASH_SOURCE[0]}")"
+source ./get-pem.sh
+
+
 ####################
 # Get private IPs
 ####################
@@ -40,12 +46,47 @@ WORKER_IPS=($(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}"
                | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' \
                | uniq | sort -t . -nk1,1 -nk2,2 -nk3,3 -nk4,4))
 
+
 ####################
 # Output /etc/hosts
 ####################
-echo "${MASTER_IP} ${name}0" 
+# this bit is in /etc/hosts by default
+echo "127.0.0.1 localhost
 
-# output data for /etc/hosts file
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+" > hosts_${nodes}
+
+# this stuff is what we care about
+echo "${MASTER_IP} ${name}0" | tee -a hosts_${nodes}
+
 for i in "${!WORKER_IPS[@]}"; do
-    echo "${WORKER_IPS[$i]} ${name}$((i+1))"
+    echo "${WORKER_IPS[$i]} ${name}$((i+1))" | tee -a hosts_${nodes}
 done
+
+
+####################
+# Update master
+####################
+MASTER_PUBIP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
+                | grep 'PublicIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g')
+
+echo ""
+echo "Copying /etc/hosts to master..."
+# update /etc/hosts (a bit hacky as scp doesn't have sudo)
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ./hosts_${nodes} ubuntu@${MASTER_PUBIP}:~/tmp_hosts
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo mv /home/ubuntu/tmp_hosts /etc/hosts"
+
+echo "Updating hostname..."
+# update /etc/hostname & change hostname without reboot
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo echo \"${name}0\" > /etc/hostname; sudo hostname ${name}0"
+
+rm -f hosts_${nodes}
+
+echo ""
+echo "OK. (Ignore 'unable to resolve host' messages)"
