@@ -16,7 +16,7 @@ if [ $# -lt 1 ]; then
     exit -1
 fi
 
-# read remaining args into array of files
+# read args into array of files
 read -a FILES <<< $(echo "$@")
 
 for file in "${FILES[@]}"; do

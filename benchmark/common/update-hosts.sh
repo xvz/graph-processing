@@ -17,6 +17,6 @@ for ((i = 1; i <= ${nodes}; i++)); do
 
     # update /etc/hostname & change hostname without reboot
     ssh -o StrictHostKeyChecking=no ${name}${i} \
-        "sudo echo \"${name}${i}\" > /tmp/hostname && sudo mv /tmp/hostname /etc/hostname; sudo hostname ${name}${i}" &
+        "echo \"${name}${i}\" > /tmp/hostname && sudo mv /tmp/hostname /etc/hostname; sudo hostname ${name}${i}" &
 done
 wait
