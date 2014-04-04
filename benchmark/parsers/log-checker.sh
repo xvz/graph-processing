@@ -17,7 +17,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # read remaining args into array of files
-read -a FILES <<< $(echo "${@:2}")
+read -a FILES <<< $(echo "$@")
 
 for file in "${FILES[@]}"; do
     logname=$(echo $(basename "$file") | sed -e 's/_time.txt$//g' -e 's/_0_mem.txt$//g')
