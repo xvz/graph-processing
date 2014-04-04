@@ -79,12 +79,13 @@ MASTER_PUBIP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}
 echo ""
 echo "Copying /etc/hosts to master..."
 # update /etc/hosts (a bit hacky as scp doesn't have sudo)
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ./hosts_${nodes} ubuntu@${MASTER_PUBIP}:~/tmp_hosts
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo mv /home/ubuntu/tmp_hosts /etc/hosts"
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ./hosts_${nodes} ubuntu@${MASTER_PUBIP}:/tmp/hosts && \
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo mv /tmp/hosts /etc/hosts"
 
 echo "Updating hostname..."
 # update /etc/hostname & change hostname without reboot
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo echo \"${name}0\" > /etc/hostname; sudo hostname ${name}0"
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" -t ubuntu@${MASTER_PUBIP} \
+    "echo \"${name}0\" > /tmp/hostname && sudo mv /tmp/hostname /etc/hostname; sudo hostname ${name}0"
 
 rm -f hosts_${nodes}
 
