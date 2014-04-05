@@ -19,8 +19,6 @@
 #
 # See ./common/get-hosts.sh for the expected naming formats and prefixes.
 
-read -p "Press enter to continue..."
-
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ./common/get-hosts.sh
 source ./common/get-dirs.sh
