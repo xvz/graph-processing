@@ -38,18 +38,18 @@ esac
 # Sync run
 #################
 # we split the algs up for simplicity
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${TOL[j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 0 ${TOL[$j]}
     done
 done
-
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+ 
+for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 0 ${SRC[j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 0 ${SRC[$j]}
     done
 done
-
+ 
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}-adj.txt" ${WORKERS}
@@ -65,15 +65,15 @@ done
 #################
 # Async Run
 #################
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${TOL[j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 1 ${TOL[$j]}
     done
 done
 
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}-adj.txt" ${WORKERS} 1 ${SRC[j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 1 ${SRC[$j]}
     done
 done
 

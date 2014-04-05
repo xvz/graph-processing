@@ -47,13 +47,13 @@ for graph in "${GRAPHS[@]}"; do
         ./pagerank.sh "${graph}.txt" ${WORKERS} 0
     done
 done
-
-for ((j = 0; j < ${#GRAPHS[@]}; j++)); do
+ 
+for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[j]}.txt" ${WORKERS} 0 ${SRC[j]}
+        ./sssp.sh "${GRAPHS[$j]}.txt" ${WORKERS} 0 ${SRC[$j]}
     done
 done
-
+ 
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}.txt" ${WORKERS} 0
