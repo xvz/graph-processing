@@ -8,7 +8,7 @@ source "$commondir"/get-dirs.sh
 cd "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/
 make -j $(nproc)
 
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     # NOTE: only copy binaries that will actually be used.. it takes too long otherwise
     scp ./pagerank ${name}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
     scp ./sssp ${name}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &

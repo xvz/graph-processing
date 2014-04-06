@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 input-graph workers"
+    echo "usage: $0 input-graph machines"
     exit -1
 fi
 
@@ -15,11 +15,11 @@ hadoop dfs -rmr "$outputdir" || true
 
 hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed -e 's/.*<value>//' -e 's@</value>.*@@')
 
-workers=$2
+machines=$2
 
 ## log names
 # diameter estimation only supports synchronous mode
-logname=dimest_${inputgraph}_${workers}_0_"$(date +%Y%m%d-%H%M%S)"
+logname=dimest_${inputgraph}_${machines}_0_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 
@@ -27,7 +27,7 @@ logfile=${logname}_time.txt
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-mpiexec -f ./machines -n ${workers} \
+mpiexec -f ./machines -n ${machines} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/approximate_diameter \
     --format adjgps \
     --graph_opts ingress=random \

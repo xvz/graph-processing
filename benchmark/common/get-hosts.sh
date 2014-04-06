@@ -17,15 +17,15 @@
 hostname=$(hostname)
 
 case ${hostname} in
-    "cloud0") name=cloud; nodes=4;;
-    "cld0") name=cld; nodes=8;;
-    "cw0") name=cw; nodes=16;;
-    "cx0") name=cx; nodes=32;;
-    "cy0") name=cy; nodes=64;;
-    "cz0") name=cz; nodes=128;;
-    "YBOX") name=YBOX; nodes=-1;;    # for testing on a single machine
+    "cloud0") name=cloud; machines=4;;
+    "cld0") name=cld; machines=8;;
+    "cw0") name=cw; machines=16;;
+    "cx0") name=cx; machines=32;;
+    "cy0") name=cy; machines=64;;
+    "cz0") name=cz; machines=128;;
+    "YBOX") name=YBOX; machines=-1;;    # for testing on a single machine
     *) echo "Invalid hostname"; exit -1;;
 esac
 
-# Note: when testing on a single machine, setting nodes to -1
+# Note: when testing on a single machine, setting machines to -1
 # will prevent bench-init and bench-finish from doing anything.

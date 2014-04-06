@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 input-graph workers gps-mode source-vertex"
+    echo "usage: $0 input-graph machines gps-mode source-vertex"
     echo ""
     echo "gps-mode: 0 for normal (no lalp, no dynamic repartitioning)"
     echo "          1 for LALP"
@@ -16,8 +16,8 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/gps/output/
 inputgraph=$(basename $1)
 
-# nodes should be number of EC2 instances
-nodes=$2
+# machines should be number of EC2 instances
+machines=$2
 
 # NOTE: we can only use LALP for SSSP when ALL edge weights are the
 # same for the entire graph. In our case, all edge weights are 1.
@@ -33,7 +33,7 @@ esac
 src=$4
 
 ## log names
-logname=sssp_${inputgraph}_${nodes}_${mode}_"$(date +%Y%m%d-%H%M%S)"
+logname=sssp_${inputgraph}_${machines}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 
@@ -44,7 +44,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 # This SSSP assigns edge weight of 1 to all edges, without using
 # the boolean trick of SingleSourceAllVerticesShortestPathVertex.
 # Input graph must not have edge weights.
-./start-nodes.sh ${nodes} quick-start \
+./start-nodes.sh ${machines} quick-start \
     ${modeflag} \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \

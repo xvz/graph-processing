@@ -1,18 +1,18 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 workers runs"
+    echo "usage: $0 machines runs"
     echo ""
-    echo "workers: 4, 8, 16, 32, 64, or 128"
+    echo "machines: 4, 8, 16, 32, 64, or 128"
     exit -1
 fi
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-WORKERS=$1
+MACHINES=$1
 RUNS=$2
 
-case ${WORKERS} in
+case ${MACHINES} in
     4)   GRAPHS=(amazon google patents);
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
@@ -25,7 +25,7 @@ case ${WORKERS} in
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;
-    *) echo "Invalid workers"; exit -1;;
+    *) echo "Invalid machines"; exit -1;;
 esac
 
 
@@ -34,7 +34,7 @@ esac
 ##################
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./premizan.sh "${graph}.txt" ${WORKERS} 1
+        ./premizan.sh "${graph}.txt" ${MACHINES} 1
     done
 done
 
@@ -44,32 +44,32 @@ done
 # we split the algs up for clarity
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${graph}.txt" ${WORKERS} 0
+        ./pagerank.sh "${graph}.txt" ${MACHINES} 0
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}.txt" ${WORKERS} 0 ${SRC[$j]}
+        ./sssp.sh "${GRAPHS[$j]}.txt" ${MACHINES} 0 ${SRC[$j]}
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}.txt" ${WORKERS} 0
+        ./wcc.sh "${graph}.txt" ${MACHINES} 0
     done
 done
 
 # MST does not work (issues w/ aggregators + graph mutation in 0.1bu1)
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./mst.sh "${graph}-mst.txt" ${WORKERS} 0
+#        ./mst.sh "${graph}-mst.txt" ${MACHINES} 0
 #    done
 #done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}.txt" ${WORKERS} 0
+#        ./dimest.sh "${graph}.txt" ${MACHINES} 0
 #    done
 #done
 

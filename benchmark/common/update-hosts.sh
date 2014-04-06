@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Updates workers' /etc/hostname and /etc/hosts files and adds them to known_hosts.
+# Updates machines' /etc/hostname and /etc/hosts files and adds them to known_hosts.
 # Name changes take effect immediately---there is no need to reboot.
 #
 # NOTE: Ignore "unable to resolve host" messages (it's not an error)
@@ -10,7 +10,7 @@ source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
 # dummy command to add master to known_hosts
 ssh -o StrictHostKeyChecking=no $hostname "exit"
 
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     # update /etc/hosts
     scp -o StrictHostKeyChecking=no /etc/hosts ${name}${i}:/tmp/hosts && \
     ssh -o StrictHostKeyChecking=no ${name}${i} "sudo mv /tmp/hosts /etc/hosts" &

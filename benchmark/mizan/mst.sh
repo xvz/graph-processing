@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers migration-mode"
+    echo "usage: $0 input-graph machines migration-mode"
     echo ""
     echo "migration-mode: 0 for static (no dynamic migration)"
     echo "                1 for delayed migration"
@@ -17,7 +17,9 @@ source ../common/get-dirs.sh
 # output of algorithm is in /user/${USER}/mizan-output/
 inputgraph=$(basename $1)
 
-workers=$2    # workers can be > number of EC2 instances
+# we can have multiple workers per machine
+machines=$2
+workers=$(($machines * $MIZAN_WPM))
 
 mode=$3
 case ${mode} in
@@ -28,7 +30,7 @@ case ${mode} in
 esac
 
 ## log names
-logname=mst_${inputgraph}_${workers}_${mode}_"$(date +%Y%m%d-%H%M%S)"
+logname=mst_${inputgraph}_${machines}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 
 

@@ -26,9 +26,9 @@ source ./get-pem.sh
 MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
              | grep 'PublicIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g')
 
-#scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/giraph/logs/cw*.tar.gz ../results/giraph/${nodes} &
+#scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/giraph/logs/c*.tar.gz ../results/giraph/${nodes} &
 scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/giraph/logs/*.tar.gz ../results/giraph/${nodes} &
 #scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/gps/logs/*.tar.gz ../results/gps/${nodes} &
 #scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/graphlab/logs/*.tar.gz  ../results/graphlab/${nodes} &
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/mizan/logs/*.tar.gz ../results/mizan/${nodes} &
+#scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_IP}:~/benchmark/mizan/logs/*.tar.gz ../results/mizan/${nodes} &
 wait

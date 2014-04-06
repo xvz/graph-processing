@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Finish data logging/collection at the master and all workers.
+# Finish data logging/collection at the master and all worker machines.
 
 if [ $# -ne 1 ]; then
     echo "usage: $0 log-name-prefix"
@@ -12,7 +12,7 @@ source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
 logname=$1
 dir=$PWD
 
-for ((i = 0; i <= ${nodes}; i++)); do
+for ((i = 0; i <= ${machines}; i++)); do
     nbtfile=${logname}_${i}_nbt.txt   # network bytes total
 
     # 1. Change to the same directory as master.
@@ -25,8 +25,8 @@ for ((i = 0; i <= ${nodes}; i++)); do
 done
 wait
 
-# get workers' files in parallel, with compression to speed things up
-for ((i = 1; i <= ${nodes}; i++)); do
+# get worker machines' files in parallel, with compression to speed things up
+for ((i = 1; i <= ${machines}; i++)); do
     rsync -az ubuntu@${name}${i}:"$dir"/logs/${logname}_${i}_*.txt ./logs/ &
 done
 wait

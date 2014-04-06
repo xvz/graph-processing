@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 4 ]; then
-    echo "usage: $0 input-graph workers engine-mode source-vertex"
+    echo "usage: $0 input-graph machines engine-mode source-vertex"
     echo ""
     echo "engine-mode: 0 for synchronous engine"
     echo "             1 for asynchronous engine"
@@ -18,7 +18,7 @@ hadoop dfs -rmr "$outputdir" || true
 
 hdfspath=$(grep hdfs "$HADOOP_DIR"/conf/core-site.xml | sed -e 's/.*<value>//' -e 's@</value>.*@@')
 
-workers=$2
+machines=$2
 
 mode=$3
 case ${mode} in
@@ -30,7 +30,7 @@ esac
 src=$4
 
 ## log names
-logname=sssp_${inputgraph}_${workers}_${mode}_"$(date +%Y%m%d-%H%M%S)"
+logname=sssp_${inputgraph}_${machines}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 
@@ -38,7 +38,7 @@ logfile=${logname}_time.txt
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-mpiexec -f ./machines -n ${workers} \
+mpiexec -f ./machines -n ${machines} \
     "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/sssp \
     --source ${src} \
     --directed 1 \

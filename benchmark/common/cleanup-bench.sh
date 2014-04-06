@@ -5,11 +5,11 @@
 #
 # Alternatively, one can run bench-finish by passing in
 # the correct log name prefix to clean things up and get
-# the workers' (incomplete) logs.
+# the worker machines' (incomplete) logs.
 
 source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
 
-for ((i = 0; i <= ${nodes}; i++)); do
+for ((i = 0; i <= ${machines}; i++)); do
     ssh ${name}${i} "kill \$(pgrep sar) & kill \$(pgrep free)" &
 done
 wait

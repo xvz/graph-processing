@@ -1,21 +1,26 @@
 #!/bin/bash -e
 
 # A modified version of master-scripts/start_gps_nodes.sh made friendlier
-# for automation. This incorporates scripts/start_gps_node.sh, so workers
-# no longer need to be updated with that script. HDFS output paths,
+# for automation. This incorporates scripts/start_gps_node.sh, so worker
+# machines no longer need to be updated with that script. HDFS output paths,
 # log paths, etc. remain unchanged.
 #
-# Slaves are started asynchronously, which is faster. This script (i.e.,
-# the master) waits until all slaves are done computations before exiting,
-# making it either to script benchmarks.
+# Note that each machine can have *multiple* workers. Hence, we refer to
+# physical machines as "machines" and workers as "workers" or "slaves".
 #
-# The number of workers MUST match the number of machines specified
-# in BOTH the slaves and machine config file. # of workers argument is
-# only used in naming the output files. It is otherwise IGNORED:
+# Workers are started asynchronously, which is faster. This script (i.e.,
+# the master) waits until all workers are done computations before exiting,
+# making it either to script benchmarks. (Although a sleep delay is still
+# required---see the batch benching scripts.)
 #
-#  >> If # workers < # specified machines, we start # of specified machines.
-#     (Otherwise, GPS would hang waiting for the extra workers).
-#  >> If # workers > # specified machines, we start # of specified machines.
+# Because of how GPS behaves, the # of workers argument is actually IGNORED.
+# Instead, we use # of workers specificed in slaves/machine config file.
+# Specifically:
+#
+#  >> If argument < # of actual workers, we start # of actual workers.
+#     (Otherwise, GPS will hang waiting for the extra workers)
+#  >> If argument > # of actual workers, we start # of actual workers.
+#     (Because no ports are specified for extra non-existent workers)
 #
 # To change max JVM heap size for GPS workers, change XMX_SIZE below.
 
@@ -25,7 +30,7 @@ XMX_SIZE=14500M         # max heap size (workers)
 
 # To use this, pass in arguments like:
 #
-#./start-nodes.sh ${nodes} quick-start \
+#./start-nodes.sh ${workers} quick-start \
 #    -ifs /user/${USER}/input/${inputgraph} \
 #    -hcf "$HADOOP_DIR"/conf/core-site.xml \
 #    -jc gps.examples.pagerank.PageRankVertex###JobConfiguration \
@@ -36,7 +41,7 @@ XMX_SIZE=14500M         # max heap size (workers)
 # Note that GPS's default start script requires 3rd argument
 # and onwards to be double-quoted, i.e.:
 #
-#./master-scripts/start_gps_nodes.sh ${nodes} quick-start \
+#./master-scripts/start_gps_nodes.sh ${workers} quick-start \
 #    "-ifs /user/${USER}/input/${inputgraph} \
 #     -hcf \"$HADOOP_DIR\"/conf/core-site.xml \
 #     -jc gps.examples.pagerank.PageRankVertex###JobConfiguration \

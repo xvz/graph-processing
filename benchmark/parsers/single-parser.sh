@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 # This parses a single experiment's logs, extracting
-# running time, total time, min/max/avg per-worker memory usage,
-# and total network I/O across workers.
+# running time, total time, min/max/avg per-machine memory usage,
+# and total network I/O across machines.
 #
 # Log files need not be in the working directory ($PWD).
 
@@ -58,9 +58,9 @@ if [[ ! -f "${logname}_time.txt" ]]; then
     exit -1
 fi
 
-nodes=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
+machines=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
 
-for (( i = 0; i <= $nodes; i++ )); do
+for (( i = 0; i <= ${machines}; i++ )); do
     # some files are critical, others are not
     if [[ ! -f "${logname}_${i}_mem.txt" ]]; then
         echo "  ERROR: ${logname}_${i}_mem.txt missing!"
@@ -128,7 +128,7 @@ fi
 # no match = 0 files
 shopt -s nullglob
 
-# iterate over logs from each WORKER node (i.e., exclude master)
+# iterate over logs from each WORKER machine (i.e., exclude master)
 FILES=(${logname}_{[0-9][0-9],[1-9]}_mem.txt)
 
 mem=""
@@ -150,7 +150,7 @@ mem_avg=$(echo "$mem" | perl -ne 'use List::Util qw(sum); @arr = split(" ", $_);
 ###########################
 # Generic network parsing
 ###########################
-# iterate over logs from each WORKER node (i.e., exclude master)
+# iterate over logs from each WORKER machine (i.e., exclude master)
 FILES=(${logname}_{[0-9][0-9],[1-9]}_nbt.txt)
 
 # running totals
@@ -179,7 +179,7 @@ eth_sent=$(perl -e "print( ${ethsentsum}/(1024*1024*1024) )")
 # Output results
 ##################
 echo "-------------------------------------------------------------------------------------------------"
-echo " Total time |   IO time |  Running time |  Mem per worker (min/max/avg)  |  Net I/O (recv/sent)  "
+echo " Total time |   IO time |  Running time |  Mem per machine (min/max/avg) |  Net I/O (recv/sent)  "
 echo "------------+-----------+---------------+--------------------------------+-----------------------"
 printf "  %8.2fs | %8.2fs |     %8.2fs | %7.3f / %7.3f / %7.3f GB | %7.3f / %7.3f GB \n" \
     $time_tot $time_io $time_run \

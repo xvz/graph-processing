@@ -1,18 +1,18 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 workers runs"
+    echo "usage: $0 machines runs"
     echo ""
-    echo "workers: 4, 8, 16, 32, 64, or 128"
+    echo "machines: 4, 8, 16, 32, 64, or 128"
     exit -1
 fi
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-WORKERS=$1
+MACHINES=$1
 RUNS=$2
 
-case ${WORKERS} in
+case ${MACHINES} in
     4)   GRAPHS=(amazon google patents);
          TOL=(0.408805 2.306985 2.220446E-16);   # for PageRank
          SRC=(0 0 6009554);;  # for SSSP
@@ -31,7 +31,7 @@ case ${WORKERS} in
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
          TOL=(0.392500 0.011872 75.448252);
          SRC=(0 1 3 0 0);;
-    *) echo "Invalid workers"; exit -1;;
+    *) echo "Invalid machines"; exit -1;;
 esac
 
 #################
@@ -40,25 +40,25 @@ esac
 # we split the algs up for simplicity
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 0 ${TOL[$j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 0 ${TOL[$j]}
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 0 ${SRC[$j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 0 ${SRC[$j]}
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}-adj.txt" ${WORKERS}
+        ./wcc.sh "${graph}-adj.txt" ${MACHINES}
     done
 done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}-adj.txt" ${WORKERS}
+#        ./dimest.sh "${graph}-adj.txt" ${MACHINES}
 #    done
 #done
 
@@ -67,13 +67,13 @@ done
 #################
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 1 ${TOL[$j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
     done
 done
 
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${WORKERS} 1 ${SRC[$j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
     done
 done
 

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers edge-type"
+    echo "usage: $0 input-graph machines edge-type"
     echo ""
     echo "edge-type: 0 for byte array edges"
     echo "           1 for hash map edges"
@@ -16,9 +16,10 @@ inputgraph=$(basename $1)
 outputdir=/user/${USER}/giraph-output/
 hadoop dfs -rmr "$outputdir" || true
 
-# workers can be > number of EC2 instances, but this is inefficient!
-# use more Giraph threads instead (e.g., -Dgiraph.numComputeThreads=N)
-workers=$2
+# Technically this is the number of "workers", which can be more
+# than the number of machines. However, using multiple workers per
+# machine is inefficient! Use more Giraph threads instead (see below).
+machines=$2
 
 edgetype=$3
 case ${edgetype} in
@@ -29,7 +30,7 @@ case ${edgetype} in
 esac
 
 ## log names
-logname=mst_${inputgraph}_${workers}_${edgetype}_"$(date +%Y%m%d-%H%M%S)"
+logname=mst_${inputgraph}_${machines}_${edgetype}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # running time
 
 
@@ -49,7 +50,7 @@ hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop
     -vip /user/${USER}/input/${inputgraph} \
     -of org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexOutputFormat \
     -op "$outputdir" \
-    -w ${workers} 2>&1 | tee -a ./logs/${logfile}
+    -w ${machines} 2>&1 | tee -a ./logs/${logfile}
 
 # -wc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexWorkerContext
 # see giraph-core/.../utils/ConfigurationUtils.java for command line opts (or -h flag to GiraphRunner)

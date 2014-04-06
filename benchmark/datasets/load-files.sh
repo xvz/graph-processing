@@ -13,14 +13,14 @@ source "$commondir"/get-dirs.sh
 if [ $# -eq 0 ]; then
     source "$commondir"/get-hosts.sh
 
-    case ${nodes} in
+    case ${machines} in
         4) size=1;;
         8) size=1;;
         16) size=2;;
         32) size=2;;
         64) size=3;;
         128) size=3;;
-        *) echo "Invalid number of workers"; exit -1;;
+        *) echo "Invalid number of machines"; exit -1;;
     esac
 else
     size=$1

@@ -5,7 +5,7 @@
 
 # partition type is either 1 (hash) or 2 (range)
 if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers partition-type"
+    echo "usage: $0 input-graph machines partition-type"
     echo ""
     echo "partition-type: 1 for hash partitioning"
     echo "                2 for range partitioning"
@@ -23,7 +23,12 @@ scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 #  (or _mrange_${workers} if using range partitioning)
 inputgraph=$(basename $1)
 
-logname=premizan_${inputgraph}_${2}_${3}_"$(date +%Y%m%d-%H%M%S)"
+# we can have multiple workers per machine
+machines=$2
+workers=$(($machines * $MIZAN_WPM))
+
+## log names
+logname=premizan_${inputgraph}_${machines}_${3}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt
 
 ## start logging memory + network usage
@@ -36,8 +41,8 @@ tstart="$(date +%s%N)"
 
 # taken from preMizan/preMizan.sh
 case $3 in
-    [1]*) ./hadoop_run_modhash.sh $inputgraph $2 true 2>&1 | tee -a "$scriptdir"/logs/${logfile};;
-    [2]*) ./hadoop_run_range.sh $inputgraph $2 true 2>&1 | tee -a "$scriptdir"/logs/${logfile};;
+    [1]*) ./hadoop_run_modhash.sh $inputgraph ${workers} true 2>&1 | tee -a "$scriptdir"/logs/${logfile};;
+    [2]*) ./hadoop_run_range.sh $inputgraph ${workers} true 2>&1 | tee -a "$scriptdir"/logs/${logfile};;
     *) echo "Error: invalid partition type!";;
 esac
 

@@ -34,9 +34,9 @@ for file in "${FILES[@]}"; do
         iserr=1
     fi
 
-    nodes=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
+    machines=$(echo "$logname" | sed 's/_/ /g' | awk '{print $3}')
 
-    for (( i = 0; i <= $nodes; i++ )); do
+    for (( i = 0; i <= ${machines}; i++ )); do
         if [[ ! -f "${logname}_${i}_mem.txt" ]]; then
             err="$err  ERROR: ${logname}_${i}_mem.txt missing!\n"
             iserr=1

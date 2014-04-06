@@ -23,7 +23,7 @@ cd "$HADOOP_DIR/conf/"
 echo "$hostname" > masters
 
 rm -f slaves
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     echo "${name}${i}" >> slaves
 done
 
@@ -121,9 +121,9 @@ echo "<?xml version=\"1.0\"?>
 </configuration>" > mapred-site.xml
 
 
-# copy configs to workers
-# (also adds workers to known_hosts, if they're not there already)
-for ((i = 1; i <= ${nodes}; i++)); do
+# copy configs to worker machines
+# (also adds machines to known_hosts, if they're not there already)
+for ((i = 1; i <= ${machines}; i++)); do
     rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./* ${name}${i}:"$HADOOP_DIR"/conf/ &
 done
 wait

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 3 ]; then
-    echo "usage: $0 input-graph workers gps-mode"
+    echo "usage: $0 input-graph machines gps-mode"
     echo ""
     echo "gps-mode: 0 for normal (no lalp, no dynamic repartitioning)"
     echo "          1 for LALP"
@@ -16,8 +16,8 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/gps/output/
 inputgraph=$(basename $1)
 
-# nodes should be number of EC2 instances
-nodes=$2
+# machines should be number of EC2 instances
+machines=$2
 
 mode=$3
 case ${mode} in
@@ -29,7 +29,7 @@ case ${mode} in
 esac
 
 ## log names
-logname=dimest_${inputgraph}_${nodes}_${mode}_"$(date +%Y%m%d-%H%M%S)"
+logname=dimest_${inputgraph}_${machines}_${mode}_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 
@@ -38,7 +38,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 ## start algorithm run
 # max controls max number of supersteps
-./start-nodes.sh ${nodes} quick-start \
+./start-nodes.sh ${machines} quick-start \
     ${modeflag} \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \

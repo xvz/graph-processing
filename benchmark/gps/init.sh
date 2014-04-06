@@ -2,8 +2,8 @@
 
 # Initiate GPS by creating slaves and machine config files.
 #
-# NOTE: "slaves" is NOT placed in master-script/, because we
-# use our own scripts for starting/stopping GPS nodes.
+# NOTE: "slaves" is NOT placed in master-script/, because we use
+# our own scripts for starting/stopping GPS workers.
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ../common/get-hosts.sh
@@ -15,7 +15,7 @@ rm -f machine.cfg
 GPS_CPUS=1
 
 # create slaves file
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     for ((j = 1; j <= ${GPS_CPUS}; j++)); do
         echo "${name}${i}" >> slaves
     done
@@ -25,7 +25,7 @@ done
 echo "-1 ${name}0 55000" >> machine.cfg   # master is special
 
 w_id=0    # worker counter (needed if workers per machine > 1)
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     # to get multiple workers per machine, use the same name
     # but give it a unique id and port
     for ((j = 1; j <= ${GPS_CPUS}; j++)); do
@@ -42,7 +42,7 @@ hadoop dfs -put machine.cfg /user/${USER}/gps-machine-config/
 
 # make GPS log directories if needed
 if [[ ! -d "$GPS_LOG_DIR" ]]; then mkdir -p "$GPS_LOG_DIR"; fi
-for ((i = 1; i <= ${nodes}; i++)); do
+for ((i = 1; i <= ${machines}; i++)); do
     ssh ${name}${i} "if [[ ! -d \"$GPS_LOG_DIR\" ]]; then mkdir -p \"$GPS_LOG_DIR\"; fi" &
 done
 wait

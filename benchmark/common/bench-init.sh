@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Initiate data logging/collection at the master and all workers.
+# Initiate data logging/collection at the master and all worker machines.
 
 if [ $# -ne 1 ]; then
     echo "usage: $0 log-name-prefix"
@@ -12,7 +12,7 @@ source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
 logname=$1
 dir=$PWD
 
-for ((i = 0; i <= ${nodes}; i++)); do
+for ((i = 0; i <= ${machines}; i++)); do
     cpufile=${logname}_${i}_cpu.txt   # cpu usage
     netfile=${logname}_${i}_net.txt   # network usage
     memfile=${logname}_${i}_mem.txt   # memory usage

@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ $# -ne 2 ]; then
-    echo "usage: $0 input-graph workers"
+    echo "usage: $0 input-graph machines"
     exit -1
 fi
 
@@ -11,12 +11,12 @@ source ../common/get-dirs.sh
 # output is in /user/${USER}/gps/output/
 inputgraph=$(basename $1)
 
-# nodes should be number of EC2 instances
-nodes=$2
+# machines should be number of EC2 instances
+machines=$2
 
 ## log names
 # MST can only run in "normal" mode (LALP & dynamic repartitioning cannot be used)
-logname=mst_${inputgraph}_${nodes}_0_"$(date +%Y%m%d-%H%M%S)"
+logname=mst_${inputgraph}_${machines}_0_"$(date +%Y%m%d-%H%M%S)"
 logfile=${logname}_time.txt       # GPS statistics (incl running time)
 
 
@@ -30,7 +30,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 # edgesatselfpjonebyone uses "storing edges at subvertices" (SEAS)
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
 # edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
-./start-nodes.sh ${nodes} quick-start \
+./start-nodes.sh ${machines} quick-start \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \
     -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration \
