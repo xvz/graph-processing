@@ -33,11 +33,10 @@ MASTER_ID=$(aws ec2 describe-spot-instance-requests --filter "Name=tag:Name,Valu
 WORKER_IDS=($(aws ec2 describe-spot-instance-requests --filter "Name=tag:Name,Values=${name}" \
                | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g' | tr '\n' ' '))
 
-aws ec2 create-tags --resources "$MASTER_ID" --tags Key=Name,Value=${name}0 &
-aws ec2 create-tags --resources "${WORKER_IDS[@]}" --tags Key=Name,Value=${name} &
+aws ec2 create-tags --resources "$MASTER_ID" --tags Key=Name,Value=${name}0
+aws ec2 create-tags --resources "${WORKER_IDS[@]}" --tags Key=Name,Value=${name}
 
 MASTER_VOL=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
               | grep "VolumeId" | awk '{print $2}' | sed -e 's/",*//g')
 
-aws ec2 create-tags --resources "$MASTER_VOL" --tags Key=Name,Value=${name}0 &
-wait
+aws ec2 create-tags --resources "$MASTER_VOL" --tags Key=Name,Value=${name}0
