@@ -39,7 +39,7 @@ logfile=${logname}_time.txt       # Mizan stats (incl. running time)
 ../common/bench-init.sh ${logname}
 
 ## start algorithm run
-mpirun -f machines -np ${workers} "$MIZAN_DIR"/Release/Mizan-0.1b \
+mpirun -f slaves -np ${workers} "$MIZAN_DIR"/Release/Mizan-0.1b \
     -a 3 \
     -s 30 \
     -u ${USER} \
