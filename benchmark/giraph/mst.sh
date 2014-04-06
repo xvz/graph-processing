@@ -43,7 +43,9 @@ logfile=${logname}_time.txt       # running time
 # Giraph seems to ignore any mapred.task.timeout specified in Hadoop's mapred-site.xml
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     ${edgeclass} \
-    -Dgiraph.numComputeThreads=${GIRAPH_COMPUTE_THREADS} \
+    -Dgiraph.numComputeThreads=${GIRAPH_THREADS} \
+    -Dgiraph.numInputThreads=${GIRAPH_THREADS} \
+    -Dgiraph.numOutputThreads=${GIRAPH_THREADS} \
     -Dmapred.task.timeout=0 \
     org.apache.giraph.examples.MinimumSpanningTreeVertex \
     -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute \

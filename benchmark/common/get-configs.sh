@@ -15,8 +15,8 @@ GPS_WORKER_XMX=7250
 GPS_MASTER_XMX=4096
 
 
-# number of compute threads per machine
-GIRAPH_COMPUTE_THREADS=4
+# number of compute/input/output threads per machine
+GIRAPH_THREADS=2
 
 # number of workers per machine (WPM)
 GPS_WPM=2

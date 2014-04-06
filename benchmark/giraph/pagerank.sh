@@ -41,7 +41,9 @@ logfile=${logname}_time.txt       # running time
 ## start algorithm run
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     ${edgeclass} \
-    -Dgiraph.numComputeThreads=${GIRAPH_COMPUTE_THREADS} \
+    -Dgiraph.numComputeThreads=${GIRAPH_THREADS} \
+    -Dgiraph.numInputThreads=${GIRAPH_THREADS} \
+    -Dgiraph.numOutputThreads=${GIRAPH_THREADS} \
     org.apache.giraph.examples.SimplePageRankVertex \
     -c org.apache.giraph.combiner.DoubleSumCombiner \
     -ca SimplePageRankVertex.maxSS=30 \
