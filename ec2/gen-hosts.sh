@@ -1,32 +1,32 @@
 #!/bin/bash -e
 
-# Obtains the private IP addresses of all workers, creates
+# Obtains private IP addresses of all worker machines, creates
 # a hosts file and updates the master with a correct hostname,
 # /etc/hostname, and /etc/hosts file.
 #
 # NOTE: This expects the master to be tagged with the name
-# "cw0" or "cx0", etc. and the workers to be ALL tagged with
-# the name "cw" or "cx", etc.
+# "cw0" or "cx0", etc. and the worker machines to be ALL tagged
+# with the name "cw" or "cx", etc.
 #
-# If workers are spot instances, ensure the actual instances
+# If any machines are spot instances, ensure actual instances
 # are tagged correctly (by, e.g., using ./assign-tags.sh)
 
 if [ $# -lt 1 ]; then
-    echo "usage: $0 workers"
+    echo "usage: $0 machines"
     echo ""
-    echo "workers: 4, 8, 16, 32, 64, or 128"
+    echo "machines: 4, 8, 16, 32, 64, or 128"
     exit -1
 fi
 
-WORKERS=$1
+NUM_MACHINES=$1
 
-case ${WORKERS} in
-    4)   name=cloud; nodes=4;;
-    8)   name=cld; nodes=8;;
-    16)  name=cw; nodes=16;;
-    32)  name=cx; nodes=32;;
-    64)  name=cy; nodes=64;;
-    128) name=cz; nodes=128;;
+case ${NUM_MACHINES} in
+    4)   name=cloud; machines=4;;
+    8)   name=cld; machines=8;;
+    16)  name=cw; machines=16;;
+    32)  name=cx; machines=32;;
+    64)  name=cy; machines=64;;
+    128) name=cz; machines=128;;
     *) echo "Invalid option!"; exit -1;;
 esac
 
@@ -41,7 +41,7 @@ source ./get-pem.sh
 MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
              | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' | uniq)
 
-# filter only for workers (skipping the master)
+# filter only for worker machines (skipping the master)
 WORKER_IPS=($(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}" \
                | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' \
                | uniq | sort -t . -nk1,1 -nk2,2 -nk3,3 -nk4,4))
@@ -60,13 +60,13 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 ff02::3 ip6-allhosts
-" > hosts_${nodes}
+" > hosts_${machines}
 
 # this stuff is what we care about
-echo "${MASTER_IP} ${name}0" | tee -a hosts_${nodes}
+echo "${MASTER_IP} ${name}0" | tee -a hosts_${machines}
 
 for i in "${!WORKER_IPS[@]}"; do
-    echo "${WORKER_IPS[$i]} ${name}$((i+1))" | tee -a hosts_${nodes}
+    echo "${WORKER_IPS[$i]} ${name}$((i+1))" | tee -a hosts_${machines}
 done
 
 
@@ -79,7 +79,7 @@ MASTER_PUBIP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}
 echo ""
 echo "Copying /etc/hosts to master..."
 # update /etc/hosts (a bit hacky as scp doesn't have sudo)
-scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ./hosts_${nodes} ubuntu@${MASTER_PUBIP}:/tmp/hosts && \
+scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ./hosts_${machines} ubuntu@${MASTER_PUBIP}:/tmp/hosts && \
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" ubuntu@${MASTER_PUBIP} "sudo mv /tmp/hosts /etc/hosts"
 
 echo "Updating hostname..."
@@ -87,7 +87,7 @@ echo "Updating hostname..."
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$PEM_KEY" -t ubuntu@${MASTER_PUBIP} \
     "echo \"${name}0\" > /tmp/hostname && sudo mv /tmp/hostname /etc/hostname; sudo hostname ${name}0"
 
-rm -f hosts_${nodes}
+rm -f hosts_${machines}
 
 echo ""
 echo "OK. (Ignore 'unable to resolve host' messages)"

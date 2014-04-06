@@ -15,12 +15,12 @@ echo "  6) cz0 (128)"
 read -p ">> " response
 
 case ${response} in
-    1) name=cloud; nodes=4;;
-    2) name=cld; nodes=8;;
-    3) name=cw; nodes=16;;
-    4) name=cx; nodes=32;;
-    5) name=cy; nodes=64;;
-    6) name=cz; nodes=128;;
+    1) name=cloud; machines=4;;
+    2) name=cld; machines=8;;
+    3) name=cw; machines=16;;
+    4) name=cx; machines=32;;
+    5) name=cy; machines=64;;
+    6) name=cz; machines=128;;
     *) echo "Invalid option!"; exit -1;;
 esac
 
