@@ -30,6 +30,7 @@ logfile=${logname}_time.txt       # running time
 # we use default byte array edges (better performance)
 # NOTE: this outputs no data to HDFS
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
+    -Dgiraph.numComputeThreads=4 \
     org.apache.giraph.examples.PageRankTolFinderVertex \
     -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute \
     -c org.apache.giraph.combiner.DoubleSumCombiner \

@@ -12,14 +12,26 @@ source ../common/get-dirs.sh
 rm -f slaves
 rm -f machine.cfg
 
+GPS_CPUS=1
+
 # create slaves file
 for ((i = 1; i <= ${nodes}; i++)); do
-    echo "${name}${i}" >> slaves
+    for ((j = 1; j <= ${GPS_CPUS}; j++)); do
+        echo "${name}${i}" >> slaves
+    done
 done
 
 # create machine config file
-for ((i = 0; i <= ${nodes}; i++)); do
-    echo "$((-1 + ${i})) ${name}${i} $((55000 + ${i}))" >> machine.cfg
+echo "-1 ${name}0 55000" >> machine.cfg   # master is special
+
+w_id=0    # worker counter (needed if workers per machine > 1)
+for ((i = 1; i <= ${nodes}; i++)); do
+    # to get multiple workers per machine, use the same name
+    # but give it a unique id and port
+    for ((j = 1; j <= ${GPS_CPUS}; j++)); do
+        echo "${w_id} ${name}${i} $((55001 + ${w_id}))" >> machine.cfg
+        w_id=$((w_id+1))
+    done
 done
 
 # upload machine config file to HDFS

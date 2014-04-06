@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # A modified version of master-scripts/start_gps_nodes.sh made friendlier
 # for automation. This incorporates scripts/start_gps_node.sh, so workers
@@ -19,8 +19,8 @@
 #
 # To change max JVM heap size for GPS workers, change XMX_SIZE below.
 
-MASTER_XMX_SIZE=2048M   # max heap size (master)
-XMX_SIZE=7000M          # max heap size (workers)
+MASTER_XMX_SIZE=4096M   # max heap size (master)
+XMX_SIZE=14500M         # max heap size (workers)
 
 
 # To use this, pass in arguments like:
@@ -91,11 +91,10 @@ while read slave || [ -n "$slave" ]; do
 
     ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp \"$OUTPUT_DIR\"/${2}-output-${i}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOG_DIR\"/${2}-machine${i}-output.txt" &
 
-    ((i++))
+    i=$((i+1))
     # no need to check if # workers < # slaves... GPS will hang in that situation
 done < "$(dirname "${BASH_SOURCE[0]}")"/slaves
 
 # ...and wait until computation completes
-# NOTE: this script must not have -e, else it will fail while launching slaves
 wait
 echo "Computation complete!"

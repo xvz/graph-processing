@@ -41,6 +41,7 @@ logfile=${logname}_time.txt       # running time
 ## start algorithm run
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     ${edgeclass} \
+    -Dgiraph.numComputeThreads=4 \
     org.apache.giraph.examples.SimpleShortestPathsVertex \
     -ca SimpleShortestPathsVertex.sourceId=${src} \
     -vif org.apache.giraph.examples.SimpleShortestPathsInputFormat \

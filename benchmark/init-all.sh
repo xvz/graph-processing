@@ -10,10 +10,7 @@
 #   2. Correct JVM Xmx size set for Giraph (see ./hadoop/init.sh)
 #      Correct JVM Xmx size set for GPS (see ./gps/start-nodes.sh)
 #
-#   3. No stale fingerprints in known_hosts.
-#
 # For (1), see ../ec2/gen-hosts.sh
-# For (3), delete ~/.ssh/known_hosts for both "ubuntu" and "su"
 #
 # To check connectivity, use ./common/ssh-check.sh
 #
@@ -23,6 +20,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 source ./common/get-hosts.sh
 source ./common/get-dirs.sh
 
+# remove known_hosts (kills stale fingerprints)
+echo "Removing known_hosts..."
+rm -f ~/.ssh/known_hosts
 
 # update workers' hostnames
 echo "Updating worker hosts..."
