@@ -70,7 +70,9 @@ if [ $# -lt 3 ]; then
     exit -1
 fi
 
-source "$(dirname "${BASH_SOURCE[0]}")"/../common/get-dirs.sh
+commondir=$(dirname "${BASH_SOURCE[0]}")/../common
+source "$commondir"/get-dirs.sh
+source "$commondir"/get-configs.sh
 
 
 OUTPUT_DIR=/user/${USER}/gps/output/
