@@ -10,9 +10,9 @@
 GIRAPH_XMX=14500M
 
 # maximum JVM heap size for GPS (per WORKER, not machine)
-GPS_WORKER_XMX=7250
+GPS_WORKER_XMX=7250M
 # max JVM heap size for GPS master
-GPS_MASTER_XMX=4096
+GPS_MASTER_XMX=4096M
 
 
 # number of compute/input/output threads per machine
