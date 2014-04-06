@@ -22,10 +22,7 @@
 #  >> If argument > # of actual workers, we start # of actual workers.
 #     (Because no ports are specified for extra non-existent workers)
 #
-# To change max JVM heap size for GPS workers, change XMX_SIZE below.
-
-MASTER_XMX_SIZE=4096M   # max heap size (master)
-XMX_SIZE=14500M         # max heap size (workers)
+# To change max JVM heap size for GPS workers, se ../common/get-configs.sh.
 
 
 # To use this, pass in arguments like:
@@ -80,13 +77,13 @@ OUTPUT_DIR=/user/${USER}/gps/output/
 
 ## start master
 MASTER_GPS_ID=-1
-MASTER_XMS_SIZE=50M     # initial heap size (master)
+GPS_MASTER_XMS=50M     # initial heap size (master)
 
 echo "Starting GPS master -1"
-"$JAVA_DIR"/bin/java -Xincgc -Xms${MASTER_XMS_SIZE} -Xmx${MASTER_XMX_SIZE} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOG_DIR"/${2}-machine${i}-output.txt &
+"$JAVA_DIR"/bin/java -Xincgc -Xms${GPS_MASTER_XMS} -Xmx${GPS_MASTER_XMX} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOG_DIR"/${2}-machine${i}-output.txt &
 
 ## start slaves asynchronously (faster this way)
-XMS_SIZE=256M   # initial heap size (workers)
+GPS_WORKER_XMS=256M   # initial heap size (workers)
 
 # read-in effectively ensures # of workers never exceeds # of lines in "slaves"
 # the "|| ..." is a workaround in case the file doesn't end with a newline
@@ -94,7 +91,7 @@ i=0
 while read slave || [ -n "$slave" ]; do
     echo "Starting GPS worker ${i}"
 
-    ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${XMS_SIZE} -Xmx${XMX_SIZE} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp \"$OUTPUT_DIR\"/${2}-output-${i}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOG_DIR\"/${2}-machine${i}-output.txt" &
+    ssh $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${GPS_WORKER_XMS} -Xmx${GPS_WORKER_XMX} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${i} -ofp \"$OUTPUT_DIR\"/${2}-output-${i}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOG_DIR\"/${2}-machine${i}-output.txt" &
 
     i=$((i+1))
     # no need to check if # workers < # slaves... GPS will hang in that situation

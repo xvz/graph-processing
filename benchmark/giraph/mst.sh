@@ -9,6 +9,7 @@ if [ $# -ne 3 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/giraph-output/
@@ -42,7 +43,7 @@ logfile=${logname}_time.txt       # running time
 # Giraph seems to ignore any mapred.task.timeout specified in Hadoop's mapred-site.xml
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
     ${edgeclass} \
-    -Dgiraph.numComputeThreads=4 \
+    -Dgiraph.numComputeThreads=${GIRAPH_COMPUTE_THREADS} \
     -Dmapred.task.timeout=0 \
     org.apache.giraph.examples.MinimumSpanningTreeVertex \
     -mc org.apache.giraph.examples.MinimumSpanningTreeVertex\$MinimumSpanningTreeVertexMasterCompute \

@@ -4,17 +4,15 @@
 # and copying them to all worker machines.
 #
 # To change the max JVM heap size for Hadoop mappers
-# (which will only affect Giraph), change GIRAPH_XMX.
+# (which will only affect Giraph), see ./get-configs.sh.
 #
 # NOTE: if testing on a single machine (i.e., pseudo-distributed),
 # slaves will have to be edited manually.
 
-GIRAPH_XMX=14500M
-
-
 commondir=$(dirname "${BASH_SOURCE[0]}")/../common
 source "$commondir"/get-hosts.sh
 source "$commondir"/get-dirs.sh
+source "$commondir"/get-configs.sh
 
 cd "$HADOOP_DIR/conf/"
 

@@ -8,15 +8,14 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ../common/get-hosts.sh
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 rm -f slaves
 rm -f machine.cfg
 
-GPS_CPUS=1
-
 # create slaves file
 for ((i = 1; i <= ${machines}; i++)); do
-    for ((j = 1; j <= ${GPS_CPUS}; j++)); do
+    for ((j = 1; j <= ${GPS_WPM}; j++)); do
         echo "${name}${i}" >> slaves
     done
 done
@@ -28,7 +27,7 @@ w_id=0    # worker counter (needed if workers per machine > 1)
 for ((i = 1; i <= ${machines}; i++)); do
     # to get multiple workers per machine, use the same name
     # but give it a unique id and port
-    for ((j = 1; j <= ${GPS_CPUS}; j++)); do
+    for ((j = 1; j <= ${GPS_WPM}; j++)); do
         echo "${w_id} ${name}${i} $((55001 + ${w_id}))" >> machine.cfg
         w_id=$((w_id+1))
     done

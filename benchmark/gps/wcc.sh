@@ -11,6 +11,7 @@ if [ $# -ne 3 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/gps/output/
@@ -18,6 +19,7 @@ inputgraph=$(basename $1)
 
 # machines should be number of EC2 instances
 machines=$2
+workers=$(($machines * $GPS_WPM))
 
 mode=$3
 case ${mode} in
@@ -39,7 +41,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 ## start algorithm run
 # NOTE: numMaxIterations can be set but we don't set it
 # (to match Giraph and Mizan, neither of which use SS termination)
-./start-nodes.sh ${machines} quick-start \
+./start-nodes.sh ${workers} quick-start \
     ${modeflag} \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \

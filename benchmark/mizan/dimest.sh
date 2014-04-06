@@ -10,6 +10,7 @@ if [ $# -ne 3 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # place input into /user/${USER}/input/ (this is where preMizan looks)
 # output of preMizan is in /user/${USER}/m_output/mizan_${inputgraph}_mhash_${workers}/

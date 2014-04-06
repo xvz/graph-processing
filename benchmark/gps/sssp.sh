@@ -11,6 +11,7 @@ if [ $# -ne 4 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/gps/output/
@@ -18,6 +19,7 @@ inputgraph=$(basename $1)
 
 # machines should be number of EC2 instances
 machines=$2
+workers=$(($machines * $GPS_WPM))
 
 # NOTE: we can only use LALP for SSSP when ALL edge weights are the
 # same for the entire graph. In our case, all edge weights are 1.
@@ -44,7 +46,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 # This SSSP assigns edge weight of 1 to all edges, without using
 # the boolean trick of SingleSourceAllVerticesShortestPathVertex.
 # Input graph must not have edge weights.
-./start-nodes.sh ${machines} quick-start \
+./start-nodes.sh ${workers} quick-start \
     ${modeflag} \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \

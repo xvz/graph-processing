@@ -13,6 +13,7 @@ if [ $# -ne 3 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # absolute path to this script's location
 scriptdir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)

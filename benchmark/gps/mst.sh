@@ -6,6 +6,7 @@ if [ $# -ne 2 ]; then
 fi
 
 source ../common/get-dirs.sh
+source ../common/get-configs.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/gps/output/
@@ -13,6 +14,7 @@ inputgraph=$(basename $1)
 
 # machines should be number of EC2 instances
 machines=$2
+workers=$(($machines * $GPS_WPM))
 
 ## log names
 # MST can only run in "normal" mode (LALP & dynamic repartitioning cannot be used)
@@ -30,7 +32,7 @@ logfile=${logname}_time.txt       # GPS statistics (incl running time)
 # edgesatselfpjonebyone uses "storing edges at subvertices" (SEAS)
 #   -> "edge cleaning on demand" (ECOD) is enabled via flag
 # edgeshybridpjonebyone uses SEAS for few iterations then default... but not published
-./start-nodes.sh ${machines} quick-start \
+./start-nodes.sh ${workers} quick-start \
     -ifs /user/${USER}/input/${inputgraph} \
     -hcf "$HADOOP_DIR"/conf/core-site.xml \
     -jc gps.examples.mst.edgesatrootpjonebyone.JobConfiguration \

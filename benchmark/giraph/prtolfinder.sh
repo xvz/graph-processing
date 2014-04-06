@@ -7,6 +7,7 @@ fi
 
 source ../common/get-dirs.sh
 source ../common/get-hosts.sh
+source ../common/get-configs.sh
 
 # place input in /user/${USER}/input/
 # output is in /user/${USER}/giraph-output/
@@ -31,7 +32,7 @@ logfile=${logname}_time.txt       # running time
 # we use default byte array edges (better performance)
 # NOTE: this outputs no data to HDFS
 hadoop jar "$GIRAPH_DIR"/giraph-examples/target/giraph-examples-1.0.0-for-hadoop-1.0.2-jar-with-dependencies.jar org.apache.giraph.GiraphRunner \
-    -Dgiraph.numComputeThreads=4 \
+    -Dgiraph.numComputeThreads=${GIRAPH_COMPUTE_THREADS} \
     org.apache.giraph.examples.PageRankTolFinderVertex \
     -mc org.apache.giraph.examples.PageRankTolFinderVertex\$PageRankTolFinderVertexMasterCompute \
     -c org.apache.giraph.combiner.DoubleSumCombiner \
