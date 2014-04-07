@@ -15,11 +15,11 @@ RUNS=$2
 case ${MACHINES} in
     4)   GRAPHS=(amazon google patents);
          GRAPHS_MST=(amazon google patents);
-         GRAPHS_MST_HASH=GRAPHS_MST;
+         GRAPHS_MST_HASH=$GRAPHS_MST;
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
          GRAPHS_MST=(amazon google patents);
-         GRAPHS_MST_HASH=GRAPHS_MST;
+         GRAPHS_MST_HASH=$GRAPHS_MST;
          SRC=(0 0 6009554);;
     16)  GRAPHS=(livejournal orkut arabic twitter);
          GRAPHS_MST=(livejournal orkut arabic);
@@ -27,15 +27,15 @@ case ${MACHINES} in
          SRC=(0 1 3 0);;
     32)  GRAPHS=(livejournal orkut arabic twitter);
          GRAPHS_MST=(livejournal orkut arabic);
-         GRAPHS_MST_HASH=GRAPHS_MST;
+         GRAPHS_MST_HASH=$GRAPHS_MST;
          SRC=(0 1 3 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
-         GRAPHS_MST_HASH=GRAPHS_MST;
+         GRAPHS_MST_HASH=$GRAPHS_MST;
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
-         GRAPHS_MST_HASH=GRAPHS_MST;
+         GRAPHS_MST_HASH=$GRAPHS_MST;
          SRC=(0 1 3 0 0);;
     *) echo "Invalid machines"; exit -1;;
 esac
