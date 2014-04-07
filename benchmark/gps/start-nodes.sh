@@ -83,7 +83,7 @@ OUTPUT_DIR=/user/${USER}/gps/output/
 MASTER_GPS_ID=-1
 GPS_MASTER_XMS=50M     # initial heap size (master)
 
-echo "Using args: ${gps-args}"
+echo "Using args: ${@:3}"
 
 echo "Starting GPS master -1"
 "$JAVA_DIR"/bin/java -Xincgc -Xms${GPS_MASTER_XMS} -Xmx${GPS_MASTER_XMX} -verbose:gc -jar "$GPS_DIR"/gps_node_runner.jar -machineid ${MASTER_GPS_ID} -ofp "$OUTPUT_DIR"/${2}-machine-stats ${@:3} &> "$GPS_LOG_DIR"/${2}-machine${i}-output.txt &
