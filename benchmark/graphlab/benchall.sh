@@ -19,12 +19,12 @@ case ${MACHINES} in
     8)   GRAPHS=(amazon google patents);
          TOL=(0.408805 2.306985 2.220446E-16);
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut arabic);
-         TOL=(0.392500 0.011872 75.448252);
-         SRC=(0 1 3);;
-    32)  GRAPHS=(livejournal orkut arabic);
-         TOL=(0.392500 0.011872 75.448252);
-         SRC=(0 1 3);;
+    16)  GRAPHS=(livejournal orkut arabic twitter);
+         TOL=(0.392500 0.011872 75.448252 0.769316);
+         SRC=(0 1 3 0);;
+    32)  GRAPHS=(livejournal orkut arabic twitter);
+         TOL=(0.392500 0.011872 75.448252 0.769316);
+         SRC=(0 1 3 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          TOL=(0.392500 0.011872 75.448252 0.769316 186.053578);
          SRC=(0 1 3 0 0);;
@@ -65,17 +65,17 @@ done
 #################
 # Async Run
 #################
-for j in "${!GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
-    done
-done
-
-for j in "${!GRAPHS[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
-    done
-done
+#for j in "${!GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
+#    done
+#done
+# 
+#for j in "${!GRAPHS[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
+#    done
+#done
 
 # no WCC
 # no dimest

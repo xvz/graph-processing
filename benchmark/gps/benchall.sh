@@ -19,12 +19,12 @@ case ${MACHINES} in
     8)   GRAPHS=(amazon google patents);
          GRAPHS_MST=(amazon google patents);
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut arabic);
-         GRAPHS_MST=(livejournal orkut);
-         SRC=(0 1 3);;
-    32)  GRAPHS=(livejournal orkut arabic);
+    16)  GRAPHS=(livejournal orkut arabic twitter);
          GRAPHS_MST=(livejournal orkut arabic);
-         SRC=(0 1 3);;
+         SRC=(0 1 3 0);;
+    32)  GRAPHS=(livejournal orkut arabic twitter);
+         GRAPHS_MST=(livejournal orkut arabic);
+         SRC=(0 1 3 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
          SRC=(0 1 3 0 0);;

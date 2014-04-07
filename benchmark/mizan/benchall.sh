@@ -17,8 +17,8 @@ case ${MACHINES} in
          SRC=(0 0 6009554);;  # for SSSP
     8)   GRAPHS=(amazon google patents);
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut);
-         SRC=(0 1);;
+    16)  GRAPHS=(livejournal orkut arabic);
+         SRC=(0 1 3);;
     32)  GRAPHS=(livejournal orkut arabic);
          SRC=(0 1 3);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);

@@ -21,14 +21,14 @@ case ${MACHINES} in
          GRAPHS_MST=(amazon google patents);
          GRAPHS_MST_HASH=GRAPHS_MST;
          SRC=(0 0 6009554);;
-    16)  GRAPHS=(livejournal orkut arabic);
-         GRAPHS_MST=(livejournal orkut);
-         GRAPHS_MST_HASH=GRAPHS_MST;
-         SRC=(0 1 3);;
-    32)  GRAPHS=(livejournal orkut arabic);
+    16)  GRAPHS=(livejournal orkut arabic twitter);
          GRAPHS_MST=(livejournal orkut arabic);
          GRAPHS_MST_HASH=(livejournal orkut);
-         SRC=(0 1 3);;
+         SRC=(0 1 3 0);;
+    32)  GRAPHS=(livejournal orkut arabic twitter);
+         GRAPHS_MST=(livejournal orkut arabic);
+         GRAPHS_MST_HASH=GRAPHS_MST;
+         SRC=(0 1 3 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST_HASH=GRAPHS_MST;
@@ -62,12 +62,12 @@ for graph in "${GRAPHS[@]}"; do
     done
 done
 
-# WARNING: this can be VERY slow for large graphs!!
-for graph in "${GRAPHS_MST[@]}"; do
-    for ((i = 1; i <= RUNS; i++)); do
-        ./mst.sh "${graph}-mst-adj.txt" ${MACHINES} 0
-    done
-done
+## WARNING: this can be VERY slow for large graphs!!
+#for graph in "${GRAPHS_MST[@]}"; do
+#    for ((i = 1; i <= RUNS; i++)); do
+#        ./mst.sh "${graph}-mst-adj.txt" ${MACHINES} 0
+#    done
+#done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
