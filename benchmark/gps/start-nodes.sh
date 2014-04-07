@@ -10,8 +10,8 @@
 #
 # Workers are started asynchronously, which is faster. This script (i.e.,
 # the master) waits until all workers are done computations before exiting,
-# making it either to script benchmarks. (Although a sleep delay is still
-# required---see the batch benching scripts.)
+# making it easier to script benchmarks. (Although a sleep delay is still
+# required---see the batch benching script.)
 #
 # Because of how GPS behaves, the # of workers argument is actually IGNORED.
 # Instead, we use # of workers specified in machine slaves/config file.
