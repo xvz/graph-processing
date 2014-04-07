@@ -37,7 +37,8 @@ case ${size} in
         hadoop dfs -put patents*.txt ./input/;;
     2)  hadoop dfs -put livejournal*.txt ./input/;
         hadoop dfs -put orkut*.txt ./input/;
-        hadoop dfs -put arabic*.txt ./input/;;
+        hadoop dfs -put arabic*.txt ./input/;
+        hadoop dfs -put twitter-adj.txt ./input;;
     3)  hadoop dfs -put livejournal*.txt ./input/;
         hadoop dfs -put orkut*.txt ./input/;
         hadoop dfs -put arabic*.txt ./input/;
