@@ -26,7 +26,7 @@ case ${MACHINES} in
          GRAPHS_MST=(livejournal orkut arabic);
          SRC=(0 1 3 0);;
     64)  GRAPHS=(livejournal orkut arabic twitter uk0705);
-         GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
+         GRAPHS_MST=(livejournal orkut arabic twitter);
          SRC=(0 1 3 0 0);;
     128) GRAPHS=(livejournal orkut arabic twitter uk0705);
          GRAPHS_MST=(livejournal orkut arabic twitter uk0705);
