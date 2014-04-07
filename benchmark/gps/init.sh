@@ -2,33 +2,25 @@
 
 # Initiate GPS by creating slaves and machine config files.
 #
-# NOTE: "slaves" is NOT placed in master-script/, because we use
-# our own scripts for starting/stopping GPS workers.
+# NOTE: "slaves" is no longer needed, because we use our own 
+# scripts for starting/stopping GPS workers.
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ../common/get-hosts.sh
 source ../common/get-dirs.sh
 source ../common/get-configs.sh
 
-rm -f slaves
 rm -f machine.cfg
 
-# create slaves file
-for ((i = 1; i <= ${machines}; i++)); do
-    for ((j = 1; j <= ${GPS_WPM}; j++)); do
-        echo "${name}${i}" >> slaves
-    done
-done
-
 # create machine config file
-echo "-1 ${name}0 55000" >> machine.cfg   # master is special
+echo "-1 ${name}0 64000" >> machine.cfg   # master is special
 
 w_id=0    # worker counter (needed if workers per machine > 1)
 for ((i = 1; i <= ${machines}; i++)); do
     # to get multiple workers per machine, use the same name
     # but give it a unique id and port
     for ((j = 1; j <= ${GPS_WPM}; j++)); do
-        echo "${w_id} ${name}${i} $((55001 + ${w_id}))" >> machine.cfg
+        echo "${w_id} ${name}${i} $((64001 + ${w_id}))" >> machine.cfg
         w_id=$((w_id+1))
     done
 done
