@@ -98,14 +98,14 @@ while read slave || [ -n "$slave" ]; do
     echo "Starting GPS worker ${w_id}"
 
     # must have -n, otherwise ssh consumes all of stdin (i.e., all of the input file)
-    # outter & runs ssh in the background; inner & and stdout/err redirections
-    # enable ssh connection to end while command continues to run remotely
+    # outer & runs ssh in the background
+    # inner & and stdout/err redirections enable ssh connection to end while remote command continues to run
     ssh -n $slave "\"$JAVA_DIR\"/bin/java -Xincgc -Xms${GPS_WORKER_XMS} -Xmx${GPS_WORKER_XMX} -verbose:gc -jar \"$GPS_DIR\"/gps_node_runner.jar -machineid ${w_id} -ofp \"$OUTPUT_DIR\"/${2}-output-${w_id}-of-$((${1}-1)) ${@:3} &> \"$GPS_LOG_DIR\"/${2}-machine${w_id}-output.txt &" &
 
     w_id=$((w_id+1))
     # no need to check if # workers < # slaves... GPS will hang in that situation
 done < "$(dirname "${BASH_SOURCE[0]}")"/slaves
 
-# ...and wait until computation completes
+# ...and wait until computation completes (= master finishes)
 wait
 echo "Computation complete!"
