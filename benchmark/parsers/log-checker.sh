@@ -16,6 +16,8 @@ if [ $# -lt 1 ]; then
     exit -1
 fi
 
+dir=$PWD
+
 # read args into array of files
 read -a FILES <<< $(echo "$@")
 
@@ -23,7 +25,7 @@ for file in "${FILES[@]}"; do
     logname=$(echo $(basename "$file") | sed -e 's/_time.txt$//g' -e 's/_0_mem.txt$//g')
 
     # move to where the logs are
-    cd "$(dirname "$file")"
+    cd "$dir/$(dirname "$file")"
 
     err="$logname\n"
     iserr=0
