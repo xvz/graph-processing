@@ -18,19 +18,10 @@ if [ $# -lt 1 ]; then
     exit -1
 fi
 
-NUM_MACHINES=$1
-
-case ${NUM_MACHINES} in
-    4)   name=cloud; machines=4;;
-    8)   name=cld; machines=8;;
-    16)  name=cw; machines=16;;
-    32)  name=cx; machines=32;;
-    64)  name=cy; machines=64;;
-    128) name=cz; machines=128;;
-    *) echo "Invalid option!"; exit -1;;
-esac
-
 cd "$(dirname "${BASH_SOURCE[0]}")"
+
+machines=$1
+source ./get-hostname.sh
 source ./get-pem.sh
 
 

@@ -11,16 +11,17 @@ echo "  6) cz0 (128)"
 read -p ">> " response
 
 case ${response} in
-    1) name=cloud; machines=4;;
-    2) name=cld; machines=8;;
-    3) name=cw; machines=16;;
-    4) name=cx; machines=32;;
-    5) name=cy; machines=64;;
-    6) name=cz; machines=128;;
+    1) machines=4;;
+    2) machines=8;;
+    3) machines=16;;
+    4) machines=32;;
+    5) machines=64;;
+    6) machines=128;;
     *) echo "Invalid option!"; exit -1;;
 esac
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
+source ./get-hostname.sh
 source ./get-pem.sh
 
 MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \

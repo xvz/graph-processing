@@ -7,6 +7,7 @@
 # as a part of the directory.
 
 # maximum JVM heap size for Giraph (per machine)
+# NOTE: to put changes into effect, run ../hadoop/init.sh; ../hadoop/restart-hadoop.sh 1
 GIRAPH_XMX=14500M
 
 # maximum JVM heap size for GPS (per WORKER, not machine)
@@ -20,4 +21,4 @@ GIRAPH_THREADS=2
 
 # number of workers per machine (WPM)
 GPS_WPM=2
-MIZAN_WPM=2
+MIZAN_WPM=2   # NOTE: re-run premizan if this is changed

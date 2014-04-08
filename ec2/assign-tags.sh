@@ -16,17 +16,9 @@ if [ $# -lt 1 ]; then
     exit -1
 fi
 
-NUM_MACHINES=$1
+machines=$1
+source "$(dirname "${BASH_SOURCE[0]}")"/get-hostname.sh
 
-case ${NUM_MACHINES} in
-    4)   name=cloud; machines=4;;
-    8)   name=cld; machines=8;;
-    16)  name=cw; machines=16;;
-    32)  name=cx; machines=32;;
-    64)  name=cy; machines=64;;
-    128) name=cz; machines=128;;
-    *) echo "Invalid option!"; exit -1;;
-esac
 
 MASTER_ID=$(aws ec2 describe-spot-instance-requests --filter "Name=tag:Name,Values=${name}0" \
              | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g')
