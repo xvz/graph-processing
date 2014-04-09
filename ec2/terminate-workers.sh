@@ -23,7 +23,6 @@ case ${response} in
     *) echo "Invalid option!"; exit -1;;
 esac
 
-machines=$1
 source "$(dirname "${BASH_SOURCE[0]}")"/get-hostname.sh
 
 
