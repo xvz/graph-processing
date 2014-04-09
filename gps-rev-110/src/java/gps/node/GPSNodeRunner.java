@@ -399,7 +399,7 @@ public class GPSNodeRunner {
 			assert line.hasOption(MACHINE_ID_OPT_NAME) : MACHINE_ID_SHORT_OPT_NAME + "or "
 				+ MACHINE_CONFIG_FILE_OPT_NAME + " option is required";
 			// Check machine id is a valid byte
-			Byte.parseByte(line.getOptionValue(MACHINE_ID_OPT_NAME));
+			Integer.parseInt(line.getOptionValue(MACHINE_ID_OPT_NAME));
 			assert line.hasOption(MACHINE_CONFIG_FILE_OPT_NAME) : MACHINE_CONFIG_FILE_SHORT_OPT_NAME
 				+ "or " + MACHINE_CONFIG_FILE_OPT_NAME + " option is required";
 			assert line.hasOption(OUTPUT_FILE_NAME_OPT_NAME) : OUTPUT_FILE_NAME_SHORT_OPT_NAME
