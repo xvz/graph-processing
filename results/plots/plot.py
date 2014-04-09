@@ -399,7 +399,7 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             plots = plot_funcs[mode][plt_type](plt, fignum, ai, gi, si, width)
      
             # generic labels that apply to all plots
-            plt.title(ALGS[ai] + ' ' + GRAPHS[gi])
+            plt.title(alg + ' ' + graph)
             # ha controls where labels are aligned to (left, center, or right)
             plt.xticks(ind[gi]+width*len(plots[0])/2, GRAPH_LABELS[gi],
                        rotation=35, ha='right', fontsize=FONTSIZE)
@@ -409,13 +409,13 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             #plt.yticks(np.arange(0,30,10))
          
             plt.ylim(ymin=0)
-            ml = MultipleLocator(1)
+            ml = MultipleLocator(5)
             plt.axes().yaxis.set_minor_locator(ml)
             plt.grid(True, which='major', axis='y')
             plt.tight_layout()
 
             if save_eps:
-                plt.savefig('./figs/' + ALGS[ai] + '_' + GRAPHS[gi] + '_' + save_suffix + '.eps')
+                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.eps')
 
 
 # plot just for the legend
