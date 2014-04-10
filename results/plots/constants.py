@@ -5,6 +5,7 @@
 ###############
 BYTE_PER_GB = 1024*1024*1024.0
 KB_PER_GB = 1024*1024.0
+MB_PER_GB = 1024.0
 
 MS_PER_SEC = 1000.0
 SEC_PER_MIN = 60.0
@@ -15,13 +16,13 @@ ALG_PREMIZAN = 'premizan'
 GRAPHS = ('livejournal', 'orkut', 'arabic', 'twitter', 'uk0705')
 MACHINES = ('16', '32', '64', '128')
 
-SYSTEMS = ('giraph', 'gps', 'graphlab', 'mizan')
-SYS_GIRAPH, SYS_GPS, SYS_GRAPHLAB, SYS_MIZAN = SYSTEMS
+SYSTEMS = ('giraph', 'gps', 'mizan', 'graphlab')
+SYS_GIRAPH, SYS_GPS, SYS_MIZAN, SYS_GRAPHLAB = SYSTEMS
 
 SYS_MODES = (('0','1'),      # Giraph: byte array, hash map
              ('0','1','2'),  # GPS: none, LALP, dynamic
-             ('0','1'),      # GraphLab: sync, async
-             ('0',))         # Mizan: static
+             ('0',),         # Mizan: static
+             ('0','1'))      # GraphLab: sync, async
 SYSMODE_HASH = '1'           # premizan hash partitioning
 
 # combination of all systems and their sys modes

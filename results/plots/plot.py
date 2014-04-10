@@ -21,17 +21,20 @@ def check_mode(mode):
 parser = argparse.ArgumentParser(description='Generates experimental data from log files.')
 parser.add_argument('mode', type=check_mode,
                     help='mode to use: 0 for time, 1 for memory, 2 for network')
-parser.add_argument('--do-master', action='store_true', default=False,
+parser.add_argument('--master', action='store_true', default=False,
                     help='plot mem/net statistics for the master rather than the worker machines (only relevant for mode=1,2)')
-parser.add_argument('--do-premizan', action='store_true', default=False,
+parser.add_argument('--premizan', action='store_true', default=False,
                     help='plot mem/net statistics for premizan only (only relevant for mode=1,2)')
 parser.add_argument('--save-eps', action='store_true', default=False,
                     help='save plots as EPS files instead of displaying them')
+parser.add_argument('--save-png', action='store_true', default=False,
+                    help='save plots as PNG files (200 DPI) instead of displaying them')
 
 mode = parser.parse_args().mode
-do_master = parser.parse_args().do_master
-do_premizan = parser.parse_args().do_premizan
+do_master = parser.parse_args().master
+do_premizan = parser.parse_args().premizan
 save_eps = parser.parse_args().save_eps
+save_png = parser.parse_args().save_png
 
 
 # import data
@@ -54,6 +57,7 @@ elif mode == MODE_NET:
 # will get reset if we don't import matplotlib first
 if save_eps:
     import matplotlib
+    # using tight_layout will cause this to be Agg...
     matplotlib.use('PS')
 
 import matplotlib.pyplot as plt
@@ -115,13 +119,15 @@ stats_dict = {stat + suffix: megatuple
 # This setup is only relevant for plotting time (which needs permizan
 # as an extra I/O add-on for Mizan).
 #
-# "+" between matrices joins last row (premizan data) with the 0s matrix.
+# "+" between matrices joins Mizan row (premizan data) with the 0s matrix.
+# TODO: constants hacked in..
 premizan_dict = {stat + suffix: megatuple
                  for (stat,suffix) in itertools.product(STATS[mode],('_avg', '_ci'))
                  for megatuple in
-                 np.array([[[[0]*len(MACHINES)]*(len(ALL_SYS)-1)
+                 np.array([[[[0]*len(MACHINES)]*(len(ALL_SYS)-3)
                             + [[eval(SYS_MIZAN + '_' + SYSMODE_HASH + '_' + machines + '_' + ALG_PREMIZAN + '_' + graph + '_' + stat + suffix)
                                 for machines in MACHINES]]
+                            + [[0]*len(MACHINES)]*2
                             for graph in GRAPHS]])}
 
 
@@ -141,26 +147,28 @@ PLOT_TYPES = (('tot', 'run'),    # time
               ('recv', 'sent'))  # net
 
 # decoration
-PATTERNS = ('/','//',       # Giraph
-            '.','*','o',    # GPS
-            '\\', '\\\\',   # GraphLab
-            'x')            # Mizan
+PATTERNS = ('.','*',       # Giraph
+            '/','o','//',    # GPS
+            'x',            # Mizan
+            '\\', '\\\\')   # GraphLab
 
-COLORS = ('#1f78b4','#1f78b4',            # Giraph
-          '#ff7f00','#ff7f00','#ff7f00',  # GPS
-          '#eb65aa','#eb65aa',            # GraphLab
-          '#b2df8a')                      # Mizan
+# old: #ff7f00 (orange), #1f78b4 (blue), #7ac36a (darker green)
+COLORS = ('#faa75b','#faa75b',            # Giraph
+          '#5a9bd4','#5a9bd4','#5a9bd4',  # GPS
+          '#b2df8a',                      # Mizan
+          '#eb65aa','#eb65aa')            # GraphLab
 
-COLOR_PREMIZAN = (0.1, 0.1, 0.1)
+COLOR_PREMIZAN = '#737373'
 COLOR_IO = (0.9, 0.9, 0.9)
+COLOR_ERR = (0.3, 0.3, 0.3)
 
 FIG_SIZE = (6,6)
 
 # labels
 LEGEND_LABELS = ('Giraph (byte array)', 'Giraph (hash map)',
                  'GPS (none)', 'GPS (LALP)', 'GPS (dynamic)',
-                 'Graphlab (sync)', 'GraphLab (async)',
-                 'Mizan (static)')
+                 'Mizan (static)',
+                 'Graphlab (sync)', 'GraphLab (async)')
 
 GRAPH_LABELS = (('LJ (16)', 'LJ (32)', 'LJ (64)', 'LJ (128)'),
                 ('OR (16)', 'OR (32)', 'OR (64)', 'OR (128)'),
@@ -191,7 +199,7 @@ def autolabel(bars):
     for bar in bars:
         # get_y() needed to output proper total time
         height = bar.get_height() + bar.get_y()
-        plt.text(bar.get_x()+bar.get_width()/2.0, height + 0.05, LABEL_FORMAT[mode]%float(height),
+        plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
                  ha='center', va='bottom', fontsize=VAL_FONTSIZE)
 
 
@@ -217,7 +225,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, width):
     # "+" does element-wise add as everything is an np.array.
     # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_run = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
-                       ecolor='black', yerr=ci, align='edge', bottom=io)
+                       ecolor=COLOR_ERR, yerr=ci, align='edge', bottom=io)
                for i,(avg,col,pat,ci,io) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
                                                           COLORS,
                                                           PATTERNS,
@@ -225,12 +233,12 @@ def plot_time_tot(plt, fignum, ai, gi, si, width):
                                                           stats_dict['io_avg'][ai,gi]+premizan_dict['io_avg'][gi]))]
 
     plt_io = [plt.bar(ind[gi] + width*i, avg, width, color=COLOR_IO,
-                      ecolor='black', yerr=ci, align='edge')
+                      ecolor=COLOR_ERR, yerr=ci, align='edge')
               for i,(avg,ci) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],
                                               stats_dict['io_ci'][ai,gi]))]
 
     plt_pm = [plt.bar(ind[gi] + width*i, avg, width, color=COLOR_PREMIZAN,
-                      ecolor='black', yerr=ci, align='edge', bottom=io)
+                      ecolor=COLOR_ERR, yerr=ci, align='edge', bottom=io)
               for i,(avg,ci,io) in enumerate(zip(premizan_dict['io_avg'][gi,si],
                                                  premizan_dict['io_ci'][gi],
                                                  stats_dict['io_avg'][ai,gi]))]
@@ -259,7 +267,7 @@ def plot_time_run(plt, fignum, ai, gi, si, width):
     """
 
     plt_run = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
-                       ecolor='black', yerr=ci, align='edge')
+                       ecolor=COLOR_ERR, yerr=ci, align='edge')
                for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
                                                        COLORS,
                                                        PATTERNS,
@@ -285,27 +293,57 @@ def plot_mem(plt, fignum, ai, gi, si, width):
     width -- width of each bar
 
     Returns:
-    Singular tuple of one plot (memory usage).
+    Tuple of plots: (max memory, avg memory, min memory).
     """
 
-    # TODO: also show min/max?
-    plt_mem = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
-                       ecolor='black', yerr=ci, align='edge')
-               for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si],
-                                                       COLORS,
-                                                       PATTERNS,
-                                                       stats_dict['mem_avg_ci'][ai,gi]))]
-    
-    # label bars with their values
-    for bars in plt_mem:
-        autolabel(bars)
+    if do_master:
+        plt_avg = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                           ecolor=COLOR_ERR, yerr=ci, align='edge')
+                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si]*MB_PER_GB,
+                                                           COLORS,
+                                                           PATTERNS,
+                                                           stats_dict['mem_avg_ci'][ai,gi]*MB_PER_GB))]
 
-    plt.ylabel('Min/max/avg memory usage (GB per worker)', fontsize=FONTSIZE)
-    return (plt_mem,)
+        plt_min = plt_max = plt_avg   # master is a single machine, so min/max = avg
+
+    else:
+        # NOTE: alpha not supported in ps/eps
+        plt_max = [plt.bar(ind[gi] + width*i, avg, width, color='#e74c3c', alpha=0.6,
+                           ecolor=COLOR_ERR, yerr=ci, align='edge')
+                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
+                                                           COLORS,
+                                                           PATTERNS,
+                                                           stats_dict['mem_max_ci'][ai,gi]))]
+
+        plt_avg = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                           ecolor=COLOR_ERR, yerr=ci, align='edge')
+                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si],
+                                                           COLORS,
+                                                           PATTERNS,
+                                                           stats_dict['mem_avg_ci'][ai,gi]))]
+    
+        plt_min = [plt.bar(ind[gi] + width*i, avg, width, color='#27ae60', alpha=0.6,
+                           ecolor=COLOR_ERR, yerr=ci, align='edge')
+                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_min_avg'][ai,gi,si],
+                                                           COLORS,
+                                                           PATTERNS,
+                                                           stats_dict['mem_min_ci'][ai,gi]))]
+
+    # label bars with their values
+    for plt_mem in (plt_max, plt_avg, plt_min):
+        for bars in plt_mem:
+            autolabel(bars)
+
+    if do_master:
+        plt.ylabel('Memory usage at master (MB)', fontsize=FONTSIZE)
+    else:
+        plt.ylabel('Min/avg/max memory usage (GB per worker)', fontsize=FONTSIZE)
+
+    return (plt_max, plt_avg, plt_min)
 
 
 def plot_net_recv(plt, fignum, ai, gi, si, width):
-    """Plots total incoming network usage (GB), summed over all workers.
+    """Plots total incoming network usage, summed over all workers.
     
     Arguments:
     plt -- matplotlib.pyplot being used
@@ -319,24 +357,35 @@ def plot_net_recv(plt, fignum, ai, gi, si, width):
     Singular tuple of one plot (network received).
     """
 
-    plt_recv = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
-                        ecolor='black', yerr=ci, align='edge')
-                for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si],
-                                                        COLORS,
-                                                        PATTERNS,
-                                                        stats_dict['eth_recv_ci'][ai,gi]))]
+    if do_master:
+        plt_recv = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                            ecolor=COLOR_ERR, yerr=ci, align='edge')
+                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si]*MB_PER_GB,
+                                                            COLORS,
+                                                            PATTERNS,
+                                                            stats_dict['eth_recv_ci'][ai,gi]*MB_PER_GB))]
+    else:
+        plt_recv = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                            ecolor=COLOR_ERR, yerr=ci, align='edge')
+                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si],
+                                                            COLORS,
+                                                            PATTERNS,
+                                                            stats_dict['eth_recv_ci'][ai,gi]))]
     
     # label bars with their values
     for bars in plt_recv:
         autolabel(bars)
 
-    plt.ylabel('Total incoming network I/O (GB)', fontsize=FONTSIZE)
+    if do_master:
+        plt.ylabel('Total incoming network I/O (MB)', fontsize=FONTSIZE)
+    else:
+        plt.ylabel('Total incoming network I/O (GB)', fontsize=FONTSIZE)
+
     return (plt_recv,)
 
 
-# TODO: yuck, duplicate code
 def plot_net_sent(plt, fignum, ai, gi, si, width):
-    """Plots total outgoing network usage (GB), summed over all workers.
+    """Plots total outgoing network usage, summed over all workers.
     
     Arguments:
     plt -- matplotlib.pyplot being used
@@ -350,18 +399,30 @@ def plot_net_sent(plt, fignum, ai, gi, si, width):
     Singular tuple of one plot (network sent).
     """
 
-    plt_sent = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
-                        ecolor='black', yerr=ci, align='edge')
-                for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si],
-                                                        COLORS,
-                                                        PATTERNS,
-                                                        stats_dict['eth_sent_ci'][ai,gi]))]
+    if do_master:
+        plt_sent = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                            ecolor=COLOR_ERR, yerr=ci, align='edge')
+                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si]*MB_PER_GB,
+                                                            COLORS,
+                                                            PATTERNS,
+                                                            stats_dict['eth_sent_ci'][ai,gi]*MB_PER_GB))]
+    else:
+        plt_sent = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                            ecolor=COLOR_ERR, yerr=ci, align='edge')
+                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si],
+                                                            COLORS,
+                                                            PATTERNS,
+                                                            stats_dict['eth_sent_ci'][ai,gi]))]
     
     # label bars with their values
     for bars in plt_sent:
         autolabel(bars)
 
-    plt.ylabel('Total outgoing network I/O (GB)', fontsize=FONTSIZE)
+    if do_master:
+        plt.ylabel('Total outgoing network I/O (MB)', fontsize=FONTSIZE)
+    else:
+        plt.ylabel('Total outgoing network I/O (GB)', fontsize=FONTSIZE)
+
     return (plt_sent,)
 
 
@@ -409,13 +470,20 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             #plt.yticks(np.arange(0,30,10))
          
             plt.ylim(ymin=0)
+            # TODO: make this dynamic wrt y-range
             ml = MultipleLocator(5)
             plt.axes().yaxis.set_minor_locator(ml)
             plt.grid(True, which='major', axis='y')
             plt.tight_layout()
 
             if save_eps:
-                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.eps')
+                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.eps',
+                            format='eps')
+            
+            # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
+            if save_png:
+                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.png',
+                            format='png', dpi=200)
 
 
 # plot just for the legend
@@ -438,4 +506,5 @@ plt.tight_layout()
 
 
 # show all plots
-plt.show()
+if (not save_eps) and (not save_png):
+    plt.show()
