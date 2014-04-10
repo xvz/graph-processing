@@ -42,8 +42,7 @@ case ${size} in
     3)  hadoop dfs -put livejournal*.txt ./input/;
         hadoop dfs -put orkut*.txt ./input/;
         hadoop dfs -put arabic*.txt ./input/;
-        hadoop dfs -put twitter-adj.txt ./input/;
-        hadoop dfs -put twitter-mst-adj.txt ./input/;
+        hadoop dfs -put twitter*.txt ./input/;
         hadoop dfs -put uk0705-adj.txt ./input/;;
     *) echo "Invalid size"; exit -1;;
 esac
