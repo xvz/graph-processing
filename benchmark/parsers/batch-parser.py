@@ -24,9 +24,6 @@ ALG_PREMIZAN = 'premizan'
 SYSTEMS = ('giraph', 'gps', 'mizan', 'graphlab')
 SYS_GIRAPH, SYS_GPS, SYS_MIZAN, SYS_GRAPHLAB = SYSTEMS
 
-# store script dir (so we know where logs are)
-SCRIPT_DIR=sys.path[0]
-
 
 ###############
 # Parse args
@@ -34,7 +31,7 @@ SCRIPT_DIR=sys.path[0]
 def check_system(system):
     try:
         s = int(system)
-        if (s < 1) or (s > len(SYSTEMS)):
+        if (s < 0) or (s >= len(SYSTEMS)):
             raise argparse.ArgumentTypeError('Invalid system')
         return s
     except:
@@ -51,16 +48,16 @@ def check_cores(cores):
 
 parser = argparse.ArgumentParser(description='Outputs experimental data for specified log files.')
 parser.add_argument('system', type=check_system,
-                    help='system: 1 for Giraph, 2 for GPS, 3 for GraphLab, 4 for Mizan')
-parser.add_argument('logs', type=str, nargs='+',
-                    help='experiment\'s time log file (e.g. pagerank_orkut-adj.txt_16_20140101-123050_time.txt), can be regular expression (e.g., page*or*time.txt)')
+                    help='system: 0 for Giraph, 1 for GPS, 2 for Mizan, 3 for GraphLab (invalid system will result in invalid time values)')
+parser.add_argument('log', type=str, nargs='+',
+                    help='an experiment\'s time log file, can be a regular expression (e.g. pagerank_orkut-adj.txt_16_0_20140101-123050_time.txt or page*or*_0_*time.txt)')
 parser.add_argument('--master', action='store_true', default=False,
                     help='get mem/net statistics for the master rather than the worker machines')
 #parser.add_argument('--cores', type=check_cores, dest='n_cores', default=4,
 #                    help='number of cores to use (> 0), default=4')
 
-system = SYSTEMS[parser.parse_args().system-1]
-logs_re = parser.parse_args().logs
+system = SYSTEMS[parser.parse_args().system]
+logs_re = parser.parse_args().log
 do_master = parser.parse_args().master
 #n_cores = parser.parse_args().n_cores
 
@@ -107,6 +104,7 @@ def time_parser(log_prefix, system, alg):
                 io/(MS_PER_SEC*SEC_PER_MIN))
 
     elif system == SYS_GPS:
+        start = computestart = end = 0
         for line in open(log_file):
             if "SYSTEM_START_TIME " in line:
                 start = float(line.split()[1])
