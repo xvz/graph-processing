@@ -13,10 +13,8 @@ import argparse, itertools
 ###############
 BYTE_PER_GB = 1024*1024*1024.0
 KB_PER_GB = 1024*1024.0
-MB_PER_GB = 1024.0
 
 MS_PER_SEC = 1000.0
-SEC_PER_MIN = 60.0
 
 ALG_PREMIZAN = 'premizan'
 
@@ -99,8 +97,7 @@ def time_parser(log_prefix, system, alg):
             elif "Total (mil" in line:
                 total = float(line.split()[5].split('=')[1])
 
-        return ((total - io)/(MS_PER_SEC*SEC_PER_MIN),
-                io/(MS_PER_SEC*SEC_PER_MIN))
+        return ((total - io)/(MS_PER_SEC), io/(MS_PER_SEC))
 
     elif system == SYS_GPS:
         start = computestart = end = 0
@@ -112,8 +109,8 @@ def time_parser(log_prefix, system, alg):
             elif "-1-LATEST_STATUS_TIMESTAMP " in line:
                 end = float(line.split()[1])
 
-        return ((end - computestart)/(MS_PER_SEC*SEC_PER_MIN),
-                (computestart - start)/(MS_PER_SEC*SEC_PER_MIN))
+        return ((end - computestart)/(MS_PER_SEC),
+                (computestart - start)/(MS_PER_SEC))
 
     elif system == SYS_GRAPHLAB:
         for line in open(log_file):
@@ -122,7 +119,7 @@ def time_parser(log_prefix, system, alg):
             elif "Finished Running engine" in line:
                 run = float(line.split()[4])
 
-        return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN)
+        return (run, (total - run))
 
     elif system == SYS_MIZAN:
         if alg == ALG_PREMIZAN:
@@ -130,7 +127,7 @@ def time_parser(log_prefix, system, alg):
                 if "TOTAL TIME (sec)" in line:
                     io = float(line.split()[3])
 
-            return (0.0, io/SEC_PER_MIN)
+            return (0.0, io)
         else:
             for line in open(log_file):
                 if "TIME: Total Running Time without IO =" in line:
@@ -138,7 +135,7 @@ def time_parser(log_prefix, system, alg):
                 elif "TIME: Total Running Time =" in line:
                     total = float(line.split()[5])
 
-            return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN)
+            return (run, (total - run))
 
 
 def mem_parser(log_prefix, machines):
