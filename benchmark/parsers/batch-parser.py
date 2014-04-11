@@ -4,7 +4,6 @@
 
 import os, sys, glob
 import argparse, itertools
-import numpy as np
 
 # do some parallel computing
 from joblib import Parallel, delayed
@@ -173,9 +172,9 @@ def mem_parser(log_prefix, machines):
         return (max(mems) - min(mems))/KB_PER_GB
 
     # list of each machine's maximum memory usage
-    mems = np.array([parse(log) for log in log_files])
+    mems = [parse(log) for log in log_files]
 
-    return (np.min(mems), np.max(mems), np.mean(mems))
+    return (min(mems), max(mems), sum(mems)/len(mems))
 
 
 def net_parser(log_prefix, machines):
