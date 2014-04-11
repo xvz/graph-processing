@@ -6,7 +6,7 @@ import os, sys, glob
 import argparse, itertools
 
 # do some parallel computing
-from joblib import Parallel, delayed
+#from joblib import Parallel, delayed
 
 ###############
 # Constants
