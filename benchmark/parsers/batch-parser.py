@@ -289,9 +289,8 @@ def single_iteration(log):
         eth_recv, eth_sent = net_parser(log_prefix, int(machines))
          
         stats = (time_run+time_io, time_io, time_run, mem_min, mem_max, mem_avg, eth_recv, eth_sent)
-        start_sep = "------------+-----------+---------------+--------------------------------+-----------------------"
-        end_sep = "-------------------------------------------------------------------------------------------------"
-        return header + err_str + "\n" + start_sep + "\n  %8.2fs | %8.2fs |     %8.2fs | %7.3f / %7.3f / %7.3f GB | %7.3f / %7.3f GB \n" % stats + end_sep
+        separator = "------------+-----------+---------------+--------------------------------+-----------------------"
+        return header + err_str + "\n" + separator + "\n  %8.2fs | %8.2fs |     %8.2fs | %7.3f / %7.3f / %7.3f GB | %7.3f / %7.3f GB \n" % stats + separator
     else:
         return header + err_str
 
@@ -301,10 +300,16 @@ def single_iteration(log):
 
 # output results serially
 print("")
-print("-------------------------------------------------------------------------------------------------")
+print("=================================================================================================")
 print(" Total time |   IO time |  Running time |  Mem per machine (min/max/avg) |  Net I/O (recv/sent)  ")
-print("------------+-----------+---------------+--------------------------------+-----------------------")
+print("============+===========+===============+================================+=======================")
 print("")
 for log in logs:
     print(single_iteration(log))
     print("")
+
+# another friendly reminder of what each thing is...
+print("============+===========+===============+================================+=======================")
+print(" Total time |   IO time |  Running time |  Mem per machine (min/max/avg) |  Net I/O (recv/sent)  ")
+print("=================================================================================================")
+print("")
