@@ -32,16 +32,16 @@ def check_cores(cores):
     except:
         raise argparse.ArgumentTypeError('Invalid core count')
 
-parser = argparse.ArgumentParser(description='Generates experimental data from log files.')
+parser = argparse.ArgumentParser(description='Generates experimental data (means and confidence intervals) from all log files.')
 parser.add_argument('mode', type=check_mode,
                     help='mode to use: 0 for time, 1 for memory, 2 for network')
-parser.add_argument('--do-master', action='store_true', default=False,
+parser.add_argument('--master', action='store_true', default=False,
                     help='get mem/net statistics for the master rather than the worker machines (only relevant for mode=1,2)')
 parser.add_argument('--cores', type=check_cores, dest='n_cores', default=4,
                     help='number of cores to use (> 0), default=4')
 
 mode = parser.parse_args().mode
-do_master = parser.parse_args().do_master
+do_master = parser.parse_args().master
 n_cores = parser.parse_args().n_cores
 
 ###############
@@ -117,7 +117,7 @@ def time_parser(log_prefix, system, alg):
                     total = float(line.split()[5])
 
             return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN)
-        pass
+
 
 def mem_parser(log_prefix, machines):
     """Parses memory usage of a single run.
