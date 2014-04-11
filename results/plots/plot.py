@@ -55,14 +55,15 @@ elif mode == MODE_NET:
 
 # we have to import matplotlib.pyplot here, as its backend
 # will get reset if we don't import matplotlib first
+import matplotlib
+
 if save_eps:
-    import matplotlib
     # using tight_layout will cause this to be Agg...
     matplotlib.use('PS')
 
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
-
+from matplotlib.ticker import MaxNLocator
 
 ###############
 # Format data
@@ -142,7 +143,7 @@ if do_premizan:
 ####################
 # Plot constants
 ####################
-PLOT_TYPES = (('tot', 'run'),    # time 
+PLOT_TYPES = (('split',),    # time 
               ('mem',),          # mem
               ('recv', 'sent'))  # net
 
@@ -184,6 +185,9 @@ VAL_FONTSIZE = 4   # for text values on top of bars
 # left/right margins of each bar group
 BAR_MARGIN = 0.05
 
+# how much extra space to leave at the top of each plot
+YMAX_FACTOR = 1.05
+
 # location of bar groups
 ind = [np.arange(len(g))+BAR_MARGIN for g in GRAPH_LABELS]
 
@@ -194,13 +198,12 @@ ind = [np.arange(len(g))+BAR_MARGIN for g in GRAPH_LABELS]
 # label formats indexed by mode
 LABEL_FORMAT = ('%0.2f', '%0.2f', '%0.1f')
 
-def autolabel(bars):
-    """Labels all bars with text values."""
-    for bar in bars:
-        # get_y() needed to output proper total time
-        height = bar.get_height() + bar.get_y()
-        plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
-                 ha='center', va='bottom', fontsize=VAL_FONTSIZE)
+def autolabel(bar):
+    """Labels a bar with text values."""
+    # get_y() needed to output proper total time
+    height = bar.get_height() + bar.get_y()
+    plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
+             ha='center', va='bottom', fontsize=VAL_FONTSIZE)
 
 
 def plot_time_tot(plt, fignum, ai, gi, si, width):
@@ -215,22 +218,24 @@ def plot_time_tot(plt, fignum, ai, gi, si, width):
     width -- width of each bar
 
     Returns:
-    Tuple of plots (each of which is a list of bars/rectangles).
-    Specifically, bars for running time, bars for I/O, and bars for premizan.
+    Tuple of axes.
     """
 
     # TODO: strings are hard coded...
+    
+    # this is generated implicitly by default, but we need to return it
+    ax = plt.subplot()
 
-    # Each (implicit) iteration plots one system+sysmode in different groups (=workers).
+    # Each (implicit) iteration plots one system+sysmode in different groups (= workers).
     # "+" does element-wise add as everything is an np.array.
     # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_run = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                        ecolor=COLOR_ERR, yerr=ci, align='edge', bottom=io)
-               for i,(avg,col,pat,ci,io) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
-                                                          COLORS,
-                                                          PATTERNS,
+               for i,(avg,ci,io,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
                                                           stats_dict['run_ci'][ai,gi],
-                                                          stats_dict['io_avg'][ai,gi]+premizan_dict['io_avg'][gi]))]
+                                                          stats_dict['io_avg'][ai,gi]+premizan_dict['io_avg'][gi],
+                                                          COLORS,
+                                                          PATTERNS))]
 
     plt_io = [plt.bar(ind[gi] + width*i, avg, width, color=COLOR_IO,
                       ecolor=COLOR_ERR, yerr=ci, align='edge')
@@ -243,12 +248,17 @@ def plot_time_tot(plt, fignum, ai, gi, si, width):
                                                  premizan_dict['io_ci'][gi],
                                                  stats_dict['io_avg'][ai,gi]))]
 
-    # label bars with their values
+    # label with total time
     for bars in plt_run:
-        autolabel(bars)
+        for bar in bars:
+            autolabel(bar)
 
-    plt.ylabel('Total time (minutes)', fontsize=FONTSIZE)
-    return (plt_run, plt_io, plt_pm)
+    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si]
+    #                     + premizan_dict['io_avg'][gi,si]
+    #                     + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
+
+    plt.ylabel('Total time (mins)')
+    return (ax,)
 
 
 def plot_time_run(plt, fignum, ai, gi, si, width):
@@ -263,22 +273,96 @@ def plot_time_run(plt, fignum, ai, gi, si, width):
     width -- width of each bar
 
     Returns:
-    Singular tuple of one plot (running time).
+    Tuple of axes.
     """
+
+    ax = plt.subplot()
 
     plt_run = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                        ecolor=COLOR_ERR, yerr=ci, align='edge')
-               for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
+               for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
+                                                       stats_dict['run_ci'][ai,gi],
                                                        COLORS,
-                                                       PATTERNS,
-                                                       stats_dict['run_ci'][ai,gi]))]
+                                                       PATTERNS))]
+
+    # label bars with running times
+    for bars in plt_run:
+        for bar in bars:
+            autolabel(bar)
+
+    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
+
+    plt.ylabel('Running time (mins)')
+    return (ax,)
+
+
+def plot_time_split(plt, fignum, ai, gi, si, width):
+    """Plots I/O + premizan time and running times in vertically separated subplots.
+
+    This is basically a variant of plot_time_tot, where we don't stack the running
+    time on top of the I/O bars.
+    
+    Arguments:
+    plt -- matplotlib.pyplot being used
+    fignum -- figure number (int)
+    ai -- algorithm index (int)
+    gi -- graph index (int)
+    si -- system indices, for plotting all or a subset of the systems (list/range)
+    width -- width of each bar
+
+    Returns:
+    Tuple of axes.
+    """    
+
+    ax_run = plt.subplot(211)
+    plt_run = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
+                       ecolor=COLOR_ERR, yerr=ci, align='edge')
+               for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
+                                                       stats_dict['run_ci'][ai,gi],
+                                                       COLORS,
+                                                       PATTERNS))]
 
     # label bars with their values
     for bars in plt_run:
-        autolabel(bars)
+        for bar in bars:
+            autolabel(bar)
 
-    plt.ylabel('Running time (minutes)', fontsize=FONTSIZE)
-    return (plt_run,)
+    # using sharey ensures both y-axis are of same scale... but it can waste a lot of space
+    #ax_io = plt.subplot(2, 1, 2, sharey=ax_run)
+    ax_io = plt.subplot(212)
+
+    plt_io = [plt.bar(ind[gi] + width*i, avg, width, color=COLOR_IO, hatch=pat,
+                      ecolor=COLOR_ERR, yerr=ci, align='edge')
+              for i,(avg,ci,pat) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],                                                  
+                                                  stats_dict['io_ci'][ai,gi],
+                                                  PATTERNS))]
+
+    plt_pm = [plt.bar(ind[gi] + width*i, avg, width, color=COLOR_PREMIZAN, hatch=pat,
+                      ecolor=COLOR_ERR, yerr=ci, align='edge', bottom=io)
+              for i,(avg,ci,io,pat) in enumerate(zip(premizan_dict['io_avg'][gi,si],
+                                                     premizan_dict['io_ci'][gi],
+                                                     stats_dict['io_avg'][ai,gi],
+                                                     PATTERNS))]
+
+    # label bars with their values
+    for bars in plt_pm:
+        for bar in bars:
+            autolabel(bar)
+
+
+    # set proper ymax
+    #ax_run.set_ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
+    #ax_io.set_ylim(ymax=np.max(premizan_dict['io_avg'][gi,si] + premizan_dict['io_ci'][gi,si]
+    #                           + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
+
+    ax_run.set_ylabel('Running time (mins)')
+    ax_io.set_ylabel('Loading time (mins)')
+
+    # remove upper y-label to avoid overlap
+    nbins = len(ax_run.get_yticklabels())
+    ax_io.yaxis.set_major_locator(MaxNLocator(nbins=nbins, prune='upper'))
+
+    return (ax_run, ax_io)
 
 
 def plot_mem(plt, fignum, ai, gi, si, width):
@@ -293,16 +377,18 @@ def plot_mem(plt, fignum, ai, gi, si, width):
     width -- width of each bar
 
     Returns:
-    Tuple of plots: (max memory, avg memory, min memory).
+    Tuple of axes.
     """
+
+    ax = plt.subplot()
 
     if do_master:
         plt_avg = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                            ecolor=COLOR_ERR, yerr=ci, align='edge')
-                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si]*MB_PER_GB,
+                   for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si]*MB_PER_GB,
+                                                           stats_dict['mem_avg_ci'][ai,gi]*MB_PER_GB,
                                                            COLORS,
-                                                           PATTERNS,
-                                                           stats_dict['mem_avg_ci'][ai,gi]*MB_PER_GB))]
+                                                           PATTERNS))]
 
         plt_min = plt_max = plt_avg   # master is a single machine, so min/max = avg
 
@@ -310,36 +396,37 @@ def plot_mem(plt, fignum, ai, gi, si, width):
         # NOTE: alpha not supported in ps/eps
         plt_max = [plt.bar(ind[gi] + width*i, avg, width, color='#e74c3c', alpha=0.6,
                            ecolor=COLOR_ERR, yerr=ci, align='edge')
-                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
-                                                           COLORS,
-                                                           PATTERNS,
-                                                           stats_dict['mem_max_ci'][ai,gi]))]
+                   for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
+                                                           stats_dict['mem_max_ci'][ai,gi],
+                                                           PATTERNS))]
 
         plt_avg = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                            ecolor=COLOR_ERR, yerr=ci, align='edge')
-                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si],
+                   for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si],
+                                                           stats_dict['mem_avg_ci'][ai,gi],
                                                            COLORS,
-                                                           PATTERNS,
-                                                           stats_dict['mem_avg_ci'][ai,gi]))]
+                                                           PATTERNS))]
     
         plt_min = [plt.bar(ind[gi] + width*i, avg, width, color='#27ae60', alpha=0.6,
                            ecolor=COLOR_ERR, yerr=ci, align='edge')
-                   for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['mem_min_avg'][ai,gi,si],
-                                                           COLORS,
-                                                           PATTERNS,
-                                                           stats_dict['mem_min_ci'][ai,gi]))]
+                   for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_min_avg'][ai,gi,si],
+                                                           stats_dict['mem_min_ci'][ai,gi],
+                                                           PATTERNS))]
 
-    # label bars with their values
+    # label all bars
     for plt_mem in (plt_max, plt_avg, plt_min):
         for bars in plt_mem:
-            autolabel(bars)
+            for bar in bars:
+                autolabel(bar)
+
+    #plt.ylim(ymax=np.max(stats_dict['mem_max_avg'][ai,gi,si] + stats_dict['mem_max_ci'][ai,gi,si])*YMAX_FACTOR)
 
     if do_master:
-        plt.ylabel('Memory usage at master (MB)', fontsize=FONTSIZE)
+        plt.ylabel('Memory usage at master (MB)')
     else:
-        plt.ylabel('Min/avg/max memory usage (GB per worker)', fontsize=FONTSIZE)
+        plt.ylabel('Min/avg/max memory usage (GB per worker)')
 
-    return (plt_max, plt_avg, plt_min)
+    return (ax,)
 
 
 def plot_net_recv(plt, fignum, ai, gi, si, width):
@@ -354,34 +441,38 @@ def plot_net_recv(plt, fignum, ai, gi, si, width):
     width -- width of each bar
 
     Returns:
-    Singular tuple of one plot (network received).
+    Tuple of axes.
     """
 
+    ax = plt.subplot()
+
     if do_master:
         plt_recv = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                             ecolor=COLOR_ERR, yerr=ci, align='edge')
-                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si]*MB_PER_GB,
+                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si]*MB_PER_GB,
+                                                            stats_dict['eth_recv_ci'][ai,gi]*MB_PER_GB,
                                                             COLORS,
-                                                            PATTERNS,
-                                                            stats_dict['eth_recv_ci'][ai,gi]*MB_PER_GB))]
+                                                            PATTERNS))]
     else:
         plt_recv = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                             ecolor=COLOR_ERR, yerr=ci, align='edge')
-                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si],
+                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si],
+                                                            stats_dict['eth_recv_ci'][ai,gi],
                                                             COLORS,
-                                                            PATTERNS,
-                                                            stats_dict['eth_recv_ci'][ai,gi]))]
+                                                            PATTERNS))]
     
-    # label bars with their values
     for bars in plt_recv:
-        autolabel(bars)
+        for bar in bars:
+            autolabel(bar)
+
+    #plt.ylim(ymax=np.max(stats_dict['eth_recv_avg'][ai,gi,si] + stats_dict['eth_recv_ci'][ai,gi,si])*YMAX_FACTOR)
 
     if do_master:
-        plt.ylabel('Total incoming network I/O (MB)', fontsize=FONTSIZE)
+        plt.ylabel('Total incoming network I/O (MB)')
     else:
-        plt.ylabel('Total incoming network I/O (GB)', fontsize=FONTSIZE)
+        plt.ylabel('Total incoming network I/O (GB)')
 
-    return (plt_recv,)
+    return (ax,)
 
 
 def plot_net_sent(plt, fignum, ai, gi, si, width):
@@ -399,40 +490,42 @@ def plot_net_sent(plt, fignum, ai, gi, si, width):
     Singular tuple of one plot (network sent).
     """
 
+    ax = plt.subplot()
+
     if do_master:
         plt_sent = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                             ecolor=COLOR_ERR, yerr=ci, align='edge')
-                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si]*MB_PER_GB,
+                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si]*MB_PER_GB,
+                                                            stats_dict['eth_sent_ci'][ai,gi]*MB_PER_GB,
                                                             COLORS,
-                                                            PATTERNS,
-                                                            stats_dict['eth_sent_ci'][ai,gi]*MB_PER_GB))]
+                                                            PATTERNS))]
     else:
         plt_sent = [plt.bar(ind[gi] + width*i, avg, width, color=col, hatch=pat,
                             ecolor=COLOR_ERR, yerr=ci, align='edge')
-                    for i,(avg,col,pat,ci) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si],
+                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si],
+                                                            stats_dict['eth_sent_ci'][ai,gi],
                                                             COLORS,
-                                                            PATTERNS,
-                                                            stats_dict['eth_sent_ci'][ai,gi]))]
+                                                            PATTERNS))]
     
-    # label bars with their values
     for bars in plt_sent:
-        autolabel(bars)
+        for bar in bars:
+            autolabel(bar)
+
+    #plt.ylim(ymax=np.max(stats_dict['eth_sent_avg'][ai,gi,si] + stats_dict['eth_sent_ci'][ai,gi,si])*YMAX_FACTOR)
 
     if do_master:
-        plt.ylabel('Total outgoing network I/O (MB)', fontsize=FONTSIZE)
+        plt.ylabel('Total outgoing network I/O (MB)')
     else:
-        plt.ylabel('Total outgoing network I/O (GB)', fontsize=FONTSIZE)
+        plt.ylabel('Total outgoing network I/O (GB)')
 
-    return (plt_sent,)
-
+    return (ax,)
 
 ####################
 # Generate plots
 ####################
-plot_funcs = ((plot_time_tot, plot_time_run),   # time
+PLOT_FUNCS = ((plot_time_split,),               # time
               (plot_mem,),                      # memory
               (plot_net_recv, plot_net_sent))   # net
-
 
 fignum = 0
 
@@ -457,29 +550,44 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             plt.figure(fignum, figsize=FIG_SIZE, facecolor='w')
      
             # mode specific plot function
-            plots = plot_funcs[mode][plt_type](plt, fignum, ai, gi, si, width)
-     
-            # generic labels that apply to all plots
-            plt.title(alg + ' ' + graph)
-            # ha controls where labels are aligned to (left, center, or right)
-            plt.xticks(ind[gi]+width*len(plots[0])/2, GRAPH_LABELS[gi],
-                       rotation=35, ha='right', fontsize=FONTSIZE)
-            plt.yticks(fontsize=FONTSIZE)
-            # turn off major and minor x-axis ticks
-            plt.tick_params(axis='x', which='both', bottom='off', top='off')
-            #plt.yticks(np.arange(0,30,10))
-         
-            plt.ylim(ymin=0)
-            # TODO: make this dynamic wrt y-range
-            ml = MultipleLocator(5)
-            plt.axes().yaxis.set_minor_locator(ml)
-            plt.grid(True, which='major', axis='y')
-            plt.tight_layout()
+            axes = PLOT_FUNCS[mode][plt_type](plt, fignum, ai, gi, si, width)
 
+            ## generic labels that apply to all plots
+            # title only for the first (upper-most) axis
+            axes[0].set_title(alg + ' ' + graph)
+            
+            # only label x-axis of last (bottom-most) axis
+            # ha controls where labels are aligned to (left, center, or right)
+            for ax in axes[:-1]:
+                ax.tick_params(labelbottom='off')            
+            plt.xticks(ind[gi]+width*len(ALL_SYS)/2, GRAPH_LABELS[gi],
+                       rotation=35, ha='right')
+
+            # If there's only one axis, we can just use plt.stuff()...
+            # But with mutliple axes we need to go through each one using axis.set_stuff()
+            for ax in axes:
+                ax.set_ylim(ymin=0)                 # zero y-axis
+                ax.minorticks_on()                  # enable all minor ticks
+
+                for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                             ax.get_xticklabels() + ax.get_yticklabels()):
+                    item.set_fontsize(FONTSIZE)
+                
+                # turn off major and minor x-axis ticks (leaves minor y-ticks on)
+                ax.tick_params(axis='x', which='both', bottom='off', top='off')
+
+                ax.grid(True, which='major', axis='y')
+
+            #ml = MultipleLocator(5)
+            #plt.axes().yaxis.set_minor_locator(ml)
+
+            plt.tight_layout()
+            plt.subplots_adjust(hspace = 0.001)
+             
             if save_eps:
                 plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.eps',
                             format='eps')
-            
+             
             # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
             if save_png:
                 plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.png',
