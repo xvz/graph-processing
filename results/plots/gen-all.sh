@@ -4,5 +4,5 @@
 ./gen-data.py 1 > data_mem.py
 ./gen-data.py 2 > data_net.py
 
-./gen-data.py 1 --do-master > data_mem_master.py
-./gen-data.py 2 --do-master > data_net_master.py
+./gen-data.py 1 --master > data_mem_master.py
+./gen-data.py 2 --master > data_net_master.py
