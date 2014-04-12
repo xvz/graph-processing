@@ -649,14 +649,18 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             plt.tight_layout()
             plt.subplots_adjust(hspace = 0.001)
              
+            save_name = alg + '_' + graph + '_' + save_suffix
+            if do_master:
+                save_name = save_name + '_master'
+            
             if save_eps:
-                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.eps',
-                            format='eps', bbox_inches='tight', pad_inches=0.05)
+                plt.savefig('./figs/' + save_name + '.eps', format='eps',
+                            bbox_inches='tight', pad_inches=0.05)
              
             # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
             if save_png:
-                plt.savefig('./figs/' + alg + '_' + graph + '_' + save_suffix + '.png',
-                            format='png', dpi=200, bbox_inches='tight', pad_inches=0.05)
+                plt.savefig('./figs/' + save_name + '.png', format='png',
+                            dpi=200, bbox_inches='tight', pad_inches=0.05)
 
 
 ## Separate plot with the legend
