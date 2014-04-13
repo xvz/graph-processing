@@ -66,9 +66,9 @@ public abstract class BaseGreedyDynamicGPSWorkerImpl<V extends MinaWritable,
 //		}
 	}
 //
-//	protected Byte putVertexIntoVerticesToMoveIfMaxCommunicationMachineIsNotLocalMachine(
-//		int nodeId, Map<Integer, Byte> vertexIdMachineIdMap) {
-//		byte maxCommunicationMachineId = findIdOfMaxCommunicatedMachine();
+//	protected Integer putVertexIntoVerticesToMoveIfMaxCommunicationMachineIsNotLocalMachine(
+//		int nodeId, Map<Integer, Integer> vertexIdMachineIdMap) {
+//		int maxCommunicationMachineId = findIdOfMaxCommunicatedMachine();
 //		if (maxCommunicationMachineId != getLocalMachineId()
 //			&& machineCommunicationHistogram[maxCommunicationMachineId]
 //			  >= (machineCommunicationHistogram[getLocalMachineId()] + benefitThreshold)) {
@@ -79,7 +79,7 @@ public abstract class BaseGreedyDynamicGPSWorkerImpl<V extends MinaWritable,
 //		}
 //	}
 
-	protected byte findIdOfMaxCommunicatedMachine() {
+	protected int findIdOfMaxCommunicatedMachine() {
 //		System.out.println("Finding maxCommunicationMachine...");
 //		System.out.println("0: " + machineCommunicationHistogram[0]);
 		int maxIndex = 0;
@@ -100,6 +100,6 @@ public abstract class BaseGreedyDynamicGPSWorkerImpl<V extends MinaWritable,
 			}
 		}
 //		System.out.println("End of finding maxCommunicationMachine...");
-		return (byte) maxIndex;
+		return (int) maxIndex;
 	}
 }

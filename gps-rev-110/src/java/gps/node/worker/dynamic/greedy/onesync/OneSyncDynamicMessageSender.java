@@ -59,7 +59,7 @@ public class OneSyncDynamicMessageSender extends StaticGPSMessageSender {
 	}
 
 	public void broadcastShuffledVertexIds(int superstepNo,
-		Map<Integer, Byte> verticesSentInCurrentSuperstep) {
+		Map<Integer, Integer> verticesSentInCurrentSuperstep) {
 		int[] randomPermutation = Utils.getRandomPermutation(machineConfig.getWorkerIds().size());
 		List<Integer> allMachineIds = new LinkedList<Integer>(machineConfig.getWorkerIds());
 		for (int i : randomPermutation) {
@@ -92,7 +92,7 @@ public class OneSyncDynamicMessageSender extends StaticGPSMessageSender {
 
 	private OutgoingBufferedMessage constructPotentialNumVerticesToSendMessage(int superstepNo,
 		int potentialNumVerticesToSend, boolean isDenseMachine) {
-		IoBuffer ioBuffer = IoBuffer.allocate(5);
+		IoBuffer ioBuffer = IoBuffer.allocate(5 * Integer.SIZE/Byte.SIZE);
 		ioBuffer.putInt(potentialNumVerticesToSend);
 		ioBuffer.put(isDenseMachine ? (byte) 1 : (byte) 0);
 		return new OutgoingBufferedMessage(MessageTypes.POTENTIAL_NUM_VERTICES_TO_SEND,
@@ -100,11 +100,11 @@ public class OneSyncDynamicMessageSender extends StaticGPSMessageSender {
 	}
 
 	private OutgoingBufferedMessage constructExceptionsMapMessage(int superstepNo,
-		Map<Integer, Byte> verticesSentInCurrentSuperstep) {
-		IoBuffer ioBuffer = IoBuffer.allocate(5 * verticesSentInCurrentSuperstep.size());
+		Map<Integer, Integer> verticesSentInCurrentSuperstep) {
+		IoBuffer ioBuffer = IoBuffer.allocate(5 * verticesSentInCurrentSuperstep.size() * Integer.SIZE/Byte.SIZE);
 		for (int vertexIdToMove : verticesSentInCurrentSuperstep.keySet()) {
 			ioBuffer.putInt(vertexIdToMove);
-			ioBuffer.put(verticesSentInCurrentSuperstep.get(vertexIdToMove));
+			ioBuffer.putInt(verticesSentInCurrentSuperstep.get(vertexIdToMove));
 		}
 		return new OutgoingBufferedMessage(MessageTypes.EXCEPTIONS_MAP, superstepNo, ioBuffer);
 	}

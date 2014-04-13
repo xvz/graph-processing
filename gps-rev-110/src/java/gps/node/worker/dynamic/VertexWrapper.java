@@ -7,5 +7,5 @@ public class VertexWrapper<V extends MinaWritable> {
 	public int[] neighborIds;
 	public V state;
 	public boolean isActive;
-	public byte toOrFromMachineId;
+	public int toOrFromMachineId;
 }

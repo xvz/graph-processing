@@ -47,9 +47,9 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 	private OneSyncDynamicMessageSender messageSender;
 	private int[] potentialNumVerticesToSend;
 	private Set<Integer> potentialVertexIdsToSend;
-	private List<Map<Integer, Byte>> potentialVerticesToSendBuckets;
-	private Map<Integer, Byte> verticesSentInPreviousSuperstep = new HashMap<Integer, Byte>();
-	private Map<Integer, Byte> verticesSentInCurrentSuperstep = new HashMap<Integer, Byte>();
+	private List<Map<Integer, Integer>> potentialVerticesToSendBuckets;
+	private Map<Integer, Integer> verticesSentInPreviousSuperstep = new HashMap<Integer, Integer>();
+	private Map<Integer, Integer> verticesSentInCurrentSuperstep = new HashMap<Integer, Integer>();
 	private OpenIntIntHashMap relabelsMap;
 	private int[] potentialNumVerticesToReceive;
 	private int[][][] shuffledVertices;
@@ -90,9 +90,9 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 		potentialNumVerticesToSend = new int[getNumWorkers()];
 		potentialNumVerticesToReceive = new int[getNumWorkers()];
 		potentialVertexIdsToSend = new HashSet<Integer>();
-		potentialVerticesToSendBuckets = new ArrayList<Map<Integer, Byte>>();
+		potentialVerticesToSendBuckets = new ArrayList<Map<Integer, Integer>>();
 		for (int i = 0; i < 8; i++) {
-			potentialVerticesToSendBuckets.add(new HashMap<Integer, Byte>());
+			potentialVerticesToSendBuckets.add(new HashMap<Integer, Integer>());
 		}
 		relabelsMap = new OpenIntIntHashMap();// new HashMap<Integer, Integer>();
 		this.receivedVertexDataWrapper = new ReceivedVertexDataWrapper<VW>();
@@ -210,7 +210,7 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 		if (graphPartition.isActiveOfLocalId(localId) == NullEdgeVertex.ACTIVE
 			&& ((shouldPutOnlyLargeVertices && neighborsSize > minNumberOfEdgesForLargeVertices)
 				|| (!shouldPutOnlyLargeVertices && neighborsSize < edgeThreshold))) {
-			byte maxCommunicationMachineId = findIdOfMaxCommunicatedMachine();
+			int maxCommunicationMachineId = findIdOfMaxCommunicatedMachine();
 			if (!shouldPutOnlyLargeVertices &&
 				denseMachines[maxCommunicationMachineId] &&
 				(neighborsSize > (minNumberOfEdgesForLargeVertices / 3))) {
@@ -236,8 +236,8 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 	}
 
 	private void addVertexIdToCorrectBenefitGroup(
-		List<Map<Integer, Byte>> potentialVerticesToSendBenefitBuckets, int vertexId,
-		byte maxCommunicationMachineId, int benefit, int neighborsSize) {
+		List<Map<Integer, Integer>> potentialVerticesToSendBenefitBuckets, int vertexId,
+		int maxCommunicationMachineId, int benefit, int neighborsSize) {
 //		if (shouldPutOnlyLargeVertices) {
 			if (benefit >= 320) {
 				potentialVerticesToSendBenefitBuckets.get(0).put(vertexId, maxCommunicationMachineId);
@@ -328,10 +328,10 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 				potentialNumVerticesToSend[i], potentialNumVerticesToReceive[i]);
 		}
 		int[] numVerticesAlreadySent = new int[getNumWorkers()];
-		for (Map<Integer, Byte> potentialVerticesToSendForCurrentSuperstepBucket
+		for (Map<Integer, Integer> potentialVerticesToSendForCurrentSuperstepBucket
 			: potentialVerticesToSendBuckets) {
 			for (int idOfPotentialVertexToSend : potentialVerticesToSendForCurrentSuperstepBucket.keySet()) {
-				byte toMachineId = potentialVerticesToSendForCurrentSuperstepBucket.get(
+				int toMachineId = potentialVerticesToSendForCurrentSuperstepBucket.get(
 					idOfPotentialVertexToSend);
 				if (numVerticesAlreadySent[toMachineId] < numVerticesToSendToEachWorker[toMachineId]) {
 					numHighBenefitVerticesSent++;
@@ -376,7 +376,7 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 
 		receivedVertexDataWrapper.verticesReceived.clear();
 
-		Map<Integer, Byte> tmp = verticesSentInCurrentSuperstep;
+		Map<Integer, Integer> tmp = verticesSentInCurrentSuperstep;
 		verticesSentInCurrentSuperstep = verticesSentInPreviousSuperstep;
 		verticesSentInPreviousSuperstep = tmp;
 		verticesSentInCurrentSuperstep.clear();
@@ -385,7 +385,7 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 
 		potentialVertexIdsToSend.clear();
 		
-		for (Map<Integer, Byte> potentialVerticesToSendBucket : potentialVerticesToSendBuckets) {
+		for (Map<Integer, Integer> potentialVerticesToSendBucket : potentialVerticesToSendBuckets) {
 			potentialVerticesToSendBucket.clear();			
 		}
 
@@ -440,7 +440,7 @@ public class TwoSyncGreedyDynamicGPSWorker<VW extends MinaWritable, EW extends M
 				while (ioBuffer.hasRemaining()) {
 					numExceptionVerticesReceived++;
 					int vertexId = ioBuffer.getInt();
-					byte toMachineId = ioBuffer.get();
+					int toMachineId = ioBuffer.getInt();
 					int nextArrayIndex = shuffledVerticesIndices[fromMachineId][toMachineId];
 					int currentArrayLength = shuffledVertices[fromMachineId][toMachineId].length;
 					if (nextArrayIndex == currentArrayLength) {
