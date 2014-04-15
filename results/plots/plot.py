@@ -196,6 +196,9 @@ GRAPH_LABELS = (('LJ (16)', 'LJ (32)', 'LJ (64)', 'LJ (128)'),
 if save_paper:
     FONTSIZE = 20
     VAL_FONTSIZE = 3   # for text values on top of bars
+elif save_eps and (not save_paper):
+    FONTSIZE = 12
+    VAL_FONTSIZE = 4
 else:
     FONTSIZE = 12      # 12 is default
     VAL_FONTSIZE = 8
@@ -664,7 +667,7 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
 
 
 ## Separate plot with the legend
-# values are tuned to give perfect size output for save_paper 
+# values are tuned to give perfect size output for fontsize of 20
 fignum += 1
 plt.figure(fignum, figsize=(4,3.6), facecolor='w')
 ax = plt.subplot()
@@ -674,7 +677,7 @@ plt_legend = [plt.bar(0 + width*i, avg[0], width, color=col, hatch=pat)
                                                    COLORS,
                                                    PATTERNS))]
 
-ax.legend(plt_legend[0:len(plt_legend)], LEGEND_LABELS, fontsize=FONTSIZE,
+ax.legend(plt_legend[0:len(plt_legend)], LEGEND_LABELS, fontsize=20,
           loc=3, bbox_to_anchor=[-0.1,-0.1], borderaxespad=0.0).draw_frame(False)
 
 for bars in plt_legend:

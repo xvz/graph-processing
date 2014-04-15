@@ -1,0 +1,3300 @@
+giraph_0_16_pagerank_livejournal_eth_recv_avg = 31.7283951623
+giraph_0_16_pagerank_livejournal_eth_recv_ci = 0.0484743042915
+giraph_0_16_pagerank_livejournal_eth_sent_avg = 30.9749306222
+giraph_0_16_pagerank_livejournal_eth_sent_ci = 0.0476670222667
+
+giraph_0_16_pagerank_orkut_eth_recv_avg = 53.5860067608
+giraph_0_16_pagerank_orkut_eth_recv_ci = 0.0712843808462
+giraph_0_16_pagerank_orkut_eth_sent_avg = 52.3344108321
+giraph_0_16_pagerank_orkut_eth_sent_ci = 0.069904586375
+
+giraph_0_16_pagerank_arabic_eth_recv_avg = 287.593867212
+giraph_0_16_pagerank_arabic_eth_recv_ci = 0.0879729012763
+giraph_0_16_pagerank_arabic_eth_sent_avg = 280.958179059
+giraph_0_16_pagerank_arabic_eth_sent_ci = 0.0861919329741
+
+giraph_0_16_pagerank_twitter_eth_recv_avg = 665.320629896
+giraph_0_16_pagerank_twitter_eth_recv_ci = 0.1811739194
+giraph_0_16_pagerank_twitter_eth_sent_avg = 649.88809738
+giraph_0_16_pagerank_twitter_eth_sent_ci = 0.204701751231
+
+giraph_0_16_pagerank_uk0705_eth_recv_avg = 0.0
+giraph_0_16_pagerank_uk0705_eth_recv_ci = 0.0
+giraph_0_16_pagerank_uk0705_eth_sent_avg = 0.0
+giraph_0_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+giraph_0_16_sssp_livejournal_eth_recv_avg = 2.67975464351
+giraph_0_16_sssp_livejournal_eth_recv_ci = 0.0624175767086
+giraph_0_16_sssp_livejournal_eth_sent_avg = 2.59844437838
+giraph_0_16_sssp_livejournal_eth_sent_ci = 0.0614447095576
+
+giraph_0_16_sssp_orkut_eth_recv_avg = 3.98624162544
+giraph_0_16_sssp_orkut_eth_recv_ci = 0.0429051232649
+giraph_0_16_sssp_orkut_eth_sent_avg = 3.87422936931
+giraph_0_16_sssp_orkut_eth_sent_ci = 0.0421958927803
+
+giraph_0_16_sssp_arabic_eth_recv_avg = 18.3816418668
+giraph_0_16_sssp_arabic_eth_recv_ci = 0.0990995298411
+giraph_0_16_sssp_arabic_eth_sent_avg = 17.9374042649
+giraph_0_16_sssp_arabic_eth_sent_ci = 0.0965622699651
+
+giraph_0_16_sssp_twitter_eth_recv_avg = 41.4359659024
+giraph_0_16_sssp_twitter_eth_recv_ci = 0.173524855735
+giraph_0_16_sssp_twitter_eth_sent_avg = 40.4451557906
+giraph_0_16_sssp_twitter_eth_sent_ci = 0.170370553536
+
+giraph_0_16_sssp_uk0705_eth_recv_avg = 0.0
+giraph_0_16_sssp_uk0705_eth_recv_ci = 0.0
+giraph_0_16_sssp_uk0705_eth_sent_avg = 0.0
+giraph_0_16_sssp_uk0705_eth_sent_ci = 0.0
+
+giraph_0_16_wcc_livejournal_eth_recv_avg = 6.69509701356
+giraph_0_16_wcc_livejournal_eth_recv_ci = 0.0433642872846
+giraph_0_16_wcc_livejournal_eth_sent_avg = 6.51997288354
+giraph_0_16_wcc_livejournal_eth_sent_ci = 0.0428594125359
+
+giraph_0_16_wcc_orkut_eth_recv_avg = 11.3625975111
+giraph_0_16_wcc_orkut_eth_recv_ci = 0.051408824962
+giraph_0_16_wcc_orkut_eth_sent_avg = 11.0800055061
+giraph_0_16_wcc_orkut_eth_sent_ci = 0.0504460801868
+
+giraph_0_16_wcc_arabic_eth_recv_avg = 102.267671582
+giraph_0_16_wcc_arabic_eth_recv_ci = 0.0506690381066
+giraph_0_16_wcc_arabic_eth_sent_avg = 99.8802674407
+giraph_0_16_wcc_arabic_eth_sent_ci = 0.0494798349785
+
+giraph_0_16_wcc_twitter_eth_recv_avg = 130.133366708
+giraph_0_16_wcc_twitter_eth_recv_ci = 0.205969105299
+giraph_0_16_wcc_twitter_eth_sent_avg = 127.077634238
+giraph_0_16_wcc_twitter_eth_sent_ci = 0.202292551853
+
+giraph_0_16_wcc_uk0705_eth_recv_avg = 0.0
+giraph_0_16_wcc_uk0705_eth_recv_ci = 0.0
+giraph_0_16_wcc_uk0705_eth_sent_avg = 0.0
+giraph_0_16_wcc_uk0705_eth_sent_ci = 0.0
+
+giraph_0_16_mst_livejournal_eth_recv_avg = 11.4404203877
+giraph_0_16_mst_livejournal_eth_recv_ci = 0.141963341429
+giraph_0_16_mst_livejournal_eth_sent_avg = 11.1645833552
+giraph_0_16_mst_livejournal_eth_sent_ci = 0.139732001204
+
+giraph_0_16_mst_orkut_eth_recv_avg = 32.0120212965
+giraph_0_16_mst_orkut_eth_recv_ci = 0.092626038024
+giraph_0_16_mst_orkut_eth_sent_avg = 31.2030793071
+giraph_0_16_mst_orkut_eth_sent_ci = 0.0619999652426
+
+giraph_0_16_mst_arabic_eth_recv_avg = 85.1116515471
+giraph_0_16_mst_arabic_eth_recv_ci = 0.131436711375
+giraph_0_16_mst_arabic_eth_sent_avg = 83.1584260268
+giraph_0_16_mst_arabic_eth_sent_ci = 0.12769612022
+
+giraph_0_16_mst_twitter_eth_recv_avg = 0.0
+giraph_0_16_mst_twitter_eth_recv_ci = 0.0
+giraph_0_16_mst_twitter_eth_sent_avg = 0.0
+giraph_0_16_mst_twitter_eth_sent_ci = 0.0
+
+giraph_0_16_mst_uk0705_eth_recv_avg = 0.0
+giraph_0_16_mst_uk0705_eth_recv_ci = 0.0
+giraph_0_16_mst_uk0705_eth_sent_avg = 0.0
+giraph_0_16_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_0_32_pagerank_livejournal_eth_recv_avg = 33.2469811358
+giraph_0_32_pagerank_livejournal_eth_recv_ci = 0.0420341354272
+giraph_0_32_pagerank_livejournal_eth_sent_avg = 32.4848402392
+giraph_0_32_pagerank_livejournal_eth_sent_ci = 0.0420074407057
+
+giraph_0_32_pagerank_orkut_eth_recv_avg = 55.8291444229
+giraph_0_32_pagerank_orkut_eth_recv_ci = 0.100307239571
+giraph_0_32_pagerank_orkut_eth_sent_avg = 54.5880421652
+giraph_0_32_pagerank_orkut_eth_sent_ci = 0.0927900329343
+
+giraph_0_32_pagerank_arabic_eth_recv_avg = 298.009858473
+giraph_0_32_pagerank_arabic_eth_recv_ci = 0.0989710590513
+giraph_0_32_pagerank_arabic_eth_sent_avg = 291.343087966
+giraph_0_32_pagerank_arabic_eth_sent_ci = 0.0958781492893
+
+giraph_0_32_pagerank_twitter_eth_recv_avg = 688.576825237
+giraph_0_32_pagerank_twitter_eth_recv_ci = 0.256750589404
+giraph_0_32_pagerank_twitter_eth_sent_avg = 672.948404109
+giraph_0_32_pagerank_twitter_eth_sent_ci = 0.250222384123
+
+giraph_0_32_pagerank_uk0705_eth_recv_avg = 0.0
+giraph_0_32_pagerank_uk0705_eth_recv_ci = 0.0
+giraph_0_32_pagerank_uk0705_eth_sent_avg = 0.0
+giraph_0_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+giraph_0_32_sssp_livejournal_eth_recv_avg = 3.15119004659
+giraph_0_32_sssp_livejournal_eth_recv_ci = 0.0521260798854
+giraph_0_32_sssp_livejournal_eth_sent_avg = 3.06233333107
+giraph_0_32_sssp_livejournal_eth_sent_ci = 0.0512041129227
+
+giraph_0_32_sssp_orkut_eth_recv_avg = 4.45234264061
+giraph_0_32_sssp_orkut_eth_recv_ci = 0.037334477249
+giraph_0_32_sssp_orkut_eth_sent_avg = 4.3320791794
+giraph_0_32_sssp_orkut_eth_sent_ci = 0.0365231488571
+
+giraph_0_32_sssp_arabic_eth_recv_avg = 20.0279029908
+giraph_0_32_sssp_arabic_eth_recv_ci = 0.105396136791
+giraph_0_32_sssp_arabic_eth_sent_avg = 19.5711565116
+giraph_0_32_sssp_arabic_eth_sent_ci = 0.10377433047
+
+giraph_0_32_sssp_twitter_eth_recv_avg = 43.8342640577
+giraph_0_32_sssp_twitter_eth_recv_ci = 0.256730449363
+giraph_0_32_sssp_twitter_eth_sent_avg = 42.8107670411
+giraph_0_32_sssp_twitter_eth_sent_ci = 0.25284513329
+
+giraph_0_32_sssp_uk0705_eth_recv_avg = 0.0
+giraph_0_32_sssp_uk0705_eth_recv_ci = 0.0
+giraph_0_32_sssp_uk0705_eth_sent_avg = 0.0
+giraph_0_32_sssp_uk0705_eth_sent_ci = 0.0
+
+giraph_0_32_wcc_livejournal_eth_recv_avg = 7.34448438697
+giraph_0_32_wcc_livejournal_eth_recv_ci = 0.0199059979461
+giraph_0_32_wcc_livejournal_eth_sent_avg = 7.16129700299
+giraph_0_32_wcc_livejournal_eth_sent_ci = 0.0220601152849
+
+giraph_0_32_wcc_orkut_eth_recv_avg = 12.2120659351
+giraph_0_32_wcc_orkut_eth_recv_ci = 0.103465289986
+giraph_0_32_wcc_orkut_eth_sent_avg = 11.9167718558
+giraph_0_32_wcc_orkut_eth_sent_ci = 0.101679457142
+
+giraph_0_32_wcc_arabic_eth_recv_avg = 106.88823058
+giraph_0_32_wcc_arabic_eth_recv_ci = 0.129364607084
+giraph_0_32_wcc_arabic_eth_sent_avg = 104.45690066
+giraph_0_32_wcc_arabic_eth_sent_ci = 0.119958675407
+
+giraph_0_32_wcc_twitter_eth_recv_avg = 134.953623458
+giraph_0_32_wcc_twitter_eth_recv_ci = 0.213982246321
+giraph_0_32_wcc_twitter_eth_sent_avg = 131.834777386
+giraph_0_32_wcc_twitter_eth_sent_ci = 0.209980995986
+
+giraph_0_32_wcc_uk0705_eth_recv_avg = 0.0
+giraph_0_32_wcc_uk0705_eth_recv_ci = 0.0
+giraph_0_32_wcc_uk0705_eth_sent_avg = 0.0
+giraph_0_32_wcc_uk0705_eth_sent_ci = 0.0
+
+giraph_0_32_mst_livejournal_eth_recv_avg = 12.4468431605
+giraph_0_32_mst_livejournal_eth_recv_ci = 0.0789409203794
+giraph_0_32_mst_livejournal_eth_sent_avg = 12.1690874493
+giraph_0_32_mst_livejournal_eth_sent_ci = 0.077312113989
+
+giraph_0_32_mst_orkut_eth_recv_avg = 34.1974968227
+giraph_0_32_mst_orkut_eth_recv_ci = 0.0789681578236
+giraph_0_32_mst_orkut_eth_sent_avg = 33.4360053381
+giraph_0_32_mst_orkut_eth_sent_ci = 0.0770175178718
+
+giraph_0_32_mst_arabic_eth_recv_avg = 89.7062143616
+giraph_0_32_mst_arabic_eth_recv_ci = 0.256848800346
+giraph_0_32_mst_arabic_eth_sent_avg = 87.6243132956
+giraph_0_32_mst_arabic_eth_sent_ci = 0.0942533603939
+
+giraph_0_32_mst_twitter_eth_recv_avg = 0.0
+giraph_0_32_mst_twitter_eth_recv_ci = 0.0
+giraph_0_32_mst_twitter_eth_sent_avg = 0.0
+giraph_0_32_mst_twitter_eth_sent_ci = 0.0
+
+giraph_0_32_mst_uk0705_eth_recv_avg = 0.0
+giraph_0_32_mst_uk0705_eth_recv_ci = 0.0
+giraph_0_32_mst_uk0705_eth_sent_avg = 0.0
+giraph_0_32_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_0_64_pagerank_livejournal_eth_recv_avg = 34.8186641727
+giraph_0_64_pagerank_livejournal_eth_recv_ci = 0.00850803579333
+giraph_0_64_pagerank_livejournal_eth_sent_avg = 34.2520378862
+giraph_0_64_pagerank_livejournal_eth_sent_ci = 0.0162809434839
+
+giraph_0_64_pagerank_orkut_eth_recv_avg = 58.0276200581
+giraph_0_64_pagerank_orkut_eth_recv_ci = 0.0645849180459
+giraph_0_64_pagerank_orkut_eth_sent_avg = 57.3472113194
+giraph_0_64_pagerank_orkut_eth_sent_ci = 0.0620275394725
+
+giraph_0_64_pagerank_arabic_eth_recv_avg = 303.695092178
+giraph_0_64_pagerank_arabic_eth_recv_ci = 0.198838455073
+giraph_0_64_pagerank_arabic_eth_sent_avg = 298.89139258
+giraph_0_64_pagerank_arabic_eth_sent_ci = 0.210115845249
+
+giraph_0_64_pagerank_twitter_eth_recv_avg = 701.426830656
+giraph_0_64_pagerank_twitter_eth_recv_ci = 0.175008310846
+giraph_0_64_pagerank_twitter_eth_sent_avg = 689.576548318
+giraph_0_64_pagerank_twitter_eth_sent_ci = 0.152296663375
+
+giraph_0_64_pagerank_uk0705_eth_recv_avg = 1772.25932023
+giraph_0_64_pagerank_uk0705_eth_recv_ci = 0.417431114519
+giraph_0_64_pagerank_uk0705_eth_sent_avg = 1741.21789327
+giraph_0_64_pagerank_uk0705_eth_sent_ci = 0.362169455605
+
+giraph_0_64_sssp_livejournal_eth_recv_avg = 4.07581203226
+giraph_0_64_sssp_livejournal_eth_recv_ci = 0.00776963228289
+giraph_0_64_sssp_livejournal_eth_sent_avg = 3.97538584881
+giraph_0_64_sssp_livejournal_eth_sent_ci = 0.00711805560724
+
+giraph_0_64_sssp_orkut_eth_recv_avg = 5.64156051669
+giraph_0_64_sssp_orkut_eth_recv_ci = 0.0448821754585
+giraph_0_64_sssp_orkut_eth_sent_avg = 5.5029006144
+giraph_0_64_sssp_orkut_eth_sent_ci = 0.044220766858
+
+giraph_0_64_sssp_arabic_eth_recv_avg = 22.1392321704
+giraph_0_64_sssp_arabic_eth_recv_ci = 0.174598474711
+giraph_0_64_sssp_arabic_eth_sent_avg = 21.7083954746
+giraph_0_64_sssp_arabic_eth_sent_ci = 0.173058647823
+
+giraph_0_64_sssp_twitter_eth_recv_avg = 46.6093286457
+giraph_0_64_sssp_twitter_eth_recv_ci = 0.306029884495
+giraph_0_64_sssp_twitter_eth_sent_avg = 45.6430714363
+giraph_0_64_sssp_twitter_eth_sent_ci = 0.309029096186
+
+giraph_0_64_sssp_uk0705_eth_recv_avg = 109.816809867
+giraph_0_64_sssp_uk0705_eth_recv_ci = 0.229440274868
+giraph_0_64_sssp_uk0705_eth_sent_avg = 107.739924748
+giraph_0_64_sssp_uk0705_eth_sent_ci = 0.204693041653
+
+giraph_0_64_wcc_livejournal_eth_recv_avg = 8.30995711517
+giraph_0_64_wcc_livejournal_eth_recv_ci = 0.0990146663802
+giraph_0_64_wcc_livejournal_eth_sent_avg = 8.12080098297
+giraph_0_64_wcc_livejournal_eth_sent_ci = 0.0964182921157
+
+giraph_0_64_wcc_orkut_eth_recv_avg = 13.3814737992
+giraph_0_64_wcc_orkut_eth_recv_ci = 0.0275220086543
+giraph_0_64_wcc_orkut_eth_sent_avg = 13.1357940372
+giraph_0_64_wcc_orkut_eth_sent_ci = 0.0242065392025
+
+giraph_0_64_wcc_arabic_eth_recv_avg = 109.781342238
+giraph_0_64_wcc_arabic_eth_recv_ci = 0.197589144344
+giraph_0_64_wcc_arabic_eth_sent_avg = 107.929025547
+giraph_0_64_wcc_arabic_eth_sent_ci = 0.144767658093
+
+giraph_0_64_wcc_twitter_eth_recv_avg = 139.365439511
+giraph_0_64_wcc_twitter_eth_recv_ci = 0.139720439559
+giraph_0_64_wcc_twitter_eth_sent_avg = 136.655105899
+giraph_0_64_wcc_twitter_eth_sent_ci = 0.166234344584
+
+giraph_0_64_wcc_uk0705_eth_recv_avg = 600.442371625
+giraph_0_64_wcc_uk0705_eth_recv_ci = 0.236660015952
+giraph_0_64_wcc_uk0705_eth_sent_avg = 588.830784531
+giraph_0_64_wcc_uk0705_eth_sent_ci = 0.273540175105
+
+giraph_0_64_mst_livejournal_eth_recv_avg = 14.1305391585
+giraph_0_64_mst_livejournal_eth_recv_ci = 0.0915384635155
+giraph_0_64_mst_livejournal_eth_sent_avg = 13.9178517517
+giraph_0_64_mst_livejournal_eth_sent_ci = 0.0885481495839
+
+giraph_0_64_mst_orkut_eth_recv_avg = 36.7978893129
+giraph_0_64_mst_orkut_eth_recv_ci = 0.239052824629
+giraph_0_64_mst_orkut_eth_sent_avg = 36.2208110496
+giraph_0_64_mst_orkut_eth_sent_ci = 0.235786513004
+
+giraph_0_64_mst_arabic_eth_recv_avg = 93.0454362923
+giraph_0_64_mst_arabic_eth_recv_ci = 0.674610373902
+giraph_0_64_mst_arabic_eth_sent_avg = 91.1379524983
+giraph_0_64_mst_arabic_eth_sent_ci = 0.623079646646
+
+giraph_0_64_mst_twitter_eth_recv_avg = 0.0
+giraph_0_64_mst_twitter_eth_recv_ci = 0.0
+giraph_0_64_mst_twitter_eth_sent_avg = 0.0
+giraph_0_64_mst_twitter_eth_sent_ci = 0.0
+
+giraph_0_64_mst_uk0705_eth_recv_avg = 0.0
+giraph_0_64_mst_uk0705_eth_recv_ci = 0.0
+giraph_0_64_mst_uk0705_eth_sent_avg = 0.0
+giraph_0_64_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_0_128_pagerank_livejournal_eth_recv_avg = 38.5502369124
+giraph_0_128_pagerank_livejournal_eth_recv_ci = 0.0443047243516
+giraph_0_128_pagerank_livejournal_eth_sent_avg = 38.2079821324
+giraph_0_128_pagerank_livejournal_eth_sent_ci = 0.0326948670081
+
+giraph_0_128_pagerank_orkut_eth_recv_avg = 62.0458989376
+giraph_0_128_pagerank_orkut_eth_recv_ci = 0.0325790006129
+giraph_0_128_pagerank_orkut_eth_sent_avg = 62.2536694864
+giraph_0_128_pagerank_orkut_eth_sent_ci = 0.12088471319
+
+giraph_0_128_pagerank_arabic_eth_recv_avg = 310.598733848
+giraph_0_128_pagerank_arabic_eth_recv_ci = 0.292752765999
+giraph_0_128_pagerank_arabic_eth_sent_avg = 312.889730155
+giraph_0_128_pagerank_arabic_eth_sent_ci = 0.452168472775
+
+giraph_0_128_pagerank_twitter_eth_recv_avg = 713.783045048
+giraph_0_128_pagerank_twitter_eth_recv_ci = 0.389411181754
+giraph_0_128_pagerank_twitter_eth_sent_avg = 714.178360781
+giraph_0_128_pagerank_twitter_eth_sent_ci = 0.460760645235
+
+giraph_0_128_pagerank_uk0705_eth_recv_avg = 1792.91208847
+giraph_0_128_pagerank_uk0705_eth_recv_ci = 0.618368692177
+giraph_0_128_pagerank_uk0705_eth_sent_avg = 1786.39396245
+giraph_0_128_pagerank_uk0705_eth_sent_ci = 0.682225067328
+
+giraph_0_128_sssp_livejournal_eth_recv_avg = 6.18689430077
+giraph_0_128_sssp_livejournal_eth_recv_ci = 0.0440271840032
+giraph_0_128_sssp_livejournal_eth_sent_avg = 6.06891155206
+giraph_0_128_sssp_livejournal_eth_sent_ci = 0.0446853204576
+
+giraph_0_128_sssp_orkut_eth_recv_avg = 7.58133311383
+giraph_0_128_sssp_orkut_eth_recv_ci = 0.0222983097009
+giraph_0_128_sssp_orkut_eth_sent_avg = 7.4299334053
+giraph_0_128_sssp_orkut_eth_sent_ci = 0.0219436854995
+
+giraph_0_128_sssp_arabic_eth_recv_avg = 26.6354889585
+giraph_0_128_sssp_arabic_eth_recv_ci = 0.171883016396
+giraph_0_128_sssp_arabic_eth_sent_avg = 26.3616610868
+giraph_0_128_sssp_arabic_eth_sent_ci = 0.165863272623
+
+giraph_0_128_sssp_twitter_eth_recv_avg = 50.6326496307
+giraph_0_128_sssp_twitter_eth_recv_ci = 0.339888294243
+giraph_0_128_sssp_twitter_eth_sent_avg = 49.9689255407
+giraph_0_128_sssp_twitter_eth_sent_ci = 0.333468696129
+
+giraph_0_128_sssp_uk0705_eth_recv_avg = 118.321808628
+giraph_0_128_sssp_uk0705_eth_recv_ci = 0.506131101945
+giraph_0_128_sssp_uk0705_eth_sent_avg = 117.714677921
+giraph_0_128_sssp_uk0705_eth_sent_ci = 0.510092474706
+
+giraph_0_128_wcc_livejournal_eth_recv_avg = 10.6322486758
+giraph_0_128_wcc_livejournal_eth_recv_ci = 0.0230082859038
+giraph_0_128_wcc_livejournal_eth_sent_avg = 10.4427496472
+giraph_0_128_wcc_livejournal_eth_sent_ci = 0.0222145552757
+
+giraph_0_128_wcc_orkut_eth_recv_avg = 15.5271310713
+giraph_0_128_wcc_orkut_eth_recv_ci = 0.0935587319966
+giraph_0_128_wcc_orkut_eth_sent_avg = 15.3161231013
+giraph_0_128_wcc_orkut_eth_sent_ci = 0.101096759809
+
+giraph_0_128_wcc_arabic_eth_recv_avg = 115.601892794
+giraph_0_128_wcc_arabic_eth_recv_ci = 0.175208167531
+giraph_0_128_wcc_arabic_eth_sent_avg = 115.845879291
+giraph_0_128_wcc_arabic_eth_sent_ci = 0.136711719071
+
+giraph_0_128_wcc_twitter_eth_recv_avg = 145.575094719
+giraph_0_128_wcc_twitter_eth_recv_ci = 0.378082482458
+giraph_0_128_wcc_twitter_eth_sent_avg = 144.535518483
+giraph_0_128_wcc_twitter_eth_sent_ci = 0.372443698472
+
+giraph_0_128_wcc_uk0705_eth_recv_avg = 618.599886074
+giraph_0_128_wcc_uk0705_eth_recv_ci = 0.436420189822
+giraph_0_128_wcc_uk0705_eth_sent_avg = 614.809710328
+giraph_0_128_wcc_uk0705_eth_sent_ci = 0.677307050583
+
+giraph_0_128_mst_livejournal_eth_recv_avg = 0.0
+giraph_0_128_mst_livejournal_eth_recv_ci = 0.0
+giraph_0_128_mst_livejournal_eth_sent_avg = 0.0
+giraph_0_128_mst_livejournal_eth_sent_ci = 0.0
+
+giraph_0_128_mst_orkut_eth_recv_avg = 0.0
+giraph_0_128_mst_orkut_eth_recv_ci = 0.0
+giraph_0_128_mst_orkut_eth_sent_avg = 0.0
+giraph_0_128_mst_orkut_eth_sent_ci = 0.0
+
+giraph_0_128_mst_arabic_eth_recv_avg = 0.0
+giraph_0_128_mst_arabic_eth_recv_ci = 0.0
+giraph_0_128_mst_arabic_eth_sent_avg = 0.0
+giraph_0_128_mst_arabic_eth_sent_ci = 0.0
+
+giraph_0_128_mst_twitter_eth_recv_avg = 0.0
+giraph_0_128_mst_twitter_eth_recv_ci = 0.0
+giraph_0_128_mst_twitter_eth_sent_avg = 0.0
+giraph_0_128_mst_twitter_eth_sent_ci = 0.0
+
+giraph_0_128_mst_uk0705_eth_recv_avg = 0.0
+giraph_0_128_mst_uk0705_eth_recv_ci = 0.0
+giraph_0_128_mst_uk0705_eth_sent_avg = 0.0
+giraph_0_128_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_1_16_pagerank_livejournal_eth_recv_avg = 31.7341384621
+giraph_1_16_pagerank_livejournal_eth_recv_ci = 0.0426226250076
+giraph_1_16_pagerank_livejournal_eth_sent_avg = 30.978790525
+giraph_1_16_pagerank_livejournal_eth_sent_ci = 0.0419247915285
+
+giraph_1_16_pagerank_orkut_eth_recv_avg = 53.5749020351
+giraph_1_16_pagerank_orkut_eth_recv_ci = 0.0757691003842
+giraph_1_16_pagerank_orkut_eth_sent_avg = 52.321366225
+giraph_1_16_pagerank_orkut_eth_sent_ci = 0.074335833627
+
+giraph_1_16_pagerank_arabic_eth_recv_avg = 287.366670954
+giraph_1_16_pagerank_arabic_eth_recv_ci = 0.0927827562445
+giraph_1_16_pagerank_arabic_eth_sent_avg = 280.711805947
+giraph_1_16_pagerank_arabic_eth_sent_ci = 0.0876975584991
+
+giraph_1_16_pagerank_twitter_eth_recv_avg = 665.080831614
+giraph_1_16_pagerank_twitter_eth_recv_ci = 0.171298907283
+giraph_1_16_pagerank_twitter_eth_sent_avg = 649.662757804
+giraph_1_16_pagerank_twitter_eth_sent_ci = 0.16974078595
+
+giraph_1_16_pagerank_uk0705_eth_recv_avg = 0.0
+giraph_1_16_pagerank_uk0705_eth_recv_ci = 0.0
+giraph_1_16_pagerank_uk0705_eth_sent_avg = 0.0
+giraph_1_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+giraph_1_16_sssp_livejournal_eth_recv_avg = 2.61758177076
+giraph_1_16_sssp_livejournal_eth_recv_ci = 0.0559272534874
+giraph_1_16_sssp_livejournal_eth_sent_avg = 2.53731004819
+giraph_1_16_sssp_livejournal_eth_sent_ci = 0.0552085932172
+
+giraph_1_16_sssp_orkut_eth_recv_avg = 3.89121890385
+giraph_1_16_sssp_orkut_eth_recv_ci = 0.0975669333626
+giraph_1_16_sssp_orkut_eth_sent_avg = 3.7808608409
+giraph_1_16_sssp_orkut_eth_sent_ci = 0.0962852539329
+
+giraph_1_16_sssp_arabic_eth_recv_avg = 18.4341212351
+giraph_1_16_sssp_arabic_eth_recv_ci = 0.0948260640729
+giraph_1_16_sssp_arabic_eth_sent_avg = 17.9918549577
+giraph_1_16_sssp_arabic_eth_sent_ci = 0.0932523802422
+
+giraph_1_16_sssp_twitter_eth_recv_avg = 0.0
+giraph_1_16_sssp_twitter_eth_recv_ci = 0.0
+giraph_1_16_sssp_twitter_eth_sent_avg = 0.0
+giraph_1_16_sssp_twitter_eth_sent_ci = 0.0
+
+giraph_1_16_sssp_uk0705_eth_recv_avg = 0.0
+giraph_1_16_sssp_uk0705_eth_recv_ci = 0.0
+giraph_1_16_sssp_uk0705_eth_sent_avg = 0.0
+giraph_1_16_sssp_uk0705_eth_sent_ci = 0.0
+
+giraph_1_16_wcc_livejournal_eth_recv_avg = 6.71458001882
+giraph_1_16_wcc_livejournal_eth_recv_ci = 0.0528860233211
+giraph_1_16_wcc_livejournal_eth_sent_avg = 6.53909341823
+giraph_1_16_wcc_livejournal_eth_sent_ci = 0.0521432589415
+
+giraph_1_16_wcc_orkut_eth_recv_avg = 11.3769360086
+giraph_1_16_wcc_orkut_eth_recv_ci = 0.0606123981394
+giraph_1_16_wcc_orkut_eth_sent_avg = 11.094318217
+giraph_1_16_wcc_orkut_eth_sent_ci = 0.059864823525
+
+giraph_1_16_wcc_arabic_eth_recv_avg = 102.132424492
+giraph_1_16_wcc_arabic_eth_recv_ci = 0.066275291167
+giraph_1_16_wcc_arabic_eth_sent_avg = 99.7580896508
+giraph_1_16_wcc_arabic_eth_sent_ci = 0.0616831513999
+
+giraph_1_16_wcc_twitter_eth_recv_avg = 0.0
+giraph_1_16_wcc_twitter_eth_recv_ci = 0.0
+giraph_1_16_wcc_twitter_eth_sent_avg = 0.0
+giraph_1_16_wcc_twitter_eth_sent_ci = 0.0
+
+giraph_1_16_wcc_uk0705_eth_recv_avg = 0.0
+giraph_1_16_wcc_uk0705_eth_recv_ci = 0.0
+giraph_1_16_wcc_uk0705_eth_sent_avg = 0.0
+giraph_1_16_wcc_uk0705_eth_sent_ci = 0.0
+
+giraph_1_16_mst_livejournal_eth_recv_avg = 11.4991720833
+giraph_1_16_mst_livejournal_eth_recv_ci = 0.238400488608
+giraph_1_16_mst_livejournal_eth_sent_avg = 11.2215817949
+giraph_1_16_mst_livejournal_eth_sent_ci = 0.234568169734
+
+giraph_1_16_mst_orkut_eth_recv_avg = 31.7646079604
+giraph_1_16_mst_orkut_eth_recv_ci = 0.142481987819
+giraph_1_16_mst_orkut_eth_sent_avg = 31.0173029849
+giraph_1_16_mst_orkut_eth_sent_ci = 0.138927773805
+
+giraph_1_16_mst_arabic_eth_recv_avg = 0.0
+giraph_1_16_mst_arabic_eth_recv_ci = 0.0
+giraph_1_16_mst_arabic_eth_sent_avg = 0.0
+giraph_1_16_mst_arabic_eth_sent_ci = 0.0
+
+giraph_1_16_mst_twitter_eth_recv_avg = 0.0
+giraph_1_16_mst_twitter_eth_recv_ci = 0.0
+giraph_1_16_mst_twitter_eth_sent_avg = 0.0
+giraph_1_16_mst_twitter_eth_sent_ci = 0.0
+
+giraph_1_16_mst_uk0705_eth_recv_avg = 0.0
+giraph_1_16_mst_uk0705_eth_recv_ci = 0.0
+giraph_1_16_mst_uk0705_eth_sent_avg = 0.0
+giraph_1_16_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_1_32_pagerank_livejournal_eth_recv_avg = 33.1987924181
+giraph_1_32_pagerank_livejournal_eth_recv_ci = 0.0501127179886
+giraph_1_32_pagerank_livejournal_eth_sent_avg = 32.4366036147
+giraph_1_32_pagerank_livejournal_eth_sent_ci = 0.0500399908234
+
+giraph_1_32_pagerank_orkut_eth_recv_avg = 55.8785171324
+giraph_1_32_pagerank_orkut_eth_recv_ci = 0.0439278411546
+giraph_1_32_pagerank_orkut_eth_sent_avg = 54.6262103651
+giraph_1_32_pagerank_orkut_eth_sent_ci = 0.0412160566102
+
+giraph_1_32_pagerank_arabic_eth_recv_avg = 297.811548395
+giraph_1_32_pagerank_arabic_eth_recv_ci = 0.161096093674
+giraph_1_32_pagerank_arabic_eth_sent_avg = 291.046528289
+giraph_1_32_pagerank_arabic_eth_sent_ci = 0.155712515066
+
+giraph_1_32_pagerank_twitter_eth_recv_avg = 688.217400281
+giraph_1_32_pagerank_twitter_eth_recv_ci = 0.177690007432
+giraph_1_32_pagerank_twitter_eth_sent_avg = 672.563033143
+giraph_1_32_pagerank_twitter_eth_sent_ci = 0.161568052312
+
+giraph_1_32_pagerank_uk0705_eth_recv_avg = 0.0
+giraph_1_32_pagerank_uk0705_eth_recv_ci = 0.0
+giraph_1_32_pagerank_uk0705_eth_sent_avg = 0.0
+giraph_1_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+giraph_1_32_sssp_livejournal_eth_recv_avg = 3.12999129333
+giraph_1_32_sssp_livejournal_eth_recv_ci = 0.0662397499142
+giraph_1_32_sssp_livejournal_eth_sent_avg = 3.04110496491
+giraph_1_32_sssp_livejournal_eth_sent_ci = 0.0653938748945
+
+giraph_1_32_sssp_orkut_eth_recv_avg = 4.5525171956
+giraph_1_32_sssp_orkut_eth_recv_ci = 0.0832084523178
+giraph_1_32_sssp_orkut_eth_sent_avg = 4.43036323208
+giraph_1_32_sssp_orkut_eth_sent_ci = 0.0819376991134
+
+giraph_1_32_sssp_arabic_eth_recv_avg = 19.9714964945
+giraph_1_32_sssp_arabic_eth_recv_ci = 0.0776536415249
+giraph_1_32_sssp_arabic_eth_sent_avg = 19.5142664796
+giraph_1_32_sssp_arabic_eth_sent_ci = 0.0757463661422
+
+giraph_1_32_sssp_twitter_eth_recv_avg = 43.7479181923
+giraph_1_32_sssp_twitter_eth_recv_ci = 0.116398758159
+giraph_1_32_sssp_twitter_eth_sent_avg = 42.7265514165
+giraph_1_32_sssp_twitter_eth_sent_ci = 0.112932186423
+
+giraph_1_32_sssp_uk0705_eth_recv_avg = 0.0
+giraph_1_32_sssp_uk0705_eth_recv_ci = 0.0
+giraph_1_32_sssp_uk0705_eth_sent_avg = 0.0
+giraph_1_32_sssp_uk0705_eth_sent_ci = 0.0
+
+giraph_1_32_wcc_livejournal_eth_recv_avg = 7.31358827148
+giraph_1_32_wcc_livejournal_eth_recv_ci = 0.0466080349152
+giraph_1_32_wcc_livejournal_eth_sent_avg = 7.12961345892
+giraph_1_32_wcc_livejournal_eth_sent_ci = 0.0456124752571
+
+giraph_1_32_wcc_orkut_eth_recv_avg = 12.1864804624
+giraph_1_32_wcc_orkut_eth_recv_ci = 0.0760907949783
+giraph_1_32_wcc_orkut_eth_sent_avg = 11.8918526538
+giraph_1_32_wcc_orkut_eth_sent_ci = 0.0751122405136
+
+giraph_1_32_wcc_arabic_eth_recv_avg = 106.680427349
+giraph_1_32_wcc_arabic_eth_recv_ci = 0.168992407736
+giraph_1_32_wcc_arabic_eth_sent_avg = 104.24021061
+giraph_1_32_wcc_arabic_eth_sent_ci = 0.164134404858
+
+giraph_1_32_wcc_twitter_eth_recv_avg = 135.3293258
+giraph_1_32_wcc_twitter_eth_recv_ci = 0.195584275267
+giraph_1_32_wcc_twitter_eth_sent_avg = 132.188144192
+giraph_1_32_wcc_twitter_eth_sent_ci = 0.199705467089
+
+giraph_1_32_wcc_uk0705_eth_recv_avg = 0.0
+giraph_1_32_wcc_uk0705_eth_recv_ci = 0.0
+giraph_1_32_wcc_uk0705_eth_sent_avg = 0.0
+giraph_1_32_wcc_uk0705_eth_sent_ci = 0.0
+
+giraph_1_32_mst_livejournal_eth_recv_avg = 12.2926175937
+giraph_1_32_mst_livejournal_eth_recv_ci = 0.0777397341635
+giraph_1_32_mst_livejournal_eth_sent_avg = 12.0158956323
+giraph_1_32_mst_livejournal_eth_sent_ci = 0.07652223026
+
+giraph_1_32_mst_orkut_eth_recv_avg = 34.1680739624
+giraph_1_32_mst_orkut_eth_recv_ci = 0.0958401696529
+giraph_1_32_mst_orkut_eth_sent_avg = 33.4030245442
+giraph_1_32_mst_orkut_eth_sent_ci = 0.0954820602116
+
+giraph_1_32_mst_arabic_eth_recv_avg = 89.7137813505
+giraph_1_32_mst_arabic_eth_recv_ci = 0.223392938281
+giraph_1_32_mst_arabic_eth_sent_avg = 87.667061965
+giraph_1_32_mst_arabic_eth_sent_ci = 0.217703965577
+
+giraph_1_32_mst_twitter_eth_recv_avg = 0.0
+giraph_1_32_mst_twitter_eth_recv_ci = 0.0
+giraph_1_32_mst_twitter_eth_sent_avg = 0.0
+giraph_1_32_mst_twitter_eth_sent_ci = 0.0
+
+giraph_1_32_mst_uk0705_eth_recv_avg = 0.0
+giraph_1_32_mst_uk0705_eth_recv_ci = 0.0
+giraph_1_32_mst_uk0705_eth_sent_avg = 0.0
+giraph_1_32_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_1_64_pagerank_livejournal_eth_recv_avg = 34.7529946359
+giraph_1_64_pagerank_livejournal_eth_recv_ci = 0.0475230703321
+giraph_1_64_pagerank_livejournal_eth_sent_avg = 34.1201415759
+giraph_1_64_pagerank_livejournal_eth_sent_ci = 0.060367489321
+
+giraph_1_64_pagerank_orkut_eth_recv_avg = 57.9021343438
+giraph_1_64_pagerank_orkut_eth_recv_ci = 0.0797779371548
+giraph_1_64_pagerank_orkut_eth_sent_avg = 57.1322148519
+giraph_1_64_pagerank_orkut_eth_sent_ci = 0.0833663627303
+
+giraph_1_64_pagerank_arabic_eth_recv_avg = 303.707991597
+giraph_1_64_pagerank_arabic_eth_recv_ci = 0.246784728557
+giraph_1_64_pagerank_arabic_eth_sent_avg = 298.425137758
+giraph_1_64_pagerank_arabic_eth_sent_ci = 0.255399634453
+
+giraph_1_64_pagerank_twitter_eth_recv_avg = 700.61080238
+giraph_1_64_pagerank_twitter_eth_recv_ci = 0.381209345426
+giraph_1_64_pagerank_twitter_eth_sent_avg = 687.682878192
+giraph_1_64_pagerank_twitter_eth_sent_ci = 0.239139296769
+
+giraph_1_64_pagerank_uk0705_eth_recv_avg = 1771.92370399
+giraph_1_64_pagerank_uk0705_eth_recv_ci = 0.159499899338
+giraph_1_64_pagerank_uk0705_eth_sent_avg = 1738.42699223
+giraph_1_64_pagerank_uk0705_eth_sent_ci = 0.323142489679
+
+giraph_1_64_sssp_livejournal_eth_recv_avg = 4.07916339431
+giraph_1_64_sssp_livejournal_eth_recv_ci = 0.000409566577827
+giraph_1_64_sssp_livejournal_eth_sent_avg = 3.97874240279
+giraph_1_64_sssp_livejournal_eth_sent_ci = 0.000748540935077
+
+giraph_1_64_sssp_orkut_eth_recv_avg = 5.58246075902
+giraph_1_64_sssp_orkut_eth_recv_ci = 0.0673364447792
+giraph_1_64_sssp_orkut_eth_sent_avg = 5.44510519914
+giraph_1_64_sssp_orkut_eth_sent_ci = 0.0658415285248
+
+giraph_1_64_sssp_arabic_eth_recv_avg = 21.9301164737
+giraph_1_64_sssp_arabic_eth_recv_ci = 0.248607720663
+giraph_1_64_sssp_arabic_eth_sent_avg = 21.4828767819
+giraph_1_64_sssp_arabic_eth_sent_ci = 0.244702103068
+
+giraph_1_64_sssp_twitter_eth_recv_avg = 45.7824811542
+giraph_1_64_sssp_twitter_eth_recv_ci = 0.51070588125
+giraph_1_64_sssp_twitter_eth_sent_avg = 44.7893934075
+giraph_1_64_sssp_twitter_eth_sent_ci = 0.497704969858
+
+giraph_1_64_sssp_uk0705_eth_recv_avg = 109.598440131
+giraph_1_64_sssp_uk0705_eth_recv_ci = 0.214788033789
+giraph_1_64_sssp_uk0705_eth_sent_avg = 107.419838923
+giraph_1_64_sssp_uk0705_eth_sent_ci = 0.220713059522
+
+giraph_1_64_wcc_livejournal_eth_recv_avg = 8.2842241792
+giraph_1_64_wcc_livejournal_eth_recv_ci = 0.0671593589718
+giraph_1_64_wcc_livejournal_eth_sent_avg = 8.09202315267
+giraph_1_64_wcc_livejournal_eth_sent_ci = 0.0648980285842
+
+giraph_1_64_wcc_orkut_eth_recv_avg = 13.3834934264
+giraph_1_64_wcc_orkut_eth_recv_ci = 0.0254558411768
+giraph_1_64_wcc_orkut_eth_sent_avg = 13.1101043131
+giraph_1_64_wcc_orkut_eth_sent_ci = 0.0303314447196
+
+giraph_1_64_wcc_arabic_eth_recv_avg = 109.23700521
+giraph_1_64_wcc_arabic_eth_recv_ci = 0.360231256791
+giraph_1_64_wcc_arabic_eth_sent_avg = 107.14856184
+giraph_1_64_wcc_arabic_eth_sent_ci = 0.378445262956
+
+giraph_1_64_wcc_twitter_eth_recv_avg = 139.142528327
+giraph_1_64_wcc_twitter_eth_recv_ci = 0.292674122435
+giraph_1_64_wcc_twitter_eth_sent_avg = 136.327675143
+giraph_1_64_wcc_twitter_eth_sent_ci = 0.308365451088
+
+giraph_1_64_wcc_uk0705_eth_recv_avg = 600.422317207
+giraph_1_64_wcc_uk0705_eth_recv_ci = 0.209454224456
+giraph_1_64_wcc_uk0705_eth_sent_avg = 588.644126342
+giraph_1_64_wcc_uk0705_eth_sent_ci = 0.284852048371
+
+giraph_1_64_mst_livejournal_eth_recv_avg = 14.1968168447
+giraph_1_64_mst_livejournal_eth_recv_ci = 0.202480294108
+giraph_1_64_mst_livejournal_eth_sent_avg = 13.961091911
+giraph_1_64_mst_livejournal_eth_sent_ci = 0.199823690412
+
+giraph_1_64_mst_orkut_eth_recv_avg = 36.8200537393
+giraph_1_64_mst_orkut_eth_recv_ci = 0.21473878803
+giraph_1_64_mst_orkut_eth_sent_avg = 36.2293567324
+giraph_1_64_mst_orkut_eth_sent_ci = 0.207124851945
+
+giraph_1_64_mst_arabic_eth_recv_avg = 93.1892611828
+giraph_1_64_mst_arabic_eth_recv_ci = 0.200550780968
+giraph_1_64_mst_arabic_eth_sent_avg = 91.3425648708
+giraph_1_64_mst_arabic_eth_sent_ci = 0.197337076535
+
+giraph_1_64_mst_twitter_eth_recv_avg = 290.664394673
+giraph_1_64_mst_twitter_eth_recv_ci = 0.291688952671
+giraph_1_64_mst_twitter_eth_sent_avg = 284.869207759
+giraph_1_64_mst_twitter_eth_sent_ci = 0.284716458517
+
+giraph_1_64_mst_uk0705_eth_recv_avg = 0.0
+giraph_1_64_mst_uk0705_eth_recv_ci = 0.0
+giraph_1_64_mst_uk0705_eth_sent_avg = 0.0
+giraph_1_64_mst_uk0705_eth_sent_ci = 0.0
+
+giraph_1_128_pagerank_livejournal_eth_recv_avg = 38.5775239339
+giraph_1_128_pagerank_livejournal_eth_recv_ci = 0.00502987983344
+giraph_1_128_pagerank_livejournal_eth_sent_avg = 38.2432493595
+giraph_1_128_pagerank_livejournal_eth_sent_ci = 0.0389816238294
+
+giraph_1_128_pagerank_orkut_eth_recv_avg = 62.0629194906
+giraph_1_128_pagerank_orkut_eth_recv_ci = 0.031485489821
+giraph_1_128_pagerank_orkut_eth_sent_avg = 61.9271238722
+giraph_1_128_pagerank_orkut_eth_sent_ci = 0.0824917522165
+
+giraph_1_128_pagerank_arabic_eth_recv_avg = 310.335427954
+giraph_1_128_pagerank_arabic_eth_recv_ci = 0.26990976716
+giraph_1_128_pagerank_arabic_eth_sent_avg = 311.742065511
+giraph_1_128_pagerank_arabic_eth_sent_ci = 0.323987147321
+
+giraph_1_128_pagerank_twitter_eth_recv_avg = 712.946728981
+giraph_1_128_pagerank_twitter_eth_recv_ci = 0.237855484131
+giraph_1_128_pagerank_twitter_eth_sent_avg = 711.647917215
+giraph_1_128_pagerank_twitter_eth_sent_ci = 0.469623462463
+
+giraph_1_128_pagerank_uk0705_eth_recv_avg = 1792.37693373
+giraph_1_128_pagerank_uk0705_eth_recv_ci = 0.413615656227
+giraph_1_128_pagerank_uk0705_eth_sent_avg = 1779.67743848
+giraph_1_128_pagerank_uk0705_eth_sent_ci = 0.691163871161
+
+giraph_1_128_sssp_livejournal_eth_recv_avg = 6.21171358339
+giraph_1_128_sssp_livejournal_eth_recv_ci = 0.0220609252346
+giraph_1_128_sssp_livejournal_eth_sent_avg = 6.09515930489
+giraph_1_128_sssp_livejournal_eth_sent_ci = 0.0221944779157
+
+giraph_1_128_sssp_orkut_eth_recv_avg = 7.5519576069
+giraph_1_128_sssp_orkut_eth_recv_ci = 0.0372012673035
+giraph_1_128_sssp_orkut_eth_sent_avg = 7.40173638761
+giraph_1_128_sssp_orkut_eth_sent_ci = 0.0362093001822
+
+giraph_1_128_sssp_arabic_eth_recv_avg = 26.87511432
+giraph_1_128_sssp_arabic_eth_recv_ci = 0.274307853386
+giraph_1_128_sssp_arabic_eth_sent_avg = 26.5365795037
+giraph_1_128_sssp_arabic_eth_sent_ci = 0.271523313832
+
+giraph_1_128_sssp_twitter_eth_recv_avg = 50.2353739398
+giraph_1_128_sssp_twitter_eth_recv_ci = 0.338034457477
+giraph_1_128_sssp_twitter_eth_sent_avg = 49.5325748028
+giraph_1_128_sssp_twitter_eth_sent_ci = 0.324607986871
+
+giraph_1_128_sssp_uk0705_eth_recv_avg = 118.306946214
+giraph_1_128_sssp_uk0705_eth_recv_ci = 0.24159159612
+giraph_1_128_sssp_uk0705_eth_sent_avg = 117.132338551
+giraph_1_128_sssp_uk0705_eth_sent_ci = 0.242902413401
+
+giraph_1_128_wcc_livejournal_eth_recv_avg = 10.6293845091
+giraph_1_128_wcc_livejournal_eth_recv_ci = 0.0013793314612
+giraph_1_128_wcc_livejournal_eth_sent_avg = 10.4487945758
+giraph_1_128_wcc_livejournal_eth_sent_ci = 0.0048589145248
+
+giraph_1_128_wcc_orkut_eth_recv_avg = 15.5114974631
+giraph_1_128_wcc_orkut_eth_recv_ci = 0.0562536116401
+giraph_1_128_wcc_orkut_eth_sent_avg = 15.2658481199
+giraph_1_128_wcc_orkut_eth_sent_ci = 0.0499195459119
+
+giraph_1_128_wcc_arabic_eth_recv_avg = 115.556922177
+giraph_1_128_wcc_arabic_eth_recv_ci = 0.294880715405
+giraph_1_128_wcc_arabic_eth_sent_avg = 115.648841944
+giraph_1_128_wcc_arabic_eth_sent_ci = 0.372922624493
+
+giraph_1_128_wcc_twitter_eth_recv_avg = 145.263886826
+giraph_1_128_wcc_twitter_eth_recv_ci = 0.543579091109
+giraph_1_128_wcc_twitter_eth_sent_avg = 143.997511022
+giraph_1_128_wcc_twitter_eth_sent_ci = 0.550346347605
+
+giraph_1_128_wcc_uk0705_eth_recv_avg = 617.446301836
+giraph_1_128_wcc_uk0705_eth_recv_ci = 0.638224367781
+giraph_1_128_wcc_uk0705_eth_sent_avg = 611.550901781
+giraph_1_128_wcc_uk0705_eth_sent_ci = 0.8615904828
+
+giraph_1_128_mst_livejournal_eth_recv_avg = 19.6074837929
+giraph_1_128_mst_livejournal_eth_recv_ci = 0.046482067369
+giraph_1_128_mst_livejournal_eth_sent_avg = 19.4939867141
+giraph_1_128_mst_livejournal_eth_sent_ci = 0.0507310188046
+
+giraph_1_128_mst_orkut_eth_recv_avg = 42.5163820984
+giraph_1_128_mst_orkut_eth_recv_ci = 0.169655774156
+giraph_1_128_mst_orkut_eth_sent_avg = 42.3750513598
+giraph_1_128_mst_orkut_eth_sent_ci = 0.185993935315
+
+giraph_1_128_mst_arabic_eth_recv_avg = 101.633690533
+giraph_1_128_mst_arabic_eth_recv_ci = 0.962940087783
+giraph_1_128_mst_arabic_eth_sent_avg = 101.037138114
+giraph_1_128_mst_arabic_eth_sent_ci = 0.964306271245
+
+giraph_1_128_mst_twitter_eth_recv_avg = 301.054386068
+giraph_1_128_mst_twitter_eth_recv_ci = 0.178817845185
+giraph_1_128_mst_twitter_eth_sent_avg = 298.198556346
+giraph_1_128_mst_twitter_eth_sent_ci = 0.228633322753
+
+giraph_1_128_mst_uk0705_eth_recv_avg = 0.0
+giraph_1_128_mst_uk0705_eth_recv_ci = 0.0
+giraph_1_128_mst_uk0705_eth_sent_avg = 0.0
+giraph_1_128_mst_uk0705_eth_sent_ci = 0.0
+
+gps_0_16_pagerank_livejournal_eth_recv_avg = 31.2982381994
+gps_0_16_pagerank_livejournal_eth_recv_ci = 0.00493016421837
+gps_0_16_pagerank_livejournal_eth_sent_avg = 30.3793554455
+gps_0_16_pagerank_livejournal_eth_sent_ci = 0.00407617395357
+
+gps_0_16_pagerank_orkut_eth_recv_avg = 52.8233014498
+gps_0_16_pagerank_orkut_eth_recv_ci = 0.00390397652234
+gps_0_16_pagerank_orkut_eth_sent_avg = 51.249336586
+gps_0_16_pagerank_orkut_eth_sent_ci = 0.00473402060133
+
+gps_0_16_pagerank_arabic_eth_recv_avg = 294.839099266
+gps_0_16_pagerank_arabic_eth_recv_ci = 0.0381585553947
+gps_0_16_pagerank_arabic_eth_sent_avg = 286.121888078
+gps_0_16_pagerank_arabic_eth_sent_ci = 0.0333942280258
+
+gps_0_16_pagerank_twitter_eth_recv_avg = 688.042233054
+gps_0_16_pagerank_twitter_eth_recv_ci = 0.0649837338852
+gps_0_16_pagerank_twitter_eth_sent_avg = 667.561151812
+gps_0_16_pagerank_twitter_eth_sent_ci = 0.177447410519
+
+gps_0_16_pagerank_uk0705_eth_recv_avg = 0.0
+gps_0_16_pagerank_uk0705_eth_recv_ci = 0.0
+gps_0_16_pagerank_uk0705_eth_sent_avg = 0.0
+gps_0_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_0_16_sssp_livejournal_eth_recv_avg = 9.27105877213
+gps_0_16_sssp_livejournal_eth_recv_ci = 0.00353285472736
+gps_0_16_sssp_livejournal_eth_sent_avg = 9.02337647025
+gps_0_16_sssp_livejournal_eth_sent_ci = 0.00428165746247
+
+gps_0_16_sssp_orkut_eth_recv_avg = 15.1948683219
+gps_0_16_sssp_orkut_eth_recv_ci = 0.00198623485433
+gps_0_16_sssp_orkut_eth_sent_avg = 14.7791362468
+gps_0_16_sssp_orkut_eth_sent_ci = 0.00136857699859
+
+gps_0_16_sssp_arabic_eth_recv_avg = 92.7209340366
+gps_0_16_sssp_arabic_eth_recv_ci = 0.0287994192921
+gps_0_16_sssp_arabic_eth_sent_avg = 90.1183280095
+gps_0_16_sssp_arabic_eth_sent_ci = 0.0389204093389
+
+gps_0_16_sssp_twitter_eth_recv_avg = 219.536760549
+gps_0_16_sssp_twitter_eth_recv_ci = 0.0159425337404
+gps_0_16_sssp_twitter_eth_sent_avg = 213.313785981
+gps_0_16_sssp_twitter_eth_sent_ci = 0.0237951236051
+
+gps_0_16_sssp_uk0705_eth_recv_avg = 0.0
+gps_0_16_sssp_uk0705_eth_recv_ci = 0.0
+gps_0_16_sssp_uk0705_eth_sent_avg = 0.0
+gps_0_16_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_0_16_wcc_livejournal_eth_recv_avg = 11.3825415244
+gps_0_16_wcc_livejournal_eth_recv_ci = 0.00272105712883
+gps_0_16_wcc_livejournal_eth_sent_avg = 11.0775078373
+gps_0_16_wcc_livejournal_eth_sent_ci = 0.00571406367744
+
+gps_0_16_wcc_orkut_eth_recv_avg = 19.0625952575
+gps_0_16_wcc_orkut_eth_recv_ci = 0.00254859672264
+gps_0_16_wcc_orkut_eth_sent_avg = 18.5304592384
+gps_0_16_wcc_orkut_eth_sent_ci = 0.00219436974711
+
+gps_0_16_wcc_arabic_eth_recv_avg = 134.892837369
+gps_0_16_wcc_arabic_eth_recv_ci = 0.0145855848705
+gps_0_16_wcc_arabic_eth_sent_avg = 131.015085533
+gps_0_16_wcc_arabic_eth_sent_ci = 0.0425942923223
+
+gps_0_16_wcc_twitter_eth_recv_avg = 265.667111927
+gps_0_16_wcc_twitter_eth_recv_ci = 0.012976998898
+gps_0_16_wcc_twitter_eth_sent_avg = 258.046927957
+gps_0_16_wcc_twitter_eth_sent_ci = 0.021645257178
+
+gps_0_16_wcc_uk0705_eth_recv_avg = 0.0
+gps_0_16_wcc_uk0705_eth_recv_ci = 0.0
+gps_0_16_wcc_uk0705_eth_sent_avg = 0.0
+gps_0_16_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_0_16_mst_livejournal_eth_recv_avg = 33.8799104385
+gps_0_16_mst_livejournal_eth_recv_ci = 0.035309374262
+gps_0_16_mst_livejournal_eth_sent_avg = 32.9399480449
+gps_0_16_mst_livejournal_eth_sent_ci = 0.0284449135986
+
+gps_0_16_mst_orkut_eth_recv_avg = 91.1879185317
+gps_0_16_mst_orkut_eth_recv_ci = 0.00652275091605
+gps_0_16_mst_orkut_eth_sent_avg = 88.5960572625
+gps_0_16_mst_orkut_eth_sent_ci = 0.0149646956382
+
+gps_0_16_mst_arabic_eth_recv_avg = 399.643873603
+gps_0_16_mst_arabic_eth_recv_ci = 0.435361718065
+gps_0_16_mst_arabic_eth_sent_avg = 388.167179709
+gps_0_16_mst_arabic_eth_sent_ci = 0.350850487039
+
+gps_0_16_mst_twitter_eth_recv_avg = 0.0
+gps_0_16_mst_twitter_eth_recv_ci = 0.0
+gps_0_16_mst_twitter_eth_sent_avg = 0.0
+gps_0_16_mst_twitter_eth_sent_ci = 0.0
+
+gps_0_16_mst_uk0705_eth_recv_avg = 0.0
+gps_0_16_mst_uk0705_eth_recv_ci = 0.0
+gps_0_16_mst_uk0705_eth_sent_avg = 0.0
+gps_0_16_mst_uk0705_eth_sent_ci = 0.0
+
+gps_0_32_pagerank_livejournal_eth_recv_avg = 40.3947552135
+gps_0_32_pagerank_livejournal_eth_recv_ci = 0.00551414273454
+gps_0_32_pagerank_livejournal_eth_sent_avg = 39.3246741107
+gps_0_32_pagerank_livejournal_eth_sent_ci = 0.00703211622352
+
+gps_0_32_pagerank_orkut_eth_recv_avg = 68.9973951096
+gps_0_32_pagerank_orkut_eth_recv_ci = 0.00865969749098
+gps_0_32_pagerank_orkut_eth_sent_avg = 67.0905894356
+gps_0_32_pagerank_orkut_eth_sent_ci = 0.023901033382
+
+gps_0_32_pagerank_arabic_eth_recv_avg = 390.138865278
+gps_0_32_pagerank_arabic_eth_recv_ci = 0.0351014594949
+gps_0_32_pagerank_arabic_eth_sent_avg = 379.094242916
+gps_0_32_pagerank_arabic_eth_sent_ci = 0.0736005422399
+
+gps_0_32_pagerank_twitter_eth_recv_avg = 916.0589884
+gps_0_32_pagerank_twitter_eth_recv_ci = 0.299182265407
+gps_0_32_pagerank_twitter_eth_sent_avg = 890.256283049
+gps_0_32_pagerank_twitter_eth_sent_ci = 0.385152160365
+
+gps_0_32_pagerank_uk0705_eth_recv_avg = 0.0
+gps_0_32_pagerank_uk0705_eth_recv_ci = 0.0
+gps_0_32_pagerank_uk0705_eth_sent_avg = 0.0
+gps_0_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_0_32_sssp_livejournal_eth_recv_avg = 17.5861643469
+gps_0_32_sssp_livejournal_eth_recv_ci = 0.00267831208589
+gps_0_32_sssp_livejournal_eth_sent_avg = 17.1484765025
+gps_0_32_sssp_livejournal_eth_sent_ci = 0.00673260890719
+
+gps_0_32_sssp_orkut_eth_recv_avg = 30.0154118676
+gps_0_32_sssp_orkut_eth_recv_ci = 0.00423778429055
+gps_0_32_sssp_orkut_eth_sent_avg = 29.2229782376
+gps_0_32_sssp_orkut_eth_sent_ci = 0.015857427812
+
+gps_0_32_sssp_arabic_eth_recv_avg = 181.53337369
+gps_0_32_sssp_arabic_eth_recv_ci = 0.00285827839745
+gps_0_32_sssp_arabic_eth_sent_avg = 176.502681955
+gps_0_32_sssp_arabic_eth_sent_ci = 0.0197834827876
+
+gps_0_32_sssp_twitter_eth_recv_avg = 430.712090136
+gps_0_32_sssp_twitter_eth_recv_ci = 0.0493377697403
+gps_0_32_sssp_twitter_eth_sent_avg = 418.580065631
+gps_0_32_sssp_twitter_eth_sent_ci = 0.0893032234552
+
+gps_0_32_sssp_uk0705_eth_recv_avg = 0.0
+gps_0_32_sssp_uk0705_eth_recv_ci = 0.0
+gps_0_32_sssp_uk0705_eth_sent_avg = 0.0
+gps_0_32_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_0_32_wcc_livejournal_eth_recv_avg = 19.7779814698
+gps_0_32_wcc_livejournal_eth_recv_ci = 0.0058161836375
+gps_0_32_wcc_livejournal_eth_sent_avg = 19.2800328901
+gps_0_32_wcc_livejournal_eth_sent_ci = 0.00846288490089
+
+gps_0_32_wcc_orkut_eth_recv_avg = 34.0261185871
+gps_0_32_wcc_orkut_eth_recv_ci = 0.00425913544036
+gps_0_32_wcc_orkut_eth_sent_avg = 33.1306777
+gps_0_32_wcc_orkut_eth_sent_ci = 0.00729297793847
+
+gps_0_32_wcc_arabic_eth_recv_avg = 225.058837296
+gps_0_32_wcc_arabic_eth_recv_ci = 0.0108833422517
+gps_0_32_wcc_arabic_eth_sent_avg = 218.735067184
+gps_0_32_wcc_arabic_eth_sent_ci = 0.0197504361918
+
+gps_0_32_wcc_twitter_eth_recv_avg = 478.421310847
+gps_0_32_wcc_twitter_eth_recv_ci = 0.0292259119426
+gps_0_32_wcc_twitter_eth_sent_avg = 464.909505745
+gps_0_32_wcc_twitter_eth_sent_ci = 0.0559936549355
+
+gps_0_32_wcc_uk0705_eth_recv_avg = 0.0
+gps_0_32_wcc_uk0705_eth_recv_ci = 0.0
+gps_0_32_wcc_uk0705_eth_sent_avg = 0.0
+gps_0_32_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_0_32_mst_livejournal_eth_recv_avg = 60.0324688785
+gps_0_32_mst_livejournal_eth_recv_ci = 0.00627396337962
+gps_0_32_mst_livejournal_eth_sent_avg = 58.4312913204
+gps_0_32_mst_livejournal_eth_sent_ci = 0.00779563383827
+
+gps_0_32_mst_orkut_eth_recv_avg = 162.421502111
+gps_0_32_mst_orkut_eth_recv_ci = 0.0276079807056
+gps_0_32_mst_orkut_eth_sent_avg = 157.924881434
+gps_0_32_mst_orkut_eth_sent_ci = 0.0190717573162
+
+gps_0_32_mst_arabic_eth_recv_avg = 753.389417798
+gps_0_32_mst_arabic_eth_recv_ci = 0.250118101859
+gps_0_32_mst_arabic_eth_sent_avg = 731.983601968
+gps_0_32_mst_arabic_eth_sent_ci = 0.0945058274066
+
+gps_0_32_mst_twitter_eth_recv_avg = 0.0
+gps_0_32_mst_twitter_eth_recv_ci = 0.0
+gps_0_32_mst_twitter_eth_sent_avg = 0.0
+gps_0_32_mst_twitter_eth_sent_ci = 0.0
+
+gps_0_32_mst_uk0705_eth_recv_avg = 0.0
+gps_0_32_mst_uk0705_eth_recv_ci = 0.0
+gps_0_32_mst_uk0705_eth_sent_avg = 0.0
+gps_0_32_mst_uk0705_eth_sent_ci = 0.0
+
+gps_0_64_pagerank_livejournal_eth_recv_avg = 58.2440274556
+gps_0_64_pagerank_livejournal_eth_recv_ci = 0.0978382374177
+gps_0_64_pagerank_livejournal_eth_sent_avg = 56.83590594
+gps_0_64_pagerank_livejournal_eth_sent_ci = 0.0482223310188
+
+gps_0_64_pagerank_orkut_eth_recv_avg = 99.2966572231
+gps_0_64_pagerank_orkut_eth_recv_ci = 0.0116701254317
+gps_0_64_pagerank_orkut_eth_sent_avg = 97.0437123122
+gps_0_64_pagerank_orkut_eth_sent_ci = 0.0357966159232
+
+gps_0_64_pagerank_arabic_eth_recv_avg = 570.606561749
+gps_0_64_pagerank_arabic_eth_recv_ci = 0.035590402699
+gps_0_64_pagerank_arabic_eth_sent_avg = 555.956627369
+gps_0_64_pagerank_arabic_eth_sent_ci = 0.0914393666822
+
+gps_0_64_pagerank_twitter_eth_recv_avg = 1347.31344943
+gps_0_64_pagerank_twitter_eth_recv_ci = 0.0695315582556
+gps_0_64_pagerank_twitter_eth_sent_avg = 1312.03285645
+gps_0_64_pagerank_twitter_eth_sent_ci = 0.148521483311
+
+gps_0_64_pagerank_uk0705_eth_recv_avg = 3434.92191722
+gps_0_64_pagerank_uk0705_eth_recv_ci = 0.541020576311
+gps_0_64_pagerank_uk0705_eth_sent_avg = 3343.54441308
+gps_0_64_pagerank_uk0705_eth_sent_ci = 0.446569719643
+
+gps_0_64_sssp_livejournal_eth_recv_avg = 34.7663033846
+gps_0_64_sssp_livejournal_eth_recv_ci = 0.00827546776102
+gps_0_64_sssp_livejournal_eth_sent_avg = 33.9155549123
+gps_0_64_sssp_livejournal_eth_sent_ci = 0.0428500081358
+
+gps_0_64_sssp_orkut_eth_recv_avg = 59.4599395383
+gps_0_64_sssp_orkut_eth_recv_ci = 0.00659245766778
+gps_0_64_sssp_orkut_eth_sent_avg = 58.1528915288
+gps_0_64_sssp_orkut_eth_sent_ci = 0.0119875247445
+
+gps_0_64_sssp_arabic_eth_recv_avg = 358.276614533
+gps_0_64_sssp_arabic_eth_recv_ci = 0.0369235882946
+gps_0_64_sssp_arabic_eth_sent_avg = 348.639267491
+gps_0_64_sssp_arabic_eth_sent_ci = 0.061275046209
+
+gps_0_64_sssp_twitter_eth_recv_avg = 852.308744444
+gps_0_64_sssp_twitter_eth_recv_ci = 0.0355804033102
+gps_0_64_sssp_twitter_eth_sent_avg = 828.696507799
+gps_0_64_sssp_twitter_eth_sent_ci = 0.0444952349877
+
+gps_0_64_sssp_uk0705_eth_recv_avg = 2181.65032623
+gps_0_64_sssp_uk0705_eth_recv_ci = 0.101830986969
+gps_0_64_sssp_uk0705_eth_sent_avg = 2120.48621728
+gps_0_64_sssp_uk0705_eth_sent_ci = 0.164469396488
+
+gps_0_64_wcc_livejournal_eth_recv_avg = 37.024509464
+gps_0_64_wcc_livejournal_eth_recv_ci = 0.00591555686957
+gps_0_64_wcc_livejournal_eth_sent_avg = 36.0803876799
+gps_0_64_wcc_livejournal_eth_sent_ci = 0.0175425212808
+
+gps_0_64_wcc_orkut_eth_recv_avg = 63.5576409485
+gps_0_64_wcc_orkut_eth_recv_ci = 0.00892171397778
+gps_0_64_wcc_orkut_eth_sent_avg = 62.1763039488
+gps_0_64_wcc_orkut_eth_sent_ci = 0.0248688095525
+
+gps_0_64_wcc_arabic_eth_recv_avg = 402.599873233
+gps_0_64_wcc_arabic_eth_recv_ci = 0.0604985271828
+gps_0_64_wcc_arabic_eth_sent_avg = 391.858733465
+gps_0_64_wcc_arabic_eth_sent_ci = 0.0912154081437
+
+gps_0_64_wcc_twitter_eth_recv_avg = 900.979082946
+gps_0_64_wcc_twitter_eth_recv_ci = 0.0655001474799
+gps_0_64_wcc_twitter_eth_sent_avg = 876.196077723
+gps_0_64_wcc_twitter_eth_sent_ci = 0.146899300645
+
+gps_0_64_wcc_uk0705_eth_recv_avg = 2429.37578111
+gps_0_64_wcc_uk0705_eth_recv_ci = 0.161981062003
+gps_0_64_wcc_uk0705_eth_sent_avg = 2362.35202773
+gps_0_64_wcc_uk0705_eth_sent_ci = 0.374145335796
+
+gps_0_64_mst_livejournal_eth_recv_avg = 112.042323039
+gps_0_64_mst_livejournal_eth_recv_ci = 0.0140174306856
+gps_0_64_mst_livejournal_eth_sent_avg = 109.391197221
+gps_0_64_mst_livejournal_eth_sent_ci = 0.039815620835
+
+gps_0_64_mst_orkut_eth_recv_avg = 301.757948695
+gps_0_64_mst_orkut_eth_recv_ci = 0.0402657042168
+gps_0_64_mst_orkut_eth_sent_avg = 293.981372563
+gps_0_64_mst_orkut_eth_sent_ci = 0.062250203084
+
+gps_0_64_mst_arabic_eth_recv_avg = 1461.22081087
+gps_0_64_mst_arabic_eth_recv_ci = 0.105122517262
+gps_0_64_mst_arabic_eth_sent_avg = 1420.678515
+gps_0_64_mst_arabic_eth_sent_ci = 0.165562455884
+
+gps_0_64_mst_twitter_eth_recv_avg = 3273.67383716
+gps_0_64_mst_twitter_eth_recv_ci = 0.143132381314
+gps_0_64_mst_twitter_eth_sent_avg = 3181.64886637
+gps_0_64_mst_twitter_eth_sent_ci = 0.22378275237
+
+gps_0_64_mst_uk0705_eth_recv_avg = 0.0
+gps_0_64_mst_uk0705_eth_recv_ci = 0.0
+gps_0_64_mst_uk0705_eth_sent_avg = 0.0
+gps_0_64_mst_uk0705_eth_sent_ci = 0.0
+
+gps_0_128_pagerank_livejournal_eth_recv_avg = 93.0767320512
+gps_0_128_pagerank_livejournal_eth_recv_ci = 0.0137599117728
+gps_0_128_pagerank_livejournal_eth_sent_avg = 90.9252065837
+gps_0_128_pagerank_livejournal_eth_sent_ci = 0.0216142734008
+
+gps_0_128_pagerank_orkut_eth_recv_avg = 158.709031556
+gps_0_128_pagerank_orkut_eth_recv_ci = 0.0297631753359
+gps_0_128_pagerank_orkut_eth_sent_avg = 155.587984725
+gps_0_128_pagerank_orkut_eth_sent_ci = 0.117573081891
+
+gps_0_128_pagerank_arabic_eth_recv_avg = 925.207586003
+gps_0_128_pagerank_arabic_eth_recv_ci = 0.0266285559537
+gps_0_128_pagerank_arabic_eth_sent_avg = 904.249538537
+gps_0_128_pagerank_arabic_eth_sent_ci = 0.218906866608
+
+gps_0_128_pagerank_twitter_eth_recv_avg = 2194.10445102
+gps_0_128_pagerank_twitter_eth_recv_ci = 0.0998172644779
+gps_0_128_pagerank_twitter_eth_sent_avg = 2144.67368039
+gps_0_128_pagerank_twitter_eth_sent_ci = 0.510157751711
+
+gps_0_128_pagerank_uk0705_eth_recv_avg = 5601.59655796
+gps_0_128_pagerank_uk0705_eth_recv_ci = 0.18271611418
+gps_0_128_pagerank_uk0705_eth_sent_avg = 5458.75681967
+gps_0_128_pagerank_uk0705_eth_sent_ci = 0.701022060135
+
+gps_0_128_sssp_livejournal_eth_recv_avg = 68.958868294
+gps_0_128_sssp_livejournal_eth_recv_ci = 0.0170823853186
+gps_0_128_sssp_livejournal_eth_sent_avg = 67.0564211814
+gps_0_128_sssp_livejournal_eth_sent_ci = 0.0305547265177
+
+gps_0_128_sssp_orkut_eth_recv_avg = 117.650500367
+gps_0_128_sssp_orkut_eth_recv_ci = 0.0168547699108
+gps_0_128_sssp_orkut_eth_sent_avg = 114.828763407
+gps_0_128_sssp_orkut_eth_sent_ci = 0.0709398620612
+
+gps_0_128_sssp_arabic_eth_recv_avg = 711.468456876
+gps_0_128_sssp_arabic_eth_recv_ci = 0.440523359171
+gps_0_128_sssp_arabic_eth_sent_avg = 692.341741125
+gps_0_128_sssp_arabic_eth_sent_ci = 0.14780933233
+
+gps_0_128_sssp_twitter_eth_recv_avg = 1693.29524927
+gps_0_128_sssp_twitter_eth_recv_ci = 0.450429165749
+gps_0_128_sssp_twitter_eth_sent_avg = 1646.36520859
+gps_0_128_sssp_twitter_eth_sent_ci = 0.095562928461
+
+gps_0_128_sssp_uk0705_eth_recv_avg = 4336.15183377
+gps_0_128_sssp_uk0705_eth_recv_ci = 0.113584663519
+gps_0_128_sssp_uk0705_eth_sent_avg = 4213.8254254
+gps_0_128_sssp_uk0705_eth_sent_ci = 0.100732185936
+
+gps_0_128_wcc_livejournal_eth_recv_avg = 71.2650154984
+gps_0_128_wcc_livejournal_eth_recv_ci = 0.0132429523318
+gps_0_128_wcc_livejournal_eth_sent_avg = 69.4562095586
+gps_0_128_wcc_livejournal_eth_sent_ci = 0.0119567454515
+
+gps_0_128_wcc_orkut_eth_recv_avg = 121.871224744
+gps_0_128_wcc_orkut_eth_recv_ci = 0.0199061542118
+gps_0_128_wcc_orkut_eth_sent_avg = 119.036956916
+gps_0_128_wcc_orkut_eth_sent_ci = 0.0491103827706
+
+gps_0_128_wcc_arabic_eth_recv_avg = 756.125418549
+gps_0_128_wcc_arabic_eth_recv_ci = 0.0495580891728
+gps_0_128_wcc_arabic_eth_sent_avg = 736.826901914
+gps_0_128_wcc_arabic_eth_sent_ci = 0.109432292502
+
+gps_0_128_wcc_twitter_eth_recv_avg = 1742.55846495
+gps_0_128_wcc_twitter_eth_recv_ci = 0.0859021667493
+gps_0_128_wcc_twitter_eth_sent_avg = 1695.59692781
+gps_0_128_wcc_twitter_eth_sent_ci = 0.174650631231
+
+gps_0_128_wcc_uk0705_eth_recv_avg = 4585.74541597
+gps_0_128_wcc_uk0705_eth_recv_ci = 0.0584061047056
+gps_0_128_wcc_uk0705_eth_sent_avg = 4460.37743583
+gps_0_128_wcc_uk0705_eth_sent_ci = 0.300154424899
+
+gps_0_128_mst_livejournal_eth_recv_avg = 216.481978112
+gps_0_128_mst_livejournal_eth_recv_ci = 0.0302240531877
+gps_0_128_mst_livejournal_eth_sent_avg = 211.446156838
+gps_0_128_mst_livejournal_eth_sent_ci = 0.10570914353
+
+gps_0_128_mst_orkut_eth_recv_avg = 583.201698048
+gps_0_128_mst_orkut_eth_recv_ci = 0.040441417696
+gps_0_128_mst_orkut_eth_sent_avg = 568.079326063
+gps_0_128_mst_orkut_eth_sent_ci = 0.0704392645089
+
+gps_0_128_mst_arabic_eth_recv_avg = 2866.43945771
+gps_0_128_mst_arabic_eth_recv_ci = 0.0712241034014
+gps_0_128_mst_arabic_eth_sent_avg = 2787.28600387
+gps_0_128_mst_arabic_eth_sent_ci = 0.116078310677
+
+gps_0_128_mst_twitter_eth_recv_avg = 6353.90005755
+gps_0_128_mst_twitter_eth_recv_ci = 0.454932191139
+gps_0_128_mst_twitter_eth_sent_avg = 6175.72344948
+gps_0_128_mst_twitter_eth_sent_ci = 0.742361840288
+
+gps_0_128_mst_uk0705_eth_recv_avg = 0.0
+gps_0_128_mst_uk0705_eth_recv_ci = 0.0
+gps_0_128_mst_uk0705_eth_sent_avg = 0.0
+gps_0_128_mst_uk0705_eth_sent_ci = 0.0
+
+gps_1_16_pagerank_livejournal_eth_recv_avg = 26.6357594408
+gps_1_16_pagerank_livejournal_eth_recv_ci = 0.0148718090202
+gps_1_16_pagerank_livejournal_eth_sent_avg = 25.8691274047
+gps_1_16_pagerank_livejournal_eth_sent_ci = 0.0155150602698
+
+gps_1_16_pagerank_orkut_eth_recv_avg = 36.5665211154
+gps_1_16_pagerank_orkut_eth_recv_ci = 0.00429283633412
+gps_1_16_pagerank_orkut_eth_sent_avg = 35.5006264824
+gps_1_16_pagerank_orkut_eth_sent_ci = 0.00631404111143
+
+gps_1_16_pagerank_arabic_eth_recv_avg = 239.712671438
+gps_1_16_pagerank_arabic_eth_recv_ci = 0.00621221338211
+gps_1_16_pagerank_arabic_eth_sent_avg = 232.55769689
+gps_1_16_pagerank_arabic_eth_sent_ci = 0.0189967159065
+
+gps_1_16_pagerank_twitter_eth_recv_avg = 372.972687158
+gps_1_16_pagerank_twitter_eth_recv_ci = 0.053384421481
+gps_1_16_pagerank_twitter_eth_sent_avg = 362.077630646
+gps_1_16_pagerank_twitter_eth_sent_ci = 0.0740841782532
+
+gps_1_16_pagerank_uk0705_eth_recv_avg = 0.0
+gps_1_16_pagerank_uk0705_eth_recv_ci = 0.0
+gps_1_16_pagerank_uk0705_eth_sent_avg = 0.0
+gps_1_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_1_16_sssp_livejournal_eth_recv_avg = 9.25148136113
+gps_1_16_sssp_livejournal_eth_recv_ci = 0.00437481468334
+gps_1_16_sssp_livejournal_eth_sent_avg = 9.00828895867
+gps_1_16_sssp_livejournal_eth_sent_ci = 0.00633469868083
+
+gps_1_16_sssp_orkut_eth_recv_avg = 15.1064920601
+gps_1_16_sssp_orkut_eth_recv_ci = 0.00313809382889
+gps_1_16_sssp_orkut_eth_sent_avg = 14.6943771228
+gps_1_16_sssp_orkut_eth_sent_ci = 0.00482394121679
+
+gps_1_16_sssp_arabic_eth_recv_avg = 92.4151077436
+gps_1_16_sssp_arabic_eth_recv_ci = 0.00303555043861
+gps_1_16_sssp_arabic_eth_sent_avg = 89.842952867
+gps_1_16_sssp_arabic_eth_sent_ci = 0.0152700070283
+
+gps_1_16_sssp_twitter_eth_recv_avg = 216.645985314
+gps_1_16_sssp_twitter_eth_recv_ci = 0.0300753928385
+gps_1_16_sssp_twitter_eth_sent_avg = 210.534283778
+gps_1_16_sssp_twitter_eth_sent_ci = 0.0657810030947
+
+gps_1_16_sssp_uk0705_eth_recv_avg = 0.0
+gps_1_16_sssp_uk0705_eth_recv_ci = 0.0
+gps_1_16_sssp_uk0705_eth_sent_avg = 0.0
+gps_1_16_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_1_16_wcc_livejournal_eth_recv_avg = 10.9519088956
+gps_1_16_wcc_livejournal_eth_recv_ci = 0.00435303040657
+gps_1_16_wcc_livejournal_eth_sent_avg = 10.6553567726
+gps_1_16_wcc_livejournal_eth_sent_ci = 0.0044809006544
+
+gps_1_16_wcc_orkut_eth_recv_avg = 17.3549056726
+gps_1_16_wcc_orkut_eth_recv_ci = 0.00214896654887
+gps_1_16_wcc_orkut_eth_sent_avg = 16.8836866893
+gps_1_16_wcc_orkut_eth_sent_ci = 0.00582810111399
+
+gps_1_16_wcc_arabic_eth_recv_avg = 122.981630298
+gps_1_16_wcc_arabic_eth_recv_ci = 0.0240656656308
+gps_1_16_wcc_arabic_eth_sent_avg = 119.474176261
+gps_1_16_wcc_arabic_eth_sent_ci = 0.023130082093
+
+gps_1_16_wcc_twitter_eth_recv_avg = 232.339226451
+gps_1_16_wcc_twitter_eth_recv_ci = 0.182710062648
+gps_1_16_wcc_twitter_eth_sent_avg = 225.770051548
+gps_1_16_wcc_twitter_eth_sent_ci = 0.173597185725
+
+gps_1_16_wcc_uk0705_eth_recv_avg = 0.0
+gps_1_16_wcc_uk0705_eth_recv_ci = 0.0
+gps_1_16_wcc_uk0705_eth_sent_avg = 0.0
+gps_1_16_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_1_16_mst_livejournal_eth_recv_avg = 0.0
+gps_1_16_mst_livejournal_eth_recv_ci = 0.0
+gps_1_16_mst_livejournal_eth_sent_avg = 0.0
+gps_1_16_mst_livejournal_eth_sent_ci = 0.0
+
+gps_1_16_mst_orkut_eth_recv_avg = 0.0
+gps_1_16_mst_orkut_eth_recv_ci = 0.0
+gps_1_16_mst_orkut_eth_sent_avg = 0.0
+gps_1_16_mst_orkut_eth_sent_ci = 0.0
+
+gps_1_16_mst_arabic_eth_recv_avg = 0.0
+gps_1_16_mst_arabic_eth_recv_ci = 0.0
+gps_1_16_mst_arabic_eth_sent_avg = 0.0
+gps_1_16_mst_arabic_eth_sent_ci = 0.0
+
+gps_1_16_mst_twitter_eth_recv_avg = 0.0
+gps_1_16_mst_twitter_eth_recv_ci = 0.0
+gps_1_16_mst_twitter_eth_sent_avg = 0.0
+gps_1_16_mst_twitter_eth_sent_ci = 0.0
+
+gps_1_16_mst_uk0705_eth_recv_avg = 0.0
+gps_1_16_mst_uk0705_eth_recv_ci = 0.0
+gps_1_16_mst_uk0705_eth_sent_avg = 0.0
+gps_1_16_mst_uk0705_eth_sent_ci = 0.0
+
+gps_1_32_pagerank_livejournal_eth_recv_avg = 36.6030469855
+gps_1_32_pagerank_livejournal_eth_recv_ci = 0.00769033224379
+gps_1_32_pagerank_livejournal_eth_sent_avg = 35.6601417683
+gps_1_32_pagerank_livejournal_eth_sent_ci = 0.0185767814382
+
+gps_1_32_pagerank_orkut_eth_recv_avg = 55.0998921923
+gps_1_32_pagerank_orkut_eth_recv_ci = 0.00664448995249
+gps_1_32_pagerank_orkut_eth_sent_avg = 53.6416575953
+gps_1_32_pagerank_orkut_eth_sent_ci = 0.0110785841894
+
+gps_1_32_pagerank_arabic_eth_recv_avg = 341.274067295
+gps_1_32_pagerank_arabic_eth_recv_ci = 0.0241754921629
+gps_1_32_pagerank_arabic_eth_sent_avg = 331.597983551
+gps_1_32_pagerank_arabic_eth_sent_ci = 0.0761478030273
+
+gps_1_32_pagerank_twitter_eth_recv_avg = 604.152589776
+gps_1_32_pagerank_twitter_eth_recv_ci = 0.048756261952
+gps_1_32_pagerank_twitter_eth_sent_avg = 587.214201278
+gps_1_32_pagerank_twitter_eth_sent_ci = 0.0681373186909
+
+gps_1_32_pagerank_uk0705_eth_recv_avg = 0.0
+gps_1_32_pagerank_uk0705_eth_recv_ci = 0.0
+gps_1_32_pagerank_uk0705_eth_sent_avg = 0.0
+gps_1_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_1_32_sssp_livejournal_eth_recv_avg = 17.6096601212
+gps_1_32_sssp_livejournal_eth_recv_ci = 0.00281952658977
+gps_1_32_sssp_livejournal_eth_sent_avg = 17.1738959029
+gps_1_32_sssp_livejournal_eth_sent_ci = 0.00402791164028
+
+gps_1_32_sssp_orkut_eth_recv_avg = 30.0473081034
+gps_1_32_sssp_orkut_eth_recv_ci = 0.0043419889893
+gps_1_32_sssp_orkut_eth_sent_avg = 29.2675498996
+gps_1_32_sssp_orkut_eth_sent_ci = 0.013908336175
+
+gps_1_32_sssp_arabic_eth_recv_avg = 181.556603879
+gps_1_32_sssp_arabic_eth_recv_ci = 0.010992207774
+gps_1_32_sssp_arabic_eth_sent_avg = 176.548396164
+gps_1_32_sssp_arabic_eth_sent_ci = 0.0388755984043
+
+gps_1_32_sssp_twitter_eth_recv_avg = 428.371112428
+gps_1_32_sssp_twitter_eth_recv_ci = 0.0247689244074
+gps_1_32_sssp_twitter_eth_sent_avg = 416.36333594
+gps_1_32_sssp_twitter_eth_sent_ci = 0.0478789355964
+
+gps_1_32_sssp_uk0705_eth_recv_avg = 0.0
+gps_1_32_sssp_uk0705_eth_recv_ci = 0.0
+gps_1_32_sssp_uk0705_eth_sent_avg = 0.0
+gps_1_32_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_1_32_wcc_livejournal_eth_recv_avg = 19.4691964112
+gps_1_32_wcc_livejournal_eth_recv_ci = 0.00453136807827
+gps_1_32_wcc_livejournal_eth_sent_avg = 18.9839206077
+gps_1_32_wcc_livejournal_eth_sent_ci = 0.00704029668035
+
+gps_1_32_wcc_orkut_eth_recv_avg = 32.6603298871
+gps_1_32_wcc_orkut_eth_recv_ci = 0.0047748682044
+gps_1_32_wcc_orkut_eth_sent_avg = 31.8129343474
+gps_1_32_wcc_orkut_eth_sent_ci = 0.0100372317212
+
+gps_1_32_wcc_arabic_eth_recv_avg = 214.689247414
+gps_1_32_wcc_arabic_eth_recv_ci = 0.00655487148183
+gps_1_32_wcc_arabic_eth_sent_avg = 208.729928103
+gps_1_32_wcc_arabic_eth_sent_ci = 0.0271030148668
+
+gps_1_32_wcc_twitter_eth_recv_avg = 446.078548372
+gps_1_32_wcc_twitter_eth_recv_ci = 0.0132612685279
+gps_1_32_wcc_twitter_eth_sent_avg = 433.600601014
+gps_1_32_wcc_twitter_eth_sent_ci = 0.0363212900683
+
+gps_1_32_wcc_uk0705_eth_recv_avg = 0.0
+gps_1_32_wcc_uk0705_eth_recv_ci = 0.0
+gps_1_32_wcc_uk0705_eth_sent_avg = 0.0
+gps_1_32_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_1_32_mst_livejournal_eth_recv_avg = 0.0
+gps_1_32_mst_livejournal_eth_recv_ci = 0.0
+gps_1_32_mst_livejournal_eth_sent_avg = 0.0
+gps_1_32_mst_livejournal_eth_sent_ci = 0.0
+
+gps_1_32_mst_orkut_eth_recv_avg = 0.0
+gps_1_32_mst_orkut_eth_recv_ci = 0.0
+gps_1_32_mst_orkut_eth_sent_avg = 0.0
+gps_1_32_mst_orkut_eth_sent_ci = 0.0
+
+gps_1_32_mst_arabic_eth_recv_avg = 0.0
+gps_1_32_mst_arabic_eth_recv_ci = 0.0
+gps_1_32_mst_arabic_eth_sent_avg = 0.0
+gps_1_32_mst_arabic_eth_sent_ci = 0.0
+
+gps_1_32_mst_twitter_eth_recv_avg = 0.0
+gps_1_32_mst_twitter_eth_recv_ci = 0.0
+gps_1_32_mst_twitter_eth_sent_avg = 0.0
+gps_1_32_mst_twitter_eth_sent_ci = 0.0
+
+gps_1_32_mst_uk0705_eth_recv_avg = 0.0
+gps_1_32_mst_uk0705_eth_recv_ci = 0.0
+gps_1_32_mst_uk0705_eth_sent_avg = 0.0
+gps_1_32_mst_uk0705_eth_sent_ci = 0.0
+
+gps_1_64_pagerank_livejournal_eth_recv_avg = 56.3807136751
+gps_1_64_pagerank_livejournal_eth_recv_ci = 0.0116064169413
+gps_1_64_pagerank_livejournal_eth_sent_avg = 55.079369322
+gps_1_64_pagerank_livejournal_eth_sent_ci = 0.03855846387
+
+gps_1_64_pagerank_orkut_eth_recv_avg = 91.1702127622
+gps_1_64_pagerank_orkut_eth_recv_ci = 0.114170927411
+gps_1_64_pagerank_orkut_eth_sent_avg = 89.0776524415
+gps_1_64_pagerank_orkut_eth_sent_ci = 0.0116409511291
+
+gps_1_64_pagerank_arabic_eth_recv_avg = 537.282390907
+gps_1_64_pagerank_arabic_eth_recv_ci = 0.195254451799
+gps_1_64_pagerank_arabic_eth_sent_avg = 523.055169864
+gps_1_64_pagerank_arabic_eth_sent_ci = 0.0355585679835
+
+gps_1_64_pagerank_twitter_eth_recv_avg = 1058.6183221
+gps_1_64_pagerank_twitter_eth_recv_ci = 0.030097407119
+gps_1_64_pagerank_twitter_eth_sent_avg = 1029.68716652
+gps_1_64_pagerank_twitter_eth_sent_ci = 0.036055021699
+
+gps_1_64_pagerank_uk0705_eth_recv_avg = 3173.38006212
+gps_1_64_pagerank_uk0705_eth_recv_ci = 0.337628362673
+gps_1_64_pagerank_uk0705_eth_sent_avg = 3086.6056937
+gps_1_64_pagerank_uk0705_eth_sent_ci = 0.749731838715
+
+gps_1_64_sssp_livejournal_eth_recv_avg = 34.8795584163
+gps_1_64_sssp_livejournal_eth_recv_ci = 0.00818632562343
+gps_1_64_sssp_livejournal_eth_sent_avg = 34.0285294
+gps_1_64_sssp_livejournal_eth_sent_ci = 0.058612031521
+
+gps_1_64_sssp_orkut_eth_recv_avg = 59.7525873918
+gps_1_64_sssp_orkut_eth_recv_ci = 0.00777941395777
+gps_1_64_sssp_orkut_eth_sent_avg = 58.4447356233
+gps_1_64_sssp_orkut_eth_sent_ci = 0.0187468771859
+
+gps_1_64_sssp_arabic_eth_recv_avg = 358.945288239
+gps_1_64_sssp_arabic_eth_recv_ci = 0.0271476518516
+gps_1_64_sssp_arabic_eth_sent_avg = 349.269985499
+gps_1_64_sssp_arabic_eth_sent_ci = 0.0157813946353
+
+gps_1_64_sssp_twitter_eth_recv_avg = 851.190878714
+gps_1_64_sssp_twitter_eth_recv_ci = 0.0586289394573
+gps_1_64_sssp_twitter_eth_sent_avg = 827.612951811
+gps_1_64_sssp_twitter_eth_sent_ci = 0.0775621836992
+
+gps_1_64_sssp_uk0705_eth_recv_avg = 2186.85151394
+gps_1_64_sssp_uk0705_eth_recv_ci = 0.040001674599
+gps_1_64_sssp_uk0705_eth_sent_avg = 2125.69607432
+gps_1_64_sssp_uk0705_eth_sent_ci = 0.078210264036
+
+gps_1_64_wcc_livejournal_eth_recv_avg = 36.9777959234
+gps_1_64_wcc_livejournal_eth_recv_ci = 0.0146422445654
+gps_1_64_wcc_livejournal_eth_sent_avg = 36.0423646506
+gps_1_64_wcc_livejournal_eth_sent_ci = 0.0199983153434
+
+gps_1_64_wcc_orkut_eth_recv_avg = 63.0218970964
+gps_1_64_wcc_orkut_eth_recv_ci = 0.00838018654559
+gps_1_64_wcc_orkut_eth_sent_avg = 61.646079849
+gps_1_64_wcc_orkut_eth_sent_ci = 0.0112398341363
+
+gps_1_64_wcc_arabic_eth_recv_avg = 395.891531941
+gps_1_64_wcc_arabic_eth_recv_ci = 0.0384749373927
+gps_1_64_wcc_arabic_eth_sent_avg = 385.23453656
+gps_1_64_wcc_arabic_eth_sent_ci = 0.050120379537
+
+gps_1_64_wcc_twitter_eth_recv_avg = 872.177368665
+gps_1_64_wcc_twitter_eth_recv_ci = 0.0625043412531
+gps_1_64_wcc_twitter_eth_sent_avg = 848.026991198
+gps_1_64_wcc_twitter_eth_sent_ci = 0.0571637688117
+
+gps_1_64_wcc_uk0705_eth_recv_avg = 2386.62053654
+gps_1_64_wcc_uk0705_eth_recv_ci = 0.202379138382
+gps_1_64_wcc_uk0705_eth_sent_avg = 2320.18994535
+gps_1_64_wcc_uk0705_eth_sent_ci = 0.287088964044
+
+gps_1_64_mst_livejournal_eth_recv_avg = 0.0
+gps_1_64_mst_livejournal_eth_recv_ci = 0.0
+gps_1_64_mst_livejournal_eth_sent_avg = 0.0
+gps_1_64_mst_livejournal_eth_sent_ci = 0.0
+
+gps_1_64_mst_orkut_eth_recv_avg = 0.0
+gps_1_64_mst_orkut_eth_recv_ci = 0.0
+gps_1_64_mst_orkut_eth_sent_avg = 0.0
+gps_1_64_mst_orkut_eth_sent_ci = 0.0
+
+gps_1_64_mst_arabic_eth_recv_avg = 0.0
+gps_1_64_mst_arabic_eth_recv_ci = 0.0
+gps_1_64_mst_arabic_eth_sent_avg = 0.0
+gps_1_64_mst_arabic_eth_sent_ci = 0.0
+
+gps_1_64_mst_twitter_eth_recv_avg = 0.0
+gps_1_64_mst_twitter_eth_recv_ci = 0.0
+gps_1_64_mst_twitter_eth_sent_avg = 0.0
+gps_1_64_mst_twitter_eth_sent_ci = 0.0
+
+gps_1_64_mst_uk0705_eth_recv_avg = 0.0
+gps_1_64_mst_uk0705_eth_recv_ci = 0.0
+gps_1_64_mst_uk0705_eth_sent_avg = 0.0
+gps_1_64_mst_uk0705_eth_sent_ci = 0.0
+
+gps_1_128_pagerank_livejournal_eth_recv_avg = 95.5092544306
+gps_1_128_pagerank_livejournal_eth_recv_ci = 0.0153222376968
+gps_1_128_pagerank_livejournal_eth_sent_avg = 93.4671381962
+gps_1_128_pagerank_livejournal_eth_sent_ci = 0.0306815151487
+
+gps_1_128_pagerank_orkut_eth_recv_avg = 162.51620559
+gps_1_128_pagerank_orkut_eth_recv_ci = 0.0144336174805
+gps_1_128_pagerank_orkut_eth_sent_avg = 160.452530032
+gps_1_128_pagerank_orkut_eth_sent_ci = 0.0508193206672
+
+gps_1_128_pagerank_arabic_eth_recv_avg = 924.825602753
+gps_1_128_pagerank_arabic_eth_recv_ci = 0.0245119928152
+gps_1_128_pagerank_arabic_eth_sent_avg = 903.057068544
+gps_1_128_pagerank_arabic_eth_sent_ci = 0.0856402436681
+
+gps_1_128_pagerank_twitter_eth_recv_avg = 1962.36695847
+gps_1_128_pagerank_twitter_eth_recv_ci = 0.0372083860745
+gps_1_128_pagerank_twitter_eth_sent_avg = 1912.17450146
+gps_1_128_pagerank_twitter_eth_sent_ci = 0.0979198790568
+
+gps_1_128_pagerank_uk0705_eth_recv_avg = 5572.43128254
+gps_1_128_pagerank_uk0705_eth_recv_ci = 0.573866144978
+gps_1_128_pagerank_uk0705_eth_sent_avg = 5425.81447199
+gps_1_128_pagerank_uk0705_eth_sent_ci = 0.169307929187
+
+gps_1_128_sssp_livejournal_eth_recv_avg = 69.2634250592
+gps_1_128_sssp_livejournal_eth_recv_ci = 0.00459691532235
+gps_1_128_sssp_livejournal_eth_sent_avg = 67.5070411714
+gps_1_128_sssp_livejournal_eth_sent_ci = 0.0112861469078
+
+gps_1_128_sssp_orkut_eth_recv_avg = 118.724402431
+gps_1_128_sssp_orkut_eth_recv_ci = 0.0266203218641
+gps_1_128_sssp_orkut_eth_sent_avg = 116.840498769
+gps_1_128_sssp_orkut_eth_sent_ci = 0.11004624524
+
+gps_1_128_sssp_arabic_eth_recv_avg = 713.455441449
+gps_1_128_sssp_arabic_eth_recv_ci = 0.0134445848173
+gps_1_128_sssp_arabic_eth_sent_avg = 694.984255511
+gps_1_128_sssp_arabic_eth_sent_ci = 0.0790887115355
+
+gps_1_128_sssp_twitter_eth_recv_avg = 1694.74848517
+gps_1_128_sssp_twitter_eth_recv_ci = 0.033780087784
+gps_1_128_sssp_twitter_eth_sent_avg = 1648.51033862
+gps_1_128_sssp_twitter_eth_sent_ci = 0.0817488628059
+
+gps_1_128_sssp_uk0705_eth_recv_avg = 4351.51990321
+gps_1_128_sssp_uk0705_eth_recv_ci = 0.104001495453
+gps_1_128_sssp_uk0705_eth_sent_avg = 4229.76396105
+gps_1_128_sssp_uk0705_eth_sent_ci = 0.0598881058239
+
+gps_1_128_wcc_livejournal_eth_recv_avg = 71.7595497871
+gps_1_128_wcc_livejournal_eth_recv_ci = 0.0101621533392
+gps_1_128_wcc_livejournal_eth_sent_avg = 69.870665643
+gps_1_128_wcc_livejournal_eth_sent_ci = 0.0375632090399
+
+gps_1_128_wcc_orkut_eth_recv_avg = 123.23577658
+gps_1_128_wcc_orkut_eth_recv_ci = 0.0239517606309
+gps_1_128_wcc_orkut_eth_sent_avg = 121.24410434
+gps_1_128_wcc_orkut_eth_sent_ci = 0.113946681703
+
+gps_1_128_wcc_arabic_eth_recv_avg = 757.431442818
+gps_1_128_wcc_arabic_eth_recv_ci = 0.0305138127933
+gps_1_128_wcc_arabic_eth_sent_avg = 738.304798801
+gps_1_128_wcc_arabic_eth_sent_ci = 0.124470227726
+
+gps_1_128_wcc_twitter_eth_recv_avg = 1721.87975838
+gps_1_128_wcc_twitter_eth_recv_ci = 0.155344837168
+gps_1_128_wcc_twitter_eth_sent_avg = 1674.92501677
+gps_1_128_wcc_twitter_eth_sent_ci = 0.248228221217
+
+gps_1_128_wcc_uk0705_eth_recv_avg = 4595.50758582
+gps_1_128_wcc_uk0705_eth_recv_ci = 0.136188112313
+gps_1_128_wcc_uk0705_eth_sent_avg = 4468.50569263
+gps_1_128_wcc_uk0705_eth_sent_ci = 0.223760595178
+
+gps_1_128_mst_livejournal_eth_recv_avg = 0.0
+gps_1_128_mst_livejournal_eth_recv_ci = 0.0
+gps_1_128_mst_livejournal_eth_sent_avg = 0.0
+gps_1_128_mst_livejournal_eth_sent_ci = 0.0
+
+gps_1_128_mst_orkut_eth_recv_avg = 0.0
+gps_1_128_mst_orkut_eth_recv_ci = 0.0
+gps_1_128_mst_orkut_eth_sent_avg = 0.0
+gps_1_128_mst_orkut_eth_sent_ci = 0.0
+
+gps_1_128_mst_arabic_eth_recv_avg = 0.0
+gps_1_128_mst_arabic_eth_recv_ci = 0.0
+gps_1_128_mst_arabic_eth_sent_avg = 0.0
+gps_1_128_mst_arabic_eth_sent_ci = 0.0
+
+gps_1_128_mst_twitter_eth_recv_avg = 0.0
+gps_1_128_mst_twitter_eth_recv_ci = 0.0
+gps_1_128_mst_twitter_eth_sent_avg = 0.0
+gps_1_128_mst_twitter_eth_sent_ci = 0.0
+
+gps_1_128_mst_uk0705_eth_recv_avg = 0.0
+gps_1_128_mst_uk0705_eth_recv_ci = 0.0
+gps_1_128_mst_uk0705_eth_sent_avg = 0.0
+gps_1_128_mst_uk0705_eth_sent_ci = 0.0
+
+gps_2_16_pagerank_livejournal_eth_recv_avg = 26.2848939935
+gps_2_16_pagerank_livejournal_eth_recv_ci = 0.0845995668601
+gps_2_16_pagerank_livejournal_eth_sent_avg = 25.5391031275
+gps_2_16_pagerank_livejournal_eth_sent_ci = 0.0860369471476
+
+gps_2_16_pagerank_orkut_eth_recv_avg = 49.7883736206
+gps_2_16_pagerank_orkut_eth_recv_ci = 0.0584051490366
+gps_2_16_pagerank_orkut_eth_sent_avg = 48.32651341
+gps_2_16_pagerank_orkut_eth_sent_ci = 0.0579569339209
+
+gps_2_16_pagerank_arabic_eth_recv_avg = 193.473726494
+gps_2_16_pagerank_arabic_eth_recv_ci = 1.25512515382
+gps_2_16_pagerank_arabic_eth_sent_avg = 187.851955022
+gps_2_16_pagerank_arabic_eth_sent_ci = 1.21243781451
+
+gps_2_16_pagerank_twitter_eth_recv_avg = 647.665406875
+gps_2_16_pagerank_twitter_eth_recv_ci = 0.4214652069
+gps_2_16_pagerank_twitter_eth_sent_avg = 628.422497535
+gps_2_16_pagerank_twitter_eth_sent_ci = 0.399009018356
+
+gps_2_16_pagerank_uk0705_eth_recv_avg = 0.0
+gps_2_16_pagerank_uk0705_eth_recv_ci = 0.0
+gps_2_16_pagerank_uk0705_eth_sent_avg = 0.0
+gps_2_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_2_16_sssp_livejournal_eth_recv_avg = 9.50799628533
+gps_2_16_sssp_livejournal_eth_recv_ci = 0.00555507717256
+gps_2_16_sssp_livejournal_eth_sent_avg = 9.25743665379
+gps_2_16_sssp_livejournal_eth_sent_ci = 0.00845246909849
+
+gps_2_16_sssp_orkut_eth_recv_avg = 15.6501089366
+gps_2_16_sssp_orkut_eth_recv_ci = 0.00147490198881
+gps_2_16_sssp_orkut_eth_sent_avg = 15.2278163783
+gps_2_16_sssp_orkut_eth_sent_ci = 0.00173491156525
+
+gps_2_16_sssp_arabic_eth_recv_avg = 93.5606757544
+gps_2_16_sssp_arabic_eth_recv_ci = 0.015622872677
+gps_2_16_sssp_arabic_eth_sent_avg = 90.9533663126
+gps_2_16_sssp_arabic_eth_sent_ci = 0.0283812380181
+
+gps_2_16_sssp_twitter_eth_recv_avg = 223.175397832
+gps_2_16_sssp_twitter_eth_recv_ci = 0.0387545882864
+gps_2_16_sssp_twitter_eth_sent_avg = 216.879878517
+gps_2_16_sssp_twitter_eth_sent_ci = 0.053477300469
+
+gps_2_16_sssp_uk0705_eth_recv_avg = 0.0
+gps_2_16_sssp_uk0705_eth_recv_ci = 0.0
+gps_2_16_sssp_uk0705_eth_sent_avg = 0.0
+gps_2_16_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_2_16_wcc_livejournal_eth_recv_avg = 11.624421896
+gps_2_16_wcc_livejournal_eth_recv_ci = 0.00365127371673
+gps_2_16_wcc_livejournal_eth_sent_avg = 11.3127549462
+gps_2_16_wcc_livejournal_eth_sent_ci = 0.00347809401635
+
+gps_2_16_wcc_orkut_eth_recv_avg = 19.8290521299
+gps_2_16_wcc_orkut_eth_recv_ci = 0.00856389228784
+gps_2_16_wcc_orkut_eth_sent_avg = 19.2800183933
+gps_2_16_wcc_orkut_eth_sent_ci = 0.0107118188266
+
+gps_2_16_wcc_arabic_eth_recv_avg = 121.043266831
+gps_2_16_wcc_arabic_eth_recv_ci = 0.253169119971
+gps_2_16_wcc_arabic_eth_sent_avg = 117.609955929
+gps_2_16_wcc_arabic_eth_sent_ci = 0.237922122344
+
+gps_2_16_wcc_twitter_eth_recv_avg = 271.933047288
+gps_2_16_wcc_twitter_eth_recv_ci = 0.0309946760485
+gps_2_16_wcc_twitter_eth_sent_avg = 264.142227243
+gps_2_16_wcc_twitter_eth_sent_ci = 0.0468042742666
+
+gps_2_16_wcc_uk0705_eth_recv_avg = 0.0
+gps_2_16_wcc_uk0705_eth_recv_ci = 0.0
+gps_2_16_wcc_uk0705_eth_sent_avg = 0.0
+gps_2_16_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_2_16_mst_livejournal_eth_recv_avg = 0.0
+gps_2_16_mst_livejournal_eth_recv_ci = 0.0
+gps_2_16_mst_livejournal_eth_sent_avg = 0.0
+gps_2_16_mst_livejournal_eth_sent_ci = 0.0
+
+gps_2_16_mst_orkut_eth_recv_avg = 0.0
+gps_2_16_mst_orkut_eth_recv_ci = 0.0
+gps_2_16_mst_orkut_eth_sent_avg = 0.0
+gps_2_16_mst_orkut_eth_sent_ci = 0.0
+
+gps_2_16_mst_arabic_eth_recv_avg = 0.0
+gps_2_16_mst_arabic_eth_recv_ci = 0.0
+gps_2_16_mst_arabic_eth_sent_avg = 0.0
+gps_2_16_mst_arabic_eth_sent_ci = 0.0
+
+gps_2_16_mst_twitter_eth_recv_avg = 0.0
+gps_2_16_mst_twitter_eth_recv_ci = 0.0
+gps_2_16_mst_twitter_eth_sent_avg = 0.0
+gps_2_16_mst_twitter_eth_sent_ci = 0.0
+
+gps_2_16_mst_uk0705_eth_recv_avg = 0.0
+gps_2_16_mst_uk0705_eth_recv_ci = 0.0
+gps_2_16_mst_uk0705_eth_sent_avg = 0.0
+gps_2_16_mst_uk0705_eth_sent_ci = 0.0
+
+gps_2_32_pagerank_livejournal_eth_recv_avg = 35.8940255549
+gps_2_32_pagerank_livejournal_eth_recv_ci = 0.0504933718243
+gps_2_32_pagerank_livejournal_eth_sent_avg = 34.9952839714
+gps_2_32_pagerank_livejournal_eth_sent_ci = 0.0421113445067
+
+gps_2_32_pagerank_orkut_eth_recv_avg = 66.9874268491
+gps_2_32_pagerank_orkut_eth_recv_ci = 0.0382320832718
+gps_2_32_pagerank_orkut_eth_sent_avg = 65.2105443895
+gps_2_32_pagerank_orkut_eth_sent_ci = 0.0571002555204
+
+gps_2_32_pagerank_arabic_eth_recv_avg = 298.612863594
+gps_2_32_pagerank_arabic_eth_recv_ci = 0.735705426589
+gps_2_32_pagerank_arabic_eth_sent_avg = 290.281299793
+gps_2_32_pagerank_arabic_eth_sent_ci = 0.698387273076
+
+gps_2_32_pagerank_twitter_eth_recv_avg = 882.426063961
+gps_2_32_pagerank_twitter_eth_recv_ci = 0.258028588423
+gps_2_32_pagerank_twitter_eth_sent_avg = 857.241859479
+gps_2_32_pagerank_twitter_eth_sent_ci = 0.334034690658
+
+gps_2_32_pagerank_uk0705_eth_recv_avg = 0.0
+gps_2_32_pagerank_uk0705_eth_recv_ci = 0.0
+gps_2_32_pagerank_uk0705_eth_sent_avg = 0.0
+gps_2_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+gps_2_32_sssp_livejournal_eth_recv_avg = 17.8639516825
+gps_2_32_sssp_livejournal_eth_recv_ci = 0.00573086700551
+gps_2_32_sssp_livejournal_eth_sent_avg = 17.426793875
+gps_2_32_sssp_livejournal_eth_sent_ci = 0.00606407041612
+
+gps_2_32_sssp_orkut_eth_recv_avg = 30.5344315348
+gps_2_32_sssp_orkut_eth_recv_ci = 0.00382192744415
+gps_2_32_sssp_orkut_eth_sent_avg = 29.7387793522
+gps_2_32_sssp_orkut_eth_sent_ci = 0.00373010065949
+
+gps_2_32_sssp_arabic_eth_recv_avg = 182.447084015
+gps_2_32_sssp_arabic_eth_recv_ci = 0.0154387942967
+gps_2_32_sssp_arabic_eth_sent_avg = 177.432304598
+gps_2_32_sssp_arabic_eth_sent_ci = 0.0215369498845
+
+gps_2_32_sssp_twitter_eth_recv_avg = 434.640909761
+gps_2_32_sssp_twitter_eth_recv_ci = 0.0240131350828
+gps_2_32_sssp_twitter_eth_sent_avg = 422.49131779
+gps_2_32_sssp_twitter_eth_sent_ci = 0.0496656251835
+
+gps_2_32_sssp_uk0705_eth_recv_avg = 0.0
+gps_2_32_sssp_uk0705_eth_recv_ci = 0.0
+gps_2_32_sssp_uk0705_eth_sent_avg = 0.0
+gps_2_32_sssp_uk0705_eth_sent_ci = 0.0
+
+gps_2_32_wcc_livejournal_eth_recv_avg = 20.1994481666
+gps_2_32_wcc_livejournal_eth_recv_ci = 0.00324423758724
+gps_2_32_wcc_livejournal_eth_sent_avg = 19.7099778606
+gps_2_32_wcc_livejournal_eth_sent_ci = 0.00837647253753
+
+gps_2_32_wcc_orkut_eth_recv_avg = 34.9779968342
+gps_2_32_wcc_orkut_eth_recv_ci = 0.00571409489755
+gps_2_32_wcc_orkut_eth_sent_avg = 34.0744060727
+gps_2_32_wcc_orkut_eth_sent_ci = 0.00919184520426
+
+gps_2_32_wcc_arabic_eth_recv_avg = 214.426058324
+gps_2_32_wcc_arabic_eth_recv_ci = 0.134255472888
+gps_2_32_wcc_arabic_eth_sent_avg = 208.536927499
+gps_2_32_wcc_arabic_eth_sent_ci = 0.137139239866
+
+gps_2_32_wcc_twitter_eth_recv_avg = 485.955434499
+gps_2_32_wcc_twitter_eth_recv_ci = 0.0242438454071
+gps_2_32_wcc_twitter_eth_sent_avg = 472.352347959
+gps_2_32_wcc_twitter_eth_sent_ci = 0.0627570461187
+
+gps_2_32_wcc_uk0705_eth_recv_avg = 0.0
+gps_2_32_wcc_uk0705_eth_recv_ci = 0.0
+gps_2_32_wcc_uk0705_eth_sent_avg = 0.0
+gps_2_32_wcc_uk0705_eth_sent_ci = 0.0
+
+gps_2_32_mst_livejournal_eth_recv_avg = 0.0
+gps_2_32_mst_livejournal_eth_recv_ci = 0.0
+gps_2_32_mst_livejournal_eth_sent_avg = 0.0
+gps_2_32_mst_livejournal_eth_sent_ci = 0.0
+
+gps_2_32_mst_orkut_eth_recv_avg = 0.0
+gps_2_32_mst_orkut_eth_recv_ci = 0.0
+gps_2_32_mst_orkut_eth_sent_avg = 0.0
+gps_2_32_mst_orkut_eth_sent_ci = 0.0
+
+gps_2_32_mst_arabic_eth_recv_avg = 0.0
+gps_2_32_mst_arabic_eth_recv_ci = 0.0
+gps_2_32_mst_arabic_eth_sent_avg = 0.0
+gps_2_32_mst_arabic_eth_sent_ci = 0.0
+
+gps_2_32_mst_twitter_eth_recv_avg = 0.0
+gps_2_32_mst_twitter_eth_recv_ci = 0.0
+gps_2_32_mst_twitter_eth_sent_avg = 0.0
+gps_2_32_mst_twitter_eth_sent_ci = 0.0
+
+gps_2_32_mst_uk0705_eth_recv_avg = 0.0
+gps_2_32_mst_uk0705_eth_recv_ci = 0.0
+gps_2_32_mst_uk0705_eth_sent_avg = 0.0
+gps_2_32_mst_uk0705_eth_sent_ci = 0.0
+
+gps_2_64_pagerank_livejournal_eth_recv_avg = 54.6358188797
+gps_2_64_pagerank_livejournal_eth_recv_ci = 0.065389630801
+gps_2_64_pagerank_livejournal_eth_sent_avg = 53.4014760746
+gps_2_64_pagerank_livejournal_eth_sent_ci = 0.0722737666688
+
+gps_2_64_pagerank_orkut_eth_recv_avg = 98.3391070785
+gps_2_64_pagerank_orkut_eth_recv_ci = 0.0179022130223
+gps_2_64_pagerank_orkut_eth_sent_avg = 96.2836601702
+gps_2_64_pagerank_orkut_eth_sent_ci = 0.0379794316367
+
+gps_2_64_pagerank_arabic_eth_recv_avg = 496.930234268
+gps_2_64_pagerank_arabic_eth_recv_ci = 0.843565367752
+gps_2_64_pagerank_arabic_eth_sent_avg = 483.659526446
+gps_2_64_pagerank_arabic_eth_sent_ci = 0.841465781247
+
+gps_2_64_pagerank_twitter_eth_recv_avg = 1322.84399402
+gps_2_64_pagerank_twitter_eth_recv_ci = 0.430166623742
+gps_2_64_pagerank_twitter_eth_sent_avg = 1287.17004178
+gps_2_64_pagerank_twitter_eth_sent_ci = 0.419918872126
+
+gps_2_64_pagerank_uk0705_eth_recv_avg = 2892.05915872
+gps_2_64_pagerank_uk0705_eth_recv_ci = 7.8631805039
+gps_2_64_pagerank_uk0705_eth_sent_avg = 2812.13947433
+gps_2_64_pagerank_uk0705_eth_sent_ci = 7.67834994515
+
+gps_2_64_sssp_livejournal_eth_recv_avg = 35.1323414015
+gps_2_64_sssp_livejournal_eth_recv_ci = 0.0593591221786
+gps_2_64_sssp_livejournal_eth_sent_avg = 34.2646631702
+gps_2_64_sssp_livejournal_eth_sent_ci = 0.0493794584403
+
+gps_2_64_sssp_orkut_eth_recv_avg = 60.0505578374
+gps_2_64_sssp_orkut_eth_recv_ci = 0.00671954476924
+gps_2_64_sssp_orkut_eth_sent_avg = 58.7595063465
+gps_2_64_sssp_orkut_eth_sent_ci = 0.0155719939803
+
+gps_2_64_sssp_arabic_eth_recv_avg = 358.95022023
+gps_2_64_sssp_arabic_eth_recv_ci = 0.0411269779298
+gps_2_64_sssp_arabic_eth_sent_avg = 349.247462295
+gps_2_64_sssp_arabic_eth_sent_ci = 0.0586681429096
+
+gps_2_64_sssp_twitter_eth_recv_avg = 856.6930846
+gps_2_64_sssp_twitter_eth_recv_ci = 0.0400871142956
+gps_2_64_sssp_twitter_eth_sent_avg = 833.056866767
+gps_2_64_sssp_twitter_eth_sent_ci = 0.0573691235151
+
+gps_2_64_sssp_uk0705_eth_recv_avg = 2188.25637653
+gps_2_64_sssp_uk0705_eth_recv_ci = 0.0971103753813
+gps_2_64_sssp_uk0705_eth_sent_avg = 2127.35464737
+gps_2_64_sssp_uk0705_eth_sent_ci = 0.0779827881658
+
+gps_2_64_wcc_livejournal_eth_recv_avg = 37.7484280486
+gps_2_64_wcc_livejournal_eth_recv_ci = 0.0118576602408
+gps_2_64_wcc_livejournal_eth_sent_avg = 36.8340044161
+gps_2_64_wcc_livejournal_eth_sent_ci = 0.0267928306142
+
+gps_2_64_wcc_orkut_eth_recv_avg = 64.6660300152
+gps_2_64_wcc_orkut_eth_recv_ci = 0.00826436726547
+gps_2_64_wcc_orkut_eth_sent_avg = 63.282920621
+gps_2_64_wcc_orkut_eth_sent_ci = 0.0215948632063
+
+gps_2_64_wcc_arabic_eth_recv_avg = 396.060625686
+gps_2_64_wcc_arabic_eth_recv_ci = 0.206480109312
+gps_2_64_wcc_arabic_eth_sent_avg = 385.515238244
+gps_2_64_wcc_arabic_eth_sent_ci = 0.193288384004
+
+gps_2_64_wcc_twitter_eth_recv_avg = 910.290210727
+gps_2_64_wcc_twitter_eth_recv_ci = 0.106066188454
+gps_2_64_wcc_twitter_eth_sent_avg = 885.190250514
+gps_2_64_wcc_twitter_eth_sent_ci = 0.16399540255
+
+gps_2_64_wcc_uk0705_eth_recv_avg = 2380.60717108
+gps_2_64_wcc_uk0705_eth_recv_ci = 0.386271760087
+gps_2_64_wcc_uk0705_eth_sent_avg = 2314.52652885
+gps_2_64_wcc_uk0705_eth_sent_ci = 0.361529678345
+
+gps_2_64_mst_livejournal_eth_recv_avg = 0.0
+gps_2_64_mst_livejournal_eth_recv_ci = 0.0
+gps_2_64_mst_livejournal_eth_sent_avg = 0.0
+gps_2_64_mst_livejournal_eth_sent_ci = 0.0
+
+gps_2_64_mst_orkut_eth_recv_avg = 0.0
+gps_2_64_mst_orkut_eth_recv_ci = 0.0
+gps_2_64_mst_orkut_eth_sent_avg = 0.0
+gps_2_64_mst_orkut_eth_sent_ci = 0.0
+
+gps_2_64_mst_arabic_eth_recv_avg = 0.0
+gps_2_64_mst_arabic_eth_recv_ci = 0.0
+gps_2_64_mst_arabic_eth_sent_avg = 0.0
+gps_2_64_mst_arabic_eth_sent_ci = 0.0
+
+gps_2_64_mst_twitter_eth_recv_avg = 0.0
+gps_2_64_mst_twitter_eth_recv_ci = 0.0
+gps_2_64_mst_twitter_eth_sent_avg = 0.0
+gps_2_64_mst_twitter_eth_sent_ci = 0.0
+
+gps_2_64_mst_uk0705_eth_recv_avg = 0.0
+gps_2_64_mst_uk0705_eth_recv_ci = 0.0
+gps_2_64_mst_uk0705_eth_sent_avg = 0.0
+gps_2_64_mst_uk0705_eth_sent_ci = 0.0
+
+gps_2_128_pagerank_livejournal_eth_recv_avg = 91.6922194041
+gps_2_128_pagerank_livejournal_eth_recv_ci = 0.0147121550107
+gps_2_128_pagerank_livejournal_eth_sent_avg = 90.0395511653
+gps_2_128_pagerank_livejournal_eth_sent_ci = 0.0391387633979
+
+gps_2_128_pagerank_orkut_eth_recv_avg = 159.585431367
+gps_2_128_pagerank_orkut_eth_recv_ci = 0.00655783005023
+gps_2_128_pagerank_orkut_eth_sent_avg = 158.558898624
+gps_2_128_pagerank_orkut_eth_sent_ci = 0.0489941711181
+
+gps_2_128_pagerank_arabic_eth_recv_avg = 877.117378943
+gps_2_128_pagerank_arabic_eth_recv_ci = 1.64702989154
+gps_2_128_pagerank_arabic_eth_sent_avg = 856.820460112
+gps_2_128_pagerank_arabic_eth_sent_ci = 1.68527331766
+
+gps_2_128_pagerank_twitter_eth_recv_avg = 2183.77728455
+gps_2_128_pagerank_twitter_eth_recv_ci = 0.325937222437
+gps_2_128_pagerank_twitter_eth_sent_avg = 2128.68046352
+gps_2_128_pagerank_twitter_eth_sent_ci = 0.536849468636
+
+gps_2_128_pagerank_uk0705_eth_recv_avg = 5186.10197108
+gps_2_128_pagerank_uk0705_eth_recv_ci = 2.34148661069
+gps_2_128_pagerank_uk0705_eth_sent_avg = 5044.84834998
+gps_2_128_pagerank_uk0705_eth_sent_ci = 2.52912488402
+
+gps_2_128_sssp_livejournal_eth_recv_avg = 69.4868694248
+gps_2_128_sssp_livejournal_eth_recv_ci = 0.013752022895
+gps_2_128_sssp_livejournal_eth_sent_avg = 67.8170422619
+gps_2_128_sssp_livejournal_eth_sent_ci = 0.0460031364535
+
+gps_2_128_sssp_orkut_eth_recv_avg = 118.701339156
+gps_2_128_sssp_orkut_eth_recv_ci = 0.0108401857111
+gps_2_128_sssp_orkut_eth_sent_avg = 116.648611257
+gps_2_128_sssp_orkut_eth_sent_ci = 0.0802118878296
+
+gps_2_128_sssp_arabic_eth_recv_avg = 711.739489824
+gps_2_128_sssp_arabic_eth_recv_ci = 0.0562345142193
+gps_2_128_sssp_arabic_eth_sent_avg = 693.309921814
+gps_2_128_sssp_arabic_eth_sent_ci = 0.1777785082
+
+gps_2_128_sssp_twitter_eth_recv_avg = 1698.94319736
+gps_2_128_sssp_twitter_eth_recv_ci = 0.0954180182316
+gps_2_128_sssp_twitter_eth_sent_avg = 1652.89136798
+gps_2_128_sssp_twitter_eth_sent_ci = 0.31190816122
+
+gps_2_128_sssp_uk0705_eth_recv_avg = 4342.52548541
+gps_2_128_sssp_uk0705_eth_recv_ci = 0.307675309036
+gps_2_128_sssp_uk0705_eth_sent_avg = 4221.32177393
+gps_2_128_sssp_uk0705_eth_sent_ci = 0.528715761842
+
+gps_2_128_wcc_livejournal_eth_recv_avg = 73.0311612228
+gps_2_128_wcc_livejournal_eth_recv_ci = 0.100737503605
+gps_2_128_wcc_livejournal_eth_sent_avg = 71.2273879478
+gps_2_128_wcc_livejournal_eth_sent_ci = 0.023025953957
+
+gps_2_128_wcc_orkut_eth_recv_avg = 124.091308765
+gps_2_128_wcc_orkut_eth_recv_ci = 0.232511788778
+gps_2_128_wcc_orkut_eth_sent_avg = 121.914785542
+gps_2_128_wcc_orkut_eth_sent_ci = 0.103440063474
+
+gps_2_128_wcc_arabic_eth_recv_avg = 757.3401596
+gps_2_128_wcc_arabic_eth_recv_ci = 0.19611173869
+gps_2_128_wcc_arabic_eth_sent_avg = 738.733160103
+gps_2_128_wcc_arabic_eth_sent_ci = 0.192276784703
+
+gps_2_128_wcc_twitter_eth_recv_avg = 1756.03546626
+gps_2_128_wcc_twitter_eth_recv_ci = 0.146420738154
+gps_2_128_wcc_twitter_eth_sent_avg = 1708.82612488
+gps_2_128_wcc_twitter_eth_sent_ci = 0.393604561009
+
+gps_2_128_wcc_uk0705_eth_recv_avg = 4585.15102812
+gps_2_128_wcc_uk0705_eth_recv_ci = 0.57977876856
+gps_2_128_wcc_uk0705_eth_sent_avg = 4458.43357253
+gps_2_128_wcc_uk0705_eth_sent_ci = 0.657895190238
+
+gps_2_128_mst_livejournal_eth_recv_avg = 0.0
+gps_2_128_mst_livejournal_eth_recv_ci = 0.0
+gps_2_128_mst_livejournal_eth_sent_avg = 0.0
+gps_2_128_mst_livejournal_eth_sent_ci = 0.0
+
+gps_2_128_mst_orkut_eth_recv_avg = 0.0
+gps_2_128_mst_orkut_eth_recv_ci = 0.0
+gps_2_128_mst_orkut_eth_sent_avg = 0.0
+gps_2_128_mst_orkut_eth_sent_ci = 0.0
+
+gps_2_128_mst_arabic_eth_recv_avg = 0.0
+gps_2_128_mst_arabic_eth_recv_ci = 0.0
+gps_2_128_mst_arabic_eth_sent_avg = 0.0
+gps_2_128_mst_arabic_eth_sent_ci = 0.0
+
+gps_2_128_mst_twitter_eth_recv_avg = 0.0
+gps_2_128_mst_twitter_eth_recv_ci = 0.0
+gps_2_128_mst_twitter_eth_sent_avg = 0.0
+gps_2_128_mst_twitter_eth_sent_ci = 0.0
+
+gps_2_128_mst_uk0705_eth_recv_avg = 0.0
+gps_2_128_mst_uk0705_eth_recv_ci = 0.0
+gps_2_128_mst_uk0705_eth_sent_avg = 0.0
+gps_2_128_mst_uk0705_eth_sent_ci = 0.0
+
+mizan_0_16_pagerank_livejournal_eth_recv_avg = 32.9220357219
+mizan_0_16_pagerank_livejournal_eth_recv_ci = 0.0748566064617
+mizan_0_16_pagerank_livejournal_eth_sent_avg = 33.7729062498
+mizan_0_16_pagerank_livejournal_eth_sent_ci = 0.0967891292371
+
+mizan_0_16_pagerank_orkut_eth_recv_avg = 48.2900835736
+mizan_0_16_pagerank_orkut_eth_recv_ci = 0.105820493261
+mizan_0_16_pagerank_orkut_eth_sent_avg = 49.4921717387
+mizan_0_16_pagerank_orkut_eth_sent_ci = 0.135453574366
+
+mizan_0_16_pagerank_arabic_eth_recv_avg = 0.0
+mizan_0_16_pagerank_arabic_eth_recv_ci = 0.0
+mizan_0_16_pagerank_arabic_eth_sent_avg = 0.0
+mizan_0_16_pagerank_arabic_eth_sent_ci = 0.0
+
+mizan_0_16_pagerank_twitter_eth_recv_avg = 0.0
+mizan_0_16_pagerank_twitter_eth_recv_ci = 0.0
+mizan_0_16_pagerank_twitter_eth_sent_avg = 0.0
+mizan_0_16_pagerank_twitter_eth_sent_ci = 0.0
+
+mizan_0_16_pagerank_uk0705_eth_recv_avg = 0.0
+mizan_0_16_pagerank_uk0705_eth_recv_ci = 0.0
+mizan_0_16_pagerank_uk0705_eth_sent_avg = 0.0
+mizan_0_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+mizan_0_16_sssp_livejournal_eth_recv_avg = 10.2300264442
+mizan_0_16_sssp_livejournal_eth_recv_ci = 0.0533303102926
+mizan_0_16_sssp_livejournal_eth_sent_avg = 11.1245600251
+mizan_0_16_sssp_livejournal_eth_sent_ci = 0.0687465120079
+
+mizan_0_16_sssp_orkut_eth_recv_avg = 15.8868514918
+mizan_0_16_sssp_orkut_eth_recv_ci = 0.127753214821
+mizan_0_16_sssp_orkut_eth_sent_avg = 17.1509457158
+mizan_0_16_sssp_orkut_eth_sent_ci = 0.163049060568
+
+mizan_0_16_sssp_arabic_eth_recv_avg = 51.6747937081
+mizan_0_16_sssp_arabic_eth_recv_ci = 0.116816591678
+mizan_0_16_sssp_arabic_eth_sent_avg = 54.442197841
+mizan_0_16_sssp_arabic_eth_sent_ci = 0.14838441806
+
+mizan_0_16_sssp_twitter_eth_recv_avg = 0.0
+mizan_0_16_sssp_twitter_eth_recv_ci = 0.0
+mizan_0_16_sssp_twitter_eth_sent_avg = 0.0
+mizan_0_16_sssp_twitter_eth_sent_ci = 0.0
+
+mizan_0_16_sssp_uk0705_eth_recv_avg = 0.0
+mizan_0_16_sssp_uk0705_eth_recv_ci = 0.0
+mizan_0_16_sssp_uk0705_eth_sent_avg = 0.0
+mizan_0_16_sssp_uk0705_eth_sent_ci = 0.0
+
+mizan_0_16_wcc_livejournal_eth_recv_avg = 12.5530473031
+mizan_0_16_wcc_livejournal_eth_recv_ci = 0.0912276508045
+mizan_0_16_wcc_livejournal_eth_sent_avg = 13.4092869516
+mizan_0_16_wcc_livejournal_eth_sent_ci = 0.118362470447
+
+mizan_0_16_wcc_orkut_eth_recv_avg = 19.249400189
+mizan_0_16_wcc_orkut_eth_recv_ci = 0.067953564618
+mizan_0_16_wcc_orkut_eth_sent_avg = 20.4590463689
+mizan_0_16_wcc_orkut_eth_sent_ci = 0.088866534214
+
+mizan_0_16_wcc_arabic_eth_recv_avg = 70.984568738
+mizan_0_16_wcc_arabic_eth_recv_ci = 0.143528312268
+mizan_0_16_wcc_arabic_eth_sent_avg = 73.6065849213
+mizan_0_16_wcc_arabic_eth_sent_ci = 0.177091694849
+
+mizan_0_16_wcc_twitter_eth_recv_avg = 0.0
+mizan_0_16_wcc_twitter_eth_recv_ci = 0.0
+mizan_0_16_wcc_twitter_eth_sent_avg = 0.0
+mizan_0_16_wcc_twitter_eth_sent_ci = 0.0
+
+mizan_0_16_wcc_uk0705_eth_recv_avg = 0.0
+mizan_0_16_wcc_uk0705_eth_recv_ci = 0.0
+mizan_0_16_wcc_uk0705_eth_sent_avg = 0.0
+mizan_0_16_wcc_uk0705_eth_sent_ci = 0.0
+
+mizan_0_16_mst_livejournal_eth_recv_avg = 0.0
+mizan_0_16_mst_livejournal_eth_recv_ci = 0.0
+mizan_0_16_mst_livejournal_eth_sent_avg = 0.0
+mizan_0_16_mst_livejournal_eth_sent_ci = 0.0
+
+mizan_0_16_mst_orkut_eth_recv_avg = 0.0
+mizan_0_16_mst_orkut_eth_recv_ci = 0.0
+mizan_0_16_mst_orkut_eth_sent_avg = 0.0
+mizan_0_16_mst_orkut_eth_sent_ci = 0.0
+
+mizan_0_16_mst_arabic_eth_recv_avg = 0.0
+mizan_0_16_mst_arabic_eth_recv_ci = 0.0
+mizan_0_16_mst_arabic_eth_sent_avg = 0.0
+mizan_0_16_mst_arabic_eth_sent_ci = 0.0
+
+mizan_0_16_mst_twitter_eth_recv_avg = 0.0
+mizan_0_16_mst_twitter_eth_recv_ci = 0.0
+mizan_0_16_mst_twitter_eth_sent_avg = 0.0
+mizan_0_16_mst_twitter_eth_sent_ci = 0.0
+
+mizan_0_16_mst_uk0705_eth_recv_avg = 0.0
+mizan_0_16_mst_uk0705_eth_recv_ci = 0.0
+mizan_0_16_mst_uk0705_eth_sent_avg = 0.0
+mizan_0_16_mst_uk0705_eth_sent_ci = 0.0
+
+mizan_0_32_pagerank_livejournal_eth_recv_avg = 42.4875993077
+mizan_0_32_pagerank_livejournal_eth_recv_ci = 0.139217642205
+mizan_0_32_pagerank_livejournal_eth_sent_avg = 43.8160548232
+mizan_0_32_pagerank_livejournal_eth_sent_ci = 0.163894154259
+
+mizan_0_32_pagerank_orkut_eth_recv_avg = 66.6944768731
+mizan_0_32_pagerank_orkut_eth_recv_ci = 0.177970597504
+mizan_0_32_pagerank_orkut_eth_sent_avg = 68.7311307386
+mizan_0_32_pagerank_orkut_eth_sent_ci = 0.211268792011
+
+mizan_0_32_pagerank_arabic_eth_recv_avg = 167.47223125
+mizan_0_32_pagerank_arabic_eth_recv_ci = 0.368489911805
+mizan_0_32_pagerank_arabic_eth_sent_avg = 171.648678647
+mizan_0_32_pagerank_arabic_eth_sent_ci = 0.297698894705
+
+mizan_0_32_pagerank_twitter_eth_recv_avg = 0.0
+mizan_0_32_pagerank_twitter_eth_recv_ci = 0.0
+mizan_0_32_pagerank_twitter_eth_sent_avg = 0.0
+mizan_0_32_pagerank_twitter_eth_sent_ci = 0.0
+
+mizan_0_32_pagerank_uk0705_eth_recv_avg = 0.0
+mizan_0_32_pagerank_uk0705_eth_recv_ci = 0.0
+mizan_0_32_pagerank_uk0705_eth_sent_avg = 0.0
+mizan_0_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+mizan_0_32_sssp_livejournal_eth_recv_avg = 13.061023118
+mizan_0_32_sssp_livejournal_eth_recv_ci = 0.0774045365771
+mizan_0_32_sssp_livejournal_eth_sent_avg = 14.3691512743
+mizan_0_32_sssp_livejournal_eth_sent_ci = 0.0761979564542
+
+mizan_0_32_sssp_orkut_eth_recv_avg = 21.0667913305
+mizan_0_32_sssp_orkut_eth_recv_ci = 0.108186262618
+mizan_0_32_sssp_orkut_eth_sent_avg = 23.1569379767
+mizan_0_32_sssp_orkut_eth_sent_ci = 0.130508551063
+
+mizan_0_32_sssp_arabic_eth_recv_avg = 64.7180279627
+mizan_0_32_sssp_arabic_eth_recv_ci = 0.133692857652
+mizan_0_32_sssp_arabic_eth_sent_avg = 68.9923591187
+mizan_0_32_sssp_arabic_eth_sent_ci = 0.148336438795
+
+mizan_0_32_sssp_twitter_eth_recv_avg = 0.0
+mizan_0_32_sssp_twitter_eth_recv_ci = 0.0
+mizan_0_32_sssp_twitter_eth_sent_avg = 0.0
+mizan_0_32_sssp_twitter_eth_sent_ci = 0.0
+
+mizan_0_32_sssp_uk0705_eth_recv_avg = 0.0
+mizan_0_32_sssp_uk0705_eth_recv_ci = 0.0
+mizan_0_32_sssp_uk0705_eth_sent_avg = 0.0
+mizan_0_32_sssp_uk0705_eth_sent_ci = 0.0
+
+mizan_0_32_wcc_livejournal_eth_recv_avg = 16.1555869119
+mizan_0_32_wcc_livejournal_eth_recv_ci = 0.0680287926505
+mizan_0_32_wcc_livejournal_eth_sent_avg = 17.4826435378
+mizan_0_32_wcc_livejournal_eth_sent_ci = 0.0807543689322
+
+mizan_0_32_wcc_orkut_eth_recv_avg = 25.8960388487
+mizan_0_32_wcc_orkut_eth_recv_ci = 0.0374898269359
+mizan_0_32_wcc_orkut_eth_sent_avg = 27.940744078
+mizan_0_32_wcc_orkut_eth_sent_ci = 0.0442406754135
+
+mizan_0_32_wcc_arabic_eth_recv_avg = 90.751686145
+mizan_0_32_wcc_arabic_eth_recv_ci = 0.237606816605
+mizan_0_32_wcc_arabic_eth_sent_avg = 95.0402964525
+mizan_0_32_wcc_arabic_eth_sent_ci = 0.284733707843
+
+mizan_0_32_wcc_twitter_eth_recv_avg = 0.0
+mizan_0_32_wcc_twitter_eth_recv_ci = 0.0
+mizan_0_32_wcc_twitter_eth_sent_avg = 0.0
+mizan_0_32_wcc_twitter_eth_sent_ci = 0.0
+
+mizan_0_32_wcc_uk0705_eth_recv_avg = 0.0
+mizan_0_32_wcc_uk0705_eth_recv_ci = 0.0
+mizan_0_32_wcc_uk0705_eth_sent_avg = 0.0
+mizan_0_32_wcc_uk0705_eth_sent_ci = 0.0
+
+mizan_0_32_mst_livejournal_eth_recv_avg = 0.0
+mizan_0_32_mst_livejournal_eth_recv_ci = 0.0
+mizan_0_32_mst_livejournal_eth_sent_avg = 0.0
+mizan_0_32_mst_livejournal_eth_sent_ci = 0.0
+
+mizan_0_32_mst_orkut_eth_recv_avg = 0.0
+mizan_0_32_mst_orkut_eth_recv_ci = 0.0
+mizan_0_32_mst_orkut_eth_sent_avg = 0.0
+mizan_0_32_mst_orkut_eth_sent_ci = 0.0
+
+mizan_0_32_mst_arabic_eth_recv_avg = 0.0
+mizan_0_32_mst_arabic_eth_recv_ci = 0.0
+mizan_0_32_mst_arabic_eth_sent_avg = 0.0
+mizan_0_32_mst_arabic_eth_sent_ci = 0.0
+
+mizan_0_32_mst_twitter_eth_recv_avg = 0.0
+mizan_0_32_mst_twitter_eth_recv_ci = 0.0
+mizan_0_32_mst_twitter_eth_sent_avg = 0.0
+mizan_0_32_mst_twitter_eth_sent_ci = 0.0
+
+mizan_0_32_mst_uk0705_eth_recv_avg = 0.0
+mizan_0_32_mst_uk0705_eth_recv_ci = 0.0
+mizan_0_32_mst_uk0705_eth_sent_avg = 0.0
+mizan_0_32_mst_uk0705_eth_sent_ci = 0.0
+
+mizan_0_64_pagerank_livejournal_eth_recv_avg = 51.501743011
+mizan_0_64_pagerank_livejournal_eth_recv_ci = 0.0304327662525
+mizan_0_64_pagerank_livejournal_eth_sent_avg = 53.4098665256
+mizan_0_64_pagerank_livejournal_eth_sent_ci = 0.0247353939594
+
+mizan_0_64_pagerank_orkut_eth_recv_avg = 84.6382519154
+mizan_0_64_pagerank_orkut_eth_recv_ci = 0.0259973846519
+mizan_0_64_pagerank_orkut_eth_sent_avg = 87.7034349682
+mizan_0_64_pagerank_orkut_eth_sent_ci = 0.0256067635146
+
+mizan_0_64_pagerank_arabic_eth_recv_avg = 209.704769287
+mizan_0_64_pagerank_arabic_eth_recv_ci = 0.0440805946552
+mizan_0_64_pagerank_arabic_eth_sent_avg = 216.193364815
+mizan_0_64_pagerank_arabic_eth_sent_ci = 0.0506176681372
+
+mizan_0_64_pagerank_twitter_eth_recv_avg = 0.0
+mizan_0_64_pagerank_twitter_eth_recv_ci = 0.0
+mizan_0_64_pagerank_twitter_eth_sent_avg = 0.0
+mizan_0_64_pagerank_twitter_eth_sent_ci = 0.0
+
+mizan_0_64_pagerank_uk0705_eth_recv_avg = 0.0
+mizan_0_64_pagerank_uk0705_eth_recv_ci = 0.0
+mizan_0_64_pagerank_uk0705_eth_sent_avg = 0.0
+mizan_0_64_pagerank_uk0705_eth_sent_ci = 0.0
+
+mizan_0_64_sssp_livejournal_eth_recv_avg = 16.3355885974
+mizan_0_64_sssp_livejournal_eth_recv_ci = 0.0167389335022
+mizan_0_64_sssp_livejournal_eth_sent_avg = 18.201919387
+mizan_0_64_sssp_livejournal_eth_sent_ci = 0.0170545267876
+
+mizan_0_64_sssp_orkut_eth_recv_avg = 27.2131563071
+mizan_0_64_sssp_orkut_eth_recv_ci = 0.0894235007675
+mizan_0_64_sssp_orkut_eth_sent_avg = 30.2030986585
+mizan_0_64_sssp_orkut_eth_sent_ci = 0.0244200051522
+
+mizan_0_64_sssp_arabic_eth_recv_avg = 79.4095194831
+mizan_0_64_sssp_arabic_eth_recv_ci = 0.0480827902362
+mizan_0_64_sssp_arabic_eth_sent_avg = 85.8286400529
+mizan_0_64_sssp_arabic_eth_sent_ci = 0.0473381510025
+
+mizan_0_64_sssp_twitter_eth_recv_avg = 0.0
+mizan_0_64_sssp_twitter_eth_recv_ci = 0.0
+mizan_0_64_sssp_twitter_eth_sent_avg = 0.0
+mizan_0_64_sssp_twitter_eth_sent_ci = 0.0
+
+mizan_0_64_sssp_uk0705_eth_recv_avg = 0.0
+mizan_0_64_sssp_uk0705_eth_recv_ci = 0.0
+mizan_0_64_sssp_uk0705_eth_sent_avg = 0.0
+mizan_0_64_sssp_uk0705_eth_sent_ci = 0.0
+
+mizan_0_64_wcc_livejournal_eth_recv_avg = 20.1538142564
+mizan_0_64_wcc_livejournal_eth_recv_ci = 0.0216206912268
+mizan_0_64_wcc_livejournal_eth_sent_avg = 22.0290225532
+mizan_0_64_wcc_livejournal_eth_sent_ci = 0.0245201808855
+
+mizan_0_64_wcc_orkut_eth_recv_avg = 33.4315361656
+mizan_0_64_wcc_orkut_eth_recv_ci = 0.0436085191245
+mizan_0_64_wcc_orkut_eth_sent_avg = 36.4695709408
+mizan_0_64_wcc_orkut_eth_sent_ci = 0.0434587900481
+
+mizan_0_64_wcc_arabic_eth_recv_avg = 112.974021592
+mizan_0_64_wcc_arabic_eth_recv_ci = 0.0532150363149
+mizan_0_64_wcc_arabic_eth_sent_avg = 119.557151083
+mizan_0_64_wcc_arabic_eth_sent_ci = 0.0443564759841
+
+mizan_0_64_wcc_twitter_eth_recv_avg = 0.0
+mizan_0_64_wcc_twitter_eth_recv_ci = 0.0
+mizan_0_64_wcc_twitter_eth_sent_avg = 0.0
+mizan_0_64_wcc_twitter_eth_sent_ci = 0.0
+
+mizan_0_64_wcc_uk0705_eth_recv_avg = 0.0
+mizan_0_64_wcc_uk0705_eth_recv_ci = 0.0
+mizan_0_64_wcc_uk0705_eth_sent_avg = 0.0
+mizan_0_64_wcc_uk0705_eth_sent_ci = 0.0
+
+mizan_0_64_mst_livejournal_eth_recv_avg = 0.0
+mizan_0_64_mst_livejournal_eth_recv_ci = 0.0
+mizan_0_64_mst_livejournal_eth_sent_avg = 0.0
+mizan_0_64_mst_livejournal_eth_sent_ci = 0.0
+
+mizan_0_64_mst_orkut_eth_recv_avg = 0.0
+mizan_0_64_mst_orkut_eth_recv_ci = 0.0
+mizan_0_64_mst_orkut_eth_sent_avg = 0.0
+mizan_0_64_mst_orkut_eth_sent_ci = 0.0
+
+mizan_0_64_mst_arabic_eth_recv_avg = 0.0
+mizan_0_64_mst_arabic_eth_recv_ci = 0.0
+mizan_0_64_mst_arabic_eth_sent_avg = 0.0
+mizan_0_64_mst_arabic_eth_sent_ci = 0.0
+
+mizan_0_64_mst_twitter_eth_recv_avg = 0.0
+mizan_0_64_mst_twitter_eth_recv_ci = 0.0
+mizan_0_64_mst_twitter_eth_sent_avg = 0.0
+mizan_0_64_mst_twitter_eth_sent_ci = 0.0
+
+mizan_0_64_mst_uk0705_eth_recv_avg = 0.0
+mizan_0_64_mst_uk0705_eth_recv_ci = 0.0
+mizan_0_64_mst_uk0705_eth_sent_avg = 0.0
+mizan_0_64_mst_uk0705_eth_sent_ci = 0.0
+
+mizan_0_128_pagerank_livejournal_eth_recv_avg = 0.0
+mizan_0_128_pagerank_livejournal_eth_recv_ci = 0.0
+mizan_0_128_pagerank_livejournal_eth_sent_avg = 0.0
+mizan_0_128_pagerank_livejournal_eth_sent_ci = 0.0
+
+mizan_0_128_pagerank_orkut_eth_recv_avg = 0.0
+mizan_0_128_pagerank_orkut_eth_recv_ci = 0.0
+mizan_0_128_pagerank_orkut_eth_sent_avg = 0.0
+mizan_0_128_pagerank_orkut_eth_sent_ci = 0.0
+
+mizan_0_128_pagerank_arabic_eth_recv_avg = 0.0
+mizan_0_128_pagerank_arabic_eth_recv_ci = 0.0
+mizan_0_128_pagerank_arabic_eth_sent_avg = 0.0
+mizan_0_128_pagerank_arabic_eth_sent_ci = 0.0
+
+mizan_0_128_pagerank_twitter_eth_recv_avg = 0.0
+mizan_0_128_pagerank_twitter_eth_recv_ci = 0.0
+mizan_0_128_pagerank_twitter_eth_sent_avg = 0.0
+mizan_0_128_pagerank_twitter_eth_sent_ci = 0.0
+
+mizan_0_128_pagerank_uk0705_eth_recv_avg = 0.0
+mizan_0_128_pagerank_uk0705_eth_recv_ci = 0.0
+mizan_0_128_pagerank_uk0705_eth_sent_avg = 0.0
+mizan_0_128_pagerank_uk0705_eth_sent_ci = 0.0
+
+mizan_0_128_sssp_livejournal_eth_recv_avg = 0.0
+mizan_0_128_sssp_livejournal_eth_recv_ci = 0.0
+mizan_0_128_sssp_livejournal_eth_sent_avg = 0.0
+mizan_0_128_sssp_livejournal_eth_sent_ci = 0.0
+
+mizan_0_128_sssp_orkut_eth_recv_avg = 0.0
+mizan_0_128_sssp_orkut_eth_recv_ci = 0.0
+mizan_0_128_sssp_orkut_eth_sent_avg = 0.0
+mizan_0_128_sssp_orkut_eth_sent_ci = 0.0
+
+mizan_0_128_sssp_arabic_eth_recv_avg = 0.0
+mizan_0_128_sssp_arabic_eth_recv_ci = 0.0
+mizan_0_128_sssp_arabic_eth_sent_avg = 0.0
+mizan_0_128_sssp_arabic_eth_sent_ci = 0.0
+
+mizan_0_128_sssp_twitter_eth_recv_avg = 0.0
+mizan_0_128_sssp_twitter_eth_recv_ci = 0.0
+mizan_0_128_sssp_twitter_eth_sent_avg = 0.0
+mizan_0_128_sssp_twitter_eth_sent_ci = 0.0
+
+mizan_0_128_sssp_uk0705_eth_recv_avg = 0.0
+mizan_0_128_sssp_uk0705_eth_recv_ci = 0.0
+mizan_0_128_sssp_uk0705_eth_sent_avg = 0.0
+mizan_0_128_sssp_uk0705_eth_sent_ci = 0.0
+
+mizan_0_128_wcc_livejournal_eth_recv_avg = 0.0
+mizan_0_128_wcc_livejournal_eth_recv_ci = 0.0
+mizan_0_128_wcc_livejournal_eth_sent_avg = 0.0
+mizan_0_128_wcc_livejournal_eth_sent_ci = 0.0
+
+mizan_0_128_wcc_orkut_eth_recv_avg = 0.0
+mizan_0_128_wcc_orkut_eth_recv_ci = 0.0
+mizan_0_128_wcc_orkut_eth_sent_avg = 0.0
+mizan_0_128_wcc_orkut_eth_sent_ci = 0.0
+
+mizan_0_128_wcc_arabic_eth_recv_avg = 0.0
+mizan_0_128_wcc_arabic_eth_recv_ci = 0.0
+mizan_0_128_wcc_arabic_eth_sent_avg = 0.0
+mizan_0_128_wcc_arabic_eth_sent_ci = 0.0
+
+mizan_0_128_wcc_twitter_eth_recv_avg = 0.0
+mizan_0_128_wcc_twitter_eth_recv_ci = 0.0
+mizan_0_128_wcc_twitter_eth_sent_avg = 0.0
+mizan_0_128_wcc_twitter_eth_sent_ci = 0.0
+
+mizan_0_128_wcc_uk0705_eth_recv_avg = 0.0
+mizan_0_128_wcc_uk0705_eth_recv_ci = 0.0
+mizan_0_128_wcc_uk0705_eth_sent_avg = 0.0
+mizan_0_128_wcc_uk0705_eth_sent_ci = 0.0
+
+mizan_0_128_mst_livejournal_eth_recv_avg = 0.0
+mizan_0_128_mst_livejournal_eth_recv_ci = 0.0
+mizan_0_128_mst_livejournal_eth_sent_avg = 0.0
+mizan_0_128_mst_livejournal_eth_sent_ci = 0.0
+
+mizan_0_128_mst_orkut_eth_recv_avg = 0.0
+mizan_0_128_mst_orkut_eth_recv_ci = 0.0
+mizan_0_128_mst_orkut_eth_sent_avg = 0.0
+mizan_0_128_mst_orkut_eth_sent_ci = 0.0
+
+mizan_0_128_mst_arabic_eth_recv_avg = 0.0
+mizan_0_128_mst_arabic_eth_recv_ci = 0.0
+mizan_0_128_mst_arabic_eth_sent_avg = 0.0
+mizan_0_128_mst_arabic_eth_sent_ci = 0.0
+
+mizan_0_128_mst_twitter_eth_recv_avg = 0.0
+mizan_0_128_mst_twitter_eth_recv_ci = 0.0
+mizan_0_128_mst_twitter_eth_sent_avg = 0.0
+mizan_0_128_mst_twitter_eth_sent_ci = 0.0
+
+mizan_0_128_mst_uk0705_eth_recv_avg = 0.0
+mizan_0_128_mst_uk0705_eth_recv_ci = 0.0
+mizan_0_128_mst_uk0705_eth_sent_avg = 0.0
+mizan_0_128_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_16_pagerank_livejournal_eth_recv_avg = 8.58188559059
+graphlab_0_16_pagerank_livejournal_eth_recv_ci = 0.000756538862185
+graphlab_0_16_pagerank_livejournal_eth_sent_avg = 8.32753889598
+graphlab_0_16_pagerank_livejournal_eth_sent_ci = 0.00106460215292
+
+graphlab_0_16_pagerank_orkut_eth_recv_avg = 18.3881267484
+graphlab_0_16_pagerank_orkut_eth_recv_ci = 0.00116971571774
+graphlab_0_16_pagerank_orkut_eth_sent_avg = 17.8383098381
+graphlab_0_16_pagerank_orkut_eth_sent_ci = 0.000986554078139
+
+graphlab_0_16_pagerank_arabic_eth_recv_avg = 34.3553095534
+graphlab_0_16_pagerank_arabic_eth_recv_ci = 0.00343077977737
+graphlab_0_16_pagerank_arabic_eth_sent_avg = 33.4764137372
+graphlab_0_16_pagerank_arabic_eth_sent_ci = 0.0108567129903
+
+graphlab_0_16_pagerank_twitter_eth_recv_avg = 229.704522619
+graphlab_0_16_pagerank_twitter_eth_recv_ci = 0.0526521431502
+graphlab_0_16_pagerank_twitter_eth_sent_avg = 223.647470566
+graphlab_0_16_pagerank_twitter_eth_sent_ci = 0.0593475077121
+
+graphlab_0_16_pagerank_uk0705_eth_recv_avg = 0.0
+graphlab_0_16_pagerank_uk0705_eth_recv_ci = 0.0
+graphlab_0_16_pagerank_uk0705_eth_sent_avg = 0.0
+graphlab_0_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_16_sssp_livejournal_eth_recv_avg = 4.11925267093
+graphlab_0_16_sssp_livejournal_eth_recv_ci = 0.000310186815621
+graphlab_0_16_sssp_livejournal_eth_sent_avg = 4.00120121408
+graphlab_0_16_sssp_livejournal_eth_sent_ci = 0.00039615293649
+
+graphlab_0_16_sssp_orkut_eth_recv_avg = 5.94085615743
+graphlab_0_16_sssp_orkut_eth_recv_ci = 0.000553680489621
+graphlab_0_16_sssp_orkut_eth_sent_avg = 5.76930436548
+graphlab_0_16_sssp_orkut_eth_sent_ci = 0.000602308637694
+
+graphlab_0_16_sssp_arabic_eth_recv_avg = 32.0508952439
+graphlab_0_16_sssp_arabic_eth_recv_ci = 0.00188841572602
+graphlab_0_16_sssp_arabic_eth_sent_avg = 31.1982087528
+graphlab_0_16_sssp_arabic_eth_sent_ci = 0.0101869997292
+
+graphlab_0_16_sssp_twitter_eth_recv_avg = 63.8867591925
+graphlab_0_16_sssp_twitter_eth_recv_ci = 0.0127798902714
+graphlab_0_16_sssp_twitter_eth_sent_avg = 62.3468034729
+graphlab_0_16_sssp_twitter_eth_sent_ci = 0.0308562181921
+
+graphlab_0_16_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_0_16_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_0_16_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_0_16_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_16_wcc_livejournal_eth_recv_avg = 8.88481710702
+graphlab_0_16_wcc_livejournal_eth_recv_ci = 0.00106455476842
+graphlab_0_16_wcc_livejournal_eth_sent_avg = 8.62110706903
+graphlab_0_16_wcc_livejournal_eth_sent_ci = 0.00200622893858
+
+graphlab_0_16_wcc_orkut_eth_recv_avg = 13.2241809545
+graphlab_0_16_wcc_orkut_eth_recv_ci = 0.00101292704242
+graphlab_0_16_wcc_orkut_eth_sent_avg = 12.8394817013
+graphlab_0_16_wcc_orkut_eth_sent_ci = 0.00247818375535
+
+graphlab_0_16_wcc_arabic_eth_recv_avg = 80.4869770637
+graphlab_0_16_wcc_arabic_eth_recv_ci = 0.0399552933838
+graphlab_0_16_wcc_arabic_eth_sent_avg = 78.7018377353
+graphlab_0_16_wcc_arabic_eth_sent_ci = 0.127945964614
+
+graphlab_0_16_wcc_twitter_eth_recv_avg = 125.492282349
+graphlab_0_16_wcc_twitter_eth_recv_ci = 0.0534476098505
+graphlab_0_16_wcc_twitter_eth_sent_avg = 122.9300134
+graphlab_0_16_wcc_twitter_eth_sent_ci = 0.134129384588
+
+graphlab_0_16_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_0_16_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_0_16_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_0_16_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_16_mst_livejournal_eth_recv_avg = 0.0
+graphlab_0_16_mst_livejournal_eth_recv_ci = 0.0
+graphlab_0_16_mst_livejournal_eth_sent_avg = 0.0
+graphlab_0_16_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_0_16_mst_orkut_eth_recv_avg = 0.0
+graphlab_0_16_mst_orkut_eth_recv_ci = 0.0
+graphlab_0_16_mst_orkut_eth_sent_avg = 0.0
+graphlab_0_16_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_0_16_mst_arabic_eth_recv_avg = 0.0
+graphlab_0_16_mst_arabic_eth_recv_ci = 0.0
+graphlab_0_16_mst_arabic_eth_sent_avg = 0.0
+graphlab_0_16_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_0_16_mst_twitter_eth_recv_avg = 0.0
+graphlab_0_16_mst_twitter_eth_recv_ci = 0.0
+graphlab_0_16_mst_twitter_eth_sent_avg = 0.0
+graphlab_0_16_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_0_16_mst_uk0705_eth_recv_avg = 0.0
+graphlab_0_16_mst_uk0705_eth_recv_ci = 0.0
+graphlab_0_16_mst_uk0705_eth_sent_avg = 0.0
+graphlab_0_16_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_32_pagerank_livejournal_eth_recv_avg = 12.0018570641
+graphlab_0_32_pagerank_livejournal_eth_recv_ci = 0.000914311367537
+graphlab_0_32_pagerank_livejournal_eth_sent_avg = 11.6742070094
+graphlab_0_32_pagerank_livejournal_eth_sent_ci = 0.00290168757007
+
+graphlab_0_32_pagerank_orkut_eth_recv_avg = 29.8274461916
+graphlab_0_32_pagerank_orkut_eth_recv_ci = 0.00406839358931
+graphlab_0_32_pagerank_orkut_eth_sent_avg = 28.9999738732
+graphlab_0_32_pagerank_orkut_eth_sent_ci = 0.0105314404278
+
+graphlab_0_32_pagerank_arabic_eth_recv_avg = 46.8560912335
+graphlab_0_32_pagerank_arabic_eth_recv_ci = 0.0057318371472
+graphlab_0_32_pagerank_arabic_eth_sent_avg = 45.5868769333
+graphlab_0_32_pagerank_arabic_eth_sent_ci = 0.0136222519582
+
+graphlab_0_32_pagerank_twitter_eth_recv_avg = 344.468704242
+graphlab_0_32_pagerank_twitter_eth_recv_ci = 0.0164981531824
+graphlab_0_32_pagerank_twitter_eth_sent_avg = 335.805205077
+graphlab_0_32_pagerank_twitter_eth_sent_ci = 0.0502223831821
+
+graphlab_0_32_pagerank_uk0705_eth_recv_avg = 0.0
+graphlab_0_32_pagerank_uk0705_eth_recv_ci = 0.0
+graphlab_0_32_pagerank_uk0705_eth_sent_avg = 0.0
+graphlab_0_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_32_sssp_livejournal_eth_recv_avg = 5.28292054944
+graphlab_0_32_sssp_livejournal_eth_recv_ci = 0.00051284462921
+graphlab_0_32_sssp_livejournal_eth_sent_avg = 5.14184850156
+graphlab_0_32_sssp_livejournal_eth_sent_ci = 0.00200929594295
+
+graphlab_0_32_sssp_orkut_eth_recv_avg = 8.61049296577
+graphlab_0_32_sssp_orkut_eth_recv_ci = 0.000426332545583
+graphlab_0_32_sssp_orkut_eth_sent_avg = 8.37216434479
+graphlab_0_32_sssp_orkut_eth_sent_ci = 0.00146459920791
+
+graphlab_0_32_sssp_arabic_eth_recv_avg = 42.2692381565
+graphlab_0_32_sssp_arabic_eth_recv_ci = 0.0017272601296
+graphlab_0_32_sssp_arabic_eth_sent_avg = 41.1017073857
+graphlab_0_32_sssp_arabic_eth_sent_ci = 0.005186644066
+
+graphlab_0_32_sssp_twitter_eth_recv_avg = 80.4547160018
+graphlab_0_32_sssp_twitter_eth_recv_ci = 0.00339151745229
+graphlab_0_32_sssp_twitter_eth_sent_avg = 78.3832426272
+graphlab_0_32_sssp_twitter_eth_sent_ci = 0.0105128623508
+
+graphlab_0_32_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_0_32_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_0_32_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_0_32_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_32_wcc_livejournal_eth_recv_avg = 11.9044460461
+graphlab_0_32_wcc_livejournal_eth_recv_ci = 0.00106318886393
+graphlab_0_32_wcc_livejournal_eth_sent_avg = 11.5705986522
+graphlab_0_32_wcc_livejournal_eth_sent_ci = 0.00193048671574
+
+graphlab_0_32_wcc_orkut_eth_recv_avg = 21.2661217915
+graphlab_0_32_wcc_orkut_eth_recv_ci = 0.00182642763054
+graphlab_0_32_wcc_orkut_eth_sent_avg = 20.6641991924
+graphlab_0_32_wcc_orkut_eth_sent_ci = 0.00482913858142
+
+graphlab_0_32_wcc_arabic_eth_recv_avg = 116.123411008
+graphlab_0_32_wcc_arabic_eth_recv_ci = 0.00246763797369
+graphlab_0_32_wcc_arabic_eth_sent_avg = 113.215876654
+graphlab_0_32_wcc_arabic_eth_sent_ci = 0.021861792877
+
+graphlab_0_32_wcc_twitter_eth_recv_avg = 173.071769841
+graphlab_0_32_wcc_twitter_eth_recv_ci = 0.0531191300253
+graphlab_0_32_wcc_twitter_eth_sent_avg = 169.955801464
+graphlab_0_32_wcc_twitter_eth_sent_ci = 0.181883271862
+
+graphlab_0_32_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_0_32_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_0_32_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_0_32_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_32_mst_livejournal_eth_recv_avg = 0.0
+graphlab_0_32_mst_livejournal_eth_recv_ci = 0.0
+graphlab_0_32_mst_livejournal_eth_sent_avg = 0.0
+graphlab_0_32_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_0_32_mst_orkut_eth_recv_avg = 0.0
+graphlab_0_32_mst_orkut_eth_recv_ci = 0.0
+graphlab_0_32_mst_orkut_eth_sent_avg = 0.0
+graphlab_0_32_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_0_32_mst_arabic_eth_recv_avg = 0.0
+graphlab_0_32_mst_arabic_eth_recv_ci = 0.0
+graphlab_0_32_mst_arabic_eth_sent_avg = 0.0
+graphlab_0_32_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_0_32_mst_twitter_eth_recv_avg = 0.0
+graphlab_0_32_mst_twitter_eth_recv_ci = 0.0
+graphlab_0_32_mst_twitter_eth_sent_avg = 0.0
+graphlab_0_32_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_0_32_mst_uk0705_eth_recv_avg = 0.0
+graphlab_0_32_mst_uk0705_eth_recv_ci = 0.0
+graphlab_0_32_mst_uk0705_eth_sent_avg = 0.0
+graphlab_0_32_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_64_pagerank_livejournal_eth_recv_avg = 15.9149808725
+graphlab_0_64_pagerank_livejournal_eth_recv_ci = 0.022070187411
+graphlab_0_64_pagerank_livejournal_eth_sent_avg = 15.6980413565
+graphlab_0_64_pagerank_livejournal_eth_sent_ci = 0.00552022735138
+
+graphlab_0_64_pagerank_orkut_eth_recv_avg = 44.0503188945
+graphlab_0_64_pagerank_orkut_eth_recv_ci = 0.0288937483313
+graphlab_0_64_pagerank_orkut_eth_sent_avg = 43.3449191481
+graphlab_0_64_pagerank_orkut_eth_sent_ci = 0.0116032623457
+
+graphlab_0_64_pagerank_arabic_eth_recv_avg = 60.3026456488
+graphlab_0_64_pagerank_arabic_eth_recv_ci = 0.00384777991757
+graphlab_0_64_pagerank_arabic_eth_sent_avg = 59.0876751855
+graphlab_0_64_pagerank_arabic_eth_sent_ci = 0.0176216711072
+
+graphlab_0_64_pagerank_twitter_eth_recv_avg = 477.113754868
+graphlab_0_64_pagerank_twitter_eth_recv_ci = 0.0326491690508
+graphlab_0_64_pagerank_twitter_eth_sent_avg = 467.247192777
+graphlab_0_64_pagerank_twitter_eth_sent_ci = 0.0932758316437
+
+graphlab_0_64_pagerank_uk0705_eth_recv_avg = 316.218103499
+graphlab_0_64_pagerank_uk0705_eth_recv_ci = 0.0278028207272
+graphlab_0_64_pagerank_uk0705_eth_sent_avg = 309.052592085
+graphlab_0_64_pagerank_uk0705_eth_sent_ci = 0.0824373322316
+
+graphlab_0_64_sssp_livejournal_eth_recv_avg = 6.60052505061
+graphlab_0_64_sssp_livejournal_eth_recv_ci = 0.00182275208582
+graphlab_0_64_sssp_livejournal_eth_sent_avg = 6.47055162098
+graphlab_0_64_sssp_livejournal_eth_sent_ci = 0.0046250873844
+
+graphlab_0_64_sssp_orkut_eth_recv_avg = 11.9833877325
+graphlab_0_64_sssp_orkut_eth_recv_ci = 0.000611547495054
+graphlab_0_64_sssp_orkut_eth_sent_avg = 11.7586808071
+graphlab_0_64_sssp_orkut_eth_sent_ci = 0.00167142705361
+
+graphlab_0_64_sssp_arabic_eth_recv_avg = 53.3972587964
+graphlab_0_64_sssp_arabic_eth_recv_ci = 0.00249154892214
+graphlab_0_64_sssp_arabic_eth_sent_avg = 52.191803558
+graphlab_0_64_sssp_arabic_eth_sent_ci = 0.0112179553647
+
+graphlab_0_64_sssp_twitter_eth_recv_avg = 98.2333598858
+graphlab_0_64_sssp_twitter_eth_recv_ci = 0.00446082741866
+graphlab_0_64_sssp_twitter_eth_sent_avg = 95.864580011
+graphlab_0_64_sssp_twitter_eth_sent_ci = 0.0153948873722
+
+graphlab_0_64_sssp_uk0705_eth_recv_avg = 280.693441551
+graphlab_0_64_sssp_uk0705_eth_recv_ci = 0.018171205952
+graphlab_0_64_sssp_uk0705_eth_sent_avg = 274.04977848
+graphlab_0_64_sssp_uk0705_eth_sent_ci = 0.0443111516441
+
+graphlab_0_64_wcc_livejournal_eth_recv_avg = 14.9919859432
+graphlab_0_64_wcc_livejournal_eth_recv_ci = 0.000375691193433
+graphlab_0_64_wcc_livejournal_eth_sent_avg = 14.753262632
+graphlab_0_64_wcc_livejournal_eth_sent_ci = 0.00513751987702
+
+graphlab_0_64_wcc_orkut_eth_recv_avg = 31.3021874933
+graphlab_0_64_wcc_orkut_eth_recv_ci = 0.0019476981303
+graphlab_0_64_wcc_orkut_eth_sent_avg = 30.764898729
+graphlab_0_64_wcc_orkut_eth_sent_ci = 0.0142607371274
+
+graphlab_0_64_wcc_arabic_eth_recv_avg = 153.174355108
+graphlab_0_64_wcc_arabic_eth_recv_ci = 0.00794198081291
+graphlab_0_64_wcc_arabic_eth_sent_avg = 149.868117566
+graphlab_0_64_wcc_arabic_eth_sent_ci = 0.0203227967003
+
+graphlab_0_64_wcc_twitter_eth_recv_avg = 223.757642487
+graphlab_0_64_wcc_twitter_eth_recv_ci = 0.0212141250903
+graphlab_0_64_wcc_twitter_eth_sent_avg = 218.668478457
+graphlab_0_64_wcc_twitter_eth_sent_ci = 0.0251948175332
+
+graphlab_0_64_wcc_uk0705_eth_recv_avg = 747.856888879
+graphlab_0_64_wcc_uk0705_eth_recv_ci = 0.0684233203383
+graphlab_0_64_wcc_uk0705_eth_sent_avg = 733.256466756
+graphlab_0_64_wcc_uk0705_eth_sent_ci = 0.131872537647
+
+graphlab_0_64_mst_livejournal_eth_recv_avg = 0.0
+graphlab_0_64_mst_livejournal_eth_recv_ci = 0.0
+graphlab_0_64_mst_livejournal_eth_sent_avg = 0.0
+graphlab_0_64_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_0_64_mst_orkut_eth_recv_avg = 0.0
+graphlab_0_64_mst_orkut_eth_recv_ci = 0.0
+graphlab_0_64_mst_orkut_eth_sent_avg = 0.0
+graphlab_0_64_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_0_64_mst_arabic_eth_recv_avg = 0.0
+graphlab_0_64_mst_arabic_eth_recv_ci = 0.0
+graphlab_0_64_mst_arabic_eth_sent_avg = 0.0
+graphlab_0_64_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_0_64_mst_twitter_eth_recv_avg = 0.0
+graphlab_0_64_mst_twitter_eth_recv_ci = 0.0
+graphlab_0_64_mst_twitter_eth_sent_avg = 0.0
+graphlab_0_64_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_0_64_mst_uk0705_eth_recv_avg = 0.0
+graphlab_0_64_mst_uk0705_eth_recv_ci = 0.0
+graphlab_0_64_mst_uk0705_eth_sent_avg = 0.0
+graphlab_0_64_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_0_128_pagerank_livejournal_eth_recv_avg = 21.7939782804
+graphlab_0_128_pagerank_livejournal_eth_recv_ci = 0.000984501456848
+graphlab_0_128_pagerank_livejournal_eth_sent_avg = 22.387720274
+graphlab_0_128_pagerank_livejournal_eth_sent_ci = 0.00586424496251
+
+graphlab_0_128_pagerank_orkut_eth_recv_avg = 60.8477917617
+graphlab_0_128_pagerank_orkut_eth_recv_ci = 0.00228409615852
+graphlab_0_128_pagerank_orkut_eth_sent_avg = 61.7315217812
+graphlab_0_128_pagerank_orkut_eth_sent_ci = 0.0169694328993
+
+graphlab_0_128_pagerank_arabic_eth_recv_avg = 74.6776824486
+graphlab_0_128_pagerank_arabic_eth_recv_ci = 0.0021863263093
+graphlab_0_128_pagerank_arabic_eth_sent_avg = 74.6082924601
+graphlab_0_128_pagerank_arabic_eth_sent_ci = 0.0182266490256
+
+graphlab_0_128_pagerank_twitter_eth_recv_avg = 630.609240748
+graphlab_0_128_pagerank_twitter_eth_recv_ci = 0.0186889409908
+graphlab_0_128_pagerank_twitter_eth_sent_avg = 628.116216334
+graphlab_0_128_pagerank_twitter_eth_sent_ci = 0.0668296623823
+
+graphlab_0_128_pagerank_uk0705_eth_recv_avg = 386.364491905
+graphlab_0_128_pagerank_uk0705_eth_recv_ci = 0.00919004287732
+graphlab_0_128_pagerank_uk0705_eth_sent_avg = 380.594174778
+graphlab_0_128_pagerank_uk0705_eth_sent_ci = 0.0234346493646
+
+graphlab_0_128_sssp_livejournal_eth_recv_avg = 9.10614503119
+graphlab_0_128_sssp_livejournal_eth_recv_ci = 0.000297023899705
+graphlab_0_128_sssp_livejournal_eth_sent_avg = 9.26916338298
+graphlab_0_128_sssp_livejournal_eth_sent_ci = 0.00110221318389
+
+graphlab_0_128_sssp_orkut_eth_recv_avg = 16.3776938567
+graphlab_0_128_sssp_orkut_eth_recv_ci = 0.000736828209092
+graphlab_0_128_sssp_orkut_eth_sent_avg = 16.4921937777
+graphlab_0_128_sssp_orkut_eth_sent_ci = 0.00254943182967
+
+graphlab_0_128_sssp_arabic_eth_recv_avg = 67.5117025141
+graphlab_0_128_sssp_arabic_eth_recv_ci = 0.0024531969106
+graphlab_0_128_sssp_arabic_eth_sent_avg = 67.4322947901
+graphlab_0_128_sssp_arabic_eth_sent_ci = 0.00990241019664
+
+graphlab_0_128_sssp_twitter_eth_recv_avg = 118.574974971
+graphlab_0_128_sssp_twitter_eth_recv_ci = 0.00453047760864
+graphlab_0_128_sssp_twitter_eth_sent_avg = 117.25230953
+graphlab_0_128_sssp_twitter_eth_sent_ci = 0.0122966756078
+
+graphlab_0_128_sssp_uk0705_eth_recv_avg = 343.11723766
+graphlab_0_128_sssp_uk0705_eth_recv_ci = 0.0117536781016
+graphlab_0_128_sssp_uk0705_eth_sent_avg = 338.119831115
+graphlab_0_128_sssp_uk0705_eth_sent_ci = 0.0279266119615
+
+graphlab_0_128_wcc_livejournal_eth_recv_avg = 18.8828592705
+graphlab_0_128_wcc_livejournal_eth_recv_ci = 0.00142979605266
+graphlab_0_128_wcc_livejournal_eth_sent_avg = 19.2210875882
+graphlab_0_128_wcc_livejournal_eth_sent_ci = 0.00680350065976
+
+graphlab_0_128_wcc_orkut_eth_recv_avg = 42.6881212087
+graphlab_0_128_wcc_orkut_eth_recv_ci = 0.00260887617645
+graphlab_0_128_wcc_orkut_eth_sent_avg = 43.0147390528
+graphlab_0_128_wcc_orkut_eth_sent_ci = 0.0186025535581
+
+graphlab_0_128_wcc_arabic_eth_recv_avg = 190.312911455
+graphlab_0_128_wcc_arabic_eth_recv_ci = 0.00325044741199
+graphlab_0_128_wcc_arabic_eth_sent_avg = 189.376142791
+graphlab_0_128_wcc_arabic_eth_sent_ci = 0.0182249633591
+
+graphlab_0_128_wcc_twitter_eth_recv_avg = 280.206288715
+graphlab_0_128_wcc_twitter_eth_recv_ci = 0.31125247851
+graphlab_0_128_wcc_twitter_eth_sent_avg = 276.764423884
+graphlab_0_128_wcc_twitter_eth_sent_ci = 0.0477186701623
+
+graphlab_0_128_wcc_uk0705_eth_recv_avg = 930.25839923
+graphlab_0_128_wcc_uk0705_eth_recv_ci = 0.00803394302786
+graphlab_0_128_wcc_uk0705_eth_sent_avg = 915.159981355
+graphlab_0_128_wcc_uk0705_eth_sent_ci = 0.0638552552847
+
+graphlab_0_128_mst_livejournal_eth_recv_avg = 0.0
+graphlab_0_128_mst_livejournal_eth_recv_ci = 0.0
+graphlab_0_128_mst_livejournal_eth_sent_avg = 0.0
+graphlab_0_128_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_0_128_mst_orkut_eth_recv_avg = 0.0
+graphlab_0_128_mst_orkut_eth_recv_ci = 0.0
+graphlab_0_128_mst_orkut_eth_sent_avg = 0.0
+graphlab_0_128_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_0_128_mst_arabic_eth_recv_avg = 0.0
+graphlab_0_128_mst_arabic_eth_recv_ci = 0.0
+graphlab_0_128_mst_arabic_eth_sent_avg = 0.0
+graphlab_0_128_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_0_128_mst_twitter_eth_recv_avg = 0.0
+graphlab_0_128_mst_twitter_eth_recv_ci = 0.0
+graphlab_0_128_mst_twitter_eth_sent_avg = 0.0
+graphlab_0_128_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_0_128_mst_uk0705_eth_recv_avg = 0.0
+graphlab_0_128_mst_uk0705_eth_recv_ci = 0.0
+graphlab_0_128_mst_uk0705_eth_sent_avg = 0.0
+graphlab_0_128_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_16_pagerank_livejournal_eth_recv_avg = 54.0251107646
+graphlab_1_16_pagerank_livejournal_eth_recv_ci = 6.45506800683
+graphlab_1_16_pagerank_livejournal_eth_sent_avg = 52.8654314943
+graphlab_1_16_pagerank_livejournal_eth_sent_ci = 6.33440918424
+
+graphlab_1_16_pagerank_orkut_eth_recv_avg = 112.534618005
+graphlab_1_16_pagerank_orkut_eth_recv_ci = 10.1566051528
+graphlab_1_16_pagerank_orkut_eth_sent_avg = 110.488439064
+graphlab_1_16_pagerank_orkut_eth_sent_ci = 9.84765274772
+
+graphlab_1_16_pagerank_arabic_eth_recv_avg = 117.63921296
+graphlab_1_16_pagerank_arabic_eth_recv_ci = 6.68523869045
+graphlab_1_16_pagerank_arabic_eth_sent_avg = 115.063998475
+graphlab_1_16_pagerank_arabic_eth_sent_ci = 6.46304804016
+
+graphlab_1_16_pagerank_twitter_eth_recv_avg = 538.052963147
+graphlab_1_16_pagerank_twitter_eth_recv_ci = 6.19331055299
+graphlab_1_16_pagerank_twitter_eth_sent_avg = 532.63097686
+graphlab_1_16_pagerank_twitter_eth_sent_ci = 6.02584130982
+
+graphlab_1_16_pagerank_uk0705_eth_recv_avg = 0.0
+graphlab_1_16_pagerank_uk0705_eth_recv_ci = 0.0
+graphlab_1_16_pagerank_uk0705_eth_sent_avg = 0.0
+graphlab_1_16_pagerank_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_16_sssp_livejournal_eth_recv_avg = 44.9520272175
+graphlab_1_16_sssp_livejournal_eth_recv_ci = 3.3269312728
+graphlab_1_16_sssp_livejournal_eth_sent_avg = 43.9727661207
+graphlab_1_16_sssp_livejournal_eth_sent_ci = 3.23567299223
+
+graphlab_1_16_sssp_orkut_eth_recv_avg = 22.37759213
+graphlab_1_16_sssp_orkut_eth_recv_ci = 2.12536111634
+graphlab_1_16_sssp_orkut_eth_sent_avg = 22.0109848684
+graphlab_1_16_sssp_orkut_eth_sent_ci = 2.07657841343
+
+graphlab_1_16_sssp_arabic_eth_recv_avg = 272.79106778
+graphlab_1_16_sssp_arabic_eth_recv_ci = 23.4773223046
+graphlab_1_16_sssp_arabic_eth_sent_avg = 268.488852876
+graphlab_1_16_sssp_arabic_eth_sent_ci = 22.9101471188
+
+graphlab_1_16_sssp_twitter_eth_recv_avg = 402.792785794
+graphlab_1_16_sssp_twitter_eth_recv_ci = 16.1037558186
+graphlab_1_16_sssp_twitter_eth_sent_avg = 394.645585767
+graphlab_1_16_sssp_twitter_eth_sent_ci = 15.6300031696
+
+graphlab_1_16_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_1_16_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_1_16_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_1_16_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_16_wcc_livejournal_eth_recv_avg = 0.0
+graphlab_1_16_wcc_livejournal_eth_recv_ci = 0.0
+graphlab_1_16_wcc_livejournal_eth_sent_avg = 0.0
+graphlab_1_16_wcc_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_16_wcc_orkut_eth_recv_avg = 0.0
+graphlab_1_16_wcc_orkut_eth_recv_ci = 0.0
+graphlab_1_16_wcc_orkut_eth_sent_avg = 0.0
+graphlab_1_16_wcc_orkut_eth_sent_ci = 0.0
+
+graphlab_1_16_wcc_arabic_eth_recv_avg = 0.0
+graphlab_1_16_wcc_arabic_eth_recv_ci = 0.0
+graphlab_1_16_wcc_arabic_eth_sent_avg = 0.0
+graphlab_1_16_wcc_arabic_eth_sent_ci = 0.0
+
+graphlab_1_16_wcc_twitter_eth_recv_avg = 0.0
+graphlab_1_16_wcc_twitter_eth_recv_ci = 0.0
+graphlab_1_16_wcc_twitter_eth_sent_avg = 0.0
+graphlab_1_16_wcc_twitter_eth_sent_ci = 0.0
+
+graphlab_1_16_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_1_16_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_1_16_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_1_16_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_16_mst_livejournal_eth_recv_avg = 0.0
+graphlab_1_16_mst_livejournal_eth_recv_ci = 0.0
+graphlab_1_16_mst_livejournal_eth_sent_avg = 0.0
+graphlab_1_16_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_16_mst_orkut_eth_recv_avg = 0.0
+graphlab_1_16_mst_orkut_eth_recv_ci = 0.0
+graphlab_1_16_mst_orkut_eth_sent_avg = 0.0
+graphlab_1_16_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_1_16_mst_arabic_eth_recv_avg = 0.0
+graphlab_1_16_mst_arabic_eth_recv_ci = 0.0
+graphlab_1_16_mst_arabic_eth_sent_avg = 0.0
+graphlab_1_16_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_1_16_mst_twitter_eth_recv_avg = 0.0
+graphlab_1_16_mst_twitter_eth_recv_ci = 0.0
+graphlab_1_16_mst_twitter_eth_sent_avg = 0.0
+graphlab_1_16_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_1_16_mst_uk0705_eth_recv_avg = 0.0
+graphlab_1_16_mst_uk0705_eth_recv_ci = 0.0
+graphlab_1_16_mst_uk0705_eth_sent_avg = 0.0
+graphlab_1_16_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_32_pagerank_livejournal_eth_recv_avg = 144.087520118
+graphlab_1_32_pagerank_livejournal_eth_recv_ci = 20.2942933246
+graphlab_1_32_pagerank_livejournal_eth_sent_avg = 141.123152105
+graphlab_1_32_pagerank_livejournal_eth_sent_ci = 20.0288614952
+
+graphlab_1_32_pagerank_orkut_eth_recv_avg = 355.601284851
+graphlab_1_32_pagerank_orkut_eth_recv_ci = 111.777589845
+graphlab_1_32_pagerank_orkut_eth_sent_avg = 348.390121166
+graphlab_1_32_pagerank_orkut_eth_sent_ci = 109.536909717
+
+graphlab_1_32_pagerank_arabic_eth_recv_avg = 371.513164324
+graphlab_1_32_pagerank_arabic_eth_recv_ci = 26.9189029246
+graphlab_1_32_pagerank_arabic_eth_sent_avg = 363.328047739
+graphlab_1_32_pagerank_arabic_eth_sent_ci = 26.4047943563
+
+graphlab_1_32_pagerank_twitter_eth_recv_avg = 877.702210202
+graphlab_1_32_pagerank_twitter_eth_recv_ci = 13.5246102011
+graphlab_1_32_pagerank_twitter_eth_sent_avg = 875.977489455
+graphlab_1_32_pagerank_twitter_eth_sent_ci = 12.6712366608
+
+graphlab_1_32_pagerank_uk0705_eth_recv_avg = 0.0
+graphlab_1_32_pagerank_uk0705_eth_recv_ci = 0.0
+graphlab_1_32_pagerank_uk0705_eth_sent_avg = 0.0
+graphlab_1_32_pagerank_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_32_sssp_livejournal_eth_recv_avg = 130.419375104
+graphlab_1_32_sssp_livejournal_eth_recv_ci = 33.2936635897
+graphlab_1_32_sssp_livejournal_eth_sent_avg = 127.411786424
+graphlab_1_32_sssp_livejournal_eth_sent_ci = 32.4120902066
+
+graphlab_1_32_sssp_orkut_eth_recv_avg = 53.7452302275
+graphlab_1_32_sssp_orkut_eth_recv_ci = 11.5464886787
+graphlab_1_32_sssp_orkut_eth_sent_avg = 52.9706538007
+graphlab_1_32_sssp_orkut_eth_sent_ci = 11.2924859989
+
+graphlab_1_32_sssp_arabic_eth_recv_avg = 2274.70682232
+graphlab_1_32_sssp_arabic_eth_recv_ci = 409.474073435
+graphlab_1_32_sssp_arabic_eth_sent_avg = 2221.72590429
+graphlab_1_32_sssp_arabic_eth_sent_ci = 398.963961346
+
+graphlab_1_32_sssp_twitter_eth_recv_avg = 1078.85235052
+graphlab_1_32_sssp_twitter_eth_recv_ci = 146.927565384
+graphlab_1_32_sssp_twitter_eth_sent_avg = 1055.60079478
+graphlab_1_32_sssp_twitter_eth_sent_ci = 143.098186879
+
+graphlab_1_32_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_1_32_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_1_32_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_1_32_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_32_wcc_livejournal_eth_recv_avg = 0.0
+graphlab_1_32_wcc_livejournal_eth_recv_ci = 0.0
+graphlab_1_32_wcc_livejournal_eth_sent_avg = 0.0
+graphlab_1_32_wcc_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_32_wcc_orkut_eth_recv_avg = 0.0
+graphlab_1_32_wcc_orkut_eth_recv_ci = 0.0
+graphlab_1_32_wcc_orkut_eth_sent_avg = 0.0
+graphlab_1_32_wcc_orkut_eth_sent_ci = 0.0
+
+graphlab_1_32_wcc_arabic_eth_recv_avg = 0.0
+graphlab_1_32_wcc_arabic_eth_recv_ci = 0.0
+graphlab_1_32_wcc_arabic_eth_sent_avg = 0.0
+graphlab_1_32_wcc_arabic_eth_sent_ci = 0.0
+
+graphlab_1_32_wcc_twitter_eth_recv_avg = 0.0
+graphlab_1_32_wcc_twitter_eth_recv_ci = 0.0
+graphlab_1_32_wcc_twitter_eth_sent_avg = 0.0
+graphlab_1_32_wcc_twitter_eth_sent_ci = 0.0
+
+graphlab_1_32_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_1_32_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_1_32_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_1_32_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_32_mst_livejournal_eth_recv_avg = 0.0
+graphlab_1_32_mst_livejournal_eth_recv_ci = 0.0
+graphlab_1_32_mst_livejournal_eth_sent_avg = 0.0
+graphlab_1_32_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_32_mst_orkut_eth_recv_avg = 0.0
+graphlab_1_32_mst_orkut_eth_recv_ci = 0.0
+graphlab_1_32_mst_orkut_eth_sent_avg = 0.0
+graphlab_1_32_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_1_32_mst_arabic_eth_recv_avg = 0.0
+graphlab_1_32_mst_arabic_eth_recv_ci = 0.0
+graphlab_1_32_mst_arabic_eth_sent_avg = 0.0
+graphlab_1_32_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_1_32_mst_twitter_eth_recv_avg = 0.0
+graphlab_1_32_mst_twitter_eth_recv_ci = 0.0
+graphlab_1_32_mst_twitter_eth_sent_avg = 0.0
+graphlab_1_32_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_1_32_mst_uk0705_eth_recv_avg = 0.0
+graphlab_1_32_mst_uk0705_eth_recv_ci = 0.0
+graphlab_1_32_mst_uk0705_eth_sent_avg = 0.0
+graphlab_1_32_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_64_pagerank_livejournal_eth_recv_avg = 1463.16204237
+graphlab_1_64_pagerank_livejournal_eth_recv_ci = 301.831647766
+graphlab_1_64_pagerank_livejournal_eth_sent_avg = 1436.92464651
+graphlab_1_64_pagerank_livejournal_eth_sent_ci = 296.646682935
+
+graphlab_1_64_pagerank_orkut_eth_recv_avg = 6641.90659649
+graphlab_1_64_pagerank_orkut_eth_recv_ci = 1046.0820268
+graphlab_1_64_pagerank_orkut_eth_sent_avg = 6513.37451467
+graphlab_1_64_pagerank_orkut_eth_sent_ci = 1026.35427574
+
+graphlab_1_64_pagerank_arabic_eth_recv_avg = 1465.44225758
+graphlab_1_64_pagerank_arabic_eth_recv_ci = 63.0084108164
+graphlab_1_64_pagerank_arabic_eth_sent_avg = 1438.59909136
+graphlab_1_64_pagerank_arabic_eth_sent_ci = 61.9096613207
+
+graphlab_1_64_pagerank_twitter_eth_recv_avg = 1868.06546011
+graphlab_1_64_pagerank_twitter_eth_recv_ci = 192.496396436
+graphlab_1_64_pagerank_twitter_eth_sent_avg = 1854.86402072
+graphlab_1_64_pagerank_twitter_eth_sent_ci = 189.813726397
+
+graphlab_1_64_pagerank_uk0705_eth_recv_avg = 4289.70675537
+graphlab_1_64_pagerank_uk0705_eth_recv_ci = 201.090768602
+graphlab_1_64_pagerank_uk0705_eth_sent_avg = 4224.29854309
+graphlab_1_64_pagerank_uk0705_eth_sent_ci = 198.063629973
+
+graphlab_1_64_sssp_livejournal_eth_recv_avg = 1965.90029803
+graphlab_1_64_sssp_livejournal_eth_recv_ci = 389.897053598
+graphlab_1_64_sssp_livejournal_eth_sent_avg = 1929.12013778
+graphlab_1_64_sssp_livejournal_eth_sent_ci = 383.447302516
+
+graphlab_1_64_sssp_orkut_eth_recv_avg = 995.1368847
+graphlab_1_64_sssp_orkut_eth_recv_ci = 225.219686643
+graphlab_1_64_sssp_orkut_eth_sent_avg = 978.056919554
+graphlab_1_64_sssp_orkut_eth_sent_ci = 221.205811521
+
+graphlab_1_64_sssp_arabic_eth_recv_avg = 0.0
+graphlab_1_64_sssp_arabic_eth_recv_ci = 0.0
+graphlab_1_64_sssp_arabic_eth_sent_avg = 0.0
+graphlab_1_64_sssp_arabic_eth_sent_ci = 0.0
+
+graphlab_1_64_sssp_twitter_eth_recv_avg = 4333.63652768
+graphlab_1_64_sssp_twitter_eth_recv_ci = 228.070264921
+graphlab_1_64_sssp_twitter_eth_sent_avg = 4251.82622008
+graphlab_1_64_sssp_twitter_eth_sent_ci = 224.756034084
+
+graphlab_1_64_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_1_64_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_1_64_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_1_64_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_64_wcc_livejournal_eth_recv_avg = 0.0
+graphlab_1_64_wcc_livejournal_eth_recv_ci = 0.0
+graphlab_1_64_wcc_livejournal_eth_sent_avg = 0.0
+graphlab_1_64_wcc_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_64_wcc_orkut_eth_recv_avg = 0.0
+graphlab_1_64_wcc_orkut_eth_recv_ci = 0.0
+graphlab_1_64_wcc_orkut_eth_sent_avg = 0.0
+graphlab_1_64_wcc_orkut_eth_sent_ci = 0.0
+
+graphlab_1_64_wcc_arabic_eth_recv_avg = 0.0
+graphlab_1_64_wcc_arabic_eth_recv_ci = 0.0
+graphlab_1_64_wcc_arabic_eth_sent_avg = 0.0
+graphlab_1_64_wcc_arabic_eth_sent_ci = 0.0
+
+graphlab_1_64_wcc_twitter_eth_recv_avg = 0.0
+graphlab_1_64_wcc_twitter_eth_recv_ci = 0.0
+graphlab_1_64_wcc_twitter_eth_sent_avg = 0.0
+graphlab_1_64_wcc_twitter_eth_sent_ci = 0.0
+
+graphlab_1_64_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_1_64_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_1_64_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_1_64_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_64_mst_livejournal_eth_recv_avg = 0.0
+graphlab_1_64_mst_livejournal_eth_recv_ci = 0.0
+graphlab_1_64_mst_livejournal_eth_sent_avg = 0.0
+graphlab_1_64_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_64_mst_orkut_eth_recv_avg = 0.0
+graphlab_1_64_mst_orkut_eth_recv_ci = 0.0
+graphlab_1_64_mst_orkut_eth_sent_avg = 0.0
+graphlab_1_64_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_1_64_mst_arabic_eth_recv_avg = 0.0
+graphlab_1_64_mst_arabic_eth_recv_ci = 0.0
+graphlab_1_64_mst_arabic_eth_sent_avg = 0.0
+graphlab_1_64_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_1_64_mst_twitter_eth_recv_avg = 0.0
+graphlab_1_64_mst_twitter_eth_recv_ci = 0.0
+graphlab_1_64_mst_twitter_eth_sent_avg = 0.0
+graphlab_1_64_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_1_64_mst_uk0705_eth_recv_avg = 0.0
+graphlab_1_64_mst_uk0705_eth_recv_ci = 0.0
+graphlab_1_64_mst_uk0705_eth_sent_avg = 0.0
+graphlab_1_64_mst_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_128_pagerank_livejournal_eth_recv_avg = 0.0
+graphlab_1_128_pagerank_livejournal_eth_recv_ci = 0.0
+graphlab_1_128_pagerank_livejournal_eth_sent_avg = 0.0
+graphlab_1_128_pagerank_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_128_pagerank_orkut_eth_recv_avg = 0.0
+graphlab_1_128_pagerank_orkut_eth_recv_ci = 0.0
+graphlab_1_128_pagerank_orkut_eth_sent_avg = 0.0
+graphlab_1_128_pagerank_orkut_eth_sent_ci = 0.0
+
+graphlab_1_128_pagerank_arabic_eth_recv_avg = 0.0
+graphlab_1_128_pagerank_arabic_eth_recv_ci = 0.0
+graphlab_1_128_pagerank_arabic_eth_sent_avg = 0.0
+graphlab_1_128_pagerank_arabic_eth_sent_ci = 0.0
+
+graphlab_1_128_pagerank_twitter_eth_recv_avg = 0.0
+graphlab_1_128_pagerank_twitter_eth_recv_ci = 0.0
+graphlab_1_128_pagerank_twitter_eth_sent_avg = 0.0
+graphlab_1_128_pagerank_twitter_eth_sent_ci = 0.0
+
+graphlab_1_128_pagerank_uk0705_eth_recv_avg = 0.0
+graphlab_1_128_pagerank_uk0705_eth_recv_ci = 0.0
+graphlab_1_128_pagerank_uk0705_eth_sent_avg = 0.0
+graphlab_1_128_pagerank_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_128_sssp_livejournal_eth_recv_avg = 0.0
+graphlab_1_128_sssp_livejournal_eth_recv_ci = 0.0
+graphlab_1_128_sssp_livejournal_eth_sent_avg = 0.0
+graphlab_1_128_sssp_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_128_sssp_orkut_eth_recv_avg = 0.0
+graphlab_1_128_sssp_orkut_eth_recv_ci = 0.0
+graphlab_1_128_sssp_orkut_eth_sent_avg = 0.0
+graphlab_1_128_sssp_orkut_eth_sent_ci = 0.0
+
+graphlab_1_128_sssp_arabic_eth_recv_avg = 0.0
+graphlab_1_128_sssp_arabic_eth_recv_ci = 0.0
+graphlab_1_128_sssp_arabic_eth_sent_avg = 0.0
+graphlab_1_128_sssp_arabic_eth_sent_ci = 0.0
+
+graphlab_1_128_sssp_twitter_eth_recv_avg = 0.0
+graphlab_1_128_sssp_twitter_eth_recv_ci = 0.0
+graphlab_1_128_sssp_twitter_eth_sent_avg = 0.0
+graphlab_1_128_sssp_twitter_eth_sent_ci = 0.0
+
+graphlab_1_128_sssp_uk0705_eth_recv_avg = 0.0
+graphlab_1_128_sssp_uk0705_eth_recv_ci = 0.0
+graphlab_1_128_sssp_uk0705_eth_sent_avg = 0.0
+graphlab_1_128_sssp_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_128_wcc_livejournal_eth_recv_avg = 0.0
+graphlab_1_128_wcc_livejournal_eth_recv_ci = 0.0
+graphlab_1_128_wcc_livejournal_eth_sent_avg = 0.0
+graphlab_1_128_wcc_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_128_wcc_orkut_eth_recv_avg = 0.0
+graphlab_1_128_wcc_orkut_eth_recv_ci = 0.0
+graphlab_1_128_wcc_orkut_eth_sent_avg = 0.0
+graphlab_1_128_wcc_orkut_eth_sent_ci = 0.0
+
+graphlab_1_128_wcc_arabic_eth_recv_avg = 0.0
+graphlab_1_128_wcc_arabic_eth_recv_ci = 0.0
+graphlab_1_128_wcc_arabic_eth_sent_avg = 0.0
+graphlab_1_128_wcc_arabic_eth_sent_ci = 0.0
+
+graphlab_1_128_wcc_twitter_eth_recv_avg = 0.0
+graphlab_1_128_wcc_twitter_eth_recv_ci = 0.0
+graphlab_1_128_wcc_twitter_eth_sent_avg = 0.0
+graphlab_1_128_wcc_twitter_eth_sent_ci = 0.0
+
+graphlab_1_128_wcc_uk0705_eth_recv_avg = 0.0
+graphlab_1_128_wcc_uk0705_eth_recv_ci = 0.0
+graphlab_1_128_wcc_uk0705_eth_sent_avg = 0.0
+graphlab_1_128_wcc_uk0705_eth_sent_ci = 0.0
+
+graphlab_1_128_mst_livejournal_eth_recv_avg = 0.0
+graphlab_1_128_mst_livejournal_eth_recv_ci = 0.0
+graphlab_1_128_mst_livejournal_eth_sent_avg = 0.0
+graphlab_1_128_mst_livejournal_eth_sent_ci = 0.0
+
+graphlab_1_128_mst_orkut_eth_recv_avg = 0.0
+graphlab_1_128_mst_orkut_eth_recv_ci = 0.0
+graphlab_1_128_mst_orkut_eth_sent_avg = 0.0
+graphlab_1_128_mst_orkut_eth_sent_ci = 0.0
+
+graphlab_1_128_mst_arabic_eth_recv_avg = 0.0
+graphlab_1_128_mst_arabic_eth_recv_ci = 0.0
+graphlab_1_128_mst_arabic_eth_sent_avg = 0.0
+graphlab_1_128_mst_arabic_eth_sent_ci = 0.0
+
+graphlab_1_128_mst_twitter_eth_recv_avg = 0.0
+graphlab_1_128_mst_twitter_eth_recv_ci = 0.0
+graphlab_1_128_mst_twitter_eth_sent_avg = 0.0
+graphlab_1_128_mst_twitter_eth_sent_ci = 0.0
+
+graphlab_1_128_mst_uk0705_eth_recv_avg = 0.0
+graphlab_1_128_mst_uk0705_eth_recv_ci = 0.0
+graphlab_1_128_mst_uk0705_eth_sent_avg = 0.0
+graphlab_1_128_mst_uk0705_eth_sent_ci = 0.0
+
+mizan_1_16_premizan_livejournal_eth_recv_avg = 11.7719649132
+mizan_1_16_premizan_livejournal_eth_recv_ci = 0.403928367084
+mizan_1_16_premizan_livejournal_eth_sent_avg = 11.4655543787
+mizan_1_16_premizan_livejournal_eth_sent_ci = 0.393805586771
+
+mizan_1_16_premizan_orkut_eth_recv_avg = 20.9091806851
+mizan_1_16_premizan_orkut_eth_recv_ci = 0.824184531827
+mizan_1_16_premizan_orkut_eth_sent_avg = 20.348795834
+mizan_1_16_premizan_orkut_eth_sent_ci = 0.803752482405
+
+mizan_1_16_premizan_arabic_eth_recv_avg = 122.905446873
+mizan_1_16_premizan_arabic_eth_recv_ci = 0.713535751735
+mizan_1_16_premizan_arabic_eth_sent_avg = 119.431651544
+mizan_1_16_premizan_arabic_eth_sent_ci = 0.702048428669
+
+mizan_1_16_premizan_twitter_eth_recv_avg = 0.0
+mizan_1_16_premizan_twitter_eth_recv_ci = 0.0
+mizan_1_16_premizan_twitter_eth_sent_avg = 0.0
+mizan_1_16_premizan_twitter_eth_sent_ci = 0.0
+
+mizan_1_16_premizan_uk0705_eth_recv_avg = 0.0
+mizan_1_16_premizan_uk0705_eth_recv_ci = 0.0
+mizan_1_16_premizan_uk0705_eth_sent_avg = 0.0
+mizan_1_16_premizan_uk0705_eth_sent_ci = 0.0
+
+mizan_1_32_premizan_livejournal_eth_recv_avg = 13.0809874695
+mizan_1_32_premizan_livejournal_eth_recv_ci = 0.509167097565
+mizan_1_32_premizan_livejournal_eth_sent_avg = 12.7531957347
+mizan_1_32_premizan_livejournal_eth_sent_ci = 0.500711954334
+
+mizan_1_32_premizan_orkut_eth_recv_avg = 22.5373898502
+mizan_1_32_premizan_orkut_eth_recv_ci = 0.338871448574
+mizan_1_32_premizan_orkut_eth_sent_avg = 21.9677315762
+mizan_1_32_premizan_orkut_eth_sent_ci = 0.332218719691
+
+mizan_1_32_premizan_arabic_eth_recv_avg = 139.246478993
+mizan_1_32_premizan_arabic_eth_recv_ci = 0.756142152721
+mizan_1_32_premizan_arabic_eth_sent_avg = 135.598339015
+mizan_1_32_premizan_arabic_eth_sent_ci = 0.741770285547
+
+mizan_1_32_premizan_twitter_eth_recv_avg = 0.0
+mizan_1_32_premizan_twitter_eth_recv_ci = 0.0
+mizan_1_32_premizan_twitter_eth_sent_avg = 0.0
+mizan_1_32_premizan_twitter_eth_sent_ci = 0.0
+
+mizan_1_32_premizan_uk0705_eth_recv_avg = 0.0
+mizan_1_32_premizan_uk0705_eth_recv_ci = 0.0
+mizan_1_32_premizan_uk0705_eth_sent_avg = 0.0
+mizan_1_32_premizan_uk0705_eth_sent_ci = 0.0
+
+mizan_1_64_premizan_livejournal_eth_recv_avg = 13.344726744
+mizan_1_64_premizan_livejournal_eth_recv_ci = 0.354212095553
+mizan_1_64_premizan_livejournal_eth_sent_avg = 13.0265867411
+mizan_1_64_premizan_livejournal_eth_sent_ci = 0.348519956185
+
+mizan_1_64_premizan_orkut_eth_recv_avg = 24.2843564432
+mizan_1_64_premizan_orkut_eth_recv_ci = 1.54773447266
+mizan_1_64_premizan_orkut_eth_sent_avg = 23.6962261928
+mizan_1_64_premizan_orkut_eth_sent_ci = 1.50468273851
+
+mizan_1_64_premizan_arabic_eth_recv_avg = 143.742485811
+mizan_1_64_premizan_arabic_eth_recv_ci = 0.236663837288
+mizan_1_64_premizan_arabic_eth_sent_avg = 140.093093825
+mizan_1_64_premizan_arabic_eth_sent_ci = 0.234233246687
+
+mizan_1_64_premizan_twitter_eth_recv_avg = 0.0
+mizan_1_64_premizan_twitter_eth_recv_ci = 0.0
+mizan_1_64_premizan_twitter_eth_sent_avg = 0.0
+mizan_1_64_premizan_twitter_eth_sent_ci = 0.0
+
+mizan_1_64_premizan_uk0705_eth_recv_avg = 0.0
+mizan_1_64_premizan_uk0705_eth_recv_ci = 0.0
+mizan_1_64_premizan_uk0705_eth_sent_avg = 0.0
+mizan_1_64_premizan_uk0705_eth_sent_ci = 0.0
+
+mizan_1_128_premizan_livejournal_eth_recv_avg = 14.1350336393
+mizan_1_128_premizan_livejournal_eth_recv_ci = 0.0703785651526
+mizan_1_128_premizan_livejournal_eth_sent_avg = 13.8098108334
+mizan_1_128_premizan_livejournal_eth_sent_ci = 0.0695041860103
+
+mizan_1_128_premizan_orkut_eth_recv_avg = 25.6319464184
+mizan_1_128_premizan_orkut_eth_recv_ci = 1.24863686443
+mizan_1_128_premizan_orkut_eth_sent_avg = 25.0233285163
+mizan_1_128_premizan_orkut_eth_sent_ci = 1.21159079112
+
+mizan_1_128_premizan_arabic_eth_recv_avg = 151.503805673
+mizan_1_128_premizan_arabic_eth_recv_ci = 0.873665530726
+mizan_1_128_premizan_arabic_eth_sent_avg = 147.72631605
+mizan_1_128_premizan_arabic_eth_sent_ci = 0.862142510339
+
+mizan_1_128_premizan_twitter_eth_recv_avg = 355.510505863
+mizan_1_128_premizan_twitter_eth_recv_ci = 1.10990111441
+mizan_1_128_premizan_twitter_eth_sent_avg = 346.109720956
+mizan_1_128_premizan_twitter_eth_sent_ci = 1.04982456832
+
+mizan_1_128_premizan_uk0705_eth_recv_avg = 0.0
+mizan_1_128_premizan_uk0705_eth_recv_ci = 0.0
+mizan_1_128_premizan_uk0705_eth_sent_avg = 0.0
+mizan_1_128_premizan_uk0705_eth_sent_ci = 0.0
+
