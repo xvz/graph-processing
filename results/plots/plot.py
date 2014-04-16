@@ -18,7 +18,7 @@ def check_mode(mode):
     except:
         raise argparse.ArgumentTypeError('Invalid mode')
 
-parser = argparse.ArgumentParser(description='Generates experimental data from log files.')
+parser = argparse.ArgumentParser(description='Plots parsed experimental data values.')
 parser.add_argument('mode', type=check_mode,
                     help='mode to use: 0 for time, 1 for memory, 2 for network')
 
@@ -26,7 +26,7 @@ parser.add_argument('mode', type=check_mode,
 parser.add_argument('--master', action='store_true', default=False,
                     help='plot mem/net statistics for the master rather than the worker machines (only relevant for mode=1,2)')
 parser.add_argument('--premizan', action='store_true', default=False,
-                    help='plot mem/net statistics for premizan only (only relevant for mode=1,2)')
+                    help='plot mem/net statistics for premizan, Mizan\'s graph partitioner (only relevant for mode=1,2)')
 parser.add_argument('--total-time', action='store_true', default=False,
                     help='plot total time (stacked bars) instead of separate setup and computation times (only revelant for mode=0)')
 
@@ -159,9 +159,9 @@ if do_premizan:
 ####################
 # Plot constants
 ####################
-PLOT_TYPES = (('split',),    # time 
-              ('mem',),          # mem
-              ('recv', 'sent'))  # net
+PLOT_TYPES = (('tot' if do_time_tot else 'split',),  # time
+              ('mem',),                              # mem
+              ('recv', 'sent'))                      # net
 
 # decoration
 PATTERNS = ('.','*',       # Giraph
@@ -248,17 +248,26 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
     # this is generated implicitly by default, but we need to return it
     ax = plt.subplot()
 
+    # don't show premizan bar if comuptation time is 0 (i.e., failed run)
+    premizan_avg = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
+                              for j,val in enumerate(arr)]
+                             for i,arr in enumerate(premizan_dict['io_avg'][gi,si])])
+
+    premizan_ci = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
+                             for j,val in enumerate(arr)]
+                            for i,arr in enumerate(premizan_dict['io_ci'][gi,si])])
+
     # Each (implicit) iteration plots one system+sysmode in different groups (= workers).
     # "+" does element-wise add as everything is an np.array.
-    # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_run = [plt.bar(ind[gi] + width*i, avg[mi], width, color=col, hatch=pat,
                        ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
                for i,(avg,ci,io,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
                                                           stats_dict['run_ci'][ai,gi],
-                                                          stats_dict['io_avg'][ai,gi]+premizan_dict['io_avg'][gi],
+                                                          stats_dict['io_avg'][ai,gi,si]+premizan_avg,
                                                           COLORS,
                                                           PATTERNS))]
 
+    # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_io = [plt.bar(ind[gi] + width*i, avg[mi], width, color=COLOR_IO,
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
               for i,(avg,ci) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],
@@ -266,8 +275,8 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
 
     plt_pm = [plt.bar(ind[gi] + width*i, avg[mi], width, color=COLOR_PREMIZAN,
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
-              for i,(avg,ci,io) in enumerate(zip(premizan_dict['io_avg'][gi,si],
-                                                 premizan_dict['io_ci'][gi],
+              for i,(avg,ci,io) in enumerate(zip(premizan_avg,
+                                                 premizan_ci,
                                                  stats_dict['io_avg'][ai,gi]))]
 
     # label with total time (if not for paper.. otherwise it clutters things)
@@ -367,10 +376,20 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, width):
                                                   stats_dict['io_ci'][ai,gi],
                                                   PATTERNS))]
 
+    # don't show premizan bar if comuptation time is 0 (i.e., failed run)
+    premizan_avg = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
+                              for j,val in enumerate(arr)]
+                             for i,arr in enumerate(premizan_dict['io_avg'][gi,si])])
+
+    premizan_ci = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
+                             for j,val in enumerate(arr)]
+                            for i,arr in enumerate(premizan_dict['io_ci'][gi,si])])
+
+
     plt_pm = [plt.bar(ind[gi] + width*i, avg[mi], width, color=COLOR_PREMIZAN, hatch=pat,
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
-              for i,(avg,ci,io,pat) in enumerate(zip(premizan_dict['io_avg'][gi,si],
-                                                     premizan_dict['io_ci'][gi],
+              for i,(avg,ci,io,pat) in enumerate(zip(premizan_avg,
+                                                     premizan_ci,
                                                      stats_dict['io_avg'][ai,gi],
                                                      PATTERNS))]
 
