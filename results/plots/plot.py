@@ -29,6 +29,8 @@ parser.add_argument('--premizan', action='store_true', default=False,
                     help='plot mem/net statistics for premizan, Mizan\'s graph partitioner (only relevant for mode=1,2)')
 parser.add_argument('--total-time', action='store_true', default=False,
                     help='plot total time (stacked bars) instead of separate setup and computation times (only revelant for mode=0)')
+parser.add_argument('--avg-memory', action='store_true', default=False,
+                    help='plot only average memory usage, instead of min, max, and average (only revelant for mode=1)')
 
 # save related items
 parser.add_argument('--save-png', action='store_true', default=False,
@@ -43,6 +45,7 @@ mode = parser.parse_args().mode
 do_master = parser.parse_args().master
 do_premizan = parser.parse_args().premizan
 do_time_tot = parser.parse_args().total_time
+do_avg_only = parser.parse_args().avg_memory
 
 save_png = parser.parse_args().save_png
 save_eps = parser.parse_args().save_eps
@@ -159,9 +162,9 @@ if do_premizan:
 ####################
 # Plot constants
 ####################
-PLOT_TYPES = (('tot' if do_time_tot else 'split',),  # time
-              ('mem',),                              # mem
-              ('recv', 'sent'))                      # net
+PLOT_TYPES = (('time_tot' if do_time_tot else 'time_split',),  # time
+              ('mem_avg' if do_avg_only else 'mem',),          # mem
+              ('recv', 'sent'))                                # net
 
 # decoration
 PATTERNS = ('.','*',       # Giraph
@@ -257,7 +260,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
                              for j,val in enumerate(arr)]
                             for i,arr in enumerate(premizan_dict['io_ci'][gi,si])])
 
-    # Each (implicit) iteration plots one system+sysmode in different groups (= workers).
+    # Each (implicit) iteration plots one system+sysmode in different groups (= # of machines).
     # "+" does element-wise add as everything is an np.array.
     plt_run = [plt.bar(ind[gi] + width*i, avg[mi], width, color=col, hatch=pat,
                        ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
@@ -295,42 +298,42 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
     return (ax,)
 
 
-def plot_time_run(plt, fignum, ai, gi, si, mi, width):
-    """Plots computation time only.
-    
-    Arguments:
-    plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
-    ai -- algorithm index (int)
-    gi -- graph index (int)
-    si -- system indices, for plotting all or a subset of the systems (list/range)
-    mi -- machine indices, for plotting all or a subset of the machines (list/range)
-    width -- width of each bar
-
-    Returns:
-    Tuple of axes.
-    """
-
-    ax = plt.subplot()
-
-    plt_run = [plt.bar(ind[gi] + width*i, avg[mi], width, color=col, hatch=pat,
-                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-               for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
-                                                       stats_dict['run_ci'][ai,gi],
-                                                       COLORS,
-                                                       PATTERNS))]
-
-    # label bars with computation times
-    if not save_paper:
-        for bars in plt_run:
-            for bar in bars:
-                autolabel(bar)
-
-    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
-
-    if (not save_eps) or gi == 0:
-        plt.ylabel('Computation time (mins)')
-    return (ax,)
+#def plot_time_run(plt, fignum, ai, gi, si, mi, width):
+#    """Plots computation time only.
+#    
+#    Arguments:
+#    plt -- matplotlib.pyplot being used
+#    fignum -- figure number (int)
+#    ai -- algorithm index (int)
+#    gi -- graph index (int)
+#    si -- system indices, for plotting all or a subset of the systems (list/range)
+#    mi -- machine indices, for plotting all or a subset of the machines (list/range)
+#    width -- width of each bar
+# 
+#    Returns:
+#    Tuple of axes.
+#    """
+# 
+#    ax = plt.subplot()
+# 
+#    plt_run = [plt.bar(ind[gi] + width*i, avg[mi], width, color=col, hatch=pat,
+#                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
+#               for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
+#                                                       stats_dict['run_ci'][ai,gi],
+#                                                       COLORS,
+#                                                       PATTERNS))]
+# 
+#    # label bars with computation times
+#    if not save_paper:
+#        for bars in plt_run:
+#            for bar in bars:
+#                autolabel(bar)
+# 
+#    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
+# 
+#    if (not save_eps) or gi == 0:
+#        plt.ylabel('Computation time (mins)')
+#    return (ax,)
 
 
 def plot_time_split(plt, fignum, ai, gi, si, mi, width):
@@ -417,7 +420,7 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, width):
 
 
 def plot_mem(plt, fignum, ai, gi, si, mi, width):
-    """Plots memory usage (GB per worker).
+    """Plots memory usage (GB per machine).
     
     Arguments:
     plt -- matplotlib.pyplot being used
@@ -446,9 +449,10 @@ def plot_mem(plt, fignum, ai, gi, si, mi, width):
 
     else:
         # NOTE: alpha not supported in ps/eps
-        plt_max = [plt.bar(ind[gi] + width*i, avg[mi], width, color='#e74c3c', alpha=0.6,
-                           ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                   for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
+        if not do_avg_only:
+            plt_max = [plt.bar(ind[gi] + width*i, avg[mi], width, color='#e74c3c', alpha=0.6,
+                               ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
+                       for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
                                                            stats_dict['mem_max_ci'][ai,gi],
                                                            PATTERNS))]
 
@@ -458,14 +462,16 @@ def plot_mem(plt, fignum, ai, gi, si, mi, width):
                                                            stats_dict['mem_avg_ci'][ai,gi],
                                                            COLORS,
                                                            PATTERNS))]
-    
-        # impossible to see colours when bars are so thin
-        if not save_paper:
+
+        if not do_avg_only:
             plt_min = [plt.bar(ind[gi] + width*i, avg[mi], width, color='#27ae60', alpha=0.6,
                                ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
                        for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_min_avg'][ai,gi,si],
                                                            stats_dict['mem_min_ci'][ai,gi],
                                                            PATTERNS))]
+
+        if do_avg_only:
+            plt_min = plt_max = plt_avg
 
     # label all bars
     if not save_paper:
@@ -480,16 +486,16 @@ def plot_mem(plt, fignum, ai, gi, si, mi, width):
         if do_master:
             plt.ylabel('Memory usage at master (MB)')
         else:
-            if save_paper:
-                plt.ylabel('Avg/max memory usage (GB per worker)')
+            if do_avg_only:
+                plt.ylabel('Average memory usage (GB per machine)')
             else:
-                plt.ylabel('Min/avg/max memory usage (GB per worker)')
+                plt.ylabel('Min/avg/max memory usage (GB per machine)')
 
     return (ax,)
 
 
 def plot_net_recv(plt, fignum, ai, gi, si, mi, width):
-    """Plots total incoming network usage, summed over all workers.
+    """Plots total incoming network usage, summed over all machines.
     
     Arguments:
     plt -- matplotlib.pyplot being used
@@ -538,7 +544,7 @@ def plot_net_recv(plt, fignum, ai, gi, si, mi, width):
 
 
 def plot_net_sent(plt, fignum, ai, gi, si, mi, width):
-    """Plots total outgoing network usage, summed over all workers.
+    """Plots total outgoing network usage, summed over all machines.
     
     Arguments:
     plt -- matplotlib.pyplot being used

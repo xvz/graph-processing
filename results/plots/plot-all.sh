@@ -1,13 +1,15 @@
 #!/bin/bash -e
 
-./plot.py 0 --save-paper
-./plot.py 1 --save-paper
-./plot.py 2 --save-paper
+./plot.py 0 --save-eps
+./plot.py 0 --save-eps --total-time
+./plot.py 1 --save-eps
+./plot.py 1 --save-eps --avg-memory
+./plot.py 2 --save-eps
 
-./plot.py 1 --master --save-paper
-./plot.py 2 --master --save-paper
+./plot.py 1 --master --save-eps
+./plot.py 2 --master --save-eps
 
-./plot.py 1 --premizan --save-paper
-./plot.py 2 --premizan --save-paper
-./plot.py 1 --premizan --master --save-paper
-./plot.py 2 --premizan --master --save-paper
+./plot.py 1 --premizan --save-eps
+./plot.py 2 --premizan --save-eps
+./plot.py 1 --premizan --master --save-eps
+./plot.py 2 --premizan --master --save-eps
