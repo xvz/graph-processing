@@ -75,6 +75,7 @@ elif mode == MODE_NET:
 # we have to import matplotlib.pyplot here, as its backend
 # will get reset if we don't import matplotlib first
 import matplotlib
+matplotlib.rcParams['figure.max_open_warning'] = 41
 
 if save_eps:
     # using tight_layout will cause this to be Agg...
@@ -167,10 +168,11 @@ PLOT_TYPES = (('time_tot' if do_time_tot else 'time_split',),  # time
               ('recv', 'sent'))                                # net
 
 # decoration
-PATTERNS = ('.','*',       # Giraph
-            '/','o','//',    # GPS
-            'x',            # Mizan
-            '\\', '\\\\')   # GraphLab
+# more chars = denser patterns; can also mix and match different ones
+PATTERNS = ('..','*',             # Giraph
+            '///','o','\\\\\\',   # GPS
+            'xx',                 # Mizan
+            '++', 'O')            # GraphLab
 
 # old: #ff7f00 (orange), #1f78b4 (blue), #7ac36a (darker green)
 COLORS = ('#faa75b','#faa75b',            # Giraph
@@ -226,8 +228,14 @@ def autolabel(bar):
     """Labels a bar with text values."""
     # get_y() needed to output proper total time
     height = bar.get_height() + bar.get_y()
-    plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
-             ha='center', va='bottom', fontsize=VAL_FONTSIZE)
+
+    # values will never be small enough to cause issues w/ this comparison
+    if height == 0:
+        plt.text(bar.get_x()+bar.get_width()/2.0, 0, 'F',
+                 ha='center', va='bottom', fontsize=VAL_FONTSIZE+2)
+    else:
+        plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
+                 ha='center', va='bottom', fontsize=VAL_FONTSIZE)
 
 
 def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
@@ -292,7 +300,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
     #                     + premizan_dict['io_avg'][gi,si]
     #                     + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_eps) or gi == 0:
+    if (not save_paper) or gi == 0:
         plt.ylabel('Total time (mins)')
 
     return (ax,)
@@ -331,7 +339,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, width):
 # 
 #    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
 # 
-#    if (not save_eps) or gi == 0:
+#    if (not save_paper) or gi == 0:
 #        plt.ylabel('Computation time (mins)')
 #    return (ax,)
 
@@ -408,7 +416,7 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, width):
     #ax_io.set_ylim(ymax=np.max(premizan_dict['io_avg'][gi,si] + premizan_dict['io_ci'][gi,si]
     #                           + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_eps) or gi == 0:
+    if (not save_paper) or gi == 0:
         ax_run.set_ylabel('Computation (mins)')
         ax_io.set_ylabel('Setup (mins)')
 
@@ -482,7 +490,7 @@ def plot_mem(plt, fignum, ai, gi, si, mi, width):
 
     #plt.ylim(ymax=np.max(stats_dict['mem_max_avg'][ai,gi,si] + stats_dict['mem_max_ci'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_eps) or gi == 0:
+    if (not save_paper) or gi == 0:
         if do_master:
             plt.ylabel('Memory usage at master (MB)')
         else:
@@ -534,7 +542,7 @@ def plot_net_recv(plt, fignum, ai, gi, si, mi, width):
 
     #plt.ylim(ymax=np.max(stats_dict['eth_recv_avg'][ai,gi,si] + stats_dict['eth_recv_ci'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_eps) or gi == 0:
+    if (not save_paper) or gi == 0:
         if do_master:
             plt.ylabel('Total incoming network I/O (MB)')
         else:
@@ -583,7 +591,7 @@ def plot_net_sent(plt, fignum, ai, gi, si, mi, width):
 
     #plt.ylim(ymax=np.max(stats_dict['eth_sent_avg'][ai,gi,si] + stats_dict['eth_sent_ci'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_eps) or gi == 0:
+    if (not save_paper) or gi == 0:
         if do_master:
             plt.ylabel('Total outgoing network I/O (MB)')
         else:
