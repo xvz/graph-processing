@@ -65,17 +65,17 @@ done
 #################
 # Async Run
 #################
-#for j in "${!GRAPHS[@]}"; do
-#    for ((i = 1; i <= RUNS; i++)); do
-#        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
-#    done
-#done
-# 
-#for j in "${!GRAPHS[@]}"; do
-#    for ((i = 1; i <= RUNS; i++)); do
-#        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
-#    done
-#done
+for j in "${!GRAPHS[@]}"; do
+    for ((i = 1; i <= RUNS; i++)); do
+        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
+    done
+done
+
+for j in "${!GRAPHS[@]}"; do
+    for ((i = 1; i <= RUNS; i++)); do
+        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
+    done
+done
 
 # no WCC
 # no dimest

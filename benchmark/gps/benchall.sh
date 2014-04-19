@@ -41,28 +41,32 @@ esac
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${graph}-adj.txt" ${MACHINES} 0
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 0 ${SRC[$j]}
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}-adj.txt" ${MACHINES} 0
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
 
 for graph in "${GRAPHS_MST[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./mst.sh "${graph}-mst-adj.txt" ${MACHINES}
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
 
@@ -70,7 +74,8 @@ done
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
 #        ./dimest.sh "${graph}-adj.txt" ${MACHINES} 0
-#        sleep 60
+#        ./stop-nodes.sh
+#        sleep 80
 #    done
 #done
 #./disable-dimest-fix.sh
@@ -81,21 +86,24 @@ done
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${graph}-adj.txt" ${MACHINES} 1
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}-adj.txt" ${MACHINES} 1
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
 
@@ -105,7 +113,8 @@ done
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
 #        ./dimest.sh "${graph}-adj.txt" ${MACHINES} 0
-#        sleep 60
+#        ./stop-nodes.sh
+#        sleep 80
 #    done
 #done
 #./disable-dimest-fix.sh
@@ -116,21 +125,24 @@ done
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./pagerank.sh "${graph}-adj.txt" ${MACHINES} 2
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 2 ${SRC[$j]}
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}-adj.txt" ${MACHINES} 2
-        sleep 60
+        ./stop-nodes.sh
+        sleep 80
     done
 done
 
@@ -140,7 +152,8 @@ done
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
 #        ./dimest.sh "${graph}-adj.txt" ${MACHINES} 0
-#        sleep 60
+#        ./stop-nodes.sh
+#        sleep 80
 #    done
 #done
 #./disable-dimest-fix.sh

@@ -23,8 +23,8 @@ case ${MACHINES} in
          SRC=(0 1 3);;
     64)  GRAPHS=(livejournal orkut arabic);
          SRC=(0 1 3);;
-    128) GRAPHS=(livejournal orkut arabic twitter uk0705);
-         SRC=(0 1 3 0 0);;
+    128) GRAPHS=(livejournal orkut arabic twitter);
+         SRC=(0 1 3 0);;
     *) echo "Invalid machines"; exit -1;;
 esac
 
@@ -47,13 +47,13 @@ for graph in "${GRAPHS[@]}"; do
         ./pagerank.sh "${graph}.txt" ${MACHINES} 0
     done
 done
- 
+
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./sssp.sh "${GRAPHS[$j]}.txt" ${MACHINES} 0 ${SRC[$j]}
     done
 done
- 
+
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
         ./wcc.sh "${graph}.txt" ${MACHINES} 0
