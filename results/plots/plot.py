@@ -22,15 +22,23 @@ parser = argparse.ArgumentParser(description='Plots parsed experimental data val
 parser.add_argument('mode', type=check_mode,
                     help='mode to use: 0 for time, 1 for memory, 2 for network')
 
-# additional mode options
+# additional data selection options
 parser.add_argument('--master', action='store_true', default=False,
-                    help='plot mem/net statistics for the master rather than the worker machines (only relevant for mode=1,2)')
+                    help='plot mem/net statistics for the master rather than the worker machines (mode=1,2)')
 parser.add_argument('--premizan', action='store_true', default=False,
-                    help='plot mem/net statistics for premizan, Mizan\'s graph partitioner (only relevant for mode=1,2)')
+                    help='plot mem/net statistics for premizan, Mizan\'s graph partitioner (mode=1,2)')
+
+# additional mode selection options
 parser.add_argument('--total-time', action='store_true', default=False,
-                    help='plot total time (stacked bars) instead of separate setup and computation times (only revelant for mode=0)')
-parser.add_argument('--avg-memory', action='store_true', default=False,
-                    help='plot only average memory usage, instead of min, max, and average (only revelant for mode=1)')
+                    help='plot total time (stacked bars) instead of separate setup and computation times (mode=0)')
+
+memnet_group = parser.add_mutually_exclusive_group()
+memnet_group.add_argument('--plot-sum', action='store_true', default=False,
+                          help='plot only sum of usage across worker machines (mode=1,2)')
+memnet_group.add_argument('--plot-avg', action='store_true', default=False,
+                          help='plot only average usage, instead of min, max, avg (mode=1,2)')
+memnet_group.add_argument('--plot-max', action='store_true', default=False,
+                          help='plot only maximum usage, instead of min, max, avg (mode=1,2)')
 
 # save related items
 parser.add_argument('--save-png', action='store_true', default=False,
@@ -44,17 +52,20 @@ eps_group.add_argument('--save-paper', action='store_true', default=False,
 mode = parser.parse_args().mode
 do_master = parser.parse_args().master
 do_premizan = parser.parse_args().premizan
+
 do_time_tot = parser.parse_args().total_time
-do_avg_only = parser.parse_args().avg_memory
+do_sum_only = parser.parse_args().plot_sum
+do_avg_only = parser.parse_args().plot_avg
+do_max_only = parser.parse_args().plot_max
 
 save_png = parser.parse_args().save_png
 save_eps = parser.parse_args().save_eps
 save_paper = parser.parse_args().save_paper
+save_file = True if (save_png or save_eps or save_paper) else False
 
 # save_paper is just a special case of save_eps
 if save_paper:
     save_eps = True
-
 
 # import data
 if mode == MODE_TIME:
@@ -77,9 +88,9 @@ elif mode == MODE_NET:
 import matplotlib
 matplotlib.rcParams['figure.max_open_warning'] = 41
 
-if save_eps:
-    # using tight_layout will cause this to be Agg...
-    matplotlib.use('PS')
+if save_file:
+    # using tight_layout requires Agg, so we can't use PS
+    matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
@@ -145,10 +156,10 @@ stats_dict = {stat + suffix: megatuple
 premizan_dict = {stat + suffix: megatuple
                  for (stat,suffix) in itertools.product(STATS[mode],('_avg', '_ci'))
                  for megatuple in
-                 np.array([[[[0]*len(MACHINES)]*(len(ALL_SYS)-3)
+                 np.array([[[[0]*len(MACHINES)]*(len(ALL_SYS)-3)      # Giraph, GPS
                             + [[eval(SYS_MIZAN + '_' + SYSMODE_HASH + '_' + machines + '_' + ALG_PREMIZAN + '_' + graph + '_' + stat + suffix)
                                 for machines in MACHINES]]
-                            + [[0]*len(MACHINES)]*2
+                            + [[0]*len(MACHINES)]*2                   # GraphLab
                             for graph in GRAPHS]])}
 
 
@@ -163,11 +174,30 @@ if do_premizan:
 ####################
 # Plot constants
 ####################
-PLOT_TYPES = (('time_tot' if do_time_tot else 'time_split',),  # time
-              ('mem_avg' if do_avg_only else 'mem',),          # mem
-              ('recv', 'sent'))                                # net
+## Things to plot + save-file suffix
+# defaults
+TIME_TYPE = ('time',)
+MEM_TYPE = ('mem',)
+NET_TYPE = ('recv', 'sent')
 
-# decoration
+# options
+if do_time_tot:
+    TIME_TYPE = ('time_tot',)
+
+if do_sum_only:
+    MEM_TYPE = ('mem_sum',)
+    NET_TYPE = ('recv_sum','sent_rum')
+elif do_avg_only:
+    MEM_TYPE = ('mem_avg',)
+    NET_TYPE = ('recv_avg','sent_avg')
+elif do_max_only:
+    MEM_TYPE = ('mem_max',)
+    NET_TYPE = ('recv_max','sent_max')
+
+PLOT_TYPES = (TIME_TYPE, MEM_TYPE, NET_TYPE)
+
+
+## decoration
 # more chars = denser patterns; can also mix and match different ones
 PATTERNS = ('..','*',             # Giraph
             '///','o','\\\\\\',   # GPS
@@ -184,7 +214,7 @@ COLOR_PREMIZAN = '#737373'
 COLOR_IO = (0.9, 0.9, 0.9)
 COLOR_ERR = (0.3, 0.3, 0.3)
 
-# labels
+## labels
 LEGEND_LABELS = ('Giraph (byte array)', 'Giraph (hash map)',
                  'GPS (none)', 'GPS (LALP)', 'GPS (dynamic)',
                  'Mizan (static)',
@@ -201,13 +231,14 @@ GRAPH_LABELS = np.array((('LJ (16)', 'LJ (32)', 'LJ (64)', 'LJ (128)'),
 if save_paper:
     FONTSIZE = 20
     VAL_FONTSIZE = 5   # for "F" of failed bars
-elif save_eps and (not save_paper):
+elif save_file:
     FONTSIZE = 12
     VAL_FONTSIZE = 4   # for text values on top of bars
 else:
     FONTSIZE = 12      # 12 is default
     VAL_FONTSIZE = 8
 
+## misc values
 # left/right margins of each bar group
 BAR_MARGIN = 0.05
 
@@ -250,7 +281,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
     si -- system indices, for plotting all or a subset of the systems (list/range)
     mi -- machine indices, for plotting all or a subset of the machines (list/range)
     ind -- left x-location of each bar group (list/range)
-    width -- width of each bar
+    width -- width of each bar (int)
 
     Returns:
     Tuple of axes.
@@ -318,7 +349,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
 #    si -- system indices, for plotting all or a subset of the systems (list/range)
 #    mi -- machine indices, for plotting all or a subset of the machines (list/range)
 #    ind -- left x-location of each bar group (list/range)
-#    width -- width of each bar
+#    width -- width of each bar (int)
 #
 #    Returns:
 #    Tuple of axes.
@@ -359,7 +390,7 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, ind, width):
     si -- system indices, for plotting all or a subset of the systems (list/range)
     mi -- machine indices, for plotting all or a subset of the machines (list/range)
     ind -- left x-location of each bar group (list/range)
-    width -- width of each bar
+    width -- width of each bar (int)
 
     Returns:
     Tuple of axes.
@@ -427,8 +458,8 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, ind, width):
     return (ax_run, ax_io)
 
 
-def plot_mem(plt, fignum, ai, gi, si, mi, ind, width):
-    """Plots memory usage (GB per machine).
+def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
+    """Plots memory usage or network usage.
 
     Arguments:
     plt -- matplotlib.pyplot being used
@@ -438,166 +469,124 @@ def plot_mem(plt, fignum, ai, gi, si, mi, ind, width):
     si -- system indices, for plotting all or a subset of the systems (list/range)
     mi -- machine indices, for plotting all or a subset of the machines (list/range)
     ind -- left x-location of each bar group (list/range)
-    width -- width of each bar
+    width -- width of each bar (int)
+    is_mem -- True for memory usage, False for network usage (boolean)
+    is_recv -- True for incoming network I/O, False for outgoing (boolean)
 
     Returns:
     Tuple of axes.
     """
+
+    if is_mem:
+        STAT_NAME = 'mem'
+        LABEL_STR = 'memory usage'
+    else:
+        if is_recv:
+            STAT_NAME = 'recv'
+            LABEL_STR = 'incoming network I/O'
+        else:
+            STAT_NAME = 'sent'
+            LABEL_STR = 'outgoing network I/O'
+
 
     ax = plt.subplot()
 
     if do_master:
         plt_avg = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                   for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si]*MB_PER_GB,
-                                                           stats_dict['mem_avg_ci'][ai,gi]*MB_PER_GB,
+                   for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_avg_avg'][ai,gi,si]*MB_PER_GB,
+                                                           stats_dict[STAT_NAME + '_avg_ci'][ai,gi]*MB_PER_GB,
                                                            COLORS,
                                                            PATTERNS))]
 
-        plt_min = plt_max = plt_avg   # master is a single machine, so min/max = avg
+        plt_min = plt_max = plt_sum = plt_avg   # master is a single machine, so min/max/sum = avg
 
     else:
-        # NOTE: alpha not supported in ps/eps
-        if not do_avg_only:
-            plt_max = [plt.bar(ind + width*i, avg[mi], width, color='#e74c3c', alpha=0.6,
-                               ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                       for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_max_avg'][ai,gi,si],
-                                                           stats_dict['mem_max_ci'][ai,gi],
-                                                           PATTERNS))]
+        def plot_helper(name, colors, alpha=1.0, is_sum=False):
+            """Helper function to plot min, max, avg, or sum, depending on arguments.
 
-        plt_avg = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                           ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                   for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['mem_avg_avg'][ai,gi,si],
-                                                           stats_dict['mem_avg_ci'][ai,gi],
-                                                           COLORS,
-                                                           PATTERNS))]
+            Arguments:
+            name -- name of the statistic: min, max, or avg (string)
+            colors -- list of colors, must have length = len(COLORS) (list)
+            alpha -- level of transparency, none by default (float)
+            is_sum -- True to compute the sum/total, False otherwise (boolean)
 
-        if not do_avg_only:
-            plt_min = [plt.bar(ind + width*i, avg[mi], width, color='#27ae60', alpha=0.6,
-                               ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                       for i,(avg,ci,pat) in enumerate(zip(stats_dict['mem_min_avg'][ai,gi,si],
-                                                           stats_dict['mem_min_ci'][ai,gi],
-                                                           PATTERNS))]
+            Returns:
+            List of bars.
+            """
 
-        if do_avg_only:
-            plt_min = plt_max = plt_avg
+            # If sum/total memory/netwok is requested, then we set number of machines correctly.
+            # Otherwise, num_machines is set to all 1s, so that element-wise multiplication of
+            # whichever statistic and num_machines just yields the original statistic.
+            if is_sum:
+                num_machines = np.array([int(m) for m in MACHINES])
+            else:
+                num_machines = np.ones(len(MACHINES))
 
-    # label all bars
-    for plt_mem in (plt_max, plt_avg, plt_min):
-        for bars in plt_mem:
+            # NOTE: alpha not supported in ps/eps
+            return [plt.bar(ind + width*i, np.multiply(avg[mi],num_machines[mi]), width,
+                            color=col, hatch=pat, alpha=alpha,
+                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
+                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_' + name + '_avg'][ai,gi,si],
+                                                            stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi],
+                                                            colors,
+                                                            PATTERNS))]
+
+        if do_sum_only:
+            plt_avg = plot_helper('avg', COLORS, 1.0, True)
+            plt_min = plt_max = plt_sum = plt_avg
+
+        elif do_avg_only:
+            plt_sum = plot_helper('avg', COLORS)
+            plt_min = plt_max = plt_avg = plt_sum
+
+        elif do_max_only:
+            plt_max = plot_helper('max', COLORS)
+            plt_min = plt_avg = plt_sum = plt_max
+
+        else:
+            # order is important: min should overlay avg, etc.
+            # NOTE: used to use 0.6 alpha for min/max, but with patterns it doesn't look as good
+            plt_max = plot_helper('max', ['#e74c3c']*len(COLORS))
+            plt_avg = plot_helper('avg', COLORS)
+            plt_min = plot_helper('min', ['#27ae60']*len(COLORS))
+            plt_sum = plt_avg
+
+    # label all bars (plt_sum == plt_avg, so we don't need both)
+    for p in (plt_max, plt_avg, plt_min):
+        for bars in p:
             for bar in bars:
                 autolabel(bar)
 
-    #plt.ylim(ymax=np.max(stats_dict['mem_max_avg'][ai,gi,si] + stats_dict['mem_max_ci'][ai,gi,si])*YMAX_FACTOR)
+    #plt.ylim(ymax=np.max(stats_dict[STAT_NAME + '_max_avg'][ai,gi,si] + stats_dict[STAT_NAME + '_max_ci'][ai,gi,si])*YMAX_FACTOR)
 
     if (not save_paper) or gi == 0:
         if do_master:
-            plt.ylabel('Memory usage at master (MB)')
+            plt.ylabel('Total ' + LABEL_STR + ' (MB)')
         else:
-            if do_avg_only:
-                plt.ylabel('Average memory usage (GB per machine)')
+            if do_sum_only:
+                plt.ylabel('Total ' + LABEL_STR + ' (GB)')
+            elif do_avg_only:
+                plt.ylabel('Average ' + LABEL_STR + ' (GB per machine)')
+            elif do_max_only:
+                plt.ylabel('Maximum ' + LABEL_STR + ' (GB per machine)')
             else:
-                plt.ylabel('Min/avg/max memory usage (GB per machine)')
+                plt.ylabel('Min/avg/max ' + LABEL_STR + ' (GB per machine)')
 
     return (ax,)
 
+
+def plot_mem(plt, fignum, ai, gi, si, mi, ind, width):
+    """Wrapper function for plot_mem_net"""
+    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, True)
 
 def plot_net_recv(plt, fignum, ai, gi, si, mi, ind, width):
-    """Plots total incoming network usage, summed over all machines.
-
-    Arguments:
-    plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
-    ai -- algorithm index (int)
-    gi -- graph index (int)
-    si -- system indices, for plotting all or a subset of the systems (list/range)
-    mi -- machine indices, for plotting all or a subset of the machines (list/range)
-    ind -- left x-location of each bar group (list/range)
-    width -- width of each bar
-
-    Returns:
-    Tuple of axes.
-    """
-
-    ax = plt.subplot()
-
-    if do_master:
-        plt_recv = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si]*MB_PER_GB,
-                                                            stats_dict['eth_recv_ci'][ai,gi]*MB_PER_GB,
-                                                            COLORS,
-                                                            PATTERNS))]
-    else:
-        plt_recv = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_recv_avg'][ai,gi,si],
-                                                            stats_dict['eth_recv_ci'][ai,gi],
-                                                            COLORS,
-                                                            PATTERNS))]
-
-    for bars in plt_recv:
-        for bar in bars:
-            autolabel(bar)
-
-    #plt.ylim(ymax=np.max(stats_dict['eth_recv_avg'][ai,gi,si] + stats_dict['eth_recv_ci'][ai,gi,si])*YMAX_FACTOR)
-
-    if (not save_paper) or gi == 0:
-        if do_master:
-            plt.ylabel('Total incoming network I/O (MB)')
-        else:
-            plt.ylabel('Total incoming network I/O (GB)')
-
-    return (ax,)
-
+    """Wrapper function for plot_mem_net"""
+    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, False, True)
 
 def plot_net_sent(plt, fignum, ai, gi, si, mi, ind, width):
-    """Plots total outgoing network usage, summed over all machines.
-
-    Arguments:
-    plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
-    ai -- algorithm index (int)
-    gi -- graph index (int)
-    si -- system indices, for plotting all or a subset of the systems (list/range)
-    mi -- machine indices, for plotting all or a subset of the machines (list/range)
-    ind -- left x-location of each bar group (list/range)
-    width -- width of each bar
-
-    Returns:
-    Tuple of axes.
-    """
-
-    ax = plt.subplot()
-
-    if do_master:
-        plt_sent = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si]*MB_PER_GB,
-                                                            stats_dict['eth_sent_ci'][ai,gi]*MB_PER_GB,
-                                                            COLORS,
-                                                            PATTERNS))]
-    else:
-        plt_sent = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['eth_sent_avg'][ai,gi,si],
-                                                            stats_dict['eth_sent_ci'][ai,gi],
-                                                            COLORS,
-                                                            PATTERNS))]
-
-    for bars in plt_sent:
-        for bar in bars:
-            autolabel(bar)
-
-    #plt.ylim(ymax=np.max(stats_dict['eth_sent_avg'][ai,gi,si] + stats_dict['eth_sent_ci'][ai,gi,si])*YMAX_FACTOR)
-
-    if (not save_paper) or gi == 0:
-        if do_master:
-            plt.ylabel('Total outgoing network I/O (MB)')
-        else:
-            plt.ylabel('Total outgoing network I/O (GB)')
-
-    return (ax,)
+    """Wrapper function for plot_mem_net"""
+    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, False, False)
 
 
 ####################
@@ -655,7 +644,7 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             axes = PLOT_FUNCS[mode][plt_type](plt, fignum, ai, gi, si, mi, IND[gi,mi], width)
 
             # title only for the first (upper-most) axis
-            if not save_eps:
+            if not save_file:
                 axes[0].set_title(alg + ' ' + graph)
 
             # If there's only one axis, we can just use plt.stuff()...
@@ -684,7 +673,7 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             # ha controls where labels are aligned to (left, center, or right)
             plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=35, ha='right')
 
-                
+
             #ml = MultipleLocator(5)
             #plt.axes().yaxis.set_minor_locator(ml)
 
@@ -734,5 +723,5 @@ if save_png:
 
 
 # show all plots
-if (not save_eps) and (not save_png):
+if not save_file:
     plt.show()

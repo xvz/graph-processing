@@ -163,8 +163,9 @@ def net_parser(log_prefix, machines):
     machines -- number of machines tested (int)
 
     Returns:
-    A tuple (eth recv, eth sent), where eth recv/sent is the total network data
-    received/sent across all worker machines (GB), or (0,0) if logs are missing.
+    A tuple (min recv, max recv, avg recv, min sent, max sent, avg sent), where
+    recv/sent is the network data received/sent across worker machines (GB),
+    or (0,0,0,0,0,0) if logs are missing.
     """
 
     if do_master:
@@ -197,8 +198,9 @@ def net_parser(log_prefix, machines):
         return (recv/BYTE_PER_GB, sent/BYTE_PER_GB)
 
     eth = [parse(log) for log in log_files]
-    eth = zip(*eth)
-    return (sum(eth[0]), sum(eth[1]))
+    eth = np.array(zip(*eth))
+    return (np.min(eth[0]), np.max(eth[0]), np.mean(eth[0]),
+            np.min(eth[1]), np.max(eth[1]), np.mean(eth[1]))
 
 
 def experiment_parser(exp_prefix, machines, system, alg):

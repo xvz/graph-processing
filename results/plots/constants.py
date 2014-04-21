@@ -41,6 +41,7 @@ MODES = (0, 1, 2)
 MODE_TIME, MODE_MEM, MODE_NET = MODES
 
 # names for relevant statistics (indexed by "mode")
-STATS = (('run', 'io'),                      # time
-         ('mem_min', 'mem_max', 'mem_avg'),  # memory
-         ('eth_recv', 'eth_sent'))           # net
+STATS = (('run', 'io'),                         # time
+         ('mem_min', 'mem_max', 'mem_avg'),     # memory
+         ('recv_min', 'recv_max', 'recv_avg',   # net
+          'sent_min', 'sent_max', 'sent_avg'))
