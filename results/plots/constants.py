@@ -12,10 +12,12 @@ SEC_PER_MIN = 60.0
 
 ALGS = ('pagerank', 'sssp', 'wcc', 'mst')
 ALG_MST = ALGS[-1]
+ALG_WCC = ALGS[-2]
 ALG_PREMIZAN = 'premizan'
 
 GRAPHS = ('livejournal', 'orkut', 'arabic', 'twitter', 'uk0705')
 GRAPH_UK = GRAPHS[-1]
+GRAPH_TW = GRAPHS[-2]
 
 MACHINES = ('16', '32', '64', '128')
 
