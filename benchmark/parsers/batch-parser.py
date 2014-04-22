@@ -146,7 +146,7 @@ def mem_parser(log_prefix, machines):
     machines -- number of machines tested (int)
 
     Returns:
-    A tuple (minimum mem, maximum mem, avg mem), where "mem" corresponds to
+    A tuple (minimum mem, avg mem, maximum mem), where "mem" corresponds to
     the max memory used at each machine (GB), or (0,0,0) if logs are missing.
     """
 
@@ -171,7 +171,7 @@ def mem_parser(log_prefix, machines):
     # list of each machine's maximum memory usage
     mems = [parse(log) for log in log_files]
 
-    return (min(mems), max(mems), sum(mems)/len(mems))
+    return (min(mems), sum(mems)/len(mems), max(mems))
 
 
 def net_parser(log_prefix, machines):
@@ -281,12 +281,12 @@ def single_iteration(log):
 
     if is_ok:
         time_run, time_io = time_parser(log_prefix, system, alg)
-        mem_min, mem_max, mem_avg = mem_parser(log_prefix, int(machines))
+        mem_min, mem_avg, mem_max = mem_parser(log_prefix, int(machines))
         eth_recv, eth_sent = net_parser(log_prefix, int(machines))
          
-        stats = (time_run+time_io, time_io, time_run, mem_min, mem_max, mem_avg, eth_recv, eth_sent)
-        separator = "------------+-----------+---------------+--------------------------------+-----------------------"
-        return header + err_str + "\n" + separator + "\n  %8.2fs | %8.2fs |     %8.2fs | %7.3f / %7.3f / %7.3f GB | %7.3f / %7.3f GB \n" % stats + separator
+        stats = (time_run+time_io, time_io, time_run, mem_min, mem_avg, mem_max, eth_recv, eth_sent)
+        separator = "------------+------------+------------+--------------------------------+---------------------------"
+        return header + err_str + "\n" + separator + "\n  %8.2fs |  %8.2fs |  %8.2fs | %7.3f / %7.3f / %7.3f GB |  %8.3f / %8.3f GB \n" % stats + separator
     else:
         return header + err_str
 
@@ -296,16 +296,16 @@ def single_iteration(log):
 
 # output results serially
 print("")
-print("=================================================================================================")
-print(" Total time |   IO time |  Running time |  Mem per machine (min/max/avg) |  Net I/O (recv/sent)  ")
-print("============+===========+===============+================================+=======================")
+print("==================================================================================================")
+print(" Total time | Setup time | Comp. time |   Memory usage (min/avg/max)  | Total net I/O (recv/sent) ")
+print("============+============+============+===============================+===========================")
 print("")
 for log in logs:
     print(single_iteration(log))
     print("")
 
 # another friendly reminder of what each thing is...
-print("============+===========+===============+================================+=======================")
-print(" Total time |   IO time |  Running time |  Mem per machine (min/max/avg) |  Net I/O (recv/sent)  ")
-print("=================================================================================================")
+print("============+============+============+================================+===========================")
+print(" Total time | Setup time | Comp. time |    Memory usage (min/avg/max)  | Total net I/O (recv/sent) ")
+print("===================================================================================================")
 print("")

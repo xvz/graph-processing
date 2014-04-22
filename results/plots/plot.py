@@ -184,15 +184,17 @@ NET_TYPE = ('recv', 'sent')
 if do_time_tot:
     TIME_TYPE = ('time_tot',)
 
-if do_sum_only:
-    MEM_TYPE = ('mem_sum',)
-    NET_TYPE = ('recv_sum','sent_rum')
-elif do_avg_only:
-    MEM_TYPE = ('mem_avg',)
-    NET_TYPE = ('recv_avg','sent_avg')
-elif do_max_only:
-    MEM_TYPE = ('mem_max',)
-    NET_TYPE = ('recv_max','sent_max')
+# master is single machine, so min = max = avg = sum
+if not do_master:
+    if do_sum_only:
+        MEM_TYPE = ('mem_sum',)
+        NET_TYPE = ('recv_sum','sent_sum')
+    elif do_avg_only:
+        MEM_TYPE = ('mem_avg',)
+        NET_TYPE = ('recv_avg','sent_avg')
+    elif do_max_only:
+        MEM_TYPE = ('mem_max',)
+        NET_TYPE = ('recv_max','sent_max')
 
 PLOT_TYPES = (TIME_TYPE, MEM_TYPE, NET_TYPE)
 

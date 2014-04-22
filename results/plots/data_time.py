@@ -393,10 +393,10 @@ giraph_0_128_mst_twitter_run_ci = 0.0
 giraph_0_128_mst_twitter_io_avg = 0.0
 giraph_0_128_mst_twitter_io_ci = 0.0
 
-giraph_0_128_mst_uk0705_run_avg = 0.0
-giraph_0_128_mst_uk0705_run_ci = 0.0
-giraph_0_128_mst_uk0705_io_avg = 0.0
-giraph_0_128_mst_uk0705_io_ci = 0.0
+giraph_0_128_mst_uk0705_run_avg = 498.249623333
+giraph_0_128_mst_uk0705_run_ci = 24.2892803216
+giraph_0_128_mst_uk0705_io_avg = 2.27736666667
+giraph_0_128_mst_uk0705_io_ci = 0.0690722199407
 
 giraph_1_16_pagerank_livejournal_run_avg = 1.39337666667
 giraph_1_16_pagerank_livejournal_run_ci = 0.0544938934686
@@ -2363,10 +2363,10 @@ mizan_0_128_wcc_arabic_run_ci = 1.04476151027
 mizan_0_128_wcc_arabic_io_avg = 0.316666666667
 mizan_0_128_wcc_arabic_io_ci = 0.0226321305522
 
-mizan_0_128_wcc_twitter_run_avg = 0.0
-mizan_0_128_wcc_twitter_run_ci = 0.0
-mizan_0_128_wcc_twitter_io_avg = 0.0
-mizan_0_128_wcc_twitter_io_ci = 0.0
+mizan_0_128_wcc_twitter_run_avg = 86.62
+mizan_0_128_wcc_twitter_run_ci = 4.30113106943
+mizan_0_128_wcc_twitter_io_avg = 0.68
+mizan_0_128_wcc_twitter_io_ci = 0.0565048355846
 
 mizan_0_128_wcc_uk0705_run_avg = 0.0
 mizan_0_128_wcc_uk0705_run_ci = 0.0
