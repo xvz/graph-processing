@@ -303,30 +303,32 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
                              for j,val in enumerate(arr)]
                             for i,arr in enumerate(premizan_dict['io_ci'][gi,si])])
 
+    # add premizan's CI in quadrature, since they're independent variables
+    tot_ci = np.sqrt(np.power(stats_dict['tot_ci'][ai,gi,si], 2) + np.power(premizan_ci, 2))
+
+
     # Each (implicit) iteration plots one system+sysmode in different groups (= # of machines).
     # "+" does element-wise add as everything is an np.array.
-    plt_run = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
-                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
-               for i,(avg,ci,io,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
-                                                          stats_dict['run_ci'][ai,gi],
-                                                          stats_dict['io_avg'][ai,gi,si]+premizan_avg,
+    plt_tot = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
+                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=pm[mi])
+               for i,(avg,ci,pm,col,pat) in enumerate(zip(stats_dict['tot_avg'][ai,gi,si],
+                                                          tot_ci,
+                                                          premizan_avg,
                                                           COLORS,
                                                           PATTERNS))]
 
-    # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_io = [plt.bar(ind + width*i, avg[mi], width, color=COLOR_IO,
-                      ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
-              for i,(avg,ci) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],
-                                              stats_dict['io_ci'][ai,gi]))]
+                      ecolor=COLOR_ERR, align='edge')
+              for i,(avg) in enumerate(stats_dict['io_avg'][ai,gi,si])]
 
+    # Only need to slice first array in zip()---the rest will get shortened automatically.
     plt_pm = [plt.bar(ind + width*i, avg[mi], width, color=COLOR_PREMIZAN,
-                      ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
-              for i,(avg,ci,io) in enumerate(zip(premizan_avg,
-                                                 premizan_ci,
-                                                 stats_dict['io_avg'][ai,gi]))]
+                      ecolor=COLOR_ERR, align='edge', bottom=io[mi])
+              for i,(avg,io) in enumerate(zip(premizan_avg,
+                                              stats_dict['io_avg'][ai,gi]))]
 
     # label with total time (if not for paper.. otherwise it clutters things)
-    for bars in plt_run:
+    for bars in plt_tot:
         for bar in bars:
             autolabel(bar)
 
@@ -520,6 +522,8 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
             # If sum/total memory/netwok is requested, then we set number of machines correctly.
             # Otherwise, num_machines is set to all 1s, so that element-wise multiplication of
             # whichever statistic and num_machines just yields the original statistic.
+            #
+            # CI is also multiplied, b/c # of machines is a constant and has no error.
             if is_sum:
                 num_machines = np.array([int(m) for m in MACHINES])
             else:
@@ -528,19 +532,19 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
             # NOTE: alpha not supported in ps/eps
             return [plt.bar(ind + width*i, np.multiply(avg[mi],num_machines[mi]), width,
                             color=col, hatch=pat, alpha=alpha,
-                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
+                            ecolor=COLOR_ERR, yerr=np.multiply(ci[mi],num_machines[mi]), align='edge')
                     for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_' + name + '_avg'][ai,gi,si],
                                                             stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi],
                                                             colors,
                                                             PATTERNS))]
 
         if do_sum_only:
-            plt_avg = plot_helper('avg', COLORS, 1.0, True)
-            plt_min = plt_max = plt_sum = plt_avg
+            plt_sum = plot_helper('avg', COLORS, 1.0, True)
+            plt_min = plt_max = plt_avg = plt_sum
 
         elif do_avg_only:
-            plt_sum = plot_helper('avg', COLORS)
-            plt_min = plt_max = plt_avg = plt_sum
+            plt_avg = plot_helper('avg', COLORS)
+            plt_min = plt_max = plt_sum = plt_avg
 
         elif do_max_only:
             plt_max = plot_helper('max', COLORS)
@@ -569,11 +573,11 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
             if do_sum_only:
                 plt.ylabel('Total ' + LABEL_STR + ' (GB)')
             elif do_avg_only:
-                plt.ylabel('Average ' + LABEL_STR + ' (GB per machine)')
+                plt.ylabel('Average ' + LABEL_STR + ' (GB)')
             elif do_max_only:
-                plt.ylabel('Maximum ' + LABEL_STR + ' (GB per machine)')
+                plt.ylabel('Maximum ' + LABEL_STR + ' (GB)')
             else:
-                plt.ylabel('Min/avg/max ' + LABEL_STR + ' (GB per machine)')
+                plt.ylabel('Min/avg/max ' + LABEL_STR + ' (GB)')
 
     return (ax,)
 

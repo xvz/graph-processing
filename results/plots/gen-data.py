@@ -48,7 +48,7 @@ n_cores = parser.parse_args().n_cores
 # Main parsers
 ###############
 def time_parser(log_prefix, system, alg):
-    """Parses running and IO times for a single run.
+    """Parses running (computation), IO (setup), and total times for a single run.
 
     Arguments:
     log_prefix -- the prefix of one experiment run's log files (str)
@@ -56,8 +56,7 @@ def time_parser(log_prefix, system, alg):
     alg -- the algorithm tested (str)
 
     Returns:
-    A tuple (running time, IO time) or (0,0) if logs files are
-    missing.
+    A tuple (computation time, IO time, total time) or (0,0,0) if log files are missing.
     """
 
     log_files = glob.glob(log_prefix + '_time.txt')
@@ -79,7 +78,8 @@ def time_parser(log_prefix, system, alg):
                 total = float(line.split()[5].split('=')[1])
 
         return ((total - io)/(MS_PER_SEC*SEC_PER_MIN),
-                io/(MS_PER_SEC*SEC_PER_MIN))
+                io/(MS_PER_SEC*SEC_PER_MIN),
+                total/(MS_PER_SEC*SEC_PER_MIN))
 
     elif system == SYS_GPS:
         for line in open(log_file):
@@ -91,7 +91,8 @@ def time_parser(log_prefix, system, alg):
                 end = float(line.split()[1])
 
         return ((end - computestart)/(MS_PER_SEC*SEC_PER_MIN),
-                (computestart - start)/(MS_PER_SEC*SEC_PER_MIN))
+                (computestart - start)/(MS_PER_SEC*SEC_PER_MIN),
+                (end - start)/(MS_PER_SEC*SEC_PER_MIN))
 
     elif system == SYS_GRAPHLAB:
         for line in open(log_file):
@@ -100,7 +101,7 @@ def time_parser(log_prefix, system, alg):
             elif "Finished Running engine" in line:
                 run = float(line.split()[4])
 
-        return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN)
+        return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN, total/SEC_PER_MIN)
 
     elif system == SYS_MIZAN:
         if alg == ALG_PREMIZAN:
@@ -108,7 +109,7 @@ def time_parser(log_prefix, system, alg):
                 if "TOTAL TIME (sec)" in line:
                     io = float(line.split()[3])
 
-            return (0.0, io/SEC_PER_MIN)
+            return (0.0, io/SEC_PER_MIN, io/SEC_PER_MIN)
         else:
             for line in open(log_file):
                 if "TIME: Total Running Time without IO =" in line:
@@ -116,7 +117,7 @@ def time_parser(log_prefix, system, alg):
                 elif "TIME: Total Running Time =" in line:
                     total = float(line.split()[5])
 
-            return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN)
+            return (run/SEC_PER_MIN, (total - run)/SEC_PER_MIN, total/SEC_PER_MIN)
 
 
 def mem_parser(log_prefix, machines):
@@ -163,8 +164,8 @@ def net_parser(log_prefix, machines):
     machines -- number of machines tested (int)
 
     Returns:
-    A tuple (min recv, max recv, avg recv, min sent, max sent, avg sent), where
-    recv/sent is the network data received/sent across worker machines (GB),
+    A tuple (min recv, max recv, avg recv, min sent, max sent, avg sent),
+    where recv/sent is the network data received/sent across worker machines (GB),
     or (0,0,0,0,0,0) if logs are missing.
     """
 
