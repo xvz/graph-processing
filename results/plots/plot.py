@@ -272,12 +272,12 @@ def autolabel(bar):
                      ha='center', va='bottom', fontsize=VAL_FONTSIZE)
 
 
-def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
+def plot_time_tot(plt, fig, ai, gi, si, mi, ind, width):
     """Plots total computation time (separated into I/O, premizan, and computation time).
 
     Arguments:
     plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
+    fig -- figure object (matplotlib.figure)
     ai -- algorithm index (int)
     gi -- graph index (int)
     si -- system indices, for plotting all or a subset of the systems (list/range)
@@ -342,12 +342,12 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
     return (ax,)
 
 
-#def plot_time_run(plt, fignum, ai, gi, si, mi, ind, width):
+#def plot_time_run(plt, fig, ai, gi, si, mi, ind, width):
 #    """Plots computation time only.
 #
 #    Arguments:
 #    plt -- matplotlib.pyplot being used
-#    fignum -- figure number (int)
+#    fig -- figure object (matplotlib.figure)
 #    ai -- algorithm index (int)
 #    gi -- graph index (int)
 #    si -- system indices, for plotting all or a subset of the systems (list/range)
@@ -380,7 +380,7 @@ def plot_time_tot(plt, fignum, ai, gi, si, mi, ind, width):
 #    return (ax,)
 
 
-def plot_time_split(plt, fignum, ai, gi, si, mi, ind, width):
+def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
     """Plots I/O + premizan time and computation times in vertically separated subplots.
 
     This is basically a variant of plot_time_tot, where we don't stack the computation
@@ -388,7 +388,7 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, ind, width):
 
     Arguments:
     plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
+    fig -- figure object (matplotlib.figure)
     ai -- algorithm index (int)
     gi -- graph index (int)
     si -- system indices, for plotting all or a subset of the systems (list/range)
@@ -462,12 +462,12 @@ def plot_time_split(plt, fignum, ai, gi, si, mi, ind, width):
     return (ax_run, ax_io)
 
 
-def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
+def plot_mem_net(plt, fig, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
     """Plots memory usage or network usage.
 
     Arguments:
     plt -- matplotlib.pyplot being used
-    fignum -- figure number (int)
+    fig -- figure object (matplotlib.figure)
     ai -- algorithm index (int)
     gi -- graph index (int)
     si -- system indices, for plotting all or a subset of the systems (list/range)
@@ -496,6 +496,7 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
     ax = plt.subplot()
 
     if do_master:
+        # master is a single machine, so min/max/sum = avg
         plt_avg = [plt.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
                            ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_avg_avg'][ai,gi,si]*MB_PER_GB,
@@ -503,7 +504,10 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
                                                            COLORS,
                                                            PATTERNS))]
 
-        plt_min = plt_max = plt_sum = plt_avg   # master is a single machine, so min/max/sum = avg
+        # label all bars
+        for bars in plt_avg:
+            for bar in bars:
+                autolabel(bar)
 
     else:
         def plot_helper(name, colors, alpha=1.0, is_sum=False):
@@ -514,9 +518,6 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
             colors -- list of colors, must have length = len(COLORS) (list)
             alpha -- level of transparency, none by default (float)
             is_sum -- True to compute the sum/total, False otherwise (boolean)
-
-            Returns:
-            List of bars.
             """
 
             # If sum/total memory/netwok is requested, then we set number of machines correctly.
@@ -530,39 +531,33 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
                 num_machines = np.ones(len(MACHINES))
 
             # NOTE: alpha not supported in ps/eps
-            return [plt.bar(ind + width*i, np.multiply(avg[mi],num_machines[mi]), width,
-                            color=col, hatch=pat, alpha=alpha,
-                            ecolor=COLOR_ERR, yerr=np.multiply(ci[mi],num_machines[mi]), align='edge')
-                    for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_' + name + '_avg'][ai,gi,si],
-                                                            stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi],
-                                                            colors,
-                                                            PATTERNS))]
+            p = [plt.bar(ind + width*i, np.multiply(avg[mi],num_machines[mi]), width,
+                         color=col, hatch=pat, alpha=alpha,
+                         ecolor=COLOR_ERR, yerr=np.multiply(ci[mi],num_machines[mi]), align='edge')
+                 for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_' + name + '_avg'][ai,gi,si],
+                                                         stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi],
+                                                         colors,
+                                                         PATTERNS))]
+
+            # label all bars
+            for bars in p:
+                for bar in bars:
+                    autolabel(bar)
+
 
         if do_sum_only:
-            plt_sum = plot_helper('avg', COLORS, 1.0, True)
-            plt_min = plt_max = plt_avg = plt_sum
-
+            plot_helper('avg', COLORS, 1.0, True)
         elif do_avg_only:
-            plt_avg = plot_helper('avg', COLORS)
-            plt_min = plt_max = plt_sum = plt_avg
-
+            plot_helper('avg', COLORS)
         elif do_max_only:
-            plt_max = plot_helper('max', COLORS)
-            plt_min = plt_avg = plt_sum = plt_max
-
+            plot_helper('max', COLORS)
         else:
             # order is important: min should overlay avg, etc.
             # NOTE: used to use 0.6 alpha for min/max, but with patterns it doesn't look as good
-            plt_max = plot_helper('max', ['#e74c3c']*len(COLORS))
-            plt_avg = plot_helper('avg', COLORS)
-            plt_min = plot_helper('min', ['#27ae60']*len(COLORS))
-            plt_sum = plt_avg
+            plot_helper('max', ['#e74c3c']*len(COLORS))
+            plot_helper('avg', COLORS)
+            plot_helper('min', ['#27ae60']*len(COLORS))
 
-    # label all bars (plt_sum == plt_avg, so we don't need both)
-    for p in (plt_max, plt_avg, plt_min):
-        for bars in p:
-            for bar in bars:
-                autolabel(bar)
 
     #plt.ylim(ymax=np.max(stats_dict[STAT_NAME + '_max_avg'][ai,gi,si] + stats_dict[STAT_NAME + '_max_ci'][ai,gi,si])*YMAX_FACTOR)
 
@@ -582,17 +577,17 @@ def plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
     return (ax,)
 
 
-def plot_mem(plt, fignum, ai, gi, si, mi, ind, width):
+def plot_mem(plt, fig, ai, gi, si, mi, ind, width):
     """Wrapper function for plot_mem_net"""
-    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, True)
+    return plot_mem_net(plt, fig, ai, gi, si, mi, ind, width, True)
 
-def plot_net_recv(plt, fignum, ai, gi, si, mi, ind, width):
+def plot_net_recv(plt, fig, ai, gi, si, mi, ind, width):
     """Wrapper function for plot_mem_net"""
-    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, False, True)
+    return plot_mem_net(plt, fig, ai, gi, si, mi, ind, width, False, True)
 
-def plot_net_sent(plt, fignum, ai, gi, si, mi, ind, width):
+def plot_net_sent(plt, fig, ai, gi, si, mi, ind, width):
     """Wrapper function for plot_mem_net"""
-    return plot_mem_net(plt, fignum, ai, gi, si, mi, ind, width, False, False)
+    return plot_mem_net(plt, fig, ai, gi, si, mi, ind, width, False, False)
 
 
 ####################
@@ -642,12 +637,12 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             # shrink width down if there are bars or groups of bars missing
             width_ratio = (7.0-len(GRAPH_LABELS[gi]))/(7.0-len(mi))
             if save_paper:
-                plt.figure(fignum, figsize=(5.0*width_ratio,7), facecolor='w')
+                fig = plt.figure(fignum, figsize=(5.0*width_ratio,7), facecolor='w')
             else:
-                plt.figure(fignum, figsize=(6.0*width_ratio,6), facecolor='w')
+                fig = plt.figure(fignum, figsize=(6.0*width_ratio,6), facecolor='w')
 
             # mode specific plot function
-            axes = PLOT_FUNCS[mode][plt_type](plt, fignum, ai, gi, si, mi, IND[gi,mi], width)
+            axes = PLOT_FUNCS[mode][plt_type](plt, fig, ai, gi, si, mi, IND[gi,mi], width)
 
             # title only for the first (upper-most) axis
             if not save_file:
