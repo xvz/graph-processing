@@ -26,7 +26,7 @@ esac
 source "$(dirname "${BASH_SOURCE[0]}")"/get-hostname.sh
 
 
-WORKER_IDS=($(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}" \
+WORKER_IDS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=${name}" \
                | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g' | tr '\n' ' '))
 
 aws ec2 terminate-instances --instance-ids "${WORKER_IDS[@]}"

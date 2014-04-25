@@ -20,15 +20,21 @@ machines=$1
 source "$(dirname "${BASH_SOURCE[0]}")"/get-hostname.sh
 
 
-MASTER_ID=$(aws ec2 describe-spot-instance-requests --filter "Name=tag:Name,Values=${name}0" \
-             | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g')
-WORKER_IDS=($(aws ec2 describe-spot-instance-requests --filter "Name=tag:Name,Values=${name}" \
+WORKER_IDS=($(aws ec2 describe-spot-instance-requests --filters "Name=state,Values=active" "Name=tag:Name,Values=${name}" \
                | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g' | tr '\n' ' '))
 
-aws ec2 create-tags --resources "$MASTER_ID" --tags Key=Name,Value=${name}0
 aws ec2 create-tags --resources "${WORKER_IDS[@]}" --tags Key=Name,Value=${name}
 
-MASTER_VOL=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
-              | grep "VolumeId" | awk '{print $2}' | sed -e 's/",*//g')
 
-aws ec2 create-tags --resources "$MASTER_VOL" --tags Key=Name,Value=${name}0
+MASTER_ID=$(aws ec2 describe-spot-instance-requests --filters "Name=state,Values=active" "Name=tag:Name,Values=${name}0" \
+             | grep "InstanceId" | awk '{print $2}' | sed -e 's/",*//g')
+
+if [[ ${MASTER_ID} -eq "" ]]; then
+    echo "Master spot instance not found... assuming it is on-demand."
+else
+    aws ec2 create-tags --resources "$MASTER_ID" --tags Key=Name,Value=${name}0
+
+    MASTER_VOL=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
+        | grep "VolumeId" | awk '{print $2}' | sed -e 's/",*//g')
+    aws ec2 create-tags --resources "$MASTER_VOL" --tags Key=Name,Value=${name}0
+fi

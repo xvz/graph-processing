@@ -29,11 +29,11 @@ source ./get-pem.sh
 # Get private IPs
 ####################
 # master is special, so filter it separately
-MASTER_IP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
+MASTER_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${name}0" \
              | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' | uniq)
 
 # filter only for worker machines (skipping the master)
-WORKER_IPS=($(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}" \
+WORKER_IPS=($(aws ec2 describe-instances --filters "Name=tag:Name,Values=${name}" \
                | grep 'PrivateIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g' \
                | uniq | sort -t . -nk1,1 -nk2,2 -nk3,3 -nk4,4))
 
@@ -64,7 +64,7 @@ done
 ####################
 # Update master
 ####################
-MASTER_PUBIP=$(aws ec2 describe-instances --filter "Name=tag:Name,Values=${name}0" \
+MASTER_PUBIP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=${name}0" \
                 | grep 'PublicIpAddress\":' | awk '{print $2}' | sed -e 's/",*//g')
 
 echo ""
