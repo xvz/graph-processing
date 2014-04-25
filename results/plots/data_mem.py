@@ -1202,12 +1202,12 @@ gps_0_16_wcc_orkut_mem_max_ci = 0.016400972992
 gps_0_16_wcc_orkut_mem_avg_avg = 1.46193799973
 gps_0_16_wcc_orkut_mem_avg_ci = 0.0110391926882
 
-gps_0_16_wcc_arabic_mem_min_avg = 2.55163345337
-gps_0_16_wcc_arabic_mem_min_ci = 0.0158275915774
-gps_0_16_wcc_arabic_mem_max_avg = 3.40777282715
-gps_0_16_wcc_arabic_mem_max_ci = 0.155884445792
-gps_0_16_wcc_arabic_mem_avg_avg = 2.92163314819
-gps_0_16_wcc_arabic_mem_avg_ci = 0.0479710676269
+gps_0_16_wcc_arabic_mem_min_avg = 2.51987380981
+gps_0_16_wcc_arabic_mem_min_ci = 0.070329387632
+gps_0_16_wcc_arabic_mem_max_avg = 3.38796463013
+gps_0_16_wcc_arabic_mem_max_ci = 0.127516729739
+gps_0_16_wcc_arabic_mem_avg_avg = 2.88303813934
+gps_0_16_wcc_arabic_mem_avg_ci = 0.0410361423735
 
 gps_0_16_wcc_twitter_mem_min_avg = 4.3245262146
 gps_0_16_wcc_twitter_mem_min_ci = 0.174025600922
@@ -1342,12 +1342,12 @@ gps_0_32_wcc_orkut_mem_max_ci = 0.00315194245754
 gps_0_32_wcc_orkut_mem_avg_avg = 1.10195024014
 gps_0_32_wcc_orkut_mem_avg_ci = 0.00343486756614
 
-gps_0_32_wcc_arabic_mem_min_avg = 2.0310043335
-gps_0_32_wcc_arabic_mem_min_ci = 0.00486258882599
-gps_0_32_wcc_arabic_mem_max_avg = 2.54392700195
-gps_0_32_wcc_arabic_mem_max_ci = 0.0495234371227
-gps_0_32_wcc_arabic_mem_avg_avg = 2.26767926216
-gps_0_32_wcc_arabic_mem_avg_ci = 0.010867021137
+gps_0_32_wcc_arabic_mem_min_avg = 2.02413253784
+gps_0_32_wcc_arabic_mem_min_ci = 0.00959839959214
+gps_0_32_wcc_arabic_mem_max_avg = 2.6031867981
+gps_0_32_wcc_arabic_mem_max_ci = 0.0824174874983
+gps_0_32_wcc_arabic_mem_avg_avg = 2.27961831093
+gps_0_32_wcc_arabic_mem_avg_ci = 0.0173674559312
 
 gps_0_32_wcc_twitter_mem_min_avg = 2.73711547852
 gps_0_32_wcc_twitter_mem_min_ci = 0.0459656746179
@@ -1482,12 +1482,12 @@ gps_0_64_wcc_orkut_mem_max_ci = 0.00379032973487
 gps_0_64_wcc_orkut_mem_avg_avg = 0.902618396282
 gps_0_64_wcc_orkut_mem_avg_ci = 0.00137301404832
 
-gps_0_64_wcc_arabic_mem_min_avg = 1.7486000061
-gps_0_64_wcc_arabic_mem_min_ci = 0.0457975472904
-gps_0_64_wcc_arabic_mem_max_avg = 1.9854598999
-gps_0_64_wcc_arabic_mem_max_ci = 0.00211912021873
-gps_0_64_wcc_arabic_mem_avg_avg = 1.89993643761
-gps_0_64_wcc_arabic_mem_avg_ci = 0.0067021652432
+gps_0_64_wcc_arabic_mem_min_avg = 1.76915435791
+gps_0_64_wcc_arabic_mem_min_ci = 0.0225910918097
+gps_0_64_wcc_arabic_mem_max_avg = 1.98184127808
+gps_0_64_wcc_arabic_mem_max_ci = 0.00325367011728
+gps_0_64_wcc_arabic_mem_avg_avg = 1.90499595404
+gps_0_64_wcc_arabic_mem_avg_ci = 0.00268859452435
 
 gps_0_64_wcc_twitter_mem_min_avg = 2.095753479
 gps_0_64_wcc_twitter_mem_min_ci = 0.00733639946454
@@ -1496,12 +1496,12 @@ gps_0_64_wcc_twitter_mem_max_ci = 0.0423293466765
 gps_0_64_wcc_twitter_mem_avg_avg = 2.31130422354
 gps_0_64_wcc_twitter_mem_avg_ci = 0.0148926140233
 
-gps_0_64_wcc_uk0705_mem_min_avg = 2.89176635742
-gps_0_64_wcc_uk0705_mem_min_ci = 0.0763000162078
-gps_0_64_wcc_uk0705_mem_max_avg = 4.44888000488
-gps_0_64_wcc_uk0705_mem_max_ci = 0.148265795829
-gps_0_64_wcc_uk0705_mem_avg_avg = 3.62085254192
-gps_0_64_wcc_uk0705_mem_avg_ci = 0.0223598131807
+gps_0_64_wcc_uk0705_mem_min_avg = 3.15814819336
+gps_0_64_wcc_uk0705_mem_min_ci = 0.103549296861
+gps_0_64_wcc_uk0705_mem_max_avg = 4.68646011353
+gps_0_64_wcc_uk0705_mem_max_ci = 0.0735341718143
+gps_0_64_wcc_uk0705_mem_avg_avg = 3.97005776167
+gps_0_64_wcc_uk0705_mem_avg_ci = 0.0253560267937
 
 gps_0_64_mst_livejournal_mem_min_avg = 1.03067474365
 gps_0_64_mst_livejournal_mem_min_ci = 0.00736056473838
@@ -1622,12 +1622,12 @@ gps_0_128_wcc_orkut_mem_max_ci = 0.00134937681052
 gps_0_128_wcc_orkut_mem_avg_avg = 0.767725783587
 gps_0_128_wcc_orkut_mem_avg_ci = 0.00140869512245
 
-gps_0_128_wcc_arabic_mem_min_avg = 1.30528717041
-gps_0_128_wcc_arabic_mem_min_ci = 0.0280513851772
-gps_0_128_wcc_arabic_mem_max_avg = 1.68125
-gps_0_128_wcc_arabic_mem_max_ci = 0.0196793385278
-gps_0_128_wcc_arabic_mem_avg_avg = 1.46532124877
-gps_0_128_wcc_arabic_mem_avg_ci = 0.00670204403117
+gps_0_128_wcc_arabic_mem_min_avg = 1.31554260254
+gps_0_128_wcc_arabic_mem_min_ci = 0.0119468323022
+gps_0_128_wcc_arabic_mem_max_avg = 1.66074371338
+gps_0_128_wcc_arabic_mem_max_ci = 0.0219628439896
+gps_0_128_wcc_arabic_mem_avg_avg = 1.45858710408
+gps_0_128_wcc_arabic_mem_avg_ci = 0.00998885974145
 
 gps_0_128_wcc_twitter_mem_min_avg = 1.76497116089
 gps_0_128_wcc_twitter_mem_min_ci = 0.0302131270162
@@ -1636,12 +1636,12 @@ gps_0_128_wcc_twitter_mem_max_ci = 0.0460249555345
 gps_0_128_wcc_twitter_mem_avg_avg = 1.99490649104
 gps_0_128_wcc_twitter_mem_avg_ci = 0.00302658870199
 
-gps_0_128_wcc_uk0705_mem_min_avg = 2.38850860596
-gps_0_128_wcc_uk0705_mem_min_ci = 0.018379098814
-gps_0_128_wcc_uk0705_mem_max_avg = 3.43016967773
-gps_0_128_wcc_uk0705_mem_max_ci = 0.0547827749204
-gps_0_128_wcc_uk0705_mem_avg_avg = 2.81079586744
-gps_0_128_wcc_uk0705_mem_avg_ci = 0.00704684990169
+gps_0_128_wcc_uk0705_mem_min_avg = 2.53783874512
+gps_0_128_wcc_uk0705_mem_min_ci = 0.0399579901822
+gps_0_128_wcc_uk0705_mem_max_avg = 3.67514343262
+gps_0_128_wcc_uk0705_mem_max_ci = 0.100858228167
+gps_0_128_wcc_uk0705_mem_avg_avg = 3.017045331
+gps_0_128_wcc_uk0705_mem_avg_ci = 0.0177791636759
 
 gps_0_128_mst_livejournal_mem_min_avg = 0.858089447021
 gps_0_128_mst_livejournal_mem_min_ci = 0.00522650283568
@@ -1762,12 +1762,12 @@ gps_1_16_wcc_orkut_mem_max_ci = 0.019464761308
 gps_1_16_wcc_orkut_mem_avg_avg = 1.4429828167
 gps_1_16_wcc_orkut_mem_avg_ci = 0.0107997797262
 
-gps_1_16_wcc_arabic_mem_min_avg = 2.68075180054
-gps_1_16_wcc_arabic_mem_min_ci = 0.0406665346709
-gps_1_16_wcc_arabic_mem_max_avg = 3.47194137573
-gps_1_16_wcc_arabic_mem_max_ci = 0.0386887943646
-gps_1_16_wcc_arabic_mem_avg_avg = 3.03124656677
-gps_1_16_wcc_arabic_mem_avg_ci = 0.0196390162613
+gps_1_16_wcc_arabic_mem_min_avg = 2.65968322754
+gps_1_16_wcc_arabic_mem_min_ci = 0.0822952073304
+gps_1_16_wcc_arabic_mem_max_avg = 3.55583572388
+gps_1_16_wcc_arabic_mem_max_ci = 0.0825133627316
+gps_1_16_wcc_arabic_mem_avg_avg = 3.07251152992
+gps_1_16_wcc_arabic_mem_avg_ci = 0.0189146344257
 
 gps_1_16_wcc_twitter_mem_min_avg = 6.21250076294
 gps_1_16_wcc_twitter_mem_min_ci = 0.0863247225833
@@ -1902,12 +1902,12 @@ gps_1_32_wcc_orkut_mem_max_ci = 0.0146751665461
 gps_1_32_wcc_orkut_mem_avg_avg = 1.1113047123
 gps_1_32_wcc_orkut_mem_avg_ci = 0.00344640475605
 
-gps_1_32_wcc_arabic_mem_min_avg = 2.1202331543
-gps_1_32_wcc_arabic_mem_min_ci = 0.0127030615827
-gps_1_32_wcc_arabic_mem_max_avg = 2.54572753906
-gps_1_32_wcc_arabic_mem_max_ci = 0.0369709489729
-gps_1_32_wcc_arabic_mem_avg_avg = 2.30631945133
-gps_1_32_wcc_arabic_mem_avg_ci = 0.00869088212308
+gps_1_32_wcc_arabic_mem_min_avg = 2.13601074219
+gps_1_32_wcc_arabic_mem_min_ci = 0.0163589205843
+gps_1_32_wcc_arabic_mem_max_avg = 2.60990905762
+gps_1_32_wcc_arabic_mem_max_ci = 0.0468038321289
+gps_1_32_wcc_arabic_mem_avg_avg = 2.32426588535
+gps_1_32_wcc_arabic_mem_avg_ci = 0.0159199303843
 
 gps_1_32_wcc_twitter_mem_min_avg = 3.75701065063
 gps_1_32_wcc_twitter_mem_min_ci = 0.0310046919156
@@ -2035,19 +2035,19 @@ gps_1_64_wcc_livejournal_mem_max_ci = 0.0528668560425
 gps_1_64_wcc_livejournal_mem_avg_avg = 0.812345325947
 gps_1_64_wcc_livejournal_mem_avg_ci = 0.00747368265511
 
-gps_1_64_wcc_orkut_mem_min_avg = 0.879110336304
-gps_1_64_wcc_orkut_mem_min_ci = 0.00963042256689
-gps_1_64_wcc_orkut_mem_max_avg = 1.0296497345
-gps_1_64_wcc_orkut_mem_max_ci = 0.00445069719248
-gps_1_64_wcc_orkut_mem_avg_avg = 0.941269636154
-gps_1_64_wcc_orkut_mem_avg_ci = 0.00285180489616
+gps_1_64_wcc_orkut_mem_min_avg = 0.883961486816
+gps_1_64_wcc_orkut_mem_min_ci = 0.00816213949172
+gps_1_64_wcc_orkut_mem_max_avg = 1.03208465576
+gps_1_64_wcc_orkut_mem_max_ci = 0.00582854686823
+gps_1_64_wcc_orkut_mem_avg_avg = 0.940541517735
+gps_1_64_wcc_orkut_mem_avg_ci = 0.00288928201898
 
-gps_1_64_wcc_arabic_mem_min_avg = 1.75027656555
-gps_1_64_wcc_arabic_mem_min_ci = 0.0395614417118
-gps_1_64_wcc_arabic_mem_max_avg = 2.01631546021
-gps_1_64_wcc_arabic_mem_max_ci = 0.0228672622744
-gps_1_64_wcc_arabic_mem_avg_avg = 1.90679777662
-gps_1_64_wcc_arabic_mem_avg_ci = 0.0038837410363
+gps_1_64_wcc_arabic_mem_min_avg = 1.76650314331
+gps_1_64_wcc_arabic_mem_min_ci = 0.0168116979289
+gps_1_64_wcc_arabic_mem_max_avg = 2.04470901489
+gps_1_64_wcc_arabic_mem_max_ci = 0.0156250273548
+gps_1_64_wcc_arabic_mem_avg_avg = 1.91368392706
+gps_1_64_wcc_arabic_mem_avg_ci = 0.00722158979717
 
 gps_1_64_wcc_twitter_mem_min_avg = 2.43390274048
 gps_1_64_wcc_twitter_mem_min_ci = 0.0227285482211
@@ -2056,12 +2056,12 @@ gps_1_64_wcc_twitter_mem_max_ci = 0.151894057971
 gps_1_64_wcc_twitter_mem_avg_avg = 2.68610310555
 gps_1_64_wcc_twitter_mem_avg_ci = 0.024719797049
 
-gps_1_64_wcc_uk0705_mem_min_avg = 5.54740219116
-gps_1_64_wcc_uk0705_mem_min_ci = 0.0806852307172
-gps_1_64_wcc_uk0705_mem_max_avg = 7.13240127563
-gps_1_64_wcc_uk0705_mem_max_ci = 0.0719808263225
-gps_1_64_wcc_uk0705_mem_avg_avg = 6.34347187281
-gps_1_64_wcc_uk0705_mem_avg_ci = 0.0629324984206
+gps_1_64_wcc_uk0705_mem_min_avg = 5.7629486084
+gps_1_64_wcc_uk0705_mem_min_ci = 0.0583336195545
+gps_1_64_wcc_uk0705_mem_max_avg = 7.06298599243
+gps_1_64_wcc_uk0705_mem_max_ci = 0.0691540517547
+gps_1_64_wcc_uk0705_mem_avg_avg = 6.42758135796
+gps_1_64_wcc_uk0705_mem_avg_ci = 0.0235949911436
 
 gps_1_64_mst_livejournal_mem_min_avg = 0.0
 gps_1_64_mst_livejournal_mem_min_ci = 0.0
@@ -2182,12 +2182,12 @@ gps_1_128_wcc_orkut_mem_max_ci = 0.0725839378432
 gps_1_128_wcc_orkut_mem_avg_avg = 1.07428855896
 gps_1_128_wcc_orkut_mem_avg_ci = 0.00334305964906
 
-gps_1_128_wcc_arabic_mem_min_avg = 1.34324035645
-gps_1_128_wcc_arabic_mem_min_ci = 0.0235794092235
-gps_1_128_wcc_arabic_mem_max_avg = 1.81472549438
-gps_1_128_wcc_arabic_mem_max_ci = 0.0324921084722
-gps_1_128_wcc_arabic_mem_avg_avg = 1.53160571456
-gps_1_128_wcc_arabic_mem_avg_ci = 0.00706058250778
+gps_1_128_wcc_arabic_mem_min_avg = 1.34859161377
+gps_1_128_wcc_arabic_mem_min_ci = 0.0166880321548
+gps_1_128_wcc_arabic_mem_max_avg = 1.7570098877
+gps_1_128_wcc_arabic_mem_max_ci = 0.0247636476932
+gps_1_128_wcc_arabic_mem_avg_avg = 1.52299026251
+gps_1_128_wcc_arabic_mem_avg_ci = 0.0107638173686
 
 gps_1_128_wcc_twitter_mem_min_avg = 2.01641464233
 gps_1_128_wcc_twitter_mem_min_ci = 0.0194630669888
@@ -2196,12 +2196,12 @@ gps_1_128_wcc_twitter_mem_max_ci = 0.0535102020511
 gps_1_128_wcc_twitter_mem_avg_avg = 2.24516392946
 gps_1_128_wcc_twitter_mem_avg_ci = 0.0101478951912
 
-gps_1_128_wcc_uk0705_mem_min_avg = 3.97122573853
-gps_1_128_wcc_uk0705_mem_min_ci = 0.0256741134424
-gps_1_128_wcc_uk0705_mem_max_avg = 5.09804382324
-gps_1_128_wcc_uk0705_mem_max_ci = 0.107669667414
-gps_1_128_wcc_uk0705_mem_avg_avg = 4.47065685391
-gps_1_128_wcc_uk0705_mem_avg_ci = 0.0324359915144
+gps_1_128_wcc_uk0705_mem_min_avg = 3.99703674316
+gps_1_128_wcc_uk0705_mem_min_ci = 0.0202110748472
+gps_1_128_wcc_uk0705_mem_max_avg = 4.90820999146
+gps_1_128_wcc_uk0705_mem_max_ci = 0.0703925486709
+gps_1_128_wcc_uk0705_mem_avg_avg = 4.40139516592
+gps_1_128_wcc_uk0705_mem_avg_ci = 0.0253809615374
 
 gps_1_128_mst_livejournal_mem_min_avg = 0.0
 gps_1_128_mst_livejournal_mem_min_ci = 0.0
@@ -2322,12 +2322,12 @@ gps_2_16_wcc_orkut_mem_max_ci = 0.0340054485001
 gps_2_16_wcc_orkut_mem_avg_avg = 1.46320033073
 gps_2_16_wcc_orkut_mem_avg_ci = 0.0159939131631
 
-gps_2_16_wcc_arabic_mem_min_avg = 2.5541809082
-gps_2_16_wcc_arabic_mem_min_ci = 0.0511777792984
-gps_2_16_wcc_arabic_mem_max_avg = 3.54091644287
-gps_2_16_wcc_arabic_mem_max_ci = 0.0722354946788
-gps_2_16_wcc_arabic_mem_avg_avg = 2.97130241394
-gps_2_16_wcc_arabic_mem_avg_ci = 0.0136977955101
+gps_2_16_wcc_arabic_mem_min_avg = 2.60379638672
+gps_2_16_wcc_arabic_mem_min_ci = 0.0341844795133
+gps_2_16_wcc_arabic_mem_max_avg = 3.44218521118
+gps_2_16_wcc_arabic_mem_max_ci = 0.0874568215744
+gps_2_16_wcc_arabic_mem_avg_avg = 2.96511316299
+gps_2_16_wcc_arabic_mem_avg_ci = 0.0254236240779
 
 gps_2_16_wcc_twitter_mem_min_avg = 4.59502410889
 gps_2_16_wcc_twitter_mem_min_ci = 0.0964101752795
@@ -2462,12 +2462,12 @@ gps_2_32_wcc_orkut_mem_max_ci = 0.00786850616745
 gps_2_32_wcc_orkut_mem_avg_avg = 1.13856377602
 gps_2_32_wcc_orkut_mem_avg_ci = 0.00167982128796
 
-gps_2_32_wcc_arabic_mem_min_avg = 2.04717254639
-gps_2_32_wcc_arabic_mem_min_ci = 0.00757748764728
-gps_2_32_wcc_arabic_mem_max_avg = 2.5795249939
-gps_2_32_wcc_arabic_mem_max_ci = 0.0619383273452
-gps_2_32_wcc_arabic_mem_avg_avg = 2.2992587328
-gps_2_32_wcc_arabic_mem_avg_ci = 0.0240887655434
+gps_2_32_wcc_arabic_mem_min_avg = 2.04983520508
+gps_2_32_wcc_arabic_mem_min_ci = 0.00700964686789
+gps_2_32_wcc_arabic_mem_max_avg = 2.55985412598
+gps_2_32_wcc_arabic_mem_max_ci = 0.0637799541076
+gps_2_32_wcc_arabic_mem_avg_avg = 2.29684188366
+gps_2_32_wcc_arabic_mem_avg_ci = 0.0110895856319
 
 gps_2_32_wcc_twitter_mem_min_avg = 2.77472839355
 gps_2_32_wcc_twitter_mem_min_ci = 0.0971092955901
@@ -2602,12 +2602,12 @@ gps_2_64_wcc_orkut_mem_max_ci = 0.00901512639919
 gps_2_64_wcc_orkut_mem_avg_avg = 0.960234487057
 gps_2_64_wcc_orkut_mem_avg_ci = 0.00212297783069
 
-gps_2_64_wcc_arabic_mem_min_avg = 1.79280090332
-gps_2_64_wcc_arabic_mem_min_ci = 0.00776167063285
-gps_2_64_wcc_arabic_mem_max_avg = 2.00678939819
-gps_2_64_wcc_arabic_mem_max_ci = 0.013230502128
-gps_2_64_wcc_arabic_mem_avg_avg = 1.91739786863
-gps_2_64_wcc_arabic_mem_avg_ci = 0.00434169550945
+gps_2_64_wcc_arabic_mem_min_avg = 1.80370254517
+gps_2_64_wcc_arabic_mem_min_ci = 0.0186397107337
+gps_2_64_wcc_arabic_mem_max_avg = 1.99812927246
+gps_2_64_wcc_arabic_mem_max_ci = 0.0102810424176
+gps_2_64_wcc_arabic_mem_avg_avg = 1.91704226732
+gps_2_64_wcc_arabic_mem_avg_ci = 0.00547067804728
 
 gps_2_64_wcc_twitter_mem_min_avg = 2.13651275635
 gps_2_64_wcc_twitter_mem_min_ci = 0.00638403815162
@@ -2616,12 +2616,12 @@ gps_2_64_wcc_twitter_mem_max_ci = 0.114224827209
 gps_2_64_wcc_twitter_mem_avg_avg = 2.3859406352
 gps_2_64_wcc_twitter_mem_avg_ci = 0.0179603079959
 
-gps_2_64_wcc_uk0705_mem_min_avg = 3.87577362061
-gps_2_64_wcc_uk0705_mem_min_ci = 0.0636444415864
-gps_2_64_wcc_uk0705_mem_max_avg = 5.09536972046
-gps_2_64_wcc_uk0705_mem_max_ci = 0.112547730017
-gps_2_64_wcc_uk0705_mem_avg_avg = 4.44937182665
-gps_2_64_wcc_uk0705_mem_avg_ci = 0.0327767790723
+gps_2_64_wcc_uk0705_mem_min_avg = 3.91583557129
+gps_2_64_wcc_uk0705_mem_min_ci = 0.048552174067
+gps_2_64_wcc_uk0705_mem_max_avg = 5.30214996338
+gps_2_64_wcc_uk0705_mem_max_ci = 0.12247235134
+gps_2_64_wcc_uk0705_mem_avg_avg = 4.56754333973
+gps_2_64_wcc_uk0705_mem_avg_ci = 0.0376644695157
 
 gps_2_64_mst_livejournal_mem_min_avg = 0.0
 gps_2_64_mst_livejournal_mem_min_ci = 0.0
@@ -2742,12 +2742,12 @@ gps_2_128_wcc_orkut_mem_max_ci = 0.038066981989
 gps_2_128_wcc_orkut_mem_avg_avg = 1.18971882463
 gps_2_128_wcc_orkut_mem_avg_ci = 0.00359614133914
 
-gps_2_128_wcc_arabic_mem_min_avg = 1.25157089233
-gps_2_128_wcc_arabic_mem_min_ci = 0.0112899533489
-gps_2_128_wcc_arabic_mem_max_avg = 1.60446395874
-gps_2_128_wcc_arabic_mem_max_ci = 0.00544312492957
-gps_2_128_wcc_arabic_mem_avg_avg = 1.47178928256
-gps_2_128_wcc_arabic_mem_avg_ci = 0.00671667886872
+gps_2_128_wcc_arabic_mem_min_avg = 1.23600769043
+gps_2_128_wcc_arabic_mem_min_ci = 0.0120640426881
+gps_2_128_wcc_arabic_mem_max_avg = 1.60243530273
+gps_2_128_wcc_arabic_mem_max_ci = 0.0121107155374
+gps_2_128_wcc_arabic_mem_avg_avg = 1.46267377734
+gps_2_128_wcc_arabic_mem_avg_ci = 0.00486286246974
 
 gps_2_128_wcc_twitter_mem_min_avg = 1.81567382812
 gps_2_128_wcc_twitter_mem_min_ci = 0.0135024526982
@@ -2756,12 +2756,12 @@ gps_2_128_wcc_twitter_mem_max_ci = 0.0410658926754
 gps_2_128_wcc_twitter_mem_avg_avg = 2.05429722071
 gps_2_128_wcc_twitter_mem_avg_ci = 0.0033351490227
 
-gps_2_128_wcc_uk0705_mem_min_avg = 2.81378479004
-gps_2_128_wcc_uk0705_mem_min_ci = 0.0296587319033
-gps_2_128_wcc_uk0705_mem_max_avg = 3.79008636475
-gps_2_128_wcc_uk0705_mem_max_ci = 0.0546728665102
-gps_2_128_wcc_uk0705_mem_avg_avg = 3.29239928722
-gps_2_128_wcc_uk0705_mem_avg_ci = 0.0174449994791
+gps_2_128_wcc_uk0705_mem_min_avg = 2.81396942139
+gps_2_128_wcc_uk0705_mem_min_ci = 0.066705263114
+gps_2_128_wcc_uk0705_mem_max_avg = 3.82760696411
+gps_2_128_wcc_uk0705_mem_max_ci = 0.0770561160581
+gps_2_128_wcc_uk0705_mem_avg_avg = 3.31905900836
+gps_2_128_wcc_uk0705_mem_avg_ci = 0.0283615251449
 
 gps_2_128_mst_livejournal_mem_min_avg = 0.0
 gps_2_128_mst_livejournal_mem_min_ci = 0.0
