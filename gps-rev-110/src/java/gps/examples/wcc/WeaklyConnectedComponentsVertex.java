@@ -11,24 +11,23 @@ import gps.writable.IntWritable;
 public class WeaklyConnectedComponentsVertex extends NullEdgeVertex<IntWritable, IntWritable>{
 
 	private int minValue;
-	public static int DEFAULT_NUM_MAX_ITERATIONS = 999;
+	//public static int DEFAULT_NUM_MAX_ITERATIONS = 999;
 	public static int numMaxIterations;
 	public WeaklyConnectedComponentsVertex(CommandLine line) {
-		String otherOptsStr = line.getOptionValue(GPSNodeRunner.OTHER_OPTS_OPT_NAME);
-		System.out.println("otherOptsStr: " + otherOptsStr);
-		numMaxIterations = DEFAULT_NUM_MAX_ITERATIONS;
-		if (otherOptsStr != null) {
-			String[] split = otherOptsStr.split("###");
-			for (int index = 0; index < split.length; ) {
-				String flag = split[index++];
-				String value = split[index++];
-				if ("-nmi".equals(flag)) {
-					numMaxIterations = Integer.parseInt(value);
-					System.out.println("numMaxIterations: " + numMaxIterations);
-				}
-			}
-		}
-
+		//String otherOptsStr = line.getOptionValue(GPSNodeRunner.OTHER_OPTS_OPT_NAME);
+		//System.out.println("otherOptsStr: " + otherOptsStr);
+		//numMaxIterations = DEFAULT_NUM_MAX_ITERATIONS;
+		//if (otherOptsStr != null) {
+		//  String[] split = otherOptsStr.split("###");
+		//  for (int index = 0; index < split.length; ) {
+		//  	String flag = split[index++];
+		//  	String value = split[index++];
+		//  	if ("-nmi".equals(flag)) {
+		//  		numMaxIterations = Integer.parseInt(value);
+		//  		System.out.println("numMaxIterations: " + numMaxIterations);
+		//  	}
+		//  }
+		//}
 	}
 	@Override
 	public void compute(Iterable<IntWritable> messageValues, int superstepNo) {
@@ -49,9 +48,10 @@ public class WeaklyConnectedComponentsVertex extends NullEdgeVertex<IntWritable,
 				voteToHalt();
 			}
 
-			if (superstepNo == numMaxIterations) {
-				voteToHalt();
-			}
+      // No superstep termination conditions---run to completion instead
+			//if (superstepNo == numMaxIterations) {
+			//	voteToHalt();
+			//}
 		}
 	}
 
