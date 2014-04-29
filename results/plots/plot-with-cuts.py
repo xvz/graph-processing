@@ -5,6 +5,7 @@ import numpy as np
 
 from constants import *
 
+SCRIPT_DIR=sys.path[0]
 
 ###############
 # Parse args
@@ -184,16 +185,16 @@ PLOT_TYPES = (TIME_TYPE, MEM_TYPE, NET_TYPE)
 
 ## decoration
 # more chars = denser patterns; can also mix and match different ones
-PATTERNS = ('..','*',             # Giraph
-            '///','o','\\\\\\',   # GPS
-            'xx',                 # Mizan
-            '++', 'O')            # GraphLab
+PATTERNS = np.array(('..','*',             # Giraph
+                     '///','o','\\\\\\',   # GPS
+                     'xx',                 # Mizan
+                     '++', 'O'))           # GraphLab
 
 # old: #ff7f00 (orange), #1f78b4 (blue), #7ac36a (darker green)
-COLORS = ('#faa75b','#faa75b',            # Giraph
-          '#5a9bd4','#5a9bd4','#5a9bd4',  # GPS
-          '#b2df8a',                      # Mizan
-          '#eb65aa','#eb65aa')            # GraphLab
+COLORS = np.array(('#faa75b','#faa75b',            # Giraph
+                   '#5a9bd4','#5a9bd4','#5a9bd4',  # GPS
+                   '#b2df8a',                      # Mizan
+                   '#eb65aa','#eb65aa'))           # GraphLab
 
 COLOR_PREMIZAN = '#737373'
 COLOR_IO = (0.9, 0.9, 0.9)
@@ -287,8 +288,8 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
     plt_io = [plt.bar(ind + width*i, avg[mi], width, color=COLOR_IO, hatch=pat,
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
               for i,(avg,ci,pat) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],
-                                                  stats_dict['io_ci'][ai,gi],
-                                                  PATTERNS))]
+                                                  stats_dict['io_ci'][ai,gi,si],
+                                                  PATTERNS[si]))]
      
     # don't show premizan bar if comuptation time is 0 (i.e., failed run)
     premizan_avg = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
@@ -304,8 +305,8 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
               for i,(avg,ci,io,pat) in enumerate(zip(premizan_avg,
                                                      premizan_ci,
-                                                     stats_dict['io_avg'][ai,gi],
-                                                     PATTERNS))]
+                                                     stats_dict['io_avg'][ai,gi,si],
+                                                     PATTERNS[si]))]
      
     # label bars with their values
     for bars in plt_pm:
@@ -357,9 +358,9 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
         p = [ax.bar(ind + width*i, avg[mi], width, color=col, hatch=pat,
                     ecolor=COLOR_ERR, yerr=ci[mi], align='edge')
              for i,(avg,ci,col,pat) in enumerate(zip(stats_dict['run_avg'][ai,gi,si],
-                                                     stats_dict['run_ci'][ai,gi],
-                                                     COLORS,
-                                                     PATTERNS))]
+                                                     stats_dict['run_ci'][ai,gi,si],
+                                                     COLORS[si],
+                                                     PATTERNS[si]))]
 
         for bars in p:
             for bar in bars:
@@ -547,9 +548,9 @@ def plot_net(plt, fig, ai, gi, si, mi, ind, width, is_recv=True):
                         color=col, hatch=pat, alpha=alpha,
                         ecolor=COLOR_ERR, yerr=np.multiply(ci[mi],num_machines[mi]), align='edge')
                  for i,(avg,ci,col,pat) in enumerate(zip(stats_dict[STAT_NAME + '_' + name + '_avg'][ai,gi,si],
-                                                         stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi],
-                                                         colors,
-                                                         PATTERNS))]
+                                                         stats_dict[STAT_NAME + '_' + name + '_ci'][ai,gi,si],
+                                                         colors[si],
+                                                         PATTERNS[si]))]
 
             # label all bars
             for bars in p:
@@ -627,9 +628,9 @@ def plot_net(plt, fig, ai, gi, si, mi, ind, width, is_recv=True):
     else:
         # order is important: min should overlay avg, etc.
         # NOTE: used to use 0.6 alpha for min/max, but with patterns it doesn't look as good
-        plot_helper('max', ['#e74c3c']*len(COLORS))
+        plot_helper('max', np.array(['#e74c3c']*len(COLORS)))
         plot_helper('avg', COLORS)
-        plot_helper('min', ['#27ae60']*len(COLORS))
+        plot_helper('min', np.array(['#27ae60']*len(COLORS)))
 
 
     if do_sum_only:
@@ -677,7 +678,6 @@ fignum = 0
 if mode == MODE_TIME:
     ALGS = (ALG_PR, None, ALG_WCC)
     GRAPHS = (None, None, None, GRAPH_TW)
-
 elif mode == MODE_NET:
     ALGS = (ALG_PR, ALG_SSSP)
 
@@ -752,12 +752,12 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
                 save_name = save_name + '_master'
 
             if save_eps:
-                plt.savefig('./figs/' + save_name + '.eps', format='eps',
+                plt.savefig(SCRIPT_DIR + '/figs/' + save_name + '.eps', format='eps',
                             bbox_inches='tight', pad_inches=0.05)
 
             # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
             if save_png:
-                plt.savefig('./figs/' + save_name + '.png', format='png',
+                plt.savefig(SCRIPT_DIR + '/figs/' + save_name + '.png', format='png',
                             dpi=200, bbox_inches='tight', pad_inches=0.05)
 
 
