@@ -5,6 +5,7 @@
 \usepackage{fixltx2e}     % latex patch fixes!!
 \usepackage{indentfirst}  % indent first paragraphs
 
+\usepackage{hyperref}
 \usepackage{graphicx, subfig, float}     % for easy postscript figure inclusion
 \usepackage{caption}
 
@@ -31,7 +32,7 @@
 
 \pagebreak
 \section{Introduction}
-The following are plots of all the data obtained in an experimental comparison of Giraph, GPS, Mizan, and GraphLab. Details of each of the modes tested can be found in ????. Datasets are given in Table \ref{tbl:datasets}.
+The following are plots of all the data obtained in an experimental comparison of Giraph, GPS, Mizan, and GraphLab. Details of each of the experiments, modes tested, and so on can be found at \url{http://cs.uwaterloo.ca/~kdaudjee/graph-processing}. Datasets are given in Table \ref{tbl:datasets}.
 
 \begin{table}[!h]
 %% spacing
@@ -62,25 +63,17 @@ The following are plots of all the data obtained in an experimental comparison o
 \item \textit{setup time}: time taken to load and partition the input graph (and write the output)
 \item \textit{computation time}: everything but setup time; includes local vertex computation, barrier synchronization, communication, etc.
 \bline[0.5]
-\item \textit{memory usage}: the difference between the maximum and minimum memory used at a single machine
-\item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total memory usage}: min, avg, max, or sum of memory usage across all worker machines
+\item \textit{per-machine memory usage}: the difference between the maximum and minimum memory used at a single machine
+\item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total memory usage}: min, avg, max, or sum of per-machine memory usage across all worker machines
 \bline[0.5]
-\item \textit{network usage}: total number of bytes sent or received by one machine
-\item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total network usage}: min, avg, max, or sum of network usage across all worker machines
+\item \textit{per-network network usage}: total number of bytes sent or received by one machine
+\item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total network usage}: min, avg, max, or sum of per-machine network usage across all worker machines
 \end{itemize}
 
-\noindent Memory usage excludes background Hadoop and OS processes, which tend to use 200-300MB of memory. All plotted values are means of five runs, with error bars indicating 95\% confidence intervals. Missing bars (labelled with `F') indicate failed runs. Note also that, for the master, minimum, average, maximum and total usage all mean the same thing (there is only one machine).
+\noindent Memory usage excludes background Hadoop and OS processes, which tend to be between 200-300MB. All plotted values are means of five runs, with error bars indicating 95\% confidence intervals. Missing bars (labelled with `F') indicate failed runs. Note also that, for the master, minimum, average, maximum and total usage all mean the same thing (there is only one machine).
 
 \bline
 Section \ref{sec:workers} shows data for all the worker machines. Section \ref{sec:master} shows data for the master machine. Finally, data for Mizan's separate graph partitioner (``premizan'') is given in Section \ref{sec:premizan} (worker machines only) and Section \ref{sec:premizan-master} (master only).
-
-\bline[0.5]
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.18\textwidth]{figs/legend.eps}
-  \caption{Legend for all plots.}
-  \label{fig:legend}
-\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,10 +85,11 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \subsection{Time (Split)}
 \begin{figure}[!h]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_time.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_time.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_time.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_time_cut.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_time.eps}
   \caption{PageRank}
 \end{figure}
@@ -103,9 +97,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_time.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_time.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_time.eps}
   \caption{SSSP}
@@ -114,10 +109,11 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_time.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/wcc_twitter_time.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_time.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/wcc_twitter_time_cut.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_time.eps}
   \caption{WCC}
 \end{figure}
@@ -125,9 +121,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_time.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_time.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_time.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_time.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_time.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -138,9 +135,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_time_tot.eps}
   \caption{PageRank}
@@ -149,9 +147,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_time_tot.eps}
   \caption{SSSP}
@@ -160,9 +159,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_time_tot.eps}
   \caption{WCC}
@@ -171,9 +171,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_time_tot.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_time_tot.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_time_tot.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_time_tot.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -184,9 +185,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_mem.eps}
   \caption{PageRank}
@@ -195,9 +197,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_mem.eps}
   \caption{SSSP}
@@ -206,9 +209,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_mem.eps}
   \caption{WCC}
@@ -217,9 +221,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_mem.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -230,9 +235,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_mem_sum.eps}
   \caption{PageRank}
@@ -241,9 +247,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_mem_sum.eps}
   \caption{SSSP}
@@ -252,9 +259,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_mem_sum.eps}
   \caption{WCC}
@@ -263,9 +271,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_mem_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_mem_sum.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -276,21 +285,23 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
-  \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv_sum.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_recv_sum.eps}
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_recv_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv_sum_cut.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_recv_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_recv_sum_cut.eps}
   \caption{PageRank}
 \end{figure}
 
 \begin{figure}[!h]
   \bline[3.5]
   \centering
-  \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv_sum.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/sssp_twitter_recv_sum.eps}\hspace{1em}%
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_recv_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv_sum_cut.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_twitter_recv_sum_cut.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_recv_sum.eps}
   \caption{SSSP}
 \end{figure}
@@ -298,9 +309,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_recv_sum.eps}
   \caption{WCC}
@@ -309,9 +321,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_recv_sum.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -322,21 +335,23 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
-  \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent_sum.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_sent_sum.eps}
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_sent_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent_sum_cut.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_sent_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_sent_sum_cut.eps}
   \caption{PageRank}
 \end{figure}
 
 \begin{figure}[!h]
   \bline[3.5]
   \centering
-  \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent_sum.eps}\\
-  \includegraphics[height=0.42\textheight]{figs/sssp_twitter_sent_sum.eps}\hspace{1em}%
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_sent_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent_sum_cut.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent_sum_cut.eps}\hspace{1em}%
+  \includegraphics[height=0.42\textheight]{figs/sssp_twitter_sent_sum_cut.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_sent_sum.eps}
   \caption{SSSP}
 \end{figure}
@@ -344,9 +359,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_sent_sum.eps}
   \caption{WCC}
@@ -355,9 +371,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_sent_sum.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -368,9 +385,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_recv.eps}
   \caption{PageRank}
@@ -379,9 +397,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_recv.eps}
   \caption{SSSP}
@@ -390,9 +409,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_recv.eps}
   \caption{WCC}
@@ -401,9 +421,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_recv.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -414,9 +435,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_sent.eps}
   \caption{PageRank}
@@ -425,9 +447,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_sent.eps}
   \caption{SSSP}
@@ -436,9 +459,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_sent.eps}
   \caption{WCC}
@@ -447,9 +471,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_sent.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -461,9 +486,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \subsection{Memory}
 \begin{figure}[!h]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_mem_master.eps}
   \caption{PageRank}
@@ -472,9 +498,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_mem_master.eps}
   \caption{SSSP}
@@ -483,9 +510,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_mem_master.eps}
   \caption{WCC}
@@ -494,9 +522,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_mem_master.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -507,9 +536,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_recv_master.eps}
   \caption{PageRank}
@@ -518,9 +548,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_recv_master.eps}
   \caption{SSSP}
@@ -529,9 +560,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_recv_master.eps}
   \caption{WCC}
@@ -540,9 +572,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_recv_master.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -553,9 +586,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_livejournal_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_orkut_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/pagerank_arabic_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_twitter_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/pagerank_uk0705_sent_master.eps}
   \caption{PageRank}
@@ -564,9 +598,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_livejournal_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_orkut_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/sssp_arabic_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_twitter_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/sssp_uk0705_sent_master.eps}
   \caption{SSSP}
@@ -575,9 +610,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_livejournal_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_orkut_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/wcc_arabic_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_twitter_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/wcc_uk0705_sent_master.eps}
   \caption{WCC}
@@ -586,9 +622,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[3.5]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/mst_livejournal_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_orkut_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/mst_arabic_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_twitter_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/mst_uk0705_sent_master.eps}
   \caption{DMST (all graphs are undirected versions)}
@@ -600,9 +637,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \subsection{Memory (Min/Max/Avg)}
 \begin{figure}[!h]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_mem.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_mem.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_mem.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_mem.eps}
   \caption{Premizan}
@@ -613,9 +651,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_recv_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_recv_sum.eps}
   \caption{Premizan}
@@ -626,9 +665,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent_sum.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent_sum.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_sent_sum.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_sent_sum.eps}
   \caption{Premizan}
@@ -639,9 +679,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_recv.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_recv.eps}
   \caption{Premizan}
@@ -652,9 +693,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_sent.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_sent.eps}
   \caption{Premizan}
@@ -667,9 +709,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \subsection{Memory}
 \begin{figure}[!h]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_mem_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_mem_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_mem_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_mem_master.eps}
   \caption{Premizan}
@@ -680,9 +723,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_recv_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_recv_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_recv_master.eps}
   \caption{Premizan}
@@ -693,9 +737,10 @@ Section \ref{sec:workers} shows data for all the worker machines. Section \ref{s
 \begin{figure}[!h]
   \bline[1]
   \centering
+  \includegraphics[width=0.16\textwidth,bb=0 -230 300 350,clip]{figs/legend.eps}\hspace{3em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_livejournal_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent_master.eps}\hspace{1em}%
-  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_orkut_sent_master.eps}\\
+  \includegraphics[height=0.42\textheight]{figs/premizan_arabic_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_twitter_sent_master.eps}\hspace{1em}%
   \includegraphics[height=0.42\textheight]{figs/premizan_uk0705_sent_master.eps}
   \caption{Premizan}
