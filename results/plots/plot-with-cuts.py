@@ -363,12 +363,12 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
 
         for bars in p:
             for bar in bars:
-                # Super hack way to get labels to show up in roughly the correct place...
+                # Super hacky way to get labels to show up in roughly the correct place...
                 #
                 # If bar value exceeds bottom subplot's ymax, then it's in the upper subplot, so:
                 # - use an offset that zeros the height (i.e., label appears at y = 0)
                 # - then add on where it should roughly be
-                #   (4/3n of bottom subplot's max-y is top of the plot)
+                #   (4/3 of bottom subplot's max-y is top of the plot)
                 if (bar.get_height() + bar.get_y()) > ycut_bot_lims[ai][gi][1]:
                     autolabel(bar, ycut_bot_lims[ai][gi][1]/0.81-(bar.get_height()+bar.get_y())*1.005)
                 else:
