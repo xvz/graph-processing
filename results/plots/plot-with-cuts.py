@@ -290,29 +290,29 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
               for i,(avg,ci,pat) in enumerate(zip(stats_dict['io_avg'][ai,gi,si],
                                                   stats_dict['io_ci'][ai,gi,si],
                                                   PATTERNS[si]))]
-     
+
     # don't show premizan bar if comuptation time is 0 (i.e., failed run)
     premizan_avg = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
                               for j,val in enumerate(arr)]
                              for i,arr in enumerate(premizan_dict['io_avg'][gi,si])])
-     
+
     premizan_ci = np.array([[0.0 if stats_dict['run_avg'][ai,gi,si][i,j] == 0 else val
                              for j,val in enumerate(arr)]
                             for i,arr in enumerate(premizan_dict['io_ci'][gi,si])])
-     
-     
+
+
     plt_pm = [plt.bar(ind + width*i, avg[mi], width, color=COLOR_PREMIZAN, hatch=pat,
                       ecolor=COLOR_ERR, yerr=ci[mi], align='edge', bottom=io[mi])
               for i,(avg,ci,io,pat) in enumerate(zip(premizan_avg,
                                                      premizan_ci,
                                                      stats_dict['io_avg'][ai,gi,si],
                                                      PATTERNS[si]))]
-     
+
     # label bars with their values
     for bars in plt_pm:
         for bar in bars:
             autolabel(bar)
-     
+
     ax_io.set_ylim(ymin=0)
 
     # ha controls where labels are aligned to (left, center, or right)

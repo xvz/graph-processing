@@ -618,9 +618,9 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             si = np.arange(len(ALL_SYS)-1)   # all except GraphLab async
         elif (alg == ALG_PREMIZAN):
             si = np.arange(5,6)              # only Mizan
- 
+
         width = (1.0 - 2.0*BAR_MARGIN)/len(si)
- 
+
         # iterate over all graphs (gi = graph index)
         for gi,graph in enumerate(GRAPHS):
             # Not all machine setups can run uk0705, so we remove 16/32's empty bars.
@@ -645,65 +645,65 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             else:
                 if (graph == GRAPH_UK):
                     mi = np.arange(2,4)         # only 64 and 128 machines
- 
+
             # each alg & graph is a separate figure---easier to handle than subplots
             fignum += 1
- 
+
             # shrink width down if there are bars or groups of bars missing
             width_ratio = (7.0-len(GRAPH_LABELS[gi]))/(7.0-len(mi))
             if save_paper:
                 fig = plt.figure(fignum, figsize=(6.5*width_ratio,7), facecolor='w')
             else:
                 fig = plt.figure(fignum, figsize=(6.0*width_ratio,6), facecolor='w')
- 
+
             # mode specific plot function
             axes = PLOT_FUNCS[mode][plt_type](plt, fig, ai, gi, si, mi, IND[gi,mi], width)
- 
+
             # title only for the first (upper-most) axis
             if not save_file:
                 axes[0].set_title(alg + ' ' + graph)
- 
+
             # If there's only one axis, we can just use plt.stuff()...
             # But with mutliple axes we need to go through each one using axis.set_stuff()
             for ax in axes:
                 ax.set_ylim(ymin=0)                 # zero y-axis
                 ax.minorticks_on()                  # enable all minor ticks
- 
+
                 for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
                              ax.get_xticklabels() + ax.get_yticklabels()):
                     item.set_fontsize(FONTSIZE)
- 
+
                 # turn off major and minor x-axis ticks (leaves minor y-ticks on)
                 ax.tick_params(axis='x', which='both', bottom='off', top='off')
- 
+
                 ax.grid(True, which='major', axis='y')
- 
+
                 # draw vertical lines to separate bar groups
                 vlines_mi = np.array(mi)[np.arange(1,len(mi))]
                 ax.vlines(IND[gi,vlines_mi]-BAR_MARGIN, 0, ax.get_ylim()[1], colors='k', linestyles='dotted')
- 
+
             # only label x-axis of last (bottom-most) axis
             for ax in axes[:-1]:
                 ax.tick_params(labelbottom='off')
- 
+
             # ha controls where labels are aligned to (left, center, or right)
             plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=30, ha='center')
- 
- 
+
+
             #ml = MultipleLocator(5)
             #plt.axes().yaxis.set_minor_locator(ml)
- 
+
             plt.tight_layout()
             plt.subplots_adjust(hspace = 0.001)
- 
+
             save_name = alg + '_' + graph + '_' + save_suffix
             if do_master:
                 save_name = save_name + '_master'
- 
+
             if save_eps:
                 plt.savefig(SCRIPT_DIR + '/figs/' + save_name + '.eps', format='eps',
                             bbox_inches='tight', pad_inches=0.05)
- 
+
             # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
             if save_png:
                 plt.savefig(SCRIPT_DIR + '/figs/' + save_name + '.png', format='png',
