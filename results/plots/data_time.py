@@ -1622,12 +1622,12 @@ gps_0_128_wcc_orkut_io_ci = 0.116828248262
 gps_0_128_wcc_orkut_tot_avg = 8.05357
 gps_0_128_wcc_orkut_tot_ci = 0.11697006585
 
-gps_0_128_wcc_arabic_run_avg = 0.0
-gps_0_128_wcc_arabic_run_ci = 0.0
-gps_0_128_wcc_arabic_io_avg = 0.0
-gps_0_128_wcc_arabic_io_ci = 0.0
-gps_0_128_wcc_arabic_tot_avg = 0.0
-gps_0_128_wcc_arabic_tot_ci = 0.0
+gps_0_128_wcc_arabic_run_avg = 2.75487333333
+gps_0_128_wcc_arabic_run_ci = 0.0142713652395
+gps_0_128_wcc_arabic_io_avg = 10.9094533333
+gps_0_128_wcc_arabic_io_ci = 0.12358425129
+gps_0_128_wcc_arabic_tot_avg = 13.6643266667
+gps_0_128_wcc_arabic_tot_ci = 0.122498118943
 
 gps_0_128_wcc_twitter_run_avg = 2.56912333333
 gps_0_128_wcc_twitter_run_ci = 0.0183000021844
@@ -1636,12 +1636,12 @@ gps_0_128_wcc_twitter_io_ci = 0.149560776017
 gps_0_128_wcc_twitter_tot_avg = 15.6156966667
 gps_0_128_wcc_twitter_tot_ci = 0.140255771397
 
-gps_0_128_wcc_uk0705_run_avg = 0.0
-gps_0_128_wcc_uk0705_run_ci = 0.0
-gps_0_128_wcc_uk0705_io_avg = 0.0
-gps_0_128_wcc_uk0705_io_ci = 0.0
-gps_0_128_wcc_uk0705_tot_avg = 0.0
-gps_0_128_wcc_uk0705_tot_ci = 0.0
+gps_0_128_wcc_uk0705_run_avg = 15.1130833333
+gps_0_128_wcc_uk0705_run_ci = 0.085371704898
+gps_0_128_wcc_uk0705_io_avg = 27.4624633333
+gps_0_128_wcc_uk0705_io_ci = 0.775482664711
+gps_0_128_wcc_uk0705_tot_avg = 42.5755466667
+gps_0_128_wcc_uk0705_tot_ci = 0.707247047672
 
 gps_0_128_mst_livejournal_run_avg = 3.43272333333
 gps_0_128_mst_livejournal_run_ci = 0.0693269351198
@@ -2182,12 +2182,12 @@ gps_1_128_wcc_orkut_io_ci = 0.137055462097
 gps_1_128_wcc_orkut_tot_avg = 8.18240333333
 gps_1_128_wcc_orkut_tot_ci = 0.157956134337
 
-gps_1_128_wcc_arabic_run_avg = 0.0
-gps_1_128_wcc_arabic_run_ci = 0.0
-gps_1_128_wcc_arabic_io_avg = 0.0
-gps_1_128_wcc_arabic_io_ci = 0.0
-gps_1_128_wcc_arabic_tot_avg = 0.0
-gps_1_128_wcc_arabic_tot_ci = 0.0
+gps_1_128_wcc_arabic_run_avg = 3.43698666667
+gps_1_128_wcc_arabic_run_ci = 0.248042089284
+gps_1_128_wcc_arabic_io_avg = 11.6768766667
+gps_1_128_wcc_arabic_io_ci = 0.131166856676
+gps_1_128_wcc_arabic_tot_avg = 15.1138633333
+gps_1_128_wcc_arabic_tot_ci = 0.260158859097
 
 gps_1_128_wcc_twitter_run_avg = 2.67532
 gps_1_128_wcc_twitter_run_ci = 0.0296894800843
@@ -2196,12 +2196,12 @@ gps_1_128_wcc_twitter_io_ci = 0.381353546337
 gps_1_128_wcc_twitter_tot_avg = 17.1219966667
 gps_1_128_wcc_twitter_tot_ci = 0.381018719793
 
-gps_1_128_wcc_uk0705_run_avg = 0.0
-gps_1_128_wcc_uk0705_run_ci = 0.0
-gps_1_128_wcc_uk0705_io_avg = 0.0
-gps_1_128_wcc_uk0705_io_ci = 0.0
-gps_1_128_wcc_uk0705_tot_avg = 0.0
-gps_1_128_wcc_uk0705_tot_ci = 0.0
+gps_1_128_wcc_uk0705_run_avg = 15.7727166667
+gps_1_128_wcc_uk0705_run_ci = 0.258460347558
+gps_1_128_wcc_uk0705_io_avg = 29.4403766667
+gps_1_128_wcc_uk0705_io_ci = 0.312465861162
+gps_1_128_wcc_uk0705_tot_avg = 45.2130933333
+gps_1_128_wcc_uk0705_tot_ci = 0.471540012668
 
 gps_1_128_mst_livejournal_run_avg = 0.0
 gps_1_128_mst_livejournal_run_ci = 0.0
@@ -2742,12 +2742,12 @@ gps_2_128_wcc_orkut_io_ci = 0.102272247583
 gps_2_128_wcc_orkut_tot_avg = 8.12741
 gps_2_128_wcc_orkut_tot_ci = 0.109876947597
 
-gps_2_128_wcc_arabic_run_avg = 0.0
-gps_2_128_wcc_arabic_run_ci = 0.0
-gps_2_128_wcc_arabic_io_avg = 0.0
-gps_2_128_wcc_arabic_io_ci = 0.0
-gps_2_128_wcc_arabic_tot_avg = 0.0
-gps_2_128_wcc_arabic_tot_ci = 0.0
+gps_2_128_wcc_arabic_run_avg = 2.98589666667
+gps_2_128_wcc_arabic_run_ci = 0.0225144020675
+gps_2_128_wcc_arabic_io_avg = 10.8544566667
+gps_2_128_wcc_arabic_io_ci = 0.200922209896
+gps_2_128_wcc_arabic_tot_avg = 13.8403533333
+gps_2_128_wcc_arabic_tot_ci = 0.207017693522
 
 gps_2_128_wcc_twitter_run_avg = 2.89714
 gps_2_128_wcc_twitter_run_ci = 0.0982994141582
@@ -2756,12 +2756,12 @@ gps_2_128_wcc_twitter_io_ci = 0.492345999024
 gps_2_128_wcc_twitter_tot_avg = 17.3064566667
 gps_2_128_wcc_twitter_tot_ci = 0.397035163923
 
-gps_2_128_wcc_uk0705_run_avg = 0.0
-gps_2_128_wcc_uk0705_run_ci = 0.0
-gps_2_128_wcc_uk0705_io_avg = 0.0
-gps_2_128_wcc_uk0705_io_ci = 0.0
-gps_2_128_wcc_uk0705_tot_avg = 0.0
-gps_2_128_wcc_uk0705_tot_ci = 0.0
+gps_2_128_wcc_uk0705_run_avg = 16.0381633333
+gps_2_128_wcc_uk0705_run_ci = 0.142913547029
+gps_2_128_wcc_uk0705_io_avg = 27.7683766667
+gps_2_128_wcc_uk0705_io_ci = 0.386046223946
+gps_2_128_wcc_uk0705_tot_avg = 43.80654
+gps_2_128_wcc_uk0705_tot_ci = 0.40232146552
 
 gps_2_128_mst_livejournal_run_avg = 0.0
 gps_2_128_mst_livejournal_run_ci = 0.0

@@ -12,7 +12,7 @@ from constants import *
 def check_mode(mode):
     try:
         m = int(mode)
-        if (m < 0) or (m >= len(MODES)):
+        if not m in MODES:
             raise argparse.ArgumentTypeError('Invalid mode')
         return m
     except:
@@ -86,7 +86,7 @@ elif mode == MODE_NET:
 # we have to import matplotlib.pyplot here, as its backend
 # will get reset if we don't import matplotlib first
 import matplotlib
-matplotlib.rcParams['figure.max_open_warning'] = 41
+matplotlib.rcParams['figure.max_open_warning'] = 42
 
 if save_file:
     # using tight_layout requires Agg, so we can't use PS
@@ -95,6 +95,7 @@ if save_file:
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 from matplotlib.ticker import MaxNLocator
+from matplotlib.patches import Rectangle
 
 ###############
 # Format data
@@ -232,13 +233,16 @@ GRAPH_LABELS = np.array((('LJ (16)', 'LJ (32)', 'LJ (64)', 'LJ (128)'),
 
 if save_paper:
     FONTSIZE = 20
-    VAL_FONTSIZE = 5   # for "F" of failed bars
+    VAL_FONTSIZE = 4
+    F_FONTSIZE = 12    # for "F" of failed bars
 elif save_file:
     FONTSIZE = 12
-    VAL_FONTSIZE = 4   # for text values on top of bars
+    VAL_FONTSIZE = 3   # for text values on top of bars
+    F_FONTSIZE = 11
 else:
     FONTSIZE = 12      # 12 is default
     VAL_FONTSIZE = 8
+    F_FONTSIZE = 12
 
 ## misc values
 # left/right margins of each bar group
@@ -264,8 +268,8 @@ def autolabel(bar):
 
     # values will never be small enough to cause issues w/ this comparison
     if height == 0:
-        plt.text(bar.get_x()+bar.get_width()/2.0, 0, 'F',
-                 ha='center', va='bottom', fontsize=VAL_FONTSIZE+2)
+        plt.text(bar.get_x()+bar.get_width()/2, 0, 'F',
+                 ha='center', va='bottom', fontsize=F_FONTSIZE)
     else:
         if not save_paper:
             plt.text(bar.get_x()+bar.get_width()/2.0, height*1.005, LABEL_FORMAT[mode]%float(height),
@@ -336,8 +340,7 @@ def plot_time_tot(plt, fig, ai, gi, si, mi, ind, width):
     #                     + premizan_dict['io_avg'][gi,si]
     #                     + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_paper) or gi == 0:
-        plt.ylabel('Total time (mins)')
+    plt.ylabel('Total time (mins)')
 
     return (ax,)
 
@@ -375,8 +378,7 @@ def plot_time_tot(plt, fig, ai, gi, si, mi, ind, width):
 #
 #    #plt.ylim(ymax=np.max(stats_dict['run_avg'][ai,gi,si] + stats_dict['run_ci'][ai,gi,si])*YMAX_FACTOR)
 #
-#    if (not save_paper) or gi == 0:
-#        plt.ylabel('Computation time (mins)')
+#    plt.ylabel('Computation time (mins)')
 #    return (ax,)
 
 
@@ -451,9 +453,8 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
     #ax_io.set_ylim(ymax=np.max(premizan_dict['io_avg'][gi,si] + premizan_dict['io_ci'][gi,si]
     #                           + stats_dict['io_avg'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_paper) or gi == 0:
-        ax_run.set_ylabel('Computation (mins)')
-        ax_io.set_ylabel('Setup (mins)')
+    ax_run.set_ylabel('Computation (mins)')
+    ax_io.set_ylabel('Setup (mins)')
 
     # remove upper y-label to avoid overlap
     nbins = len(ax_run.get_yticklabels())
@@ -559,20 +560,23 @@ def plot_mem_net(plt, fig, ai, gi, si, mi, ind, width, is_mem, is_recv=True):
             plot_helper('min', ['#27ae60']*len(COLORS))
 
 
+    # for worker's memory usage, plot the larger graphs to have same ymax
+    if is_mem and not (do_sum_only or do_master or do_premizan) and not GRAPHS[gi] in [GRAPH_LJ, GRAPH_OR]:
+        plt.ylim(ymax=14.0)
+
     #plt.ylim(ymax=np.max(stats_dict[STAT_NAME + '_max_avg'][ai,gi,si] + stats_dict[STAT_NAME + '_max_ci'][ai,gi,si])*YMAX_FACTOR)
 
-    if (not save_paper) or gi == 0:
-        if do_master:
-            plt.ylabel('Total ' + LABEL_STR + ' (MB)')
+    if do_master:
+        plt.ylabel('Total ' + LABEL_STR + ' (MB)')
+    else:
+        if do_sum_only:
+            plt.ylabel('Total ' + LABEL_STR + ' (GB)')
+        elif do_avg_only:
+            plt.ylabel('Average ' + LABEL_STR + ' (GB)')
+        elif do_max_only:
+            plt.ylabel('Maximum ' + LABEL_STR + ' (GB)')
         else:
-            if do_sum_only:
-                plt.ylabel('Total ' + LABEL_STR + ' (GB)')
-            elif do_avg_only:
-                plt.ylabel('Average ' + LABEL_STR + ' (GB)')
-            elif do_max_only:
-                plt.ylabel('Maximum ' + LABEL_STR + ' (GB)')
-            else:
-                plt.ylabel('Min/avg/max ' + LABEL_STR + ' (GB)')
+            plt.ylabel('Min/avg/max ' + LABEL_STR + ' (GB)')
 
     return (ax,)
 
@@ -611,84 +615,87 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             si = np.arange(3)                # only Giraph (hashmap, byte array) and GPS (none)
         elif (alg == ALG_WCC):
             si = np.arange(len(ALL_SYS)-1)   # all except GraphLab async
-
+ 
         width = (1.0 - 2.0*BAR_MARGIN)/len(si)
-
+ 
         # iterate over all graphs (gi = graph index)
         for gi,graph in enumerate(GRAPHS):
             # Not all machine setups can run uk0705, so we remove 16/32's empty bars.
             # This will make the plot thinner (removes 2 groups of bars).
             # (mi = machine indices, which silces columns of the matrix)
-            mi = np.arange(len(MACHINES))       # all machines by default
+            if save_paper:
+                mi = np.arange(1,4)             # for paper, only plot 32,64, 128
+            else:
+                mi = np.arange(len(MACHINES))   # all machines by default
+ 
             if (alg == ALG_MST):
                 if (graph == GRAPH_UK):
                     # NOTE: using 3,4 causes divide by zero warning in ticker.py
-                    # along with poor figure width control..
-                    mi = np.arange(2,4)         # only 128 machines, but also show 64
+                    mi = np.arange(3,4)         # only 128 machines
                 elif (graph == GRAPH_TW):
                     mi = np.arange(2,4)         # only 64 and 128 machines
             else:
                 if (graph == GRAPH_UK):
                     mi = np.arange(2,4)         # only 64 and 128 machines
-
+ 
             # each alg & graph is a separate figure---easier to handle than subplots
             fignum += 1
-
+ 
             # shrink width down if there are bars or groups of bars missing
             width_ratio = (7.0-len(GRAPH_LABELS[gi]))/(7.0-len(mi))
             if save_paper:
-                fig = plt.figure(fignum, figsize=(5.0*width_ratio,7), facecolor='w')
+                fig = plt.figure(fignum, figsize=(6.5*width_ratio,7), facecolor='w')
             else:
                 fig = plt.figure(fignum, figsize=(6.0*width_ratio,6), facecolor='w')
-
+ 
             # mode specific plot function
             axes = PLOT_FUNCS[mode][plt_type](plt, fig, ai, gi, si, mi, IND[gi,mi], width)
-
+ 
             # title only for the first (upper-most) axis
             if not save_file:
                 axes[0].set_title(alg + ' ' + graph)
-
+ 
             # If there's only one axis, we can just use plt.stuff()...
             # But with mutliple axes we need to go through each one using axis.set_stuff()
             for ax in axes:
                 ax.set_ylim(ymin=0)                 # zero y-axis
                 ax.minorticks_on()                  # enable all minor ticks
-
+ 
                 for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
                              ax.get_xticklabels() + ax.get_yticklabels()):
                     item.set_fontsize(FONTSIZE)
-
+ 
                 # turn off major and minor x-axis ticks (leaves minor y-ticks on)
                 ax.tick_params(axis='x', which='both', bottom='off', top='off')
-
+ 
                 ax.grid(True, which='major', axis='y')
-
+ 
                 # draw vertical lines to separate bar groups
                 vlines_mi = np.array(mi)[np.arange(1,len(mi))]
                 ax.vlines(IND[gi,vlines_mi]-BAR_MARGIN, 0, ax.get_ylim()[1], colors='k', linestyles='dotted')
-
+ 
             # only label x-axis of last (bottom-most) axis
             for ax in axes[:-1]:
                 ax.tick_params(labelbottom='off')
-
+ 
             # ha controls where labels are aligned to (left, center, or right)
-            plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=35, ha='right')
-
-
+            plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=30, ha='center')
+ 
+ 
             #ml = MultipleLocator(5)
             #plt.axes().yaxis.set_minor_locator(ml)
-
+ 
             plt.tight_layout()
             plt.subplots_adjust(hspace = 0.001)
-
+ 
             save_name = alg + '_' + graph + '_' + save_suffix
             if do_master:
                 save_name = save_name + '_master'
-
+ 
             if save_eps:
                 plt.savefig('./figs/' + save_name + '.eps', format='eps',
                             bbox_inches='tight', pad_inches=0.05)
-
+ 
             # TODO: save_png causes error on exit (purely cosmetic: trying to close a non-existent canvas)
             if save_png:
                 plt.savefig('./figs/' + save_name + '.png', format='png',
@@ -721,6 +728,37 @@ if save_eps:
 
 if save_png:
     plt.savefig('./figs/legend.png', format='png', dpi=200, bbox_inches='tight', pad_inches=0)
+
+
+# collapsed legend
+fignum += 1
+plt.figure(fignum, figsize=(10.9,1.4), facecolor='w')
+ax = plt.subplot()
+width = (1.0-2.0*BAR_MARGIN)/3
+plt_legend = [plt.bar(0 + width*i, avg[0], width, color=col, hatch=pat)
+              for i,(avg,col,pat) in enumerate(zip(stats_dict[STATS[mode][0] + '_avg'][0,0],
+                                                   COLORS,
+                                                   PATTERNS))]
+
+# create empty rectangle so we have Giraph in one column, GPS in another, etc.
+blank = Rectangle((0, 0), 1, 1, fc="w", fill=False, edgecolor='none', linewidth=0)
+ax.legend(plt_legend[0:2] + [blank] + plt_legend[2:len(plt_legend)],
+          list(LEGEND_LABELS[0:2]) + [""] + list(LEGEND_LABELS[2:]),
+          fontsize=20, ncol=3,
+          loc=3, bbox_to_anchor=[-0.03, -0.5], borderaxespad=0.0).draw_frame(False)
+
+for bars in plt_legend:
+    for bar in bars:
+        bar.set_visible(False)
+
+plt.axis('off')
+plt.tight_layout()
+
+if save_eps:
+    plt.savefig('./figs/legend-horiz.eps', format='eps', bbox_inches='tight', pad_inches=0)
+
+if save_png:
+    plt.savefig('./figs/legend-horiz.png', format='png', dpi=200, bbox_inches='tight', pad_inches=0)
 
 
 # show all plots

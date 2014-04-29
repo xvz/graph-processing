@@ -1,4 +1,4 @@
 graph-processing
 ================
 
-Comparison of graph processing systems.
+A comparison of graph processing systems. Please see the wiki!
