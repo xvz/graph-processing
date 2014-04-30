@@ -316,7 +316,7 @@ def plot_time_split(plt, fig, ai, gi, si, mi, ind, width):
     ax_io.set_ylim(ymin=0)
 
     # ha controls where labels are aligned to (left, center, or right)
-    plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=35, ha='center')
+    plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=30, ha='center')
 
     ## Plot running time with y-ais cuts
     ycut_top_lims = [[(0,0), (0,0), (0,0), (105, 120)],
@@ -614,7 +614,7 @@ def plot_net(plt, fig, ai, gi, si, mi, ind, width, is_recv=True):
             ax.vlines(IND[gi,vlines_mi]-BAR_MARGIN, 0, ax.get_ylim()[1], colors='k', linestyles='dotted')
 
         # ha controls where labels are aligned to (left, center, or right)
-        plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=35, ha='center')
+        plt.xticks(IND[gi,mi]+width*len(si)/2, GRAPH_LABELS[gi,mi], rotation=30, ha='center')
 
         plt.tight_layout()
         plt.subplots_adjust(hspace = 0.05)
@@ -716,7 +716,7 @@ for plt_type,save_suffix in enumerate(PLOT_TYPES[mode]):
             # This will make the plot thinner (removes 2 groups of bars).
             # (mi = machine indices, which silces columns of the matrix)
             if save_paper:
-                mi = np.arange(1,4)             # for paper, only plot 32,64, 128
+                mi = np.arange(1,4)             # for paper, only plot 32, 64, 128
             else:
                 mi = np.arange(len(MACHINES))   # all machines by default
 

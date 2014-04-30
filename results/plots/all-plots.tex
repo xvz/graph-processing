@@ -32,7 +32,7 @@
 
 \pagebreak
 \section{Introduction}
-The following are plots of all the data obtained in an experimental comparison of Giraph, GPS, Mizan, and GraphLab. Details of each of the experiments, modes tested, and so on can be found at \url{http://cs.uwaterloo.ca/~kdaudjee/graph-processing}. Datasets are given in Table \ref{tbl:datasets}.
+The following are plots of all the data obtained in an experimental comparison of Giraph, GPS, Mizan, and GraphLab. Details for the experiments can be found in the paper linked at \url{http://cs.uwaterloo.ca/~kdaudjee/graph-processing}, along with the raw data and a guide to repeating these experiments. The datasets used are summarized in Table \ref{tbl:datasets}.
 
 \begin{table}[!h]
 %% spacing
@@ -41,16 +41,16 @@ The following are plots of all the data obtained in an experimental comparison o
 \newcommand{\phb}{\phantom{1.}}
 
 \centering
-\caption{Datasets. All graphs are directed. Values in brackets are for the undirected versions used in DMST.}
+\caption{Directed datasets. Values in parentheses are for the undirected versions used in DMST.}
 \label{tbl:datasets}
 \begin{tabular}[c]{lcrcrc}
   \toprule
   \textbf{Graph}                 & \multicolumn{1}{c}{$|V|$} & \multicolumn{1}{c}{$|E|$}  & \textbf{Avg In/Outdegree} & \textbf{Max In/Outdegree}         & \textbf{Largest SCC}   \\\midrule
-  soc-LiveJournal1 \textbf{(LJ)} & \pho 4.8M                 & \phb 68M \phb$\!\!$(86M)   & 14 (18)                   & 13.9K / \php 20K \phb (20K)       & \pho 3.8M \phb (79\%)  \\
-  com-Orkut \textbf{(OR)}        & \pho 3.0M                 & \php 117M \php$\!\!$(234M) & 38 (76)                   & \pho 3.4K / \php 33K \phb (33K)   & \pho 3.0M \php (100\%) \\
-  arabic-2005 \textbf{(AR)}      & 22.7M                     & \php 639M (1.11B)          & 28 (49)                   & \php 575K / 9.9K \php (575K)      & 15.1M (66.7\%)         \\
-  twitter-2010 \textbf{(TW)}     & 41.6M                     & 1.46B (2.40B)              & 35 (58)                   & \php 770K / $\!$2.9M $\,\,$(2.9M) & 33.4M (80.3\%)         \\
-  uk-2007-05 \textbf{(UK)}       & \php 105M                 & 3.73B (6.62B)              & 35 (63)                   & \php 975K / \php 15K \php (975K)  & 68.5M (64.7\%)         \\\bottomrule
+  soc-LiveJournal1 \textbf{(LJ)} & \pho 4.8M                 & \phb 68M \phb$\!\!$(86M)   & 14 / 14 (18)              & 13.9K / \php 20K \phb (20K)       & \pho 3.8M \phb (79\%)  \\
+  com-Orkut \textbf{(OR)}        & \pho 3.0M                 & \php 117M \php$\!\!$(234M) & 38 / 38 (76)              & \pho 3.4K / \php 33K \phb (33K)   & \pho 3.0M \php (100\%) \\
+  arabic-2005 \textbf{(AR)}      & 22.7M                     & \php 639M (1.11B)          & 28 / 28 (49)              & \php 575K / 9.9K \php (575K)      & 15.1M (66.7\%)         \\
+  twitter-2010 \textbf{(TW)}     & 41.6M                     & 1.46B (2.40B)              & 35 / 35 (58)              & \php 770K / $\!$2.9M $\,\,$(2.9M) & 33.4M (80.3\%)         \\
+  uk-2007-05 \textbf{(UK)}       & \php 105M                 & 3.73B (6.62B)              & 35 / 35 (63)              & \php 975K / \php 15K \php (975K)  & 68.5M (64.7\%)         \\\bottomrule
 \end{tabular}
 \end{table}
 
@@ -66,11 +66,11 @@ The following are plots of all the data obtained in an experimental comparison o
 \item \textit{per-machine memory usage}: the difference between the maximum and minimum memory used at a single machine
 \item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total memory usage}: min, avg, max, or sum of per-machine memory usage across all worker machines
 \bline[0.5]
-\item \textit{per-network network usage}: total number of bytes sent or received by one machine
+\item \textit{per-network network usage}: total number of bytes sent (\textit{outgoing}) or received (\textit{incoming}) by a single machine
 \item \textit{minimum}, \textit{average}, \textit{maximum}, or \textit{total network usage}: min, avg, max, or sum of per-machine network usage across all worker machines
 \end{itemize}
 
-\noindent Memory usage excludes background Hadoop and OS processes, which tend to be between 200-300MB. All plotted values are means of five runs, with error bars indicating 95\% confidence intervals. Missing bars (labelled with `F') indicate failed runs. Note also that, for the master, minimum, average, maximum and total usage all mean the same thing (there is only one machine).
+\noindent Memory usage excludes background Hadoop and OS processes, which tend to be between 200-300MB. All plotted values are means of five runs, with error bars indicating 95\% confidence intervals. Missing bars labelled with `F' indicate failed runs. Note also that, for the master, minimum, average, maximum and total usage all mean the same thing (there is only one machine).
 
 \bline
 Section \ref{sec:workers} shows data for all the worker machines. Section \ref{sec:master} shows data for the master machine. Finally, data for Mizan's separate graph partitioner (``premizan'') is given in Section \ref{sec:premizan} (worker machines only) and Section \ref{sec:premizan-master} (master only).
