@@ -1,37 +1,14 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-####################
-# Notes
-####################
 # Authors: Young Han, Khaled Ammar
 #          {young.han, kammar} @ uwaterloo . ca
 #
 # For any bugs or comments, please contact the authors
 #
-# This is loosely based off of Graphlab's gl_ec2.py file, so some functions may be similar.
-
-
-####################
-# Misc Dev Notes
-####################
-# For valid filters, see e.g.:
+# This is very loosely based off of GraphLab's gl_ec2.py file.
+# Some functionality may be similar.
+#
+# For valid boto filters, see e.g.:
 # http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeInstances.html
 
 import os, sys
@@ -39,7 +16,6 @@ import argparse
 import time
 import boto.ec2, boto.manage.cmdshell
 import subprocess
-#import logging
 
 
 ####################
@@ -47,8 +23,8 @@ import subprocess
 ####################
 SCRIPT_DIR = sys.path[0] + '/'
 
-ACTIONS = ('launch', 'terminate', 'start', 'stop',
-           'connect', 'init', 'create-sg', 'create-kp')
+ACTIONS = ('launch', 'terminate', 'start', 'stop', 'connect',
+           'init', 'create-sg', 'create-kp', 'get-logs')
 # ACTION_FUNCS is defined below
 
 # special cluster names used in our experiments
@@ -95,11 +71,15 @@ def get_args():
                         help="R|Action to perform: \n"
                              "launch    - launch a new cluster\n"
                              "terminate - terminate an existing cluster\n"
-                             "start     - start a stopped cluster (on-demand only)\n"
-                             "stop      - stop a running cluster (on-demand only)\n"
+                             "start     - start a stopped cluster (on-demand instances only)\n"
+                             "stop      - stop a running cluster (on-demand instances only)\n"
+                             "connect   - connect to the master of a running cluster\n"
                              "init      - initialize a cluster\n"
-                             "create-sg - create new security group\n"
-                             "create-kp - create new EC2 key pair (saved in %s)" % SCRIPT_DIR)
+                             "create-sg - create a new security group\n"
+                             "create-kp - create a new EC2 key pair (saved in " + SCRIPT_DIR + ")\n"
+                             "get-logs  - grab ~/benchmark/<system>/logs/*.tar.gz to\n"
+                             "            " + SCRIPT_DIR + "../results/<system>/<num_slaves>/\n"
+                             "            for all systems (giraph, gps, graphlab, mizan)")
 
     def check_slaves(num_slaves):
         try:
@@ -114,13 +94,11 @@ def get_args():
                         help="Number of worker/slave machines (default: 4)")
     parser.add_argument('-p', '--spot-price', metavar="PRICE", type=float, default=None,
                         help="If specified, launch as spot instances with the given maximum price (in dollars)")
-    parser.add_argument('--persist-master-vol', action='store_true', default=False,
-                        help="Do not delete the master's EBS volume on termination")
 
-    parser.add_argument('-s', '--ssh-key', default=DEFAULT_PEM,
-                        help="Local pem key file for SSHing (default: %s)" % DEFAULT_PEM)
-    parser.add_argument('-k', '--key-pair', default=DEFAULT_KEY,
-                        help="Name of key file on AWS (default: %s)" % DEFAULT_KEY)
+    parser.add_argument('-i', '--identity-file', metavar="PEM_KEY", default=DEFAULT_PEM,
+                        help="Local pem key file for SSHing to EC2 instances (default: %s)" % DEFAULT_PEM)
+    parser.add_argument('-k', '--key-pair', metavar="KEY_NAME", default=DEFAULT_KEY,
+                        help="Name of key pair on AWS (default: %s)" % DEFAULT_KEY)
 
     parser.add_argument('-t', '--instance-type', metavar="INSTANCE_TYPE", default=DEFAULT_INSTANCE,
                         help="Instance type (default: %s)" % DEFAULT_INSTANCE)
@@ -131,11 +109,12 @@ def get_args():
     parser.add_argument('-a', '--availability-zone', metavar="AZ", default=DEFAULT_AZ,
                         help="Availability zone to use (default: %s)" % DEFAULT_AZ)
 
-
     parser.add_argument('--ami-master', metavar="AMI_ID", default=AMI_MASTER,
                         help="Master AMI image (default: %s)" % AMI_MASTER)
     parser.add_argument('--ami-slave', metavar="AMI_ID", default=AMI_SLAVE,
                         help="Slave AMI image (default: %s)" % AMI_SLAVE)
+    parser.add_argument('--persist-master-vol', action='store_true', default=False,
+                        help="Do not delete the master's EBS volume on termination")
 
     args = parser.parse_args()
 
@@ -143,11 +122,17 @@ def get_args():
     setattr(args, 'cluster_name', get_cluster_name(args.num_slaves))
     return args
 
+
 def get_cluster_name(num_slaves):
     '''Generates a cluster name based on the number of slaves.
 
     If num_slaves is 4, 8, 16, 32, 64, or 128, it will return
     the machine names we used in our experiments.
+
+    Naming conventions is always cluster_name + machine_id.
+    For example, if the cluster_name is "cw" and there are 16
+    slave machines, then the hostname of the master is cw0,
+    while the slaves are cw1, cw2, ..., cw16.
 
     Arguments:
     num_slaves -- number of slaves (int)
@@ -158,7 +143,6 @@ def get_cluster_name(num_slaves):
 
     if num_slaves in EXP_NUMS:
         return EXP_NAMES[EXP_NUMS.index(num_slaves)]
-
     else:
         return 'c' + str(num_slaves) + 'x'  # totally creative
 
@@ -227,6 +211,7 @@ def create_kp(conn, args):
     except boto.exception.EC2ResponseError as e:
         if "already exists" in e.body:
             print("Key pair %s already exists!" % args.key_pair)
+            return
         else:
             raise
 
@@ -260,6 +245,7 @@ def create_sg(conn, args):
     except boto.exception.EC2ResponseError as e:
         if "already exists" in e.body:
             print("Security group %s already exists!" % args.security_group)
+            return
         else:
             raise
 
@@ -283,7 +269,7 @@ def start_cluster(conn, args):
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: only %i of %i slave machines found!" % (len(slave_instance_ids), args.num_slaves))
 
-    sys.stdout.write("Starting cluster [%s]... " % args.cluster_name)
+    sys.stdout.write("Starting cluster %s... " % args.cluster_name)
     sys.stdout.flush()
     try:
         conn.start_instances(master_instance_ids + slave_instance_ids)
@@ -296,7 +282,7 @@ def start_cluster(conn, args):
 
     sec = 0
     while True:
-        sys.stdout.write("\rStarting cluster [%s]... (waited %is)" % (args.cluster_name, sec))
+        sys.stdout.write("\rStarting cluster %s... (waited %is)" % (args.cluster_name, sec))
         sys.stdout.flush()
         pending_instances = conn.get_only_instances(master_instance_ids + slave_instance_ids,
                                                     filters={'instance-state-name': 'pending'})
@@ -327,9 +313,9 @@ def stop_cluster(conn, args):
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: only %i of %i slaves machines found!" % (len(slave_instance_ids), args.num_slaves))
 
-    sys.stdout.write("Stopping cluster [%s]... " % args.cluster_name)
+    sys.stdout.write("Stopping cluster %s... " % args.cluster_name)
     sys.stdout.flush()
-    
+
     try:
         conn.stop_instances(master_instance_ids + slave_instance_ids)
     except boto.exception.EC2ResponseError as e:
@@ -344,7 +330,7 @@ def stop_cluster(conn, args):
 
     sec = 0
     while True:
-        sys.stdout.write("\rStopping cluster [%s]... (waited %is)" % (args.cluster_name, sec))
+        sys.stdout.write("\rStopping cluster %s... (waited %is)" % (args.cluster_name, sec))
         sys.stdout.flush()
         stopping_instances = conn.get_only_instances(master_instance_ids + slave_instance_ids,
                                                      filters={'instance-state-name': 'stopping'})
@@ -374,7 +360,7 @@ def terminate_cluster(conn, args):
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
 
-    sys.stdout.write("Terminating cluster [%s]... " % args.cluster_name)
+    sys.stdout.write("Terminating cluster %s... " % args.cluster_name)
     sys.stdout.flush()
     conn.terminate_instances(master_instance_ids + slave_instance_ids)
     print("Done.")
@@ -403,21 +389,20 @@ def launch_cluster(conn, args):
     Fails (exits) if a cluster already exists.
     '''
 
-    print("Creating cluster [%s] with %i slaves..." % (args.cluster_name, args.num_slaves))
+    print("Creating cluster %s with %i slaves..." % (args.cluster_name, args.num_slaves))
 
     ## Check if instances already exist for a cluster
     (masters, slaves) = get_cluster(conn, args.cluster_name)
     if len(masters) > 0 or len(slaves) > 0:
-        print("ERROR: There are existing instances for %s!" + args.cluster_name)
-        sys.exit(1)
+        print("ERROR: There are existing instances for %s!" % args.cluster_name)
+        return
 
     ## Check if images actually exist
     try:
-        conn.get_all_images(image_ids=[args.ami_master])
-        conn.get_all_images(image_ids=[args.ami_slave])
+        conn.get_all_images(image_ids=[args.ami_master, args.ami_slave])
     except:
         print("ERROR: Could not find AMIs!")
-        sys.exit(1)
+        return
 
     # common launch settings
     launch_config = dict(key_name = args.key_pair,
@@ -480,7 +465,7 @@ def launch_cluster(conn, args):
             # If any one request is no longer "pending" while being "open", then
             # the cluster cannot be started in any reasonable amount of time.
             # This can be due to price too low, insufficient capacity to launch entire group, etc.
-            # 
+            #
             # Safest bet is to cancel all requests (no instances will be up, due to launch-group-constraint)
             for r in pending_master_reqs + pending_slave_reqs:
                 if not (r.status.code in ['pending-evaluation', 'pending-fulfillment']):
@@ -577,10 +562,8 @@ def init_cluster(conn, args):
     master_instance = conn.get_only_instances(master_instance_ids)[0]
 
     ssh = boto.manage.cmdshell.sshclient_from_instance(master_instance,
-                                                       args.ssh_key,
+                                                       args.identity_file,
                                                        user_name='ubuntu')
-
-    # TODO: pem key permission/mode check
 
     hosts = ("127.0.0.1 localhost\n\n"
              "# The following lines are desirable for IPv6 capable hosts\n"
@@ -590,6 +573,13 @@ def init_cluster(conn, args):
              "ff02::1 ip6-allnodes\n"
              "ff02::2 ip6-allrouters\n"
              "ff02::3 ip6-allhosts\n\n")
+
+    # Naming conventions is always cluster_name + machine_id.
+    # For example, if the cluster_name is "cw" and there are 16
+    # slave machines, then the hostname of the master is cw0,
+    # while the slaves are cw1, cw2, ..., cw16.
+    sys.stdout.write("Updating master's hostname and /etc/hosts... ")
+    sys.stdout.flush()
 
     machine_id = 0
     hosts += "%s %s%i\n" % (master_instance.private_ip_address, args.cluster_name, machine_id)
@@ -601,21 +591,33 @@ def init_cluster(conn, args):
 
     # change master's hostname
     ssh.run('sudo hostname %s0' % args.cluster_name)
-    print ssh.run('sudo echo \"%s0\" > /etc/hostname' % args.cluster_name)
+    ssh.run('sudo echo \"%s0\" > /etc/hostname' % args.cluster_name)
 
     # update master's /etc/hosts
-    print ssh.run('sudo echo \"%s\" > /etc/hosts' % hosts)
+    ssh.run('sudo echo \"%s\" > /etc/hosts' % hosts)
+    print("Done.")
 
-    # execute ~/benchmark/init-all.sh
-    # TODO: fix???
-    # TODO: generate get-hosts.sh!!!
-    #print(' '.join(map(str,ssh.run('~/benchmark/init-all.sh')[1:])))
+    # generate ~/benchmark/common/get-hosts.sh file
+    sys.stdout.write("Generating get-hosts.sh... ")
+    sys.stdout.flush()
+    get_hosts = ("#!/bin/bash\n\n"
+                 "# Set the prefix name and number of slaves/worker machines.\n#\n"
+                 "# NOTE: This file is automatically generated by uw-ec2.py!\n\n"
+                 "hostname=$(hostname)\n"
+                 "name=%s\n"
+                 "machines=%d") % (args.cluster_name, args.num_slaves)
+    ssh.run('echo \"%s\" > ~/benchmark/common/get-hosts.sh' % get_hosts)
+    ssh.run('chmod +x ~/benchmark/common/get-hosts.sh')
+    print("Done.")
+
+    # to see results from remote cmds, use:
+    # print(' '.join(map(str,ssh.run('some-cmd')[1:])))
 
     print("Initialization complete!")
 
 
-def connect_cluster(conn, args):
-    '''Connect to the master of a cluster.
+def ssh_master(conn, args):
+    '''Connect/ssh to the master of a cluster.
 
     Arguments:
     conn -- EC2 connection instance (boto.ec2.connection.EC2Connection)
@@ -630,15 +632,54 @@ def connect_cluster(conn, args):
 
     pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
 
-    subprocess.check_call("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s" %
-                          (args.ssh_key, pub_ip), shell=True)
+    subprocess.call("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s" %
+                    (args.identity_file, pub_ip), shell=True)
+
+
+def get_logs(conn, args):
+    '''Grab tarballs from each system's log folder (~/benchmark/<system>/logs/*.tar.gz).
+
+    Specifically, remote files from ~/benchmark/<system>/logs/*.tar.gz are scp'd
+    to ../results/<system>/<num_slaves>/, relative to the location of this script.
+    Here, <num_slaves> is the number of slaves in the cluster.
+
+    Arguments:
+    conn -- EC2 connection instance (boto.ec2.connection.EC2Connection)
+    args -- Command-line arguments (argparse.Namespace)
+    '''
+
+    (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
+
+    if len(master_instance_ids) != 1:
+        print("No master machine found!")
+        return
+
+    pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
+
+    # build SCP command and create result directories (if they don't exist)
+    scp_cmd = ""
+    for system in ['giraph', 'gps', 'graphlab', 'mizan']:
+        scp_cmd += ("scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" "
+                    "ubuntu@%s:~/benchmark/%s/logs/*.tar.gz %s/../results/%s/%i/ & " %
+                    (args.identity_file, pub_ip, system, SCRIPT_DIR, system, args.num_slaves))
+
+        target_dir = '%s/../results/%s/%i/' % (SCRIPT_DIR, system, args.num_slaves)
+        if not os.path.exists(target_dir):
+            os.makedirs(target_dir)
+
+    # basically a hacky way to spawn shell processes & wait on them
+    scp_cmd += "wait"
+
+    print("Grabbing tarballs from all systems in parallel...")
+    subprocess.call(scp_cmd, shell=True)
+    print("Complete!")
 
 
 ####################
 # main()
 ####################
 ACTION_FUNCS = (launch_cluster, terminate_cluster, start_cluster, stop_cluster,
-                connect_cluster, init_cluster, create_sg, create_kp)
+                ssh_master, init_cluster, create_sg, create_kp, get_logs)
 
 def main():
     args = get_args()
@@ -652,9 +693,9 @@ def main():
                              "***************************************************\n"
                              "* WARNING: ALL DATA ON ALL MACHINES WILL BE LOST! *\n"
                              "***************************************************\n"
-                             "Terminate cluster [" + args.cluster_name + "]? (y/N): ")
+                             "Terminate cluster %s? (y/N): " % args.cluster_name)
         if response != "y":
-            sys.exit(1)
+            return
 
     elif args.action == 'stop':
         response = raw_input("\n"
@@ -662,14 +703,11 @@ def main():
                              "* WARNING: ALL DATA ON EPHEMERAL DISKS WILL BE LOST!       *\n"
                              "*          THE CLUSTER WILL CONTINUE TO INCUR EBS CHARGES! *\n"
                              "************************************************************\n"
-                             "Stop cluster [" + args.cluster_name + "]? (y/N): ")
+                             "Stop cluster %s? (y/N): " % args.cluster_name)
         if response != "y":
-            sys.exit(1)
+            return
 
     ACTION_FUNCS[ACTIONS.index(args.action)](conn, args)
 
-    # TODO: get results
-
 if __name__ == "__main__":
-#    logging.basicConfig()
     main()

@@ -20,7 +20,12 @@ if [ $# -eq 0 ]; then
         32) size=2;;
         64) size=3;;
         128) size=3;;
-        *) echo "Invalid number of machines"; exit -1;;
+        *) echo "usage: $0 size";
+           echo "";
+           echo "size: 1 for amazon, google, patents";
+           echo "      2 for livejournal, orkut, arabic, twitter";
+           echo "      3 for livejournal, orkut, arabic, twitter, uk0705";
+           exit -1;;
     esac
 else
     size=$1
@@ -44,5 +49,6 @@ case ${size} in
         hadoop dfs -put arabic*.txt ./input/;
         hadoop dfs -put twitter*.txt ./input/;
         hadoop dfs -put uk0705-adj.txt ./input/;;
+        hadoop dfs -put uk0705-mst-adj.txt ./input/;;
     *) echo "Invalid size"; exit -1;;
 esac

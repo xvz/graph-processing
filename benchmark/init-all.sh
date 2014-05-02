@@ -9,12 +9,10 @@
 #
 #   2. Correct JVM Xmx size set for Giraph and GPS
 #
-# For (1), see ../ec2/gen-hosts.sh
+# For (1), see ../ec2/uw-ec2.py init
 # For (2), see ./common/get-config.sh
 #
 # To check connectivity, use ./common/ssh-check.sh
-#
-# See ./common/get-hosts.sh for the expected naming formats and prefixes.
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ./common/get-hosts.sh
@@ -75,5 +73,6 @@ echo "Initializing Mizan..."
 ###############
 # Datasets
 ###############
+hadoop dfs -mkdir ./input || true
 #echo "Loading datasets..."
 #./datasets/load-files.sh
