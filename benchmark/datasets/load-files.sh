@@ -3,9 +3,7 @@
 # Loads the input data, based on the cluster size.
 #
 # The size can be specified as an argument. Otherwise,
-# it will be obtained from the hostname of the master.
-#
-# usage: $0 [size]
+# it will be obtained based on ../common/get-hosts.sh.
 
 commondir=$(dirname "${BASH_SOURCE[0]}")/../common
 source "$commondir"/get-dirs.sh
@@ -37,18 +35,20 @@ hadoop dfsadmin -safemode wait > /dev/null
 hadoop dfs -mkdir ./input || true    # no problem if it already exists
 
 case ${size} in
-    1)  hadoop dfs -put amazon*.txt ./input/;
-        hadoop dfs -put google*.txt ./input/;
-        hadoop dfs -put patents*.txt ./input/;;
-    2)  hadoop dfs -put livejournal*.txt ./input/;
-        hadoop dfs -put orkut*.txt ./input/;
-        hadoop dfs -put arabic*.txt ./input/;
-        hadoop dfs -put twitter-adj.txt ./input/;;
-    3)  hadoop dfs -put livejournal*.txt ./input/;
-        hadoop dfs -put orkut*.txt ./input/;
-        hadoop dfs -put arabic*.txt ./input/;
-        hadoop dfs -put twitter*.txt ./input/;
-        hadoop dfs -put uk0705-adj.txt ./input/;;
-        hadoop dfs -put uk0705-mst-adj.txt ./input/;;
+    1)  echo "Uploading amazon*.txt...";  hadoop dfs -put amazon*.txt ./input/;
+        echo "Uploading google*.txt...";  hadoop dfs -put google*.txt ./input/;
+        echo "Uploading patents*.txt..."; hadoop dfs -put patents*.txt ./input/;;
+    2)  echo "Uploading livejournal*.txt..."; hadoop dfs -put livejournal*.txt ./input/;
+        echo "Uploading orkut*.txt...";       hadoop dfs -put orkut*.txt ./input/;
+        echo "Uploading arabic*.txt...";      hadoop dfs -put arabic*.txt ./input/;
+        echo "Uploading twitter-adj.txt...";  hadoop dfs -put twitter-adj.txt ./input/;;
+    3)  echo "Uploading livejournal*.txt..."; hadoop dfs -put livejournal*.txt ./input/;
+        echo "Uploading orkut*.txt...";       hadoop dfs -put orkut*.txt ./input/;
+        echo "Uploading arabic*.txt...";      hadoop dfs -put arabic*.txt ./input/;
+        echo "Uploading twitter*.txt...";     hadoop dfs -put twitter*.txt ./input/;
+        echo "Uploading uk0705-adj.txt...";   hadoop dfs -put uk0705-adj.txt ./input/;
+        echo "Uploading uk0705-mst-adj.txt..."; hadoop dfs -put uk0705-mst-adj.txt ./input/;;
     *) echo "Invalid size"; exit -1;;
 esac
+
+echo "Done."
