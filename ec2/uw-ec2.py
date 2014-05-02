@@ -47,7 +47,7 @@ DEFAULT_AZ = 'us-west-2c'
 
 
 ####################
-# Utility functions
+# Helper functions
 ####################
 def get_args():
     '''Parses arguments.
@@ -557,14 +557,15 @@ def terminate_cluster(conn, args):
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
 
+    # find this info out before terminating the instances
+    master_vol_deleted = conn.get_instance_attribute(
+        master_instance_ids[0],
+        'blockDeviceMapping')['blockDeviceMapping']['/dev/sda1'].delete_on_termination
+
     sys.stdout.write("Terminating cluster %s... " % args.cluster_name)
     sys.stdout.flush()
     conn.terminate_instances(master_instance_ids + slave_instance_ids)
     print("Done.")
-
-    master_vol_deleted = conn.get_instance_attribute(
-        master_instance_ids[0],
-        'blockDeviceMapping')['blockDeviceMapping']['/dev/sda1'].delete_on_termination
 
     if not master_vol_deleted:
         print("WARNING: The master's volume has NOT been deleted. Please delete it manually.")
