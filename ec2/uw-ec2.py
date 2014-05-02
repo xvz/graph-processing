@@ -101,7 +101,7 @@ def get_args():
                         help="Name of key pair on AWS (default: %s)" % DEFAULT_KEY)
 
     parser.add_argument('-t', '--instance-type', metavar="INSTANCE_TYPE", default=DEFAULT_INSTANCE,
-                        help="Instance type (default: %s)" % DEFAULT_INSTANCE)
+                        help="Instance type, used only by 'launch' (default: %s)" % DEFAULT_INSTANCE)
     parser.add_argument('-g', '--security-group', metavar="SECURITY_GROUP", default=DEFAULT_SG,
                         help="Name of security group (default: %s)" % DEFAULT_SG)
     parser.add_argument('-r', '--region', metavar="REGION", default=DEFAULT_REGION,
