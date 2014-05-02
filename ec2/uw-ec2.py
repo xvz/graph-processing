@@ -607,6 +607,8 @@ def init_cluster(conn, args):
     print ssh.run('sudo echo \"%s\" > /etc/hosts' % hosts)
 
     # execute ~/benchmark/init-all.sh
+    # TODO: fix???
+    # TODO: generate get-hosts.sh!!!
     #print(' '.join(map(str,ssh.run('~/benchmark/init-all.sh')[1:])))
 
     print("Initialization complete!")
