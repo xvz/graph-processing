@@ -279,8 +279,11 @@ def launch_instances(conn, args, num_slaves, launch_master):
         sec = 0
         while True:
             # get remaining open requests (this is needed to get updated info)
-            pending_master_reqs = conn.get_all_spot_instance_requests(master_req_ids,
-                                                                      filters={'state': 'open'}) if launch_master else []
+            if launch_master:
+                pending_master_reqs = conn.get_all_spot_instance_requests(master_req_ids, filters={'state': 'open'})
+            else:
+                pending_master_reqs = []
+
             pending_slave_reqs = conn.get_all_spot_instance_requests(slave_req_ids, filters={'state': 'open'})
 
             # If any one request is no longer "pending" while being "open", then
@@ -472,8 +475,11 @@ def start_cluster(conn, args):
         print("ERROR: No machines to start!")
         return
 
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) == 0:
+        print("ERROR: No master machine found!")
+        return
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
     # go ahead anyway, the user probably knows what he/she is doing...
@@ -509,10 +515,12 @@ def stop_cluster(conn, args):
         print("ERROR: No machines to stop!")
         return
 
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
+    if len(master_instance_ids) == 0:
+        print("WARNING: No master machine found!")
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: Only %i of %i slaves machines found!" % (len(slave_instance_ids), args.num_slaves))
 
@@ -550,17 +558,22 @@ def terminate_cluster(conn, args):
         return
 
     # just in case the user forgot about a renamed master...
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
+    if len(master_instance_ids) == 0:
+        print("WARNING: No master machine found!")
     if len(slave_instance_ids) != args.num_slaves:
         print("WARNING: Only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
 
     # find this info out before terminating the instances
-    master_vol_deleted = conn.get_instance_attribute(
-        master_instance_ids[0],
-        'blockDeviceMapping')['blockDeviceMapping']['/dev/sda1'].delete_on_termination
+    if len(master_instance_ids) != 0:
+        master_vol_deleted = conn.get_instance_attribute(
+            master_instance_ids[0],
+            'blockDeviceMapping')['blockDeviceMapping']['/dev/sda1'].delete_on_termination
+    else:
+        master_vol_deleted = True
 
     sys.stdout.write("Terminating cluster %s... " % args.cluster_name)
     sys.stdout.flush()
@@ -625,6 +638,9 @@ def init_cluster(conn, args):
     for a cluster name "cw" and 16 slaves, the master is "cw0" and the
     slaves are "cw1", "cw2", ..., "cw16".
 
+    Then it updates hostnames, /etc/hostname, and /etc/hosts of all
+    intances in the cluster (using the above "name" tag).
+
     Arguments:
     conn -- EC2 connection instance (boto.ec2.connection.EC2Connection)
     args -- Command-line arguments (argparse.Namespace)
@@ -632,8 +648,11 @@ def init_cluster(conn, args):
 
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) == 0:
+        print("ERROR: No master machine found!")
+        return
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
     if len(slave_instance_ids) != args.num_slaves:
@@ -655,18 +674,7 @@ def init_cluster(conn, args):
     print("Done.")
 
 
-    ## SSH to master and update host names and generate get-hosts.sh
-    sys.stdout.write("Updating master's hostname and /etc/hosts... ")
-    sys.stdout.flush()
-
-    master_instance = conn.get_only_instances(master_instance_ids)[0]
-
-    # Note: we use Ubuntu images, so username is always 'ubuntu'.
-    # For other variants (e.g., Fedora), it is ec2-user.
-    ssh = boto.manage.cmdshell.sshclient_from_instance(master_instance,
-                                                       args.identity_file,
-                                                       user_name='ubuntu')
-
+    ## Update hostnames and /etc/hosts
     hosts = ("127.0.0.1 localhost\n\n"
              "# The following lines are desirable for IPv6 capable hosts\n"
              "::1 ip6-localhost ip6-loopback\n"
@@ -676,24 +684,66 @@ def init_cluster(conn, args):
              "ff02::2 ip6-allrouters\n"
              "ff02::3 ip6-allhosts\n\n")
 
-    hosts += "%s %s\n" % (master_instance.private_ip_address, master_instance.tags['name'])
+    master_instance = conn.get_only_instances(master_instance_ids)[0]
+    hosts += "%s %s\n" % (master_instance.private_ip_address,
+                          master_instance.tags['name'])
     hosts += ''.join(["%s %s\n" % (i.private_ip_address, i.tags['name'])
                       for i in conn.get_only_instances(slave_instance_ids)])
 
-    # change master's hostname
-    ssh.run('sudo hostname %s0' % args.cluster_name)
-    ssh.run('sudo echo \"%s0\" > /etc/hostname' % args.cluster_name)
+    # first SSH to instances is always very slow, so do this in parallel to save time
+    sys.stdout.write("Performing first SSH to all instances (this may take a while)... ")
+    sys.stdout.flush()
 
-    # update master's /etc/hosts
-    ssh.run('sudo echo \"%s\" > /etc/hosts' % hosts)
+    cmd = ""
+    for i in conn.get_only_instances(master_instance_ids + slave_instance_ids):
+        if i.state != 'running':
+            print("\nInstance %s not running! Try again once it's running." % i.tags['name'])
+            return
+
+        # build dummy command that SSHs and immediately exits; important bit is "&"
+        cmd += ("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s 'exit'& "
+                % (args.identity_file, i.ip_address))
+
+    cmd += "wait"
+    subprocess.call(cmd, shell=True)
+
     print("Done.")
 
-    # generate ~/benchmark/common/get-hosts.sh file
+    # update master + slaves' hostnames, /etc/hostname, and /etc/hosts
+    sys.stdout.write("Updating hostname and /etc/hosts... (0 of %i done)" % (args.num_slaves+1))
+    sys.stdout.flush()
+
+    for count,i in enumerate(conn.get_only_instances(master_instance_ids + slave_instance_ids)):
+        # Note: we use Ubuntu images, so username is always 'ubuntu'.
+        # For other variants (e.g., Fedora), it is ec2-user.
+        ssh = boto.manage.cmdshell.sshclient_from_instance(i, args.identity_file,
+                                                           user_name='ubuntu',
+                                                           host_key_file='/dev/null')
+
+        cmd = ("sudo hostname " + i.tags['name'] + ";"                           # update hostname
+               "sudo chown ubuntu /etc/hostname; sudo chown ubuntu /etc/hosts;"  # chown so we can write
+               "echo \"" + i.tags['name'] + "\" > /etc/hostname;"                # update /etc/hostname
+               "echo \"" + hosts + "\" > /etc/hosts;"                            # update /etc/hosts
+               "sudo chown root /etc/hostname; sudo chown root /etc/hosts")      # restore to root for security
+        ssh.run(cmd)
+
+        sys.stdout.write("\rUpdating hostname and /etc/hosts... (%i of %i done)"
+                         % (count+1, args.num_slaves+1))
+        sys.stdout.flush()
+
+    print("\nDone.")
+
+    ## Generate ~/benchmark/common/get-hosts.sh on master
     sys.stdout.write("Generating get-hosts.sh... ")
     sys.stdout.flush()
+
+    master_instance = conn.get_only_instances(master_instance_ids)[0]
+    ssh = boto.manage.cmdshell.sshclient_from_instance(master_instance, args.identity_file,
+                                                       user_name='ubuntu',
+                                                       host_key_file='/dev/null')
     get_hosts = ("#!/bin/bash\n\n"
                  "# Set the prefix name and number of slaves/worker machines.\n#\n"
-                 "# NOTE: This file is automatically generated by uw-ec2.py!\n\n"
+                 "# NOTE: This file is automatically generated by uw-ec2.py init!\n\n"
                  "hostname=$(hostname)\n"
                  "name=%s\n"
                  "machines=%d") % (args.cluster_name, args.num_slaves)
@@ -717,12 +767,25 @@ def ssh_master(conn, args):
 
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) == 0:
+        print("ERROR: No master machine found!")
+        return
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
-    pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
+    master_instance = conn.get_only_instances(master_instance_ids)[0]
 
+    if master_instance.state == 'pending':
+        wait_for_status_exit(conn, master_instance_ids,
+                             'pending', "Waiting for master machine to start... ")
+        master_instance.update()
+
+    if master_instance.state != 'running':
+        print("ERROR: Master machine is not running!")
+        return
+
+    pub_ip = master_instance.ip_address
     subprocess.call("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s" %
                     (args.identity_file, pub_ip), shell=True)
 
@@ -731,8 +794,8 @@ def get_logs(conn, args):
     '''Grab tarballs from each system's log folder (~/benchmark/<system>/logs/*.tar.gz).
 
     Specifically, remote files from ~/benchmark/<system>/logs/*.tar.gz are scp'd
-    to ../results/<system>/<num_slaves>/, relative to the location of this script.
-    Here, <num_slaves> is the number of slaves in the cluster.
+    to ../results/<system>/<num-slaves>/, relative to the location of this script.
+    Here, <num-slaves> is the number of slaves in the cluster.
 
     Arguments:
     conn -- EC2 connection instance (boto.ec2.connection.EC2Connection)
@@ -741,11 +804,25 @@ def get_logs(conn, args):
 
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
-    if len(master_instance_ids) != 1:
-        print("ERROR: No unique master machine found!")
+    if len(master_instance_ids) == 0:
+        print("ERROR: No master machine found!")
+        return
+    if len(master_instance_ids) > 1:
+        print("ERROR: Multiple master machines found!")
         return
 
-    pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
+    master_instance = conn.get_only_instances(master_instance_ids)[0]
+
+    if master_instance.state == 'pending':
+        wait_for_status_exit(conn, master_instance_ids,
+                             'pending', "Waiting for master machine to start... ")
+        master_instance.update()
+
+    if master_instance.state != 'running':
+        print("ERROR: Master machine is not running!")
+        return
+
+    pub_ip = master_instance.ip_address
 
     # build SCP command and create result directories (if they don't exist)
     scp_cmd = ""

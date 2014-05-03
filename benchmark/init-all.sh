@@ -2,12 +2,9 @@
 
 # Initialize Hadoop and all systems.
 #
-# NOTE: before doing this, ensure the master has:
-#   1. A correct hostname (use "sudo hostname X" to update it without reboot)
-#      A correct hostname in /etc/hostname
-#      Correct IPs and names of all worker machines in /etc/hosts
-#
-#   2. Correct JVM Xmx size set for Giraph and GPS
+# NOTE: before doing this, ensure:
+#   1. All machines have correct hostnames, /etc/hostname, and /etc/hosts
+#   2. Master has correct JVM Xmx size set for Giraph and GPS
 #
 # For (1), see ../ec2/uw-ec2.py init
 # For (2), see ./common/get-config.sh
@@ -22,12 +19,15 @@ source ./common/get-dirs.sh
 echo "Removing known_hosts..."
 rm -f ~/.ssh/known_hosts
 
-# update worker machines' hostnames
-echo "Updating worker hosts..."
-./common/update-hosts.sh
+echo "Creating known_hosts..."
+for ((i = 0; i <= ${machines}; i++)); do
+    ssh -q -o StrictHostKeyChecking=no ${name}${i} "exit" &
+done
+wait
 
 echo "Updating Hadoop configs..."
-./hadoop/init.sh
+./hadoop/init.sh > /dev/null      # quiet
+
 
 ###############
 # Hadoop
@@ -38,9 +38,7 @@ echo "Removing old HDFS data and Hadoop logs..."
 
 stop-all.sh > /dev/null   # just in case anything is running
 
-# do it separately for the master---this is useful when testing on a single machine
-rm -rf "$HADOOP_DATA_DIR"; rm -rf "$HADOOP_DIR"/logs/*
-for ((i = 1; i <= ${machines}; i++)); do
+for ((i = 0; i <= ${machines}; i++)); do
     ssh ${name}${i} "rm -rf \"$HADOOP_DATA_DIR\"; rm -rf \"$HADOOP_DIR\"/logs/*" &
 done
 wait
@@ -48,6 +46,8 @@ wait
 # create new HDFS & start Hadoop
 echo "Creating new HDFS..."
 hadoop namenode -format
+
+echo "Starting up Hadoop..."
 start-all.sh
 
 # wait until Hadoop starts up (HDFS exits safemode)
