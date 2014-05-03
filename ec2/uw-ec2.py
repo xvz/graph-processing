@@ -78,7 +78,7 @@ def get_args():
                              "create-sg - create a new security group\n"
                              "create-kp - create a new EC2 key pair (saved in " + SCRIPT_DIR + ")\n"
                              "get-logs  - grab ~/benchmark/<system>/logs/*.tar.gz to\n"
-                             "            " + SCRIPT_DIR + "../results/<system>/<num_slaves>/\n"
+                             "            " + SCRIPT_DIR + "../results/<system>/<num-slaves>/\n"
                              "            for all systems (giraph, gps, graphlab, mizan)")
 
     def check_slaves(num_slaves):
@@ -93,7 +93,7 @@ def get_args():
     parser.add_argument('-n', '--num-slaves', type=check_slaves, default=4,
                         help="Number of worker/slave machines (default: 4)")
     parser.add_argument('-p', '--spot-price', metavar="PRICE", type=float, default=None,
-                        help="If specified, launch as spot instances with the given maximum price (in dollars)")
+                        help="If specified, launches a cluster as spot instances with the given maximum price (in dollars)")
 
     parser.add_argument('-i', '--identity-file', metavar="PEM_KEY", default=DEFAULT_PEM,
                         help="Local pem key file for SSHing to EC2 instances (default: %s)" % DEFAULT_PEM)
@@ -101,7 +101,7 @@ def get_args():
                         help="Name of key pair on AWS (default: %s)" % DEFAULT_KEY)
 
     parser.add_argument('-t', '--instance-type', metavar="INSTANCE_TYPE", default=DEFAULT_INSTANCE,
-                        help="Instance type, used only by 'launch' (default: %s)" % DEFAULT_INSTANCE)
+                        help="Instance type, used by 'launch' (default: %s)" % DEFAULT_INSTANCE)
     parser.add_argument('-g', '--security-group', metavar="SECURITY_GROUP", default=DEFAULT_SG,
                         help="Name of security group (default: %s)" % DEFAULT_SG)
     parser.add_argument('-r', '--region', metavar="REGION", default=DEFAULT_REGION,
@@ -469,16 +469,16 @@ def start_cluster(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) == 0 and len(slave_instance_ids) == 0:
-        print("ERROR: no machines to start!")
+        print("ERROR: No machines to start!")
         return
 
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     # go ahead anyway, the user probably knows what he/she is doing...
     if len(slave_instance_ids) != args.num_slaves:
-        print("WARNING: only %i of %i slave machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("WARNING: Only %i of %i slave machines found!" % (len(slave_instance_ids), args.num_slaves))
 
     sys.stdout.write("Starting cluster %s... " % args.cluster_name)
     sys.stdout.flush()
@@ -506,15 +506,15 @@ def stop_cluster(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) == 0 and len(slave_instance_ids) == 0:
-        print("ERROR: no machines to stop!")
+        print("ERROR: No machines to stop!")
         return
 
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     if len(slave_instance_ids) != args.num_slaves:
-        print("WARNING: only %i of %i slaves machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("WARNING: Only %i of %i slaves machines found!" % (len(slave_instance_ids), args.num_slaves))
 
     sys.stdout.write("Stopping cluster %s... " % args.cluster_name)
     sys.stdout.flush()
@@ -546,16 +546,16 @@ def terminate_cluster(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) == 0 and len(slave_instance_ids) == 0:
-        print("ERROR: no machines to terminate!")
+        print("ERROR: No machines to terminate!")
         return
 
     # just in case the user forgot about a renamed master...
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     if len(slave_instance_ids) != args.num_slaves:
-        print("WARNING: only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("WARNING: Only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
 
     # find this info out before terminating the instances
     master_vol_deleted = conn.get_instance_attribute(
@@ -633,11 +633,11 @@ def init_cluster(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     if len(slave_instance_ids) != args.num_slaves:
-        print("ERROR: only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("ERROR: Only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
         return
 
     ## Assign proper 'name' tags to instances and EBS volumes
@@ -718,7 +718,7 @@ def ssh_master(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
@@ -742,7 +742,7 @@ def get_logs(conn, args):
     (master_instance_ids, slave_instance_ids) = get_cluster(conn, args.cluster_name)
 
     if len(master_instance_ids) != 1:
-        print("ERROR: no unique master machine found!")
+        print("ERROR: No unique master machine found!")
         return
 
     pub_ip = conn.get_only_instances(master_instance_ids)[0].ip_address
