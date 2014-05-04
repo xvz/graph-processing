@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Runs all the benchmarks..
+# Runs all the benchmarks.
 #
 # The batch-benchmarking scripts are quite primitive, simply because
 # when things fail it's usually easier to intervene manually.
