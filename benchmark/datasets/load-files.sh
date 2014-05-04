@@ -18,7 +18,8 @@ if [ $# -eq 0 ]; then
         32) size=2;;
         64) size=3;;
         128) size=3;;
-        *) echo "usage: $0 size";
+        *) echo "Invalid number of machines.";
+           echo "usage: $0 size";
            echo "";
            echo "size: 1 for amazon, google, patents";
            echo "      2 for livejournal, orkut, arabic, twitter";

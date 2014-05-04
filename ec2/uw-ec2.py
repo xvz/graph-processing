@@ -16,6 +16,7 @@ import argparse
 import time
 import boto.ec2, boto.manage.cmdshell
 import subprocess
+import xml.dom.minidom
 
 
 ####################
@@ -35,9 +36,6 @@ EXP_NUMS = (4, 8, 16, 32, 64, 128)
 AMI_MASTER = 'ami-831b6cb3'
 AMI_SLAVE = 'ami-9d1b6cad'
 
-# for non-Ubuntu images (e.g., Fedora), this would be ec2-user
-EC2_USER = 'ubuntu'
-
 # default key pair, security group, instance type
 DEFAULT_KEY = 'uwbench'
 DEFAULT_PEM = SCRIPT_DIR + DEFAULT_KEY + '.pem'
@@ -48,6 +46,9 @@ DEFAULT_SG = 'uwbench'
 DEFAULT_REGION = 'us-west-2'
 DEFAULT_AZ = 'us-west-2c'
 
+# for non-Ubuntu images (e.g., Fedora), this would be ec2-user
+EC2_USER = 'ubuntu'
+EC2_DRY_RUN_SUCCESS = 412   # status code (see AWS API)
 
 ####################
 # Helper functions
@@ -179,15 +180,15 @@ def wait_for_status_exit(conn, instance_ids, state, message):
 
     sec = 0
     while True:
+        sys.stdout.write("\r%s(waited %is)" % (message, sec))
+        sys.stdout.flush()
+
         remaining_instances = conn.get_only_instances(instance_ids, filters={'instance-state-name': state})
         if len(remaining_instances) == 0:
             break
 
         time.sleep(5)
         sec += 5
-
-        sys.stdout.write("\r%s(waited %is)" % (message, sec))
-        sys.stdout.flush()
 
     print("\nDone.")
 
@@ -236,6 +237,20 @@ def launch_instances(conn, args, num_slaves, launch_master):
         print("Requesting %s%d slaves as on-demand instances."
               % ("master and " if launch_master else "", num_slaves))
 
+        # do a test/dry run so failures won't occur half way
+        # (an example is when quota is exceeded)
+        try:
+            conn.run_instances(args.ami_slave,
+                               min_count = num_slaves + (1 if launch_master else 0),
+                               max_count = num_slaves + (1 if launch_master else 0),
+                               dry_run = True,
+                               **launch_config)
+        except boto.exception.EC2ResponseError as e:
+            if e.status != EC2_DRY_RUN_SUCCESS:
+                print("\nInstance requests failed:")
+                print(xml.dom.minidom.parseString(e.body).toprettyxml(indent="  "))
+                return ([], [])
+
         if launch_master:
             master_res = conn.run_instances(args.ami_master, **launch_config)
             master_instance_ids = [i.id for i in master_res.instances]
@@ -252,22 +267,41 @@ def launch_instances(conn, args, num_slaves, launch_master):
         print("Requesting %s%d slaves as spot instances with price $%.3f."
               % ("master and " if launch_master else "", num_slaves, args.spot_price))
 
-        # get requests and request ids
-        if launch_master:
-            master_reqs = conn.request_spot_instances(args.spot_price,
-                                                      args.ami_master,
-                                                      launch_group = args.cluster_name,
-                                                      **launch_config)
-            master_req_ids = [req.id for req in master_reqs]
-        else:
-            master_req_ids = []
+        # unlike instances, spot requests can be cancelled
+        # additionally, dry run does NOT detect "max spot instance count exceeded"
+        try:
+            # get requests and request ids
+            master_reqs = slave_reqs = []   # for except clause
 
-        slave_reqs = conn.request_spot_instances(args.spot_price,
-                                                 args.ami_slave,
-                                                 count = num_slaves,
-                                                 launch_group = args.cluster_name,
-                                                 **launch_config)
-        slave_req_ids = [req.id for req in slave_reqs]
+            if launch_master:
+                master_reqs = conn.request_spot_instances(args.spot_price,
+                                                          args.ami_master,
+                                                          launch_group = args.cluster_name,
+                                                          **launch_config)
+                master_req_ids = [req.id for req in master_reqs]
+            else:
+                master_req_ids = []
+
+            slave_reqs = conn.request_spot_instances(args.spot_price,
+                                                     args.ami_slave,
+                                                     count = num_slaves,
+                                                     launch_group = args.cluster_name,
+                                                     **launch_config)
+            slave_req_ids = [req.id for req in slave_reqs]
+
+        except boto.exception.EC2ResponseError as e:
+            print("\nSpot requests failed:")
+            print(xml.dom.minidom.parseString(e.body).toprettyxml(indent="  "))
+            master_req_ids = [req.id for req in master_reqs]
+            slave_req_ids = [req.id for req in slave_reqs]
+            
+            if len(master_req_ids + slave_req_ids) > 0:          
+                sys.stdout.write("Cancelling all requests... ")
+                sys.stdout.flush()
+                conn.cancel_spot_instance_requests(master_req_ids + slave_req_ids)
+                print("Done.")
+
+            return ([],[])
 
         # tag spot requests
         time.sleep(5)         # wait for requests to actually exist
@@ -283,9 +317,6 @@ def launch_instances(conn, args, num_slaves, launch_master):
         # wait for all requests to become active/fulfilled
         sec = 0
         while True:
-            time.sleep(5)
-            sec += 5
-
             # get remaining open requests (this is needed to get updated info)
             if launch_master:
                 pending_master_reqs = conn.get_all_spot_instance_requests(master_req_ids, filters={'state': 'open'})
@@ -326,6 +357,8 @@ def launch_instances(conn, args, num_slaves, launch_master):
                                  (num_slaves - len(pending_slave_reqs), num_slaves, sec))
                 sys.stdout.flush()
 
+            time.sleep(5)
+            sec += 5
 
         # get instance ids from requests
         # NOTE: must retreive them again to get updated request info
@@ -625,9 +658,10 @@ def launch_cluster(conn, args):
             ret = launch_instances(conn, args, num_launch_slaves, False)
 
             # start up existing instances
-            conn.start_instances(master_instance_ids + slave_instance_ids)
-            wait_for_status_exit(conn, master_instance_ids + slave_instance_ids,
-                                 'pending', "Starting existing instances... ")
+            if ret != ([], []):
+                conn.start_instances(master_instance_ids + slave_instance_ids)
+                wait_for_status_exit(conn, master_instance_ids + slave_instance_ids,
+                                     'pending', "Starting existing instances... ")
             return ret
 
         else:
@@ -719,7 +753,7 @@ def init_cluster(conn, args):
 
         # Execute command once in a while, so it doesn't become too large.
         # Also execute remaining commands if this is the last iteration.
-        if (i+1) % 32 == 0) or i == args.num_slaves:
+        if (i+1) % 32 == 0 or i == args.num_slaves:
             cmd += "wait"
             subprocess.call(cmd, shell=True)
             cmd = ""

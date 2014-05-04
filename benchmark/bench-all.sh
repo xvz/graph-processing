@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Runs all the benchmarks. If something fails, it will
-# just continue to the next experiment.
+# Runs all the benchmarks..
 #
 # The batch-benchmarking scripts are quite primitive, simply because
 # when things fail it's usually easier to intervene manually.
@@ -11,10 +10,8 @@
 #
 # Use "screen" to start a screen and run "./bench-all.sh" within it.
 # Detach from the screen at any time with C-a d (Ctrl-a d).
-# Reattach to the screen anywhere with "screen -r". This can be done
+# Reattach to the screen anywhere with "screen -R". This can be done
 # after a detach or when ssh is inadvertently killed.
-
-read -p "Press enter to continue..."
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 source ./common/get-hosts.sh
