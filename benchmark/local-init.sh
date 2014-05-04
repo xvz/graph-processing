@@ -3,14 +3,13 @@
 # Initialize Hadoop and all systems for local testing.
 #
 # This is for LOCAL TESTING only!! Ensure that:
-#   1. Set LOCAL_MACHINES to the number of pseudo-machines you want.
+#   1. LOCAL_MACHINES is the number of pseudo-machines you want.
 #   2. ./common/get-dirs.sh has a correct DIR_PREFIX
 #   3. ./common/get-config.sh has correct JVM Xmx sizes
 
 # number of pseudo machines to use
 # adjust JVM Xmx accordingly to avoid running out of memory!
 LOCAL_MACHINES=1
-
 
 
 cd "$(dirname "${BASH_SOURCE[0]}")"

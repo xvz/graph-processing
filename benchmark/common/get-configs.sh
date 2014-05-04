@@ -7,7 +7,8 @@
 # as a part of the directory.
 
 # maximum JVM heap size for Giraph (per machine)
-# NOTE: to put changes into effect, run ../hadoop/init.sh; ../hadoop/restart-hadoop.sh 1
+# NOTE: to put changes into effect without re-initializing everything (i.e., ../init-all.sh),
+#       run ../hadoop/init.sh; ../hadoop/restart-hadoop.sh 1
 GIRAPH_XMX=14500M
 
 # maximum JVM heap size for GPS (per WORKER, not machine)
