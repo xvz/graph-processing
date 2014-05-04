@@ -235,6 +235,7 @@ def check_files(log_prefix, machines):
     
     logname = os.path.basename(log_prefix)
 
+    # machines+1, as the master has those log files too
     if len(glob.glob(log_prefix + '_time.txt')) == 0:
         return (False, "\n  ERROR: " + logname + "_time.txt missing!")
     elif len(glob.glob(log_prefix + '_*_nbt.txt')) < machines+1:
