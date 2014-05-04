@@ -295,12 +295,12 @@ def launch_instances(conn, args, num_slaves, launch_master):
 
             master_req_ids = [req.id for req in master_reqs]
             slave_req_ids = [req.id for req in slave_reqs]
-            
-            if len(master_req_ids + slave_req_ids) > 0:          
-                sys.stdout.write("Cancelling all requests... ")
+
+            sys.stdout.write("Cancelling all requests... ")
+            if len(master_req_ids + slave_req_ids) > 0:
                 sys.stdout.flush()
                 conn.cancel_spot_instance_requests(master_req_ids + slave_req_ids)
-                print("Done.")
+            print("Done.")
 
             return ([],[])
 
@@ -642,7 +642,7 @@ def launch_cluster(conn, args):
 
     Also fails if a cluster already exists and there are no missing slaves.
     '''
-    
+
     print("Creating cluster %s with %i slaves..." % (args.cluster_name, args.num_slaves))
 
     ## Check if instances already exist for a cluster (and if replacements are needed)
@@ -739,27 +739,34 @@ def init_cluster(conn, args):
     # perform multiple SSH commands in the background
     sys.stdout.write("Updating hostname and /etc/hosts... (0 of %i done)" % (args.num_slaves+1))
     sys.stdout.flush()
-    
+
     cmd = ""
     for i,instance in enumerate(conn.get_only_instances(master_instance_ids + slave_instance_ids)):
         # build up command (to be ran in bg)
         # NOTE: subprocess.call(...,shell=True) uses /bin/sh, so escapes in echo are always interpreted
-        cmd += ("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s \""
+        cmd += ("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s \""
                 % (args.identity_file, EC2_USER, instance.ip_address))
         cmd += ("sudo hostname " + instance.tags['name'] + "; "           # update hostname
                 "sudo chown " + EC2_USER + " /etc/hostname /etc/hosts; "  # chown so we can write
                 "echo '" + instance.tags['name'] + "' > /etc/hostname; "  # update /etc/hostname
                 "echo '" + hosts + "' > /etc/hosts; "                     # update /etc/hosts
                 "sudo chown root /etc/hostname /etc/hosts")               # restore to root for security
-        cmd += "\" > /dev/null 2>&1 & "
+
+        cmd += "\" 2>&1 | grep -v 'Warning: Permanently added'"           # suppress specific warnings
+        cmd += " | grep -v 'sudo: unable to resolve host' & "             # suppress hostname-changed warnings
 
         # Execute command once in a while, so it doesn't become too large.
         # Also execute remaining commands if this is the last iteration.
         if (i+1) % 32 == 0 or i == args.num_slaves:
             cmd += "wait"
-            subprocess.call(cmd, shell=True)
+            output = subprocess.check_output(cmd, shell=True)
             cmd = ""
-            
+
+            if len(output) != 0:
+                print "\n" + output
+                print "Initialization failed!"
+                return
+
             sys.stdout.write("\rUpdating hostname and /etc/hosts... (%i of %i done)"
                              % (i+1, args.num_slaves+1))
             sys.stdout.flush()
@@ -779,13 +786,18 @@ def init_cluster(conn, args):
 
     master_instance = conn.get_only_instances(master_instance_ids)[0]
 
-    cmd = ("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s \""
+    cmd = ("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s \""
             % (args.identity_file, EC2_USER, master_instance.ip_address))
     cmd += ("echo '" + get_hosts + "' > ~/benchmark/common/get-hosts.sh; "
             "chmod +x ~/benchmark/common/get-hosts.sh")
-    cmd += "\""
-    subprocess.call(cmd, shell=True)
-    
+    cmd += "\" 2>&1 | grep -v 'Warning: Permanently added' || true"   # "|| true" is hack to get exit status 0
+    output = subprocess.check_output(cmd, shell=True)
+
+    if len(output) != 0:
+        print "\n" + output
+        print "Initialization failed!"
+        return
+
     print("Done.")
 
     # example of using paramiko via boto's cmdshell
