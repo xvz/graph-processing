@@ -11,9 +11,9 @@ cd "$GIRAPH_DIR"
 mvn clean install -Phadoop_1.0 -DskipTests -pl giraph-examples -Dfindbugs.skip
 
 # copy compiled jars to worker machines
-for ((i = 1; i <= ${machines}; i++)); do
-    scp ./giraph-examples/target/*.jar ${name}${i}:"$GIRAPH_DIR"/giraph-examples/target/ &
-    scp ./giraph-core/target/*.jar ${name}${i}:"$GIRAPH_DIR"/giraph-core/target/ &
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
+    scp ./giraph-examples/target/*.jar ${CLUSTER_NAME}${i}:"$GIRAPH_DIR"/giraph-examples/target/ &
+    scp ./giraph-core/target/*.jar ${CLUSTER_NAME}${i}:"$GIRAPH_DIR"/giraph-core/target/ &
 done
 wait
 

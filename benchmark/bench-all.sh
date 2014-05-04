@@ -22,13 +22,13 @@ source ./common/get-dirs.sh
 hadoop dfsadmin -safemode wait > /dev/null
 
 echo "Running Giraph experiments..."
-./giraph/benchall.sh ${machines} 5
+./giraph/benchall.sh ${NUM_MACHINES} 5
 
 echo "Running GPS experiments..."
-./gps/benchall.sh ${machines} 5
+./gps/benchall.sh ${NUM_MACHINES} 5
 
 echo "Running GraphLab experiments..."
-./graphlab/benchall.sh ${machines} 5
+./graphlab/benchall.sh ${NUM_MACHINES} 5
 
 echo "Running Mizan experiments..."
-./mizan/benchall.sh ${machines} 5
+./mizan/benchall.sh ${NUM_MACHINES} 5

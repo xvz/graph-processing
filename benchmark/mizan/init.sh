@@ -9,8 +9,8 @@ source ../common/get-configs.sh
 # create slaves file
 rm -f slaves
 
-for ((i = 1; i <= ${machines}; i++)); do
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
     for ((j = 1; j <= ${MIZAN_WPM}; j++)); do
-        echo "${name}${i}" >> slaves
+        echo "${CLUSTER_NAME}${i}" >> slaves
     done
 done

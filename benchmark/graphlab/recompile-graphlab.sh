@@ -8,14 +8,14 @@ source "$commondir"/get-dirs.sh
 cd "$GRAPHLAB_DIR"/release/toolkits/graph_analytics/
 make -j $(nproc)
 
-for ((i = 1; i <= ${machines}; i++)); do
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
     # NOTE: only copy binaries that will actually be used.. it takes too long otherwise
-    scp ./pagerank ${name}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
-    scp ./sssp ${name}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
-    scp ./connected_component ${name}$i:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
-    scp ./approximate_diameter ${name}$i:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
+    scp ./pagerank ${CLUSTER_NAME}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
+    scp ./sssp ${CLUSTER_NAME}${i}:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
+    scp ./connected_component ${CLUSTER_NAME}$i:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
+    scp ./approximate_diameter ${CLUSTER_NAME}$i:"$GRAPHLAB_DIR"/release/toolkits/graph_analytics/ &
 
-    rsync -avz --exclude '*.make' --exclude '*.cmake' "$GRAPHLAB_DIR"/deps/local/ ${name}${i}:"$GRAPHLAB_DIR"/deps/local 
+    rsync -avz --exclude '*.make' --exclude '*.cmake' "$GRAPHLAB_DIR"/deps/local/ ${CLUSTER_NAME}${i}:"$GRAPHLAB_DIR"/deps/local 
 done
 wait
 

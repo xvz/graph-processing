@@ -20,8 +20,8 @@ echo "Removing known_hosts..."
 rm -f ~/.ssh/known_hosts
 
 echo "Creating known_hosts..."
-for ((i = 0; i <= ${machines}; i++)); do
-    ssh -q -o StrictHostKeyChecking=no ${name}${i} "exit" &
+for ((i = 0; i <= ${NUM_MACHINES}; i++)); do
+    ssh -q -o StrictHostKeyChecking=no ${CLUSTER_NAME}${i} "exit" &
 done
 wait
 
@@ -38,8 +38,8 @@ echo "Removing old HDFS data and Hadoop logs..."
 
 stop-all.sh > /dev/null   # just in case anything is running
 
-for ((i = 0; i <= ${machines}; i++)); do
-    ssh ${name}${i} "rm -rf \"$HADOOP_DATA_DIR\"; rm -rf \"$HADOOP_DIR\"/logs/*" &
+for ((i = 0; i <= ${NUM_MACHINES}; i++)); do
+    ssh ${CLUSTER_NAME}${i} "rm -rf \"$HADOOP_DATA_DIR\"; rm -rf \"$HADOOP_DIR\"/logs/*" &
 done
 wait
 

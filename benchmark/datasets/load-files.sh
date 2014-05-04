@@ -11,7 +11,7 @@ source "$commondir"/get-dirs.sh
 if [ $# -eq 0 ]; then
     source "$commondir"/get-hosts.sh
 
-    case ${machines} in
+    case ${NUM_MACHINES} in
         4) size=1;;
         8) size=1;;
         16) size=2;;

@@ -18,11 +18,11 @@ cd "$HADOOP_DIR/conf/"
 
 
 # masters and slaves
-echo "$hostname" > masters
+echo "${HOSTNAME}" > masters
 
 rm -f slaves
-for ((i = 1; i <= ${machines}; i++)); do
-    echo "${name}${i}" >> slaves
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
+    echo "${CLUSTER_NAME}${i}" >> slaves
 done
 
 
@@ -39,7 +39,7 @@ echo "<?xml version=\"1.0\"?>
   </property>
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://${hostname}:54310</value>
+    <value>hdfs://${HOSTNAME}:54310</value>
   </property>
   <property>
     <name>fs.checkpoint.edits.dir</name>
@@ -74,7 +74,7 @@ echo "<?xml version=\"1.0\"?>
 <configuration>
   <property>
     <name>mapred.job.tracker</name>
-    <value>${hostname}:54311</value>
+    <value>${HOSTNAME}:54311</value>
   </property>
   <property>
     <name>mapred.local.dir</name>
@@ -120,7 +120,7 @@ echo "<?xml version=\"1.0\"?>
 
 
 # copy configs to worker machines
-for ((i = 1; i <= ${machines}; i++)); do
-    rsync -avz ./* ${name}${i}:"$HADOOP_DIR"/conf/ &
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
+    rsync -avz ./* ${CLUSTER_NAME}${i}:"$HADOOP_DIR"/conf/ &
 done
 wait

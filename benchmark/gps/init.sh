@@ -14,21 +14,21 @@ rm -f slaves
 rm -f machine.cfg
 
 # create slaves file
-for ((i = 1; i <= ${machines}; i++)); do
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
     for ((j = 1; j <= ${GPS_WPM}; j++)); do
-        echo "${name}${i}" >> slaves
+        echo "${CLUSTER_NAME}${i}" >> slaves
     done
 done
 
 # create machine config file
-echo "-1 ${name}0 64000" >> machine.cfg   # master is special
+echo "-1 ${HOSTNAME} 64000" >> machine.cfg   # master is special
 
 w_id=0    # worker counter (needed if workers per machine > 1)
-for ((i = 1; i <= ${machines}; i++)); do
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
     # to get multiple workers per machine, use the same name
     # but give it a unique id and port
     for ((j = 1; j <= ${GPS_WPM}; j++)); do
-        echo "${w_id} ${name}${i} $((64001 + ${w_id}))" >> machine.cfg
+        echo "${w_id} ${CLUSTER_NAME}${i} $((64001 + ${w_id}))" >> machine.cfg
         w_id=$((w_id+1))
     done
 done
@@ -41,7 +41,7 @@ hadoop dfs -put machine.cfg /user/${USER}/gps-machine-config/
 
 # make GPS log directories if needed
 if [[ ! -d "$GPS_LOG_DIR" ]]; then mkdir -p "$GPS_LOG_DIR"; fi
-for ((i = 1; i <= ${machines}; i++)); do
-    ssh ${name}${i} "if [[ ! -d \"$GPS_LOG_DIR\" ]]; then mkdir -p \"$GPS_LOG_DIR\"; fi" &
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
+    ssh ${CLUSTER_NAME}${i} "if [[ ! -d \"$GPS_LOG_DIR\" ]]; then mkdir -p \"$GPS_LOG_DIR\"; fi" &
 done
 wait

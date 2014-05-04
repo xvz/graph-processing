@@ -59,8 +59,8 @@ darray[0]=$(cat "$HADOOP_DIR"/logs/userlogs/${jobid}/*/syslog | grep 'max change
 
 # NOTE: this is a hack---ZK is located on one of the workers, so just go
 # through everyone and we'll get master.compute()'s output exactly once
-for ((i = 1; i <= ${machines}; i++)); do
-    darray[${i}]=$(ssh ${name}${i} "cat \"$HADOOP_DIR\"/logs/userlogs/${jobid}/*/syslog | grep 'max change' | awk '{print \$9}' | tr '\n' ','")
+for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
+    darray[${i}]=$(ssh ${CLUSTER_NAME}${i} "cat \"$HADOOP_DIR\"/logs/userlogs/${jobid}/*/syslog | grep 'max change' | awk '{print \$9}' | tr '\n' ','")
 done
 
 deltas=$(echo "${darray[*]}" | sed -e 's/^ *//' -e 's/ *$//')  # join array and strip whitespace

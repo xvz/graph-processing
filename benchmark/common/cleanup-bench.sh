@@ -9,7 +9,14 @@
 
 source "$(dirname "${BASH_SOURCE[0]}")"/get-hosts.sh
 
-for ((i = 0; i <= ${machines}; i++)); do
-    ssh ${name}${i} "kill \$(pgrep sar) & kill \$(pgrep free)" &
+for ((i = 0; i <= ${NUM_MACHINES}; i++)); do
+    # special case for master, to make it work for local testing too
+    if [ $i -eq  0 ]; then
+        name=${HOSTNAME}
+    else
+        name=${CLUSTER_NAME}${i}
+    fi
+
+    ssh ${name} "kill \$(pgrep sar) & kill \$(pgrep free)" &
 done
 wait
