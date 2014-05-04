@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Initialize Hadoop and all systems.
+# Initialize Hadoop and all systems for local testing.
 #
 # This is for LOCAL TESTING only!! Ensure that:
 #   1. Set LOCAL_MACHINES to the number of pseudo-machines you want.
