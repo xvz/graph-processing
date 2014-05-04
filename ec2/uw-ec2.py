@@ -31,9 +31,12 @@ ACTIONS = ('launch', 'terminate', 'start', 'stop', 'connect',
 EXP_NAMES = ('cloud', 'cld', 'cw', 'cx', 'cy', 'cz')
 EXP_NUMS = (4, 8, 16, 32, 64, 128)
 
-# Default master/slave AMI images (us-west-2)
+# default master/slave AMI images (us-west-2)
 AMI_MASTER = 'ami-831b6cb3'
 AMI_SLAVE = 'ami-9d1b6cad'
+
+# for non-Ubuntu images (e.g., Fedora), this would be ec2-user
+EC2_USER = 'ubuntu'
 
 # default key pair, security group, instance type
 DEFAULT_KEY = 'uwbench'
@@ -176,15 +179,15 @@ def wait_for_status_exit(conn, instance_ids, state, message):
 
     sec = 0
     while True:
-        sys.stdout.write("\r%s(waited %is)" % (message, sec))
-        sys.stdout.flush()
-
         remaining_instances = conn.get_only_instances(instance_ids, filters={'instance-state-name': state})
         if len(remaining_instances) == 0:
             break
 
         time.sleep(5)
         sec += 5
+
+        sys.stdout.write("\r%s(waited %is)" % (message, sec))
+        sys.stdout.flush()
 
     print("\nDone.")
 
@@ -256,6 +259,8 @@ def launch_instances(conn, args, num_slaves, launch_master):
                                                       launch_group = args.cluster_name,
                                                       **launch_config)
             master_req_ids = [req.id for req in master_reqs]
+        else:
+            master_req_ids = []
 
         slave_reqs = conn.request_spot_instances(args.spot_price,
                                                  args.ami_slave,
@@ -278,6 +283,9 @@ def launch_instances(conn, args, num_slaves, launch_master):
         # wait for all requests to become active/fulfilled
         sec = 0
         while True:
+            time.sleep(5)
+            sec += 5
+
             # get remaining open requests (this is needed to get updated info)
             if launch_master:
                 pending_master_reqs = conn.get_all_spot_instance_requests(master_req_ids, filters={'state': 'open'})
@@ -318,8 +326,6 @@ def launch_instances(conn, args, num_slaves, launch_master):
                                  (num_slaves - len(pending_slave_reqs), num_slaves, sec))
                 sys.stdout.flush()
 
-            time.sleep(5)
-            sec += 5
 
         # get instance ids from requests
         # NOTE: must retreive them again to get updated request info
@@ -417,7 +423,7 @@ def create_kp(conn, args):
         key = conn.create_key_pair(args.key_pair)
         # key is saved as <args.key_pair>.pem
         key.save(SCRIPT_DIR)
-        print("Key created and saved to %s/%s.pem" % (SCRIPT_DIR, args.key_pair))
+        print("Key created and saved to %s%s.pem" % (SCRIPT_DIR, args.key_pair))
 
     except boto.exception.EC2ResponseError as e:
         if "already exists" in e.body:
@@ -565,7 +571,7 @@ def terminate_cluster(conn, args):
     if len(master_instance_ids) == 0:
         print("WARNING: No master machine found!")
     if len(slave_instance_ids) != args.num_slaves:
-        print("WARNING: Only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("WARNING: Only %i of %i slave machines found!" % (len(slave_instance_ids), args.num_slaves))
 
     # find this info out before terminating the instances
     if len(master_instance_ids) != 0:
@@ -656,7 +662,7 @@ def init_cluster(conn, args):
         return
 
     if len(slave_instance_ids) != args.num_slaves:
-        print("ERROR: Only %i of %i machines found!" % (len(slave_instance_ids), args.num_slaves))
+        print("ERROR: Only %i of %i slave machines found!" % (len(slave_instance_ids), args.num_slaves))
         return
 
     ## Assign proper 'name' tags to instances and EBS volumes
@@ -673,6 +679,11 @@ def init_cluster(conn, args):
                          {'name': '%s%i' % (args.cluster_name, i+1)})
     print("Done.")
 
+    ## Check that all instances are running
+    for i in conn.get_only_instances(master_instance_ids + slave_instance_ids):
+        if i.state != 'running':
+            print("\nInstance %s not running! Try again once it's running." % i.tags['name'])
+            return
 
     ## Update hostnames and /etc/hosts
     hosts = ("127.0.0.1 localhost\n\n"
@@ -690,46 +701,32 @@ def init_cluster(conn, args):
     hosts += ''.join(["%s %s\n" % (i.private_ip_address, i.tags['name'])
                       for i in conn.get_only_instances(slave_instance_ids)])
 
-    # first SSH to instances is always very slow, so do this in parallel to save time
-    sys.stdout.write("Performing first SSH to all instances (this may take a while)... ")
-    sys.stdout.flush()
-
-    cmd = ""
-    for i in conn.get_only_instances(master_instance_ids + slave_instance_ids):
-        if i.state != 'running':
-            print("\nInstance %s not running! Try again once it's running." % i.tags['name'])
-            return
-
-        # build dummy command that SSHs and immediately exits; important bit is "&"
-        cmd += ("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s 'exit'& "
-                % (args.identity_file, i.ip_address))
-
-    cmd += "wait"
-    subprocess.call(cmd, shell=True)
-
-    print("Done.")
-
-    # update master + slaves' hostnames, /etc/hostname, and /etc/hosts
+    # perform multiple SSH commands in the background
     sys.stdout.write("Updating hostname and /etc/hosts... (0 of %i done)" % (args.num_slaves+1))
     sys.stdout.flush()
+    
+    cmd = ""
+    for i,instance in enumerate(conn.get_only_instances(master_instance_ids + slave_instance_ids)):
+        # build up command (to be ran in bg)
+        cmd += ("ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s \""
+                % (args.identity_file, EC2_USER, instance.ip_address))
+        cmd += ("sudo hostname " + instance.tags['name'] + "; "           # update hostname
+                "sudo chown " + EC2_USER + " /etc/hostname /etc/hosts; "  # chown so we can write
+                "echo '" + instance.tags['name'] + "' > /etc/hostname; "  # update /etc/hostname
+                "echo '" + hosts + "' > /etc/hosts; "                     # update /etc/hosts
+                "sudo chown root /etc/hostname /etc/hosts")               # restore to root for security
+        cmd += "\" > /dev/null 2>&1 & "
 
-    for count,i in enumerate(conn.get_only_instances(master_instance_ids + slave_instance_ids)):
-        # Note: we use Ubuntu images, so username is always 'ubuntu'.
-        # For other variants (e.g., Fedora), it is ec2-user.
-        ssh = boto.manage.cmdshell.sshclient_from_instance(i, args.identity_file,
-                                                           user_name='ubuntu',
-                                                           host_key_file='/dev/null')
-
-        cmd = ("sudo hostname " + i.tags['name'] + ";"                           # update hostname
-               "sudo chown ubuntu /etc/hostname; sudo chown ubuntu /etc/hosts;"  # chown so we can write
-               "echo \"" + i.tags['name'] + "\" > /etc/hostname;"                # update /etc/hostname
-               "echo \"" + hosts + "\" > /etc/hosts;"                            # update /etc/hosts
-               "sudo chown root /etc/hostname; sudo chown root /etc/hosts")      # restore to root for security
-        ssh.run(cmd)
-
-        sys.stdout.write("\rUpdating hostname and /etc/hosts... (%i of %i done)"
-                         % (count+1, args.num_slaves+1))
-        sys.stdout.flush()
+        # Execute command once in a while, so it doesn't become too large.
+        # Also execute remaining commands if this is the last iteration.
+        if (i+1) % 32 == 0) or i == args.num_slaves:
+            cmd += "wait"
+            subprocess.call(cmd, shell=True)
+            cmd = ""
+            
+            sys.stdout.write("\rUpdating hostname and /etc/hosts... (%i of %i done)"
+                             % (i+1, args.num_slaves+1))
+            sys.stdout.flush()
 
     print("\nDone.")
 
@@ -739,7 +736,7 @@ def init_cluster(conn, args):
 
     master_instance = conn.get_only_instances(master_instance_ids)[0]
     ssh = boto.manage.cmdshell.sshclient_from_instance(master_instance, args.identity_file,
-                                                       user_name='ubuntu',
+                                                       user_name=EC2_USER,
                                                        host_key_file='/dev/null')
     get_hosts = ("#!/bin/bash\n\n"
                  "# Set the prefix name and number of slaves/worker machines.\n#\n"
@@ -786,8 +783,8 @@ def ssh_master(conn, args):
         return
 
     pub_ip = master_instance.ip_address
-    subprocess.call("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" ubuntu@%s" %
-                    (args.identity_file, pub_ip), shell=True)
+    subprocess.call("ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" %s@%s" %
+                    (args.identity_file, EC2_USER, pub_ip), shell=True)
 
 
 def get_logs(conn, args):
@@ -828,8 +825,8 @@ def get_logs(conn, args):
     scp_cmd = ""
     for system in ['giraph', 'gps', 'graphlab', 'mizan']:
         scp_cmd += ("scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \"%s\" "
-                    "ubuntu@%s:~/benchmark/%s/logs/*.tar.gz %s/../results/%s/%i/ & " %
-                    (args.identity_file, pub_ip, system, SCRIPT_DIR, system, args.num_slaves))
+                    "%s@%s:~/benchmark/%s/logs/*.tar.gz %s/../results/%s/%i/ & "
+                    % (args.identity_file, EC2_USER, pub_ip, system, SCRIPT_DIR, system, args.num_slaves))
 
         target_dir = '%s/../results/%s/%i/' % (SCRIPT_DIR, system, args.num_slaves)
         if not os.path.exists(target_dir):
