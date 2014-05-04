@@ -237,13 +237,13 @@ def check_files(log_prefix, machines):
 
     if len(glob.glob(log_prefix + '_time.txt')) == 0:
         return (False, "\n  ERROR: " + logname + "_time.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_nbt.txt')) < machines:
+    elif len(glob.glob(log_prefix + '_*_nbt.txt')) < machines+1:
         return (False, "\n  ERROR: " + logname + "_*_nbt.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_mem.txt')) < machines:
+    elif len(glob.glob(log_prefix + '_*_mem.txt')) < machines+1:
         return (False, "\n  ERROR: " + logname + "_*_mem.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_cpu.txt')) < machines:
+    elif len(glob.glob(log_prefix + '_*_cpu.txt')) < machines+1:
         return (True, "\n  WARNING: " + logname + "_*_cpu.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_net.txt')) < machines:
+    elif len(glob.glob(log_prefix + '_*_net.txt')) < machines+1:
         return (True, "\n  WARNING: " + logname + "_*_net.txt missing!")
 
     return (True, "")
