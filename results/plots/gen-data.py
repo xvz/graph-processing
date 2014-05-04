@@ -61,7 +61,7 @@ def time_parser(log_prefix, system, alg):
 
     log_files = glob.glob(log_prefix + '_time.txt')
     if len(log_files) != 1:
-        return (0,0)
+        return (0,0,0)
 
     log_file = log_files[0]
 
@@ -172,11 +172,11 @@ def net_parser(log_prefix, machines):
     if do_master:
         log_files = glob.glob(log_prefix + '_0_nbt.txt')
         if len(log_files) != 1:
-            return (0,0,0)
+            return (0,0,0,0,0,0)
     else:
         log_files = [f for f in glob.glob(log_prefix + '_*_nbt.txt') if "_0_nbt.txt" not in f]
         if len(log_files) < machines:
-            return (0,0,0)
+            return (0,0,0,0,0,0)
 
     def parse(log):
         """Parses a single log file for net stats.
