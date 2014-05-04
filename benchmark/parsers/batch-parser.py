@@ -235,17 +235,20 @@ def check_files(log_prefix, machines):
     
     logname = os.path.basename(log_prefix)
 
-    # machines+1, as the master has those log files too
     if len(glob.glob(log_prefix + '_time.txt')) == 0:
         return (False, "\n  ERROR: " + logname + "_time.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_nbt.txt')) < machines+1:
-        return (False, "\n  ERROR: " + logname + "_*_nbt.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_mem.txt')) < machines+1:
-        return (False, "\n  ERROR: " + logname + "_*_mem.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_cpu.txt')) < machines+1:
-        return (True, "\n  WARNING: " + logname + "_*_cpu.txt missing!")
-    elif len(glob.glob(log_prefix + '_*_net.txt')) < machines+1:
-        return (True, "\n  WARNING: " + logname + "_*_net.txt missing!")
+
+    stats = ['nbt', 'mem', 'cpu', 'net']
+
+    if do_master:
+        for stat in stats:            
+            if len(glob.glob(log_prefix + '_0_' + stat + '.txt')) == 0:
+                return (False, "\n  ERROR: " + logname + "_0_" + stat + ".txt missing!")
+    else:
+        for stat in stats:            
+            # machines+1, as the master has those log files too
+            if len(glob.glob(log_prefix + '_*_' + stat + '.txt')) < machines+1:
+                return (False, "\n  ERROR: " + logname + "_*_" + stat + ".txt missing!")
 
     return (True, "")
 
