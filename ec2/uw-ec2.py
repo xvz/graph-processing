@@ -33,7 +33,7 @@ EXP_NAMES = ('cloud', 'cld', 'cw', 'cx', 'cy', 'cz')
 EXP_NUMS = (4, 8, 16, 32, 64, 128)
 
 # default master/slave AMI images (us-west-2)
-AMI_MASTER = 'ami-831b6cb3'
+AMI_MASTER = 'ami-79bec949'
 AMI_SLAVE = 'ami-9d1b6cad'
 
 # default key pair, security group, instance type
