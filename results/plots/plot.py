@@ -234,11 +234,11 @@ GRAPH_LABELS = np.array((('LJ (16)', 'LJ (32)', 'LJ (64)', 'LJ (128)'),
 
 if save_paper:
     FONTSIZE = 20
-    VAL_FONTSIZE = 4
+    VAL_FONTSIZE = 4   # for text values on top of bars
     F_FONTSIZE = 12    # for "F" of failed bars
 elif save_file:
     FONTSIZE = 12
-    VAL_FONTSIZE = 3   # for text values on top of bars
+    VAL_FONTSIZE = 3
     F_FONTSIZE = 11
 else:
     FONTSIZE = 12      # 12 is default
