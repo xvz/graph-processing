@@ -40,25 +40,25 @@ esac
 # we split the algs up for simplicity
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 0 ${TOL[$j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj-split/" ${MACHINES} 0 ${TOL[$j]}
     done
 done
  
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 0 ${SRC[$j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj-split/" ${MACHINES} 0 ${SRC[$j]}
     done
 done
  
 for graph in "${GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./wcc.sh "${graph}-adj.txt" ${MACHINES}
+        ./wcc.sh "${graph}-adj-split/" ${MACHINES}
     done
 done
 
 #for graph in "${GRAPHS[@]}"; do
 #    for ((i = 1; i <= RUNS; i++)); do
-#        ./dimest.sh "${graph}-adj.txt" ${MACHINES}
+#        ./dimest.sh "${graph}-adj-split/" ${MACHINES}
 #    done
 #done
 
@@ -67,13 +67,13 @@ done
 #################
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./pagerank.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${TOL[$j]}
+        ./pagerank.sh "${GRAPHS[$j]}-adj-split/" ${MACHINES} 1 ${TOL[$j]}
     done
 done
 
 for j in "${!GRAPHS[@]}"; do
     for ((i = 1; i <= RUNS; i++)); do
-        ./sssp.sh "${GRAPHS[$j]}-adj.txt" ${MACHINES} 1 ${SRC[$j]}
+        ./sssp.sh "${GRAPHS[$j]}-adj-split/" ${MACHINES} 1 ${SRC[$j]}
     done
 done
 
