@@ -25,7 +25,7 @@ if [[ -f "${graph}-adj.txt" ]]; then
 fi
 
 # convert graph to adjacency format
-echo "Converting to adjacency format..."
+echo "Converting ${graph}.txt to adjacency format..."
 if [[ ${domst} -eq 1 ]]; then
     "${scriptdir}"/snap-convert "${graph}.txt" "${graph}-adj.txt" 2 2
 else

@@ -7,10 +7,9 @@
 
 commondir=$(dirname "${BASH_SOURCE[0]}")/../common
 source "$commondir"/get-dirs.sh
+source "$commondir"/get-hosts.sh
 
 if [ $# -eq 0 ]; then
-    source "$commondir"/get-hosts.sh
-
     case ${NUM_MACHINES} in
         4) size=1;;
         8) size=1;;

@@ -41,7 +41,7 @@ else
     rm -i "${graph}.txt"
 fi
 
-echo "Converting to MST format..."
+echo "Converting ${graph}.txt to MST format..."
 
 "${scriptdir}"/mst-convert "${sortedgraph}.txt" "${graph}-mst-unsorted.txt"
 
