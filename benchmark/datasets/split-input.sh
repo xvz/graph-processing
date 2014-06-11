@@ -15,6 +15,11 @@ if [[ ! -f "${graph}.txt" ]]; then
     exit -1
 fi
 
+if [[ $2 -le 0 ]]; then
+    echo "Invalid number of chunks."
+    exit -1
+fi
+
 if [[ -d "${graph}-split" ]]; then
     echo "${graph}-split/ already exists. Delete it first."
     exit -1
