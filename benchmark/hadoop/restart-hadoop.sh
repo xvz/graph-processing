@@ -24,7 +24,7 @@ wait
 
 start-all.sh
 
-if [ $1 -eq 1 ]; then
+if [[ $# -eq 1 && $1 -eq 1 ]]; then
     # wait until Hadoop is up
     hadoop dfsadmin -safemode wait
 fi
