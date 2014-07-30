@@ -34,6 +34,6 @@ wait
 
 # get worker machines' files in parallel, with compression to speed things up
 for ((i = 1; i <= ${NUM_MACHINES}; i++)); do
-    rsync -az ubuntu@${CLUSTER_NAME}${i}:"$dir"/logs/${logname}_${i}_*.txt ./logs/ &
+    rsync -az ${CLUSTER_NAME}${i}:"$dir"/logs/${logname}_${i}_*.txt ./logs/ &
 done
 wait
