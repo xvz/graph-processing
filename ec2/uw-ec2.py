@@ -33,8 +33,8 @@ EXP_NAMES = ('cloud', 'cld', 'cw', 'cx', 'cy', 'cz')
 EXP_NUMS = (4, 8, 16, 32, 64, 128)
 
 # default master/slave AMI images (us-west-2)
-AMI_MASTER = 'ami-3faed30f'
-AMI_SLAVE = 'ami-9d1b6cad'
+AMI_MASTER = 'ami-0b4c073b'
+AMI_SLAVE = 'ami-794c0749'
 
 # default key pair, security group, instance type
 DEFAULT_KEY = 'uwbench'
@@ -117,6 +117,13 @@ def get_args():
                         help="Master AMI image (default: %s)" % AMI_MASTER)
     parser.add_argument('--ami-slave', metavar="AMI_ID", default=AMI_SLAVE,
                         help="Slave AMI image (default: %s)" % AMI_SLAVE)
+    parser.add_argument('--size-master', metavar="SIZE", type=int, default=0,
+                        help="R|Resize master EBS volume to SIZE (GB) on launch\n"
+                        "(NOTE: resizing takes time and will delay connectivity)")
+    parser.add_argument('--size-slave', metavar="SIZE", type=int, default=0,
+                        help="R|Resize master EBS volume to SIZE (GB) on launch\n"
+                        "(NOTE: resizing takes time and will delay connectivity)")
+
     parser.add_argument('--persist-master-vol', action='store_true', default=False,
                         help="Do not delete the master's EBS volume on termination")
 
@@ -231,6 +238,25 @@ def launch_instances(conn, args, num_slaves, launch_master):
                          security_groups = [args.security_group],
                          placement = args.zone)
 
+    # note that automatically resizing EBS volumes upon launch can delay connectivity
+    # to instances for several minutes (even after it has entered "running" state)
+    if args.size_master > 0:
+        bdm_master = boto.ec2.blockdevicemapping.BlockDeviceMapping()
+        bdm_master['/dev/sda1'] = boto.ec2.blockdevicemapping.EBSBlockDeviceType(
+            size = args.size_master,
+            delete_on_termination = True)
+    else:
+        # default of None will use AMI image's attributes
+        bdm_master = None
+
+    if args.size_slave > 0:
+        bdm_slave = boto.ec2.blockdevicemapping.BlockDeviceMapping()
+        bdm_slave['/dev/sda1'] = boto.ec2.blockdevicemapping.EBSBlockDeviceType(
+            size = args.size_slave,
+            delete_on_termination = True)
+    else:
+        bdm_slave = None
+
     ## Launch instances
     if args.spot_price == None:
         # if no spot price specified, launch things on-demand
@@ -244,6 +270,7 @@ def launch_instances(conn, args, num_slaves, launch_master):
                                min_count = num_slaves + (1 if launch_master else 0),
                                max_count = num_slaves + (1 if launch_master else 0),
                                dry_run = True,
+                               block_device_map = bdm_slave,
                                **launch_config)
         except boto.exception.EC2ResponseError as e:
             if e.status != EC2_DRY_RUN_SUCCESS:
@@ -252,7 +279,9 @@ def launch_instances(conn, args, num_slaves, launch_master):
                 return ([], [])
 
         if launch_master:
-            master_res = conn.run_instances(args.ami_master, **launch_config)
+            master_res = conn.run_instances(args.ami_master,
+                                            block_device_map = bdm_master,
+                                            **launch_config)
             master_instance_ids = [i.id for i in master_res.instances]
         else:
             master_instance_ids = []
@@ -260,6 +289,7 @@ def launch_instances(conn, args, num_slaves, launch_master):
         slave_res = conn.run_instances(args.ami_slave,
                                        min_count = num_slaves,
                                        max_count = num_slaves,
+                                       block_device_map = bdm_slave,
                                        **launch_config)
         slave_instance_ids = [i.id for i in slave_res.instances]
 
@@ -277,6 +307,7 @@ def launch_instances(conn, args, num_slaves, launch_master):
                 master_reqs = conn.request_spot_instances(args.spot_price,
                                                           args.ami_master,
                                                           launch_group = args.cluster_name,
+                                                          block_device_map = bdm_master,
                                                           **launch_config)
                 master_req_ids = [req.id for req in master_reqs]
             else:
@@ -286,6 +317,7 @@ def launch_instances(conn, args, num_slaves, launch_master):
                                                      args.ami_slave,
                                                      count = num_slaves,
                                                      launch_group = args.cluster_name,
+                                                     block_device_map = bdm_slave,
                                                      **launch_config)
             slave_req_ids = [req.id for req in slave_reqs]
 
